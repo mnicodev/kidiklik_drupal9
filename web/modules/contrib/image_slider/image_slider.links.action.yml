@@ -1,0 +1,6 @@
+image_slider.slider_add:
+  route_name: image_slider.slider_add
+  title: 'Add Slider'
+  appears_on:
+    - entity.image_slider.collection
+    - entity.image_slider.canonical

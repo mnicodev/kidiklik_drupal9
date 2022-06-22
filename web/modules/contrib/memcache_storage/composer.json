@@ -1,0 +1,7 @@
+{
+    "name": "drupal/memcache_storage",
+    "description": "Provides integration with memcached backend for storing cached data.",
+    "type": "drupal-module",
+    "license": "GPL-2.0+",
+    "require": {}
+}

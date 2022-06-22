@@ -1,0 +1,38 @@
+type: theme
+core: 8.x
+core_version_requirement: ^8 || ^9
+
+name: 'KIDIKLIK'
+description: 'A Drupal Bootstrap 3 based sub-theme.'
+package: 'Bootstrap'
+
+regions:
+  header: 'Zone lien accueil'
+  kidiklik_logo: 'Zone logo kidiklik'
+  pub_entete: 'Zone pub entête dep'
+  navigation: 'Navigation'
+  navigation_collapsible: 'Navigation (Collapsible)'
+  highlighted: 'Highlighted'
+  help: 'Help'
+  content: 'Content'
+  sidebar_first: 'Bandeau droit'
+  sidebar_second: 'Colonne pub + jeux concours'
+  zone_entete_national: 'Zone entête national'
+  carte_france: 'Bloc carte de France'
+  recherche_geo: 'Bloc recherche par département ou ville'
+  content_article_accueil: 'Bloc article accueil'
+  content_article_right: 'Bloc article droite'
+  zone_rubriques_activites: 'Zone rubriques activités'
+  footer: 'Footer'
+  page_top: 'Page top'
+  page_bottom: 'Page bottom'
+  moteur_recherche: 'Moteur de recherche'
+  footer_menu_mobil: 'Menu footer en mode mobile'
+
+#Libraries
+libraries:
+  - kidiklik/bootstrap
+  - kidiklik/fontawesome
+  - kidiklik/select2
+  - kidiklik/global-components
+

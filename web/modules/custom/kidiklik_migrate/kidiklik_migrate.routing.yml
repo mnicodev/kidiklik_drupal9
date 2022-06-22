@@ -1,0 +1,17 @@
+
+kidiklik_migrate.default_controller_migrate_client:
+  path: '/admin/migrate/client'
+  defaults:
+    _controller: '\Drupal\kidiklik_migrate\Controller\DefaultController::migrateClient'
+    _title: 'Kidiklik migration client'
+  requirements:
+    _permission: 'access user profiles'
+
+
+kidiklik_migrate.default_controller_migrate_adherent:
+  path: '/admin/migrate/adherent'
+  defaults:
+    _controller: '\Drupal\kidiklik_migrate\Controller\DefaultController::migrateAdherent'
+    _title: 'Kidiklik migration adherent'
+  requirements:
+    _permission: 'access user profiles'

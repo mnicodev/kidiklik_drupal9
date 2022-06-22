@@ -1,0 +1,6 @@
+services:
+  drush9_example.commands:
+    class: \Drupal\kidiklik_migrate\Commands\KidiklikCommands
+    arguments: ['@database']
+    tags:
+      - { name: drush.command }

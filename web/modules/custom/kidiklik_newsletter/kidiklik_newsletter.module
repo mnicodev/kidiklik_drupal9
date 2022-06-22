@@ -1,0 +1,153 @@
+<?php
+
+/**
+ * @file
+ * Contains kidiklik_newsletter.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Ajax\ReplaceCommand;
+
+/**
+ * Implements hook_help().
+ */
+function kidiklik_newsletter_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the kidiklik_newsletter module.
+    case 'help.page.kidiklik_newsletter':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Module permettant la création d&#039;&#039;une newsletter par la méthode kidiklik') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function kidiklik_newsletter_theme() {
+  return [
+    'kidiklik_newsletter' => [
+      "variables" => [
+			"entete" => null,
+			"blocs" => null,
+		]
+    ],
+    'kidiklik_newsletter_for_mailjet' => [
+		"variables" => [
+			"entete" => null,
+			"blocs" => null,
+		]
+    ],
+  ];
+}
+
+
+
+/**
+ * Implements hook_form_alter().
+ *
+ * Add debug output container and Ajax callback.
+ */
+function kidiklik_newsletter_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+	preg_match("/views_form_liste_bloc_donnees_newsletter_page_1_(\d*)/",$form["form_id"]["#value"],$rs);
+	if(!empty($rs)) {
+		$form["actions"][]=[
+			"submit"=> [
+				"#type"=>"html_tag",
+				"#tag" => "a",
+				"#value"=>"Retour à la liste des newsletter",
+				"#attributes" => [
+					"class"=>"btn btn-primary",
+					"href"=>"/admin/newsletters",
+
+				],
+			],
+		];
+		$form["actions"][]=[
+			"submit"=> [
+				"#type"=>"html_tag",
+				"#tag" => "a",
+				"#value"=>"Editer la newsletter",
+				"#attributes" => [
+					"class"=>"btn btn-warning",
+					"href"=>"/node/".$rs[1]."/edit?destination=/admin/newsletter/".$rs[1]."&nid=".$rs[1],
+
+				],
+			],
+		];
+
+    $form["actions"][]=[
+      "submit"=> [
+        "#type"=>"html_tag",
+        "#tag" => "a",
+        "#value"=>"Gestion des blocs",
+        "#attributes" => [
+          "class"=>"btn btn-primary",
+          "href"=>"/admin/newsletter/contenu/".$rs[1]."?nid=".$rs[1],
+
+        ],
+      ],
+    ];
+
+	}
+  if ($form_id == 'newsletter_form') {
+    // Add empty container to the form. it gets filled with
+    // the Kint output from our Ajax event callback.
+    $form['debug'] = [
+      '#type' => 'container',
+      '#attributes' => [
+        'id' => ['debug-out'],
+      ],
+    ];
+  }
+
+  // Here follows the code where you add the #ajax callback
+  // to some field of this form. Let's say a taxonomy reference select box.
+ /* $form['field_mev']['widget']['#ajax'] = [
+    'event' => 'change',
+    "disable-refocus" => FALSE,
+    'callback' => 'kidiklik_newsletter_ajax_callback',
+  ];*/
+}
+
+// The callback function, triggered by changing selection of our taxonomy select box.
+function kidiklik_newsletter_ajax_callback(array &$form, FormStateInterface $form_state) {
+  $response = new AjaxResponse();
+  $debugOut = @Kint::dump($form_state);
+  $response->addCommand(new ReplaceCommand('#debug-out', $debugOut ));
+  return $response;
+}
+
+
+function kidiklik_newsletter_views_query_alter(Drupal\views\ViewExecutable $view, Drupal\views\Plugin\views\query\QueryPluginBase $query) {
+	if($view->current_display=="newsletter_json_pub") {
+		$dep_id=get_term_departement();
+		//$query->where[1]["conditions"]
+		//ksm($query->where[1]["conditions"]);
+		//$query->where[0]["conditions"][1]["field"]="node__field_partage_departements.field_partage_departements_target_id = :node__field_partage_departements_field_partage_departements_target_id";
+		//$query->where[0]["conditions"][1]["value"]=[':node__field_partage_departements_field_partage_departements_target_id'=>(int)$dep_id];
+
+		/*$query->where[0]["conditions"][1]["field"]="node__field_partage_departements.field_partage_departements_target_id = '".$dep_id."'";
+		$query->where[0]["conditions"][1]["value"]=[];*/
+    /*$configuration = array(
+      'type' => 'INNER',
+      'table' => 'node__field_date_debut',
+      'field' => 'entity_id',
+      'left_table' => 'node_field_data',
+      'left_field' => 'nid',
+      'operator' => '=',
+    );
+
+    $join = \Drupal\views\Views::pluginManager('join')->createInstance('standard', $configuration);
+    $rel = $query->addRelationship('field_date_debut', $join, 'node_field_data');
+    $query->addTable('node__field_date_debut', $rel, $join, 'field_date_debut');
+    $query->addWhere('', 'field_date_debut.field_date_debut_value', get_term_departement(), '<=');*/
+	}
+
+}

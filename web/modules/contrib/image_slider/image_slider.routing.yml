@@ -1,0 +1,39 @@
+entity.image_slider.canonical:
+  path: '/image_slider/{image_slider}'
+  defaults:
+    _entity_view: 'image_slider'
+    _title: 'Slider content'
+  requirements:
+    _entity_access: 'image_slider.view'
+
+entity.image_slider.collection:
+  path: '/admin/structure/image_slider/list'
+  defaults:
+    _entity_list: 'image_slider'
+    _title: 'Slider list'
+  requirements:
+    _permission: 'view slider entity'
+
+image_slider.slider_add:
+  path: '/admin/structure/image_slider/add'
+  defaults:
+    _entity_form: image_slider.default
+    _title: 'Add slider'
+  requirements:
+    _entity_create_access: 'image_slider'
+
+entity.image_slider.edit_form:
+  path: '/admin/structure/image_slider/{image_slider}/edit'
+  defaults:
+    _entity_form: image_slider.default
+    _title: 'Edit slider'
+  requirements:
+    _entity_access: 'image_slider.update'
+
+entity.image_slider.delete_form:
+  path: '/admin/structure/slider/{image_slider}/delete'
+  defaults:
+    _entity_form: image_slider.delete
+    _title: 'Delete slider'
+  requirements:
+    _entity_access: 'image_slider.delete'

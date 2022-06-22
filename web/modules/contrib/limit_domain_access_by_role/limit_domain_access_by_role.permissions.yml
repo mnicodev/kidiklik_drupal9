@@ -1,0 +1,4 @@
+
+block access on non-technical domain:
+  title: 'Block access on non-technical domain'
+  description: 'Usually used to disallow admin operations outside of a technical domain (use for admin users).'

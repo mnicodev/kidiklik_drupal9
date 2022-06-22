@@ -1,0 +1,26 @@
+id: kidiklik_adherents_contacts
+label: kidiklik CSV Migrate Adherents Contacts
+migration_tags:
+  - kidiklik Migrate Clients Adherents
+source:
+  plugin: csv
+  path: modules/custom/kidiklik_migrate/sources/adherents_contacts.csv
+  ids: [id_contact]
+process:
+  title: nom
+  uid:
+    plugin: default_value
+    default_value: 1
+  field_dept: dept
+  field_telephone: telephone
+  field_email: email
+  field_type_contact:
+    plugin: default_value
+    default_value: adherent
+  field_ref: ref_adherent
+  type:
+    plugin: default_value
+    default_value: contact
+
+destination:
+  plugin: entity:node

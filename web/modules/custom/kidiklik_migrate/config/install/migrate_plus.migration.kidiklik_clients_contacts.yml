@@ -1,0 +1,36 @@
+id: kidiklik_clients_contacts
+label: kidiklik CSV Migrate Clients Contacts
+migration_tags:
+  - kidiklik Migrate Clients Contacts
+source:
+  plugin: csv
+  path: modules/custom/kidiklik_migrate/sources/clients_contacts.csv
+  ids: [id_contact]
+process:
+  title: nom
+  uid:
+    plugin: default_value
+    default_value: 1
+  field_departement:
+    plugin: migration_lookup
+    migration: kidiklik_departements
+    source: dept
+  field_telephone: telephone
+  field_email: email
+  field_type_contact:
+    plugin: default_value
+    default_value: client
+  field_ref: ref_client
+  type:
+    plugin: default_value
+    default_value: contact
+migration_dependencies:
+  required:
+    - kidiklik_departements
+  optional: []
+dependencies:
+  enforced:
+    module:
+      - kidiklik_migrate
+destination:
+  plugin: entity:node

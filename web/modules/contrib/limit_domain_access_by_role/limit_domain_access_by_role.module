@@ -1,0 +1,45 @@
+<?php
+
+/**
+ * @file
+ * Contains limit_domain_access_by_role.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function limit_domain_access_by_role_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the limit_domain_access_by_role module.
+    case 'help.page.limit_domain_access_by_role':
+      // Return a line-break version of the README.md.
+      return _filter_autop(file_get_contents(dirname(__FILE__) . '/README.md'));
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_user_login().
+ */
+function limit_domain_access_by_role_user_login($account) {
+  $config = \Drupal::config('limit_domain_access_by_role.settings');
+  $technical_domains = array_values(array_filter(explode(',', $config->get('technical_domains'))));
+  $on_tech_domain = 0;
+  $host = \Drupal::request()->getHost();
+  foreach ($technical_domains as $tech_dom) {
+    if (\Drupal::service('path.matcher')->matchPath($host, trim($tech_dom)) !== FALSE) {
+      $on_tech_domain = 1;
+    }
+  }
+  $block = $account->hasPermission('block access on non-technical domain');
+  if (!$block || $on_tech_domain) {
+    return;
+  }
+  else {
+    // Force logout.
+    user_logout();
+  }
+}

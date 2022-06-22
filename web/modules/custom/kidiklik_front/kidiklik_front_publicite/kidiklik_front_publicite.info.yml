@@ -1,0 +1,5 @@
+name: 'kidiklik_front_publicite'
+type: module
+description: 'Module pour la gestion des pubs en front'
+core: 8.x
+package: 'Custom'

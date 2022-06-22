@@ -1,0 +1,6 @@
+name: 'kidiklik_newsletter'
+type: module
+description: 'Module permettant la création d''une newsletter par la méthode kidiklik'
+core: 8.x
+package: 'Custom'
+version: '9.0'

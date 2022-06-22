@@ -1,0 +1,17 @@
+image_slider_data:
+  version: 1.x
+  css:
+    theme:
+      css/image_slider.css: {}
+      https://fonts.googleapis.com/css?family=Montserrat:100,100italic,200,200italic,300,300italic,regular,italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic&subset=latin-ext,cyrillic-ext,vietnamese,latin,cyrillic: { type: external }
+      https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300italic,regular,italic,700,700italic&subset=latin-ext,greek-ext,cyrillic-ext,greek,vietnamese,latin,cyrillic: { type: external }
+
+  js:
+    https://code.jquery.com/jquery-migrate-3.0.0.min.js: { type: external }
+    js/jssor.slider-28.0.0.min.js: {}
+    js/image_slider.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+    - core/jquery.once
+    - core/drupalSettings

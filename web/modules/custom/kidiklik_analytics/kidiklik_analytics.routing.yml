@@ -1,0 +1,8 @@
+
+kidiklik_analytics.data_controller_content:
+  path: '/kidiklik_analytics/content_data'
+  defaults:
+    _controller: '\Drupal\kidiklik_analytics\Controller\DataController::content'
+    _title: 'Google Analytics Data'
+  requirements:
+    _permission: 'access content'

@@ -1,0 +1,10 @@
+
+limit_domain_access_by_role.settings:
+  path: '/admin/config/system/limit_domain_access_by_role'
+  defaults:
+    _form: '\Drupal\limit_domain_access_by_role\Form\LimitDomainAccessByRoleConfigForm'
+    _title: 'Limit Domain Access By Role'
+  requirements:
+    _permission: 'administer site configuration'
+  options:
+    _admin_route: TRUE

@@ -1,0 +1,40 @@
+id: kidiklik_agendas
+label: kidiklik CSV Migrate Agendas
+migration_tags:
+  - kidiklik Migrate Agendas
+source:
+  plugin: csv
+  path: modules/custom/kidiklik_migrate/sources/agendas.csv
+  ids: [id_agenda]
+process:
+  title: titre
+  uid:
+    plugin: default_value
+    default_value: 1
+  field_adresse: adresse
+  body: description
+  field_resume: resume
+  field_ref_dept: dept
+  field_email: email
+  field_lien: url
+  field_lieu: lieu
+  field_latitude: lat
+  field_longitude: lng
+  field_horaires: horaires
+  field_info_complementaires: info_sup
+  field_a_partir_de: age_min
+  field_jusque_age_de: age_max
+  field_video: video
+  field_type_de_reservation: type_resa
+  field_telephone: telephone
+  field_ref_activite: ref_activite
+  field_ref_adherent: ref_adherent
+  field_ref_ville: ref_ville
+  field_ref_agenda: id_agenda
+
+  type:
+    plugin: default_value
+    default_value: agenda
+
+destination:
+  plugin: entity:node

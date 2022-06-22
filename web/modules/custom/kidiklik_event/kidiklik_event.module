@@ -1,0 +1,119 @@
+<?php
+
+/**
+ * @file
+ * Contains kidiklik_event.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\kidiklik_event\Event\NodeInsertEvent;
+use Drupal\kidiklik_event\Event\NodeUpdateEvent;
+use Drupal\kidiklik_base\KidiklikEntity;
+
+/**
+ * Implements hook_help().
+ */
+function kidiklik_event_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the kidiklik_event module.
+    case 'help.page.kidiklik_event':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Kidiklik Event') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+function kidiklik_event_node_view($node,$view_node,$alngcode) {
+  
+}
+
+function kidiklik_event_node_insert(Drupal\Core\Entity\EntityInterface $entity) {
+	\Drupal::service('event_dispatcher')->dispatch(NodeInsertEvent::NODE_INSERT, new NodeInsertEvent($entity));
+	
+	if(!empty(\Drupal::request()->query->get('create'))) {
+		\Drupal::request()->query->set('destination', '/node/'.$entity->Id().'/edit');
+		\Drupal::request()->query->remove('create');
+	}
+}
+
+/**
+ * On ne peut faire un save dans un update
+ * Donc on place les nouvelles valeurs dans presave
+ */
+function kidiklik_event_node_presave(Drupal\node\NodeInterface $node) {
+	global $_SERVER;
+	
+	$type=current($node->get("type")->getValue())["target_id"];
+	if($type=="agenda") {
+		//kint($node);exit;
+		$activite=\Drupal::entityTypeManager()
+			->getStorage("node")
+			->load($node->get("field_activite_save")->value);
+
+		$node->set("field_activite",$activite);
+
+		/*$ville=\Drupal::entityTypeManager()
+			->getStorage("taxonomy_term")
+			->load($node->get("field_ville_save")->value);
+		$node->set("field_ville",$ville);*/
+			// kint($ville);exit;
+
+	}
+	
+	/*if($type=="activite" || $type=="client" || $type=="adherent"|| $type=="agenda") {
+		$ville=\Drupal::entityTypeManager()
+			->getStorage("taxonomy_term")
+			->load($node->get("field_ville_save")->value);
+		$database=\Drupal::database();
+		$query=$database->query("select * from villes where id_ville='".$node->get("field_ville_save")->value."'");
+		$ville=$query->fetchAll();
+		$node->set("field_ville",$ville->commune);
+	}*/
+	
+	if($type=="activite" || $type=="agenda") {
+		//kint($node);exit;
+		$node = KidiklikEntity::setGPS($node);		
+	} 
+	if($type=="activite" || $type=="agenda" || $type=="article") {
+	}
+	//
+
+	if($type=="bloc_de_mise_en_avant") {
+		$adherent=\Drupal::entityTypeManager()
+				->getStorage("node")
+				->load(current($node->get("field_adherent_cache")->getValue())["value"]);
+		if(!empty($adherent)) {
+			$adherent->__set("field_activites",$node);
+			//$adherent->save();
+			$node->set("field_adherent",$adherent);
+		}
+
+		/**
+		 *  On ne prend plus en compte le champ bloc mise en avant
+		 * les bloc de newsletter seront indépendants et marqué par le champs newsletter du bloc
+		 */
+		/*$newsletter=\Drupal::entityTypeManager()
+				->getStorage("node")
+				->load(current($node->get("field_newsletter")->getValue())["target_id"]);
+
+		if(!empty($newsletter)) {
+
+			$newsletter->get("field_bloc_de_mise_en_avant")->appendItem($node);
+
+		}*/
+
+
+	}
+
+
+}
+
+
+function kidiklik_event_node_update(Drupal\Core\Entity\EntityInterface $entity) {
+	//kint($entity);exit;
+	\Drupal::service('event_dispatcher')->dispatch(NodeUpdateEvent::NODE_UPDATE, new NodeUpdateEvent($entity));
+
+}

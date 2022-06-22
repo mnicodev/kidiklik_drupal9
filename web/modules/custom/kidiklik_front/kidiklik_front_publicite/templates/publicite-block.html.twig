@@ -1,0 +1,25 @@
+{#
+/**
+* @file
+* Default theme implementation to display a block.
+*
+* @see template_preprocess_block()
+*
+* @ingroup themeable
+*/
+#}
+{% set classes = [
+    'clear-both',
+] %}
+<div class="bloc-publicite ">
+	<div class="{{ content.class }}">
+			{% if content.script %}
+			{{ content.script|raw }}
+			{% elseif content.img %}
+			<a href="{{ content.url }}">
+				<img src="{{ content.img }}" data-nid="{{ content.nid }}"/>
+			</a>
+			{% endif %}
+	</div>
+</div>
+

@@ -1,0 +1,330 @@
+<html>
+<head>
+<title></title>
+<style type="text/css">
+  /*Media Queries*/
+  @media screen and (max-width: 480px) {
+    .left-sidebar.item .left,
+    .left-sidebar.item .right,
+    .right-sidebar .left,
+    .right-sidebar .right {
+      max-width: 100% !important;
+    }
+  }
+
+  @media screen and (max-width: 620px) {
+    .immanquable.left-sidebar .left,
+    .immanquable.left-sidebar .right,
+    .immanquable.right-sidebar .left,
+    .immanquable.right-sidebar .right {
+      max-width: 100% !important;
+    }
+  }
+</style>
+<body>
+<center class="wrapper"
+        style="width: 100%; table-layout: fixed; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;">
+  <div class="webkit" style="max-width: 600px;">
+    <!--[if (gte mso 9)|(IE)]>
+    <table width="600" align="center">
+      <tr>
+        <td>
+    <![endif]-->
+    <table class="outer" align="center"
+           style="border-spacing: 0; font-family: Arial, Helvetica, sans-serif; color: #8c8c8c; Margin: 0 auto; width: 100%; max-width: 600px;">
+      <tr>
+        <td class="one-column">
+          <table style="border-spacing: 0; font-family: Arial, Helvetica, sans-serif; color: #8c8c8c;" width="100%">
+            <tbody>
+            <tr>
+              <td class="inner contents entete"
+                  style="padding: 15px 10px 15px 10px; width: 100%; padding-top: 15px; text-align: center; color: #000;">
+                <p style="Margin: 0; font-size: 14px; Margin-bottom: 10px;">
+                  <img src="{{ entete.image }}" width="100%"/>
+                </p>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      <!-- texte -->
+      <tr>
+        <td class="one-column">
+          <table style="border-spacing: 0; font-family: Arial, Helvetica, sans-serif; color: #8c8c8c;" width="100%">
+            <tbody>
+            <tr>
+              <td class="inner contents entete"
+                  style="padding: 15px 10px 15px 10px; width: 100%; padding-top: 15px; text-align: center; color: #000;">
+                <b style="Margin: 0; font-size: 14px; Margin-bottom: 10px;">
+                  {{ entete.sujet }}
+                </b>
+              </td>
+            </tr>
+            <tr>
+              <td class="inner contents entete"
+                  style="padding: 15px 10px 15px 10px; width: 100%; padding-top: 15px; text-align: center; color: #000;">
+                <p style="Margin: 0; font-size: 14px; Margin-bottom: 10px;">
+                  {{ entete.texte }}
+                </p>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      <!-- pub -->
+      <tr>
+        <td class="one-column">
+          <table style="border-spacing: 0; font-family: Arial, Helvetica, sans-serif; color: #8c8c8c;" width="100%">
+            <tbody>
+            <tr>
+              <td class="inner contents entete"
+                  style="padding: 15px 10px 15px 10px; width: 100%; padding-top: 15px; text-align: center; color: #000;">
+                <p style="Margin: 0; font-size: 14px; Margin-bottom: 10px;">
+                  <img src="{{ entete.pub }}"/>
+                </p>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      {% set cpt=0 %}
+      {% for bloc in blocs %}
+        <tr>
+          <td>
+            {% if cpt%2 == 0 %}
+
+              <table width="100%" {% if entete.bandeau_rose == 1 %}style="background: #FA2661;"{% endif %}>
+                <tr>
+                  <td width="265">
+
+                    <table class="column left"
+                           style="border-spacing: 0; font-family: Arial, Helvetica, sans-serif; color: #000000; width: 100%; display: inline-block; vertical-align: middle; max-width: 335px;">
+                      <tbody>
+                      <tr>
+                        <td class="inner contents"
+                            style="padding: 15px 10px 15px 10px; width: 100%; font-size: 14px; text-align: left;{% if entete.bandeau_rose == 1 %}color:#ffffff{% endif %}">
+                          <p class="h2"
+                             style="Margin: 0; font-weight: bold; Margin-bottom: 9px; line-height: 18px; font-size: 18px; color: #000000;">
+                            <a href="{{ bloc.lien }}" style="text-decoration: none; {% if entete.bandeau_rose == 1 %}color:#ffffff{% else %}color: #000000;{% endif %}">
+                              {{ bloc.titre }}</a></p>
+                          <p style="Margin: 0;">
+                            <a href="h{{ bloc.lien }}" style="text-decoration: none; {% if entete.bandeau_rose == 1 %}color:#ffffff{% else %}color: #000000;{% endif %}">
+                              {{ bloc.texte }}
+                            </a>
+                          </p>
+                        </td>
+                      </tr>
+                      </tbody>
+                    </table>
+
+                  </td>
+                  <td width="335" align="right">
+
+                    <table class="column right"
+                           style="border-spacing: 0; font-family: Arial, Helvetica, sans-serif; color: #000000; width: 100%; display: inline-block; vertical-align: middle; max-width: 259px;">
+                      <tbody>
+                      <tr>
+                        <td class="inner full-width-image" style="padding: 0;">
+                          <a href="{{ bloc.lien }}" style="text-decoration: none; color: #000000;" align="right">
+                            <img src="{{ bloc.image }}"   style="border: 0; width: 100%; height: auto;" width="265">
+                          </a>
+                        </td>
+                      </tr>
+                      </tbody>
+                    </table>
+
+                  </td>
+                </tr>
+              </table>
+
+            {% else %}
+
+              <table width="100%">
+                <tr>
+                  <td width="265" align="left">
+
+                    <table class="column left"
+                           style="border-spacing: 0; font-family: Arial, Helvetica, sans-serif; color: #000000; width: 100%; display: inline-block; vertical-align: middle; max-width: 259px;">
+                      <tbody>
+                      <tr>
+                        <td class="inner full-width-image" style="padding: 0;">
+                          <a href="{{ bloc.lien }}" style="text-decoration: none; color: #000000;">
+                            <img src="{{ bloc.image }}" alt="Dossier spécial Vacances de Toussaint dans le Loiret"
+                                 style="border: 0; width: 100%; height: auto;" width="265">
+                          </a>
+                        </td>
+                      </tr>
+                      </tbody>
+                    </table>
+
+                  </td>
+                  <td width="335">
+
+                    <table class="column right"
+                           style="border-spacing: 0; font-family: Arial, Helvetica, sans-serif; color: #000000; width: 100%; display: inline-block; vertical-align: middle; max-width: 335px;">
+                      <tbody>
+                      <tr>
+                        <td class="inner contents"
+                            style="padding: 15px 10px 15px 10px; width: 100%; font-size: 14px; text-align: left;">
+                          <p class="h2"
+                             style="Margin: 0; font-weight: bold; Margin-bottom: 9px; line-height: 18px; font-size: 18px; color: #000000;">
+                            <a href="{{ bloc.lien }}" style="text-decoration: none; color: #000000;">
+                              {{ bloc.titre }}</a></p>
+                          <p style="Margin: 0;">
+                            <a href="h{{ bloc.lien }}" style="text-decoration: none; color: #000000;">
+                              {{ bloc.texte }}
+                            </a>
+                          </p>
+                        </td>
+                      </tr>
+                      </tbody>
+                    </table>
+
+                  </td>
+                </tr>
+              </table>
+
+            {% endif %}
+          </td>
+        </tr>
+        {% set cpt=cpt+1 %}
+      {% endfor %}
+      <tr>
+        <td>
+          <table class="column cont-footer"
+                 style="border-spacing: 0; font-family: Arial, Helvetica, sans-serif; color: #8c8c8c; margin: 0 auto; padding-top: 20px; border-top: 1px solid #ccc;"
+                 align="center">
+            <tbody>
+            <tr>
+              <td class="left-sidebar footer" style="padding: 0; text-align: center; font-size: 0;">
+
+                <table width="100%">
+                  <tr>
+                    <td width="100">
+
+                      <table class="column left"
+                             style="border-spacing: 0; font-family: Arial, Helvetica, sans-serif; color: #8c8c8c; width: 100%; display: inline-block; vertical-align: middle; max-width: 100px;">
+                        <tbody>
+                        <tr>
+                          <td class="inner full-width-image" style="padding: 15px 10px 15px 10px;">
+                            <a href="https://45.kidiklik.fr" style="text-decoration: none; color: #8c8c8c;">
+                              <img src="https://45.kidiklik.fr/images/newsletters/piaf.png"
+                                   alt="Aller sur le site kidiklik 45" style="border: 0; width: 100%; height: auto;"
+                                   width="100">
+                            </a>
+                          </td>
+                        </tr>
+                        </tbody>
+                      </table>
+
+                    </td>
+                    <td width="100">
+
+                      <table class="column right"
+                             style="border-spacing: 0; font-family: Arial, Helvetica, sans-serif; color: #8c8c8c; width: 100%; display: inline-block; vertical-align: middle; max-width: 100px;">
+                        <tbody>
+                        <tr>
+                          <td class="inner contents"
+                              style="padding: 15px 10px 15px 10px; width: 100%; text-align: left; font-size: 14px;">
+                            <p style="Margin: 0; font-size: 14px; Margin-bottom: 10px; margin-bottom: 0;">
+                              <a href="https://45.kidiklik.fr"
+                                 style="text-decoration: none; color: #f00; text-transform: uppercase; font-size: 13px; font-weight: bold;">
+                                Aller sur le site kidiklik {{ entete.dep.getName() }}
+                              </a>
+                            </p>
+                          </td>
+                        </tr>
+                        </tbody>
+                      </table>
+
+                    </td>
+                  </tr>
+                </table>
+
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table style="border-spacing: 0; font-family: Arial, Helvetica, sans-serif; color: #8c8c8c;" width="100%">
+            <tbody>
+            <tr>
+              <td class="inner contents rs"
+                  style="padding: 15px 10px 15px 10px; width: 100%; padding-bottom: 0; text-align: left;">
+                <p style="Margin: 0; font-size: 14px; Margin-bottom: 10px; text-align: center; color: #000;">
+                  Suivez-nous pour découvrir toutes nos bonnes idées
+                </p>
+                <p class="cont-rs"
+                   style="Margin: 0; font-size: 14px; Margin-bottom: 10px; text-align: center; color: #000; margin-bottom: 0;">
+                  {% for rs in entete.dep.get("field_reseaux_sociaux2").getIterator() %}
+
+                    <a href="https://www.facebook.com/kidiklik45" style="color: #ee6a56; text-decoration: none;">
+                      <img src="https://45.kidiklik.fr/images/newsletters/rs/{{ rs.get('social').value }}.png"
+                           alt="Facebook Kidiklik 45" style="border: 0;">
+                    </a>
+                  {% endfor %}
+
+
+                </p>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table width="100%">
+            <tbody>
+            <tr>
+              <td class="one-column" style="padding: 0;">
+                <table style="border-spacing: 0; font-family: Arial, Helvetica, sans-serif; color: #8c8c8c;"
+                       width="100%">
+                  <tbody>
+                  <tr>
+                    <td class="inner contents mentions"
+                        style="padding: 15px 10px 15px 10px; width: 100%; text-align: left;">
+                      <p
+                        style="Margin: 0; font-size: 11px; Margin-bottom: 10px; text-align: center; color: #000000;font-weight:bold">
+                        SUJET : Un gros dossier plein de sorties pour les vacances !
+                      </p>
+
+                      <p style="Margin: 0; font-size: 11px; Margin-bottom: 10px; text-align: center; color: #000000;">
+                        Si vous ne parvenez pas à afficher cet e-mail, veuillez consulter la version en <a
+                          href="{{ url }}"
+                          style="color: #000000; text-decoration: underline; font-size: 11px;">ligne.</a>
+                      </p>
+                      <p style="Margin: 0; font-size: 11px; Margin-bottom: 10px; text-align: center; color: #000000;">
+                        Si vous ne souhaitez plus recevoir de newsletter de la part de Kidiklik, ce serait bien dommage
+                        mais cliquez sur <a href="[[UNSUB_LINK_FR]]"
+                                            style="color: #000000; text-decoration: underline; font-size: 11px;">desinscription</a>
+                        et vous ne recevrez plus nos bonnes idées.
+                      </p>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </div>
+</center>
+
+</body>
+</html>

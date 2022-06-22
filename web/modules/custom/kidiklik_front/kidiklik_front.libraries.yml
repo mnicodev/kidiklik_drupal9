@@ -1,0 +1,9 @@
+kidiklik_front.actions:
+  version: 1.x
+  css:
+    theme:
+      css/styles.css: {}
+  js:
+    js/scripts.js: {}
+  dependencies:
+    - core/drupal.ajax

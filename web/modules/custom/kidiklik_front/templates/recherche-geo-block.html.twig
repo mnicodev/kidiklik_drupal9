@@ -1,0 +1,36 @@
+{#
+/**
+* @file
+* Default theme implementation to display a block.
+*
+* @see template_preprocess_block()
+*
+* @ingroup themeable
+*/
+#}
+{% set classes = [
+    'clear-both',
+    'recherche-geo'
+] %}
+<div{{ attributes.addClass(classes) }}>
+    <div class="texte">Cliquez sur la carte ou choisissez ci-dessous</div>
+    <div class="form-group">
+    
+    <label for="search_ville">				
+		<select id="search_ville" style=""></select>
+	</label>
+	</div>
+   
+   <div class="form-group">
+   <label for="search_dep">				
+				
+					 <select id="search_dep" >
+						
+					 </select>
+				
+
+	</label>
+	</div>
+
+    
+</div>

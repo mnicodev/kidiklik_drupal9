@@ -1,0 +1,13 @@
+{
+    "name": "kidiklik_base",
+    "type": "drupal-module",
+    "description": "Fonctionnalités de base de Kidiklik",
+    "keywords": [
+    ],
+    "homepage": "https://www.drupal.org/project/kidiklik_base",
+    "minimum-stability": "dev",
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/kidiklik_base",
+        "source": "http://cgit.drupalcode.org/kidiklik_base",
+    },
+}

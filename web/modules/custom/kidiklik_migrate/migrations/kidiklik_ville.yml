@@ -1,0 +1,25 @@
+id: kidiklik_ville
+label: kidiklik CSV Migrate Villes
+migration_tags:
+  - kidiklik Migrate Villes
+source:
+  plugin: csv
+  path: modules/custom/kidiklik_migrate/sources/villes.csv
+  keys:
+    - id_ville
+  ids: [id_ville]
+process:
+  name: commune
+  field_code_commune: code_commune
+  field_code_insee: code_insee
+  field_code_postal: code_postal
+  field_code_region: code_region
+  field_latitude: lat
+  field_longitude: lng
+  vid:
+    plugin: default_value
+    default_value: ville
+
+
+destination:
+  plugin: entity:taxonomy_term

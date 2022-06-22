@@ -1,0 +1,5 @@
+kidiklik_requestlistener:
+    class: Drupal\kidiklik_base\Event\Listener\RequestListener
+    arguments: ['@twig', '@settings']
+    tags:
+        - { name: event_subscriber }

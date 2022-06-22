@@ -1,0 +1,48 @@
+
+
+#newsletter-form {
+	fieldset  {
+
+		legend {
+			border-bottom: 1px solid #ccc;
+		}
+	}
+
+	#edit-information {
+		legend {
+			border-bottom: none;
+
+		}
+	}
+
+	.select-bloc {
+		width: 50%;
+	    padding-left: 15px;
+	    padding-right: 15px;
+	    float: left;
+	}
+
+	#content_datas {
+		background: #eee;
+		margin-bottom: 20px;
+		padding: 30px;
+	}
+
+	#blocs_datas {
+		.row {
+			border-top: 1px solid #ccc;
+			padding-top: 20px;
+		}
+		img {
+			width: 100%;
+		}
+
+		.space {
+			margin-bottom: 10px;
+		}
+
+		.pink {
+			background: #FA2661;
+		}
+	}
+}

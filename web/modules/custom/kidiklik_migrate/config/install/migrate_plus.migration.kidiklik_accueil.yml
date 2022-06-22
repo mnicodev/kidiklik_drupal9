@@ -1,0 +1,36 @@
+id: kidiklik_accueil
+label: kidiklik CSV Migrate accueil
+migration_tags:
+  - kidiklik Migrate accueil
+source:
+  plugin: csv
+  path: modules/custom/kidiklik_migrate/sources/accueils.csv
+  ids: [id_accueil]
+process:
+  title: titre
+  uid:
+    plugin: default_value
+    default_value: 1
+
+  field_dept: dept
+  field_ref_entite: ref_entite
+  field_entite: entite
+  field_ref_adherent: ref_adherent
+  field_resume: description
+  field_lien: url
+  field_type: type
+  field_ref_accueil: id_accueil
+  field_image_save: image
+
+  type:
+    plugin: default_value
+    default_value: bloc_de_mise_en_avant
+
+destination:
+  plugin: entity:node
+
+
+dependencies:
+  enforced:
+    module:
+      - kidiklik_migrate

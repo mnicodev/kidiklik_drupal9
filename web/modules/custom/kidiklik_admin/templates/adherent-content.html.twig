@@ -1,0 +1,18 @@
+<h1>Contenus de l'adhérent {{ adherent }}</h1>
+<form method="post" class="filtre-content-adherent">
+<div class="row">
+	
+		<div class="col-md-4">
+			<label>Date de début</label>
+			<input type="date" name="date_deb" class="form-control" value="{{ date_deb }}" />
+		</div>
+		<div class="col-md-4">
+			<label>Date de fin</label>
+			<input type="date" name="date_fin" class="form-control" value="{{ date_fin }}"  />
+		</div>
+		<div class="col-md-4" style="margin-top: 25px">
+			<input type="submit" class="btn btn-primary" value="Filtrer"  />
+		</div>
+	
+</div>
+</form>

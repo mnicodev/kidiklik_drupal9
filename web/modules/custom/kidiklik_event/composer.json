@@ -1,0 +1,13 @@
+{
+    "name": "kidiklik_event",
+    "type": "drupal-module",
+    "description": "Kidiklik Event",
+    "keywords": [
+    ],
+    "homepage": "https://www.drupal.org/project/kidiklik_event",
+    "minimum-stability": "dev",
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/kidiklik_event",
+        "source": "http://cgit.drupalcode.org/kidiklik_event",
+    },
+}

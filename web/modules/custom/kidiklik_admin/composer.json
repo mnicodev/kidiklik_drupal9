@@ -1,0 +1,13 @@
+{
+    "name": "kidiklik_admin",
+    "type": "drupal-module",
+    "description": "Fonctionnalités admin kidiklik",
+    "keywords": [
+    ],
+    "homepage": "https://www.drupal.org/project/kidiklik_admin",
+    "minimum-stability": "dev",
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/kidiklik_admin",
+        "source": "http://cgit.drupalcode.org/kidiklik_admin",
+    },
+}

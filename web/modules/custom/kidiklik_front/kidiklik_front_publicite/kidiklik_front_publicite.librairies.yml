@@ -1,0 +1,6 @@
+kidiklik_front_publicite.actions:
+  version: 1.x
+  js:
+    js/scripts.js: {}
+  dependencies:
+    - core/drupal.ajax

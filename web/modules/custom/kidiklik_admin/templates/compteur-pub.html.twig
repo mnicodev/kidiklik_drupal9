@@ -1,0 +1,37 @@
+<h1>Liste des publicités pour le mois de {{ periode }}</h1>
+<br>
+<div class="row">
+<div class="col-xs-12">
+<a href="/admin/publicites/compteur?mois={{ mois }}&delta={{ delta-1 }}" class="btn btn-warning align-left">Mois précédent</a>
+<a href="/admin/publicites/compteur?mois={{ mois }}&delta={{ delta+1 }}" class="btn btn-warning align-right">Mois suivant</a>
+</div>
+</div>
+<br>
+{% if error %}
+<div class="alert alert-error">{{ error }}</div>
+{% endif %}
+{% if pub|length %}
+<table class="periode-tab views-table views-view-table cols-10 sticky-enabled table table-bordered  responsive">
+{% for key,line in pub %}
+<tr class="periode">
+<td colspan='4' >du {{ key|replace({"_":" au "}) }}</td>
+</tr>
+
+    {% for item in line %}
+    <tr class="line">
+    <td>{{ item.title }}</td>
+    <td>{{ item.format }}</td>
+    <td>{{ item.date_deb }}</td>
+    <td>{{ item.date_fin }}</td>
+    </tr>
+    {% endfor %}
+	<tr colspan='4' height="10"><td></td></tr>
+{% endfor %}
+</table>
+{% endif %}
+<div class="row">
+<div class="col-xs-12">
+<a href="/admin/publicites/compteur?mois={{ mois }}&delta={{ delta-1 }}" class="btn btn-warning align-left">Mois précédent</a>
+<a href="/admin/publicites/compteur?mois={{ mois }}&delta={{ delta+1 }}" class="btn btn-warning align-right">Mois suivant</a>
+</div>
+</div>

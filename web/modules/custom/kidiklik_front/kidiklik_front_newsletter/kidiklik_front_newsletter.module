@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * @file
+ * Contains kidiklik_front_newsletter.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function kidiklik_front_newsletter_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the kidiklik_front_newsletter module.
+    case 'help.page.kidiklik_front_newsletter':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Kidiklik newsletter') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function kidiklik_front_newsletter_theme() {
+  return [
+    'kidiklik_front_newsletter' => [
+      'render element' => 'children',
+    ],
+  ];
+}

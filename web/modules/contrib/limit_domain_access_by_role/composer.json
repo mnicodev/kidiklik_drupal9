@@ -1,0 +1,14 @@
+{
+  "name": "drupal/limit_domain_access_by_role",
+  "type": "drupal-module",
+  "description": "Limit Domain Access By Role",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0-or-later",
+  "homepage": "https://www.drupal.org/project/limit_domain_access_by_role",
+  "minimum-stability": "dev",
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/3071899",
+    "source": "https://git.drupalcode.org/project/limit_domain_access_by_role"
+  },
+  "require": { }
+}

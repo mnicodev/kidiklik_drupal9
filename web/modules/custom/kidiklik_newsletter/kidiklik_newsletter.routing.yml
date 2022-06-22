@@ -1,0 +1,24 @@
+kidiklik_newsletter.default_form:
+  path: '/admin/newsletter/contenu/{node}'
+  defaults:
+    _form: '\Drupal\kidiklik_newsletter\Form\DefaultForm'
+    _title: "Contenu de la newsletter"
+  requirements:
+    _custom_access: '\Drupal\kidiklik_access\Controller\Access::adminAccess'
+
+kidiklik_newsletter.blocs_datas_controller_get:
+  path: '/admin/newsletter/blocs-datas/{nid}'
+  defaults:
+    _controller: '\Drupal\kidiklik_newsletter\Controller\BlocsDatasController::get'
+    _title: 'Blocs datas'
+  requirements:
+    _custom_access: '\Drupal\kidiklik_access\Controller\Access::adminAccess'
+
+
+kidiklik_newsletter.newsletter_for_mailjet:
+  path: '/newsletter/{nid}/{titre}'
+  defaults:
+    _controller: '\Drupal\kidiklik_newsletter\Controller\NewsletterController::newsletterForMailjet'
+    _title: 'Newsletter'
+  requirements:
+    _permission: 'access content'

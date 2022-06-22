@@ -1,0 +1,13 @@
+{
+    "name": "kidiklik_access",
+    "type": "drupal-module",
+    "description": "Access kidiklik",
+    "keywords": [
+    ],
+    "homepage": "https://www.drupal.org/project/kidiklik_access",
+    "minimum-stability": "dev",
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/kidiklik_access",
+        "source": "http://cgit.drupalcode.org/kidiklik_access",
+    },
+}

@@ -1,0 +1,110 @@
+
+kidiklik_admin.content_controller_redirect:
+  path: '/admin/pages'
+  defaults:
+    _controller: '\Drupal\kidiklik_admin\Controller\ContentController::pages'
+    _title: 'Edition du contenu des pages'
+  requirements:
+    _custom_access: '\Drupal\kidiklik_access\Controller\Access::adminAccess'
+
+
+kidiklik_admin.content_controller_action:
+  path: '/admin/contenu/{action}/{node_id}'
+  defaults:
+    _controller: '\Drupal\kidiklik_admin\Controller\ContentController::action'
+  requirements:
+    _custom_access: '\Drupal\kidiklik_access\Controller\Access::adminAccess'
+
+
+kidiklik_admin.adherent.page_controller:
+  path: '/admin/adherent/{adherent_id}'
+  defaults:
+    _controller: '\Drupal\kidiklik_admin\Controller\AdherentController::page'
+  requirements:
+    _custom_access: '\Drupal\kidiklik_access\Controller\Access::adminAccess'
+
+kidiklik_admin.jeu_concours.gagnants:
+    path: '/admin/jeux-concours/getGagnants/{nid}'
+    defaults:
+        _controller: '\Drupal\kidiklik_admin\Controller\JeuxConcoursController::getGagnants'
+    requirements:
+        _custom_access: '\Drupal\kidiklik_access\Controller\Access::adminAccess'
+
+kidiklik_admin.compteur.publicite:
+    path: '/admin/publicites/compteur'
+    defaults: 
+        _controller: '\Drupal\kidiklik_admin\Controller\CompteurPubliciteController::content'
+    requirements:
+        _custom_access: '\Drupal\kidiklik_access\Controller\Access::adminAccess'
+
+kidiklik_admin.periode_controller_content:
+  path: '/admin/publicites/periode'
+  defaults:
+    _controller: '\Drupal\kidiklik_admin\Controller\PeriodeController::content'
+    _title: 'Pub par période'
+  requirements:
+    _permission: 'access content'
+
+
+
+kidiklik_admin.getville:
+  path: '/admin/villes/getByCp/{cp}'
+  defaults:
+    _controller: '\Drupal\kidiklik_admin\Controller\VillesController::getByCp'
+  requirements:
+    _custom_access: '\Drupal\kidiklik_access\Controller\Access::adminAccess'
+
+kidiklik_admin.villes_controller_get:
+  path: '/admin/villes'
+  defaults:
+    _controller: '\Drupal\kidiklik_admin\Controller\VillesController::get'
+    _title: 'getVilles'
+  requirements:
+    _custom_access: '\Drupal\kidiklik_access\Controller\Access::adminAccess'
+
+kidiklik_admin.villes_controller_getGPS:
+  path: '/admin/villes/gps/{ville}'
+  defaults:
+    _controller: '\Drupal\kidiklik_admin\Controller\VillesController::getGPS'
+    _title: 'getGPS'
+  requirements:
+    _custom_access: '\Drupal\kidiklik_access\Controller\Access::adminAccess'
+
+kidiklik_admin.adherent.delete:
+  path: '/admin/adherent/{nid}/delete'
+  defaults:
+    _controller: '\Drupal\kidiklik_admin\Controller\AdherentController::delete'
+    _title: 'Suppression adhérent'
+  requirements:
+    _custom_access: '\Drupal\kidiklik_access\Controller\Access::adminAccess'
+
+kidiklik_admin.adherent.confirm_delete:
+  path: '/admin/adherent/{nid}/confirme_delete'
+  defaults:
+    _controller: '\Drupal\kidiklik_admin\Controller\AdherentController::confirme_delete'
+    _title: 'Êtes-vous sûr(e) de vouloir supprimer cet adhérent'
+  requirements:
+    _custom_access: '\Drupal\kidiklik_access\Controller\Access::adminAccess'
+kidiklik_admin.newsletter_inscrits_controller_list:
+  path: '/admin/newsletters/inscrits'
+  defaults:
+    _controller: '\Drupal\kidiklik_admin\Controller\NewsletterInscritsController::list'
+    _title: 'Liste des inscrits'
+  requirements:
+    _permission: 'access content'
+
+kidiklik_admin.adherent.select:
+  path: '/admin/select/adherents'
+  defaults:
+    _controller: '\Drupal\kidiklik_admin\Controller\AdherentController::select'
+    _title: 'Select adhérent'
+  requirements:
+    _custom_access: '\Drupal\kidiklik_access\Controller\Access::adminAccess'
+
+kidiklik_admin.client.select:
+  path: '/admin/select/clients'
+  defaults:
+    _controller: '\Drupal\kidiklik_admin\Controller\ClientController::select'
+    _title: 'Select adhérent'
+  requirements:
+    _custom_access: '\Drupal\kidiklik_access\Controller\Access::adminAccess'

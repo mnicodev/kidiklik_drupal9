@@ -1,0 +1,30 @@
+id: kidiklik_rubriques_activites
+label: kidiklik CSV Migrate Rubriques
+migration_tags:
+  - kidiklik Migrate Rubriques
+source:
+  plugin: csv
+  path: modules/custom/kidiklik_migrate/sources/rubriques.csv
+  keys:
+    - id_rubrique
+  ids: [id_rubrique]
+process:
+  name: nom
+  field_ref_parent: parent
+  field_code_departement: code
+  field_ref_rubrique: id_rubrique
+  field_titre_seo: titre_seo
+  field_ref_dept: dept
+  status: active
+  vid:
+    plugin: default_value
+    default_value: rubriques_activite
+
+
+dependencies:
+  enforced:
+    module:
+      - kidiklik_migrate
+
+destination:
+  plugin: entity:taxonomy_term

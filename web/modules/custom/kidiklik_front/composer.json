@@ -1,0 +1,13 @@
+{
+    "name": "kidiklik_front",
+    "type": "drupal-module",
+    "description": "Module pour la gestion du front",
+    "keywords": [
+    ],
+    "homepage": "https://www.drupal.org/project/kidiklik_front",
+    "minimum-stability": "dev",
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/kidiklik_front",
+        "source": "http://cgit.drupalcode.org/kidiklik_front",
+    },
+}

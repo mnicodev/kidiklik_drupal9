@@ -1,0 +1,6 @@
+services:
+  kidiklik_migrate.connection:
+    class: Drupal\kidiklik_migrate\Controller\DefaultController
+    arguments: ['@database']
+    tags:
+      - { name: backend_overridable }

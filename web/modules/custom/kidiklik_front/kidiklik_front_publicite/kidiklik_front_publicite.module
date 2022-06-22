@@ -1,0 +1,111 @@
+<?php
+
+/**
+ * Implements hook_theme().
+ */
+function kidiklik_front_publicite_theme() {
+  return [
+    'publicite_block' => [
+      'variables' => [
+		  'content' => NULL,
+		  'path_stat' => null,
+      ],
+      'render element' => 'children',
+    ],
+  ];
+}
+
+
+
+/**
+	* * Implements hook_views_pre_render().
+	* */
+function kidiklik_front_publicite_views_post_render(Drupal\views\ViewExecutable $view, &$output, Drupal\views\Plugin\views\cache\CachePluginBase $cache) {
+
+	  if (isset($view) && ($view->storage->id() == 'blocs_publicites')) {
+		 
+	//kint($output);exit;
+		 /* $view->element['#attached']['library'][] = 'statistics/drupal.statistics';
+		 kint($view->query->where);exit;
+    	 $settings = ['data' => ['nid' => $node->id()], 'url' => \Drupal::request()->getBasePath() . '/' . drupal_get_path('module', 'statistics') . '/statistics.php'];
+		 kint($settings);exit;
+		  $view->element['#attached']['drupalSettings']['statistics']=$settings; */
+	   }
+}
+
+
+/*
+ * Modification de la requête sql d'une vue
+ */
+function kidiklik_front_publicite_views_query_alter(Drupal\views\ViewExecutable $view, Drupal\views\Plugin\views\query\QueryPluginBase $query) {
+	$term_dep=get_term_departement();
+	
+	if($view->current_display=="carre" || 
+		$view->current_display=="colonne" || 
+		$view->current_display=="carre2" ||
+		$view->current_display=="large") {
+
+		/* 1er condition : la publicité fait partie du département */
+		$query->where[2]["conditions"][0]["value"]=$term_dep;
+		$query->where[2]["conditions"][0]["operator"]="=";
+		/* 2eme condition : la publicité est pour tous les sites */
+		/* rien à faire */
+		/* 3eme conditions : la publicite est partagée avec le dép */
+		$query->where[2]["conditions"][2]["value"]=$term_dep;
+		$query->where[2]["conditions"][2]["operator"]="=";
+		//ksm($query->where);
+		
+		/* recherche des publicite */
+		/* date fin */
+		//$query->where[1]["conditions"][2]["field"]="DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') <= DATE_FORMAT('".date("Y-m-d")."', '%Y-%m-%d')";
+		/* date fin */
+		//$query->where[1]["conditions"][3]["field"]="DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d') >= DATE_FORMAT('".date("Y-m-d")."', '%Y-%m-%d')";
+		/* la date de début du bloc de mise en avant doit être inférieur ou égal à la date du jour */ 
+		$query->where[1]["conditions"][2]["value"]=date("Y-m-d");
+		$query->where[1]["conditions"][2]["operator"]="<=";
+		/* la date de fin du bloc de mise en avant doit être supérieur ou égal à la date du jour */
+		$query->where[1]["conditions"][3]["value"]=date("Y-m-d");
+		$query->where[1]["conditions"][3]["operator"]=">=";
+		
+	 
+		/* on ajoute une jonction avec node_counter */
+		$config= [
+			"type"=>"left",
+			"table" => "node_counter",
+			"field"=>"nid",
+			"left_table"=>"node_field_data",
+			"left_field"=>"nid",
+			"operator"=>"="
+		];
+		$join=\Drupal\views\Views::pluginManager('join')->createInstance("standard",$config);
+		$rel=$query->addRelationship("nc",$join,"node_field_data");
+		$query->addTable("node_counter",$rel,$join,"nc");
+
+		/* pour récupérer la données du nb d'aff possible, on fait une jonction avec la table correspondante */
+		$config= [
+			"type"=>"left",
+			"table" => "node__field_nombre_affichage_possible",
+			"field"=>"entity_id",
+			"left_table"=>"node_field_data",
+			"left_field"=>"nid",
+			"operator"=>"="
+		];
+		$join=\Drupal\views\Views::pluginManager('join')->createInstance("standard",$config);
+		//$rel=$query->addRelationship("nb_aff_poss",$join,"node_field_data");
+		//$query->addTable("node__field_nombre_affichage_possible",$rel,$join,"nb_aff_poss");
+
+		/* on ajoute le where */
+		//$query->addWhere(4,"nc.totalcount<=nb_aff_poss.field_nombre_affichage_possible_value",[],"formula");
+		
+		//ksm($query->where);
+		
+		/*$query->where[1]["conditions"][5]["operator"]="formula";
+		$query->where[1]["conditions"][5]["field"]="node_counter.totalcount<=node__field_nombre_affichage_possible.field_nombre_affichage_possible_value";
+		$query->where[1]["conditions"][5]["value"]=[];*/
+
+	}
+
+	
+
+	
+}

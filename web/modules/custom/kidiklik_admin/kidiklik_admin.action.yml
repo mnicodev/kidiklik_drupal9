@@ -1,0 +1,8 @@
+
+kidiklik_admin.content_controller_redirect:
+  path: '/admin/pages'
+  defaults:
+    _controller: '\Drupal\kidiklik_admin\Controller\ContentController::pages'
+    _title: 'Edition du contenu des pages'
+  requirements:
+    _custom_access: '\Drupal\kidiklik_access\Controller\Access::adminAccess'

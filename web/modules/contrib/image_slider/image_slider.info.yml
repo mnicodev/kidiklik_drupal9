@@ -1,0 +1,15 @@
+name: Image slider
+type: module
+description: We can use this module to generate different type of slider.
+package: Slider
+core: '8.x'
+core_version_requirement: ^8 || ^9
+configure: entity.image_slider.collection
+dependencies:
+  - drupal:options
+  - drupal:user
+
+# Information added by Drupal.org packaging script on 2020-07-27
+version: '8.x-1.3'
+project: 'image_slider'
+datestamp: 1595855134

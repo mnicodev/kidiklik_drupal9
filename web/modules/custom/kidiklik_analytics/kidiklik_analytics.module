@@ -1,0 +1,45 @@
+<?php
+
+/**
+ * @file
+ * Contains kidiklik_analytics.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function kidiklik_analytics_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the kidiklik_analytics module.
+    case 'help.page.kidiklik_analytics':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Kidiklik Admin google analytics') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+
+
+/**
+ * Implements hook_theme().
+ */
+function kidiklik_analytics_theme() {
+  return [
+    'default_block' => [
+      'variables' => [
+        'content' => NULL,
+        "dep" => NULL,
+        "url" => NULL,
+      ],
+
+    ],
+    'kidiklik_analytics' => [
+      'render element' => 'children',
+    ],
+  ];
+}

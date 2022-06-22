@@ -1,0 +1,6 @@
+name: 'kidiklik_event'
+type: module
+description: 'Kidiklik Event'
+core: 8.x
+package: 'Custom'
+version: '9.0'

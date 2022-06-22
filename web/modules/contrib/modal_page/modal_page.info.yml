@@ -1,0 +1,13 @@
+name: Modal Page
+description: Create Modal
+type: module
+core_version_requirement: ^8.8 || ^9
+package: User interface
+configure: modal_page.settings
+dependencies:
+  - 'drupal:system (>= 8.8)'
+
+# Information added by Drupal.org packaging script on 2021-09-07
+version: '4.1.7'
+project: 'modal_page'
+datestamp: 1631023938

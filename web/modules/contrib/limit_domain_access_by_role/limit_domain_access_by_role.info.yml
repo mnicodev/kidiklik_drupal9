@@ -1,0 +1,12 @@
+name: 'Limit Domain Access By Role'
+type: module
+description: 'Whitelist technical domains to limit admin roles to interact only on those.'
+core_version_requirement: ^8.7.7 || ^9
+configure: limit_domain_access_by_role.settings
+dependencies:
+  - drupal:user
+
+# Information added by Drupal.org packaging script on 2020-05-18
+version: '8.x-1.5'
+project: 'limit_domain_access_by_role'
+datestamp: 1589809357

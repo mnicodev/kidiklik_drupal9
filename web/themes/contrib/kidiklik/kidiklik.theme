@@ -1,0 +1,176 @@
+<?php
+
+use Drupal\views\Views;
+use Drupal\node\Entity\Node;
+use Drupal\image\Entity\ImageStyle;
+/**
+ * @file
+ * Bootstrap sub-theme.
+ *
+ * Place your custom PHP code in this file.
+ */
+
+
+function kidiklik_preprocess_page(&$variables) {
+
+
+	$variables["dep"] = get_departement();
+	$term_dep=\Drupal::entityTypeManager()->getStorage("taxonomy_term")->load(get_term_departement());
+	$variables["name_dep"] =$term_dep->get('field_nom')->value;
+	$tmp=\Drupal::entityTypeManager()->getStorage("taxonomy_term")->loadByProperties(['vid'=>'departement']);
+	$variables["liste_dep"]=[];
+	$variables["liste_dep"][]="Changer de département";
+	foreach($tmp as $item) {
+		//kint($item->get('field_nom')->value);
+
+		if($item->getName() !== '2b' && $item->getName() !== '2a') {
+			$dep=(int)$item->getName();
+
+			if($dep!=0) {
+				$dep=($dep<10?"0".$dep:"$dep");
+
+				$variables["liste_dep"][$dep]=$item->get('field_nom')->value." - ".$dep;
+			}
+		} else {
+			$dep=$item->getName();
+			$variables["liste_dep"][$dep]=$item->get('field_nom')->value." - ".$dep;
+		}
+
+	}
+	ksort($variables["liste_dep"]);
+	//ksm($variables["liste_dep"]);
+	/*$paragraph_storage=\Drupal::entityTypeManager()->getStorage("paragraph");
+	$n=\Drupal::entityTypeManager()->getStorage("node")->load(11);
+	$paragraph_field_items=$n->get('field_filtres')->getValue();
+	$ids = array_column($paragraph_field_items, 'target_id');
+	$paragraphs_objects = $paragraph_storage->loadMultiple($ids);
+			kint($paragraphs_objects);exit;*/
+	$variables['reseaux_sociaux']=$term_dep->get('field_reseaux_sociaux2')->getValue();
+
+}
+
+function kidiklik_preprocess_html(&$variables) {
+	$variables['url_statistiques']=\Drupal::request()->getBasePath() . '/' . drupal_get_path('module', 'statistics') . '/statistics.php';
+	$variables['url_mailjet']=\Drupal::request()->getBasePath() . '/' . drupal_get_path('module', 'kidiklik_front_newsletter') . '/email_to_newsletter.php';
+	$variables['base_url']=\Drupal::request()->getBasePath();
+	$variables['domain_name']=\Drupal::service("settings")->get('domain_name');
+	$variables['departement'] = get_departement();
+	if(\Drupal::request()->get('record_email')) {
+	  $variables['email'] = \Drupal::request()->get('record_email');
+	}
+	//ksm(\Drupal::request()->get('email'));
+//	kint($variables);exit;
+}
+
+function kidiklik_preprocess_page_title(&$variables, $hook) {
+
+  if(isset(\Drupal::request()->attributes->all()['node_type'])) {
+
+	  $node_type = \Drupal::request()->attributes->all()['node_type'];
+	  if(!empty($node_type) && $node_type->get('type') === 'message_contact') {
+  		unset($variables['title']);
+	  }
+	}
+
+
+}
+
+
+function kidiklik_preprocess_menu(&$variables, $hook) {
+}
+
+function kidiklik_preprocess_field(&$variables) {
+	$variables['dept'] = get_departement();
+	
+	if(\Drupal::request()->attributes->get('node') !== null) {
+		$node = \Drupal::request()->attributes->get('node');
+		if($node->getType() === 'article') {
+			$variables['type_for_img'] = 'editos';
+		} else if($node->getType() === 'reportage') {
+			$variables['type_for_img'] = 'tests';
+		}
+		
+
+		//ksm(\Drupal::request()->attributes->all()['node_type']);
+	}
+
+}
+
+function kidiklik_preprocess_views_view_unformatted(&$vars) {
+	//ksm($vars);
+	$query="SELECT node_field_data.nid AS nid,  RAND() AS random_field
+	FROM node_field_data
+	LEFT JOIN node__field_date ON node_field_data.nid = node__field_date.entity_id
+
+	INNER JOIN node__field_format node__field_format ON node_field_data.nid = node__field_format.entity_id AND node__field_format.deleted = '0'
+	LEFT JOIN node__field_departement node__field_departement ON node_field_data.nid = node__field_departement.entity_id AND node__field_departement.deleted = '0'
+	LEFT JOIN node__field_tous_les_sites node__field_tous_les_sites ON node_field_data.nid = node__field_tous_les_sites.entity_id AND node__field_tous_les_sites.deleted = '0'
+	LEFT JOIN node__field_partage_departements node__field_partage_departements ON node_field_data.nid = node__field_partage_departements.entity_id AND node__field_partage_departements.deleted = '0'
+	LEFT JOIN node__field_nombre_affichage_possible node__field_nombre_affichage_possible ON node_field_data.nid = node__field_nombre_affichage_possible.entity_id
+	LEFT JOIN node__field_date_debut node__field_date_debut ON node_field_data.nid = node__field_date_debut.entity_id AND node__field_date_debut.deleted = '0' AND (node__field_date_debut.langcode = node_field_data.langcode OR node__field_date_debut.bundle = 'activite')
+	LEFT JOIN node__field_date_fin node__field_date_fin ON node_field_data.nid = node__field_date_fin.entity_id AND node__field_date_fin.deleted = '0' AND (node__field_date_fin.langcode = node_field_data.langcode OR node__field_date_fin.bundle = 'activite')
+	left JOIN node_counter nc ON node_field_data.nid = nc.nid
+	left JOIN node__field_nombre_affichage_possible nb_aff_poss ON node_field_data.nid = nb_aff_poss.entity_id";
+
+		$where=" WHERE (
+		(node__field_format.field_format_target_id in ('95', '957', '97', '98'))) AND (
+		(
+			(node_field_data.status = '1') AND
+			(node_field_data.type IN ('publicite'))
+		)
+		AND (
+			(node__field_departement.field_departement_target_id = '".get_term_departement()."') OR
+			(node__field_tous_les_sites.field_tous_les_sites_value = '1') OR
+			(node__field_partage_departements.field_partage_departements_target_id = '".get_term_departement()."')
+		) AND (
+			(
+			(
+				DATE_FORMAT(node__field_date_debut.field_date_debut_value, '%Y-%m-%d') <= DATE_FORMAT('".date("Y-m-d")."', '%Y-%m-%d')
+			) AND (
+				DATE_FORMAT(node__field_date_fin.field_date_fin_value, '%Y-%m-%d') >= DATE_FORMAT('".date("Y-m-d")."', '%Y-%m-%d')
+			)
+		) or (
+			(node__field_nombre_affichage_possible.field_nombre_affichage_possible_value > '0') AND ((nc.totalcount<=nb_aff_poss.field_nombre_affichage_possible_value))
+		)
+			)
+	)
+	ORDER BY random_field ASC
+	LIMIT 4 OFFSET 0";
+
+  //ksm($query.$where);
+    $db=\Drupal\Core\Database\Database::getConnection();
+    $rs=$db->query($query.$where)->fetchAll();
+    $result=[];
+    foreach($rs as $item) {
+		$node=Node::load($item->nid);
+		$type=current($node->get('field_format')->getValue())['target_id'];
+		switch($type) {
+			case 97:
+				$style=ImageStyle::load("pub_haut");
+				break;
+			case 98:
+				$style=ImageStyle::load("pub_large");
+				break;
+			case 95:
+				$style=ImageStyle::load("pub_carre");
+				break;
+			case 957:
+				$style=ImageStyle::load("pub_carre");
+				break;
+		}
+        $fid=current($node->get("field_image")->getValue())["target_id"];
+        $img=\Drupal::entityTypeManager()->getStorage('file')->load($fid);
+
+        $result["img"]=$style->buildUrl($img->uri->value);
+        $result["url"]=current($node->get("field_url")->getValue())["uri"];
+        $result["nid"]=$node->id();
+        $tab[]=$result;
+	}
+    //exit;
+	if(!empty($tab)) {
+		$vars["pub"]=$tab;
+	}
+	
+	//kint($tab);exit;
+
+}

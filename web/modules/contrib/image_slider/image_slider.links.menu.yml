@@ -1,0 +1,5 @@
+entity.image_slider.collection:
+  title: 'Image Slider'
+  route_name: entity.image_slider.collection
+  description: 'List sliders'
+  parent: system.admin_structure

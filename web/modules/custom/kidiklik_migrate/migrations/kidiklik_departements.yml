@@ -1,0 +1,41 @@
+id: kidiklik_departements
+label: kidiklik CSV Migrate Departements
+migration_tags:
+  - kidiklik Migrate Departements
+source:
+  plugin: csv
+  path: modules/custom/kidiklik_migrate/sources/departements.csv
+  keys:
+    - id_departement
+  ids: [id_departement]
+process:
+  name: code
+  field_adresse: adresse
+  field_ville:
+    plugin: migration_lookup
+    migration: kidiklik_ville
+    source: id_ville
+  field_email: email
+  field_societe: societe
+  field_telephone: telephone
+  field_nom: nom
+  field_code_departement: code
+  field_prefix: prefix
+  field_couleur: couleur
+  status: active
+  vid:
+    plugin: default_value
+    default_value: departement
+
+migration_dependencies:
+  optional:
+    - kidiklik_ville
+
+
+dependencies:
+  enforced:
+    module:
+      - kidiklik_migrate
+
+destination:
+  plugin: entity:taxonomy_term

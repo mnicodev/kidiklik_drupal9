@@ -1,0 +1,44 @@
+id: kidiklik_activites
+label: kidiklik CSV Migrate Activites
+migration_tags:
+  - kidiklik Migrate Activites
+source:
+  plugin: csv
+  path: modules/custom/kidiklik_migrate/sources/activites.csv
+  ids: [id_activite]
+process:
+  title: titre
+  uid:
+    plugin: default_value
+    default_value: 1
+  field_adresse: adresse
+  body: description
+  field_resume: resume
+  field_ref_dept: dept
+  field_email: email
+  field_lien: url
+  field_lieu: lieu
+  field_tarif: tarif
+  field_service: service
+  field_latitude: lat
+  field_longitude: lng
+  field_duree: duree
+  field_horaires: horaires
+  field_info_complementaires: info_sup
+  field_a_partir_de: age_min
+  field_jusque_age_de: age_max
+  field_video: video
+  field_type_de_reservation: type_resa
+  field_telephone: telephone
+  field_ref_activite: id_activite
+  field_ref_adherent: ref_adherent
+  field_ref_ville: ref_ville
+  field_date_debut: data_debut
+  field_date_fin: date_fin
+
+  type:
+    plugin: default_value
+    default_value: activite
+
+destination:
+  plugin: entity:node

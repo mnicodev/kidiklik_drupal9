@@ -1,0 +1,21 @@
+id: kidiklik_utilisateurs
+label: kidiklik CSV Migrate Utilisateurs
+migration_tags:
+  - kidiklik Migrate Utilisateurs
+source:
+  plugin: csv
+  path: modules/custom/kidiklik_migrate/sources/utilisateurs.csv
+  ids: [id_utilisateur]
+process:
+  name: login
+  roles: ref_profil
+  field_prenom: prenom
+  field_nom: nom
+  mail: email
+  status:
+    plugin: default_value
+    default_value: 1
+  field_dept: dept
+
+destination:
+  plugin: entity:user

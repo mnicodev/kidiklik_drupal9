@@ -1,0 +1,7 @@
+limit_domain_access_by_role.settings:
+  title: 'Limit domain access by role'
+  route_name: limit_domain_access_by_role.settings
+  description: 'Whitelist of technical domains.'
+  parent: system.admin_config_system
+  weight: 99
+

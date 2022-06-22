@@ -1,0 +1,44 @@
+<?php
+
+/**
+ * @file
+ * Contains kidiklik_migrate.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function kidiklik_migrate_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the kidiklik_migrate module.
+    case 'help.page.kidiklik_migrate':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Migration kidiklik') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+/*
+* Implements hook_uninstall()
+*/
+function kidiklik_migrate_uninstall() {
+ Drupal::configFactory()->getEditable('migrate_plus.migration.kidiklik_ville')->delete();
+ Drupal::configFactory()->getEditable('migrate_plus.migration.kidiklik_clients')->delete();
+ Drupal::configFactory()->getEditable('migrate_plus.migration.kidiklik_clients_contacts')->delete();
+ Drupal::configFactory()->getEditable('migrate_plus.migration.kidiklik_adherents')->delete();
+ Drupal::configFactory()->getEditable('migrate_plus.migration.kidiklik_adherents_contacts')->delete();
+ Drupal::configFactory()->getEditable('migrate_plus.migration.kidiklik_departements')->delete();
+ Drupal::configFactory()->getEditable('migrate_plus.migration.kidiklik_utilisateurs')->delete();
+ Drupal::configFactory()->getEditable('migrate_plus.migration.kidiklik_activites')->delete();
+  Drupal::configFactory()->getEditable('migrate_plus.migration.kidiklik_agendas')->delete();
+}
+
+
+function kidiklik_migrate_install() {
+  //Drupal::configFactory()->getEditable('migrate_plus.migration.kidiklik_activites')->delete();
+ //Drupal::configFactory()->getEditable('migrate_plus.migration.clients_contacts')->delete();
+}

@@ -1,0 +1,92 @@
+diff --git a/src/TermDelete.php b/src/TermDelete.php
+index 0f33f0a..d419a30 100644
+--- a/src/TermDelete.php
++++ b/src/TermDelete.php
+@@ -1,6 +1,7 @@
+ <?php
+ 
+ namespace Drupal\taxonomy_delete;
++use Drupal\Core\Entity\EntityTypeManagerInterface;
+ 
+ /**
+  * Class TermDelete.
+@@ -8,7 +9,21 @@ namespace Drupal\taxonomy_delete;
+  * @package Drupal\taxonomy_delete
+  */
+ class TermDelete {
+-
++  
++  /**
++   * Drupal\Core\Entity\EntityTypeManagerInterface definition.
++   *
++   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
++   */
++  protected $entityTypeManager;
++  
++  /**
++   * Use core services object.
++   */
++  public function __construct(EntityTypeManagerInterface $entity_type_manager) {
++    $this->entityTypeManager = $entity_type_manager;
++  }
++  
+   /**
+    * Delete terms by Vocabulary.
+    *
+@@ -20,8 +35,7 @@ class TermDelete {
+    */
+   public function deleteTermByVid($vid) {
+     $terms = [];
+-    $controller = \Drupal::entityTypeManager()
+-      ->getStorage('taxonomy_term');
++    $controller = $this->entityTypeManager->getStorage('taxonomy_term');
+     $tree = $controller->loadTree($vid);
+     foreach ($tree as $term) {
+       $terms[] = $term->tid;
+diff --git a/taxonomy_delete.drush.inc b/taxonomy_delete.drush.inc
+index 4ee4c2e..ccdad0c 100644
+--- a/taxonomy_delete.drush.inc
++++ b/taxonomy_delete.drush.inc
+@@ -28,19 +28,7 @@ function drush_taxonomy_delete_term_delete($vid = NULL) {
+     drush_set_error("Missing argument - Vocabulary");
+     return;
+   }
+-
+-  $tree = \Drupal::entityTypeManager()
+-    ->getStorage('taxonomy_term')
+-    ->loadTree($vid);
+-  if ($tree) {
+-    foreach ($tree as $term) {
+-      $terms[] = $term->tid;
+-    }
+-  }
+-  else {
+-    drush_set_error("No such vocabulary exists");
+-    return;
+-  }
++  
+   if (drush_confirm("Are you sure your want to delete all terms in $vid")) {
+ 
+     $service = \Drupal::service('taxonomy_delete.term_delete');
+diff --git a/taxonomy_delete.routing.yml b/taxonomy_delete.routing.yml
+index 99d28a0..7e66d8f 100644
+--- a/taxonomy_delete.routing.yml
++++ b/taxonomy_delete.routing.yml
+@@ -4,6 +4,6 @@ taxonomy_delete.ui:
+     _form: '\Drupal\taxonomy_delete\Form\TaxonomyDeleteUIForm'
+     _title: 'Taxonomy Delete UI'
+   requirements:
+-    _permission: 'access administration pages'
++    _permission: 'administer site configuration'
+   options:
+     _admin_route: TRUE
+diff --git a/taxonomy_delete.services.yml b/taxonomy_delete.services.yml
+index 7575963..42c7923 100644
+--- a/taxonomy_delete.services.yml
++++ b/taxonomy_delete.services.yml
+@@ -1,4 +1,4 @@
+ services:
+   taxonomy_delete.term_delete:
+     class: Drupal\taxonomy_delete\TermDelete
+-    arguments: []
++    arguments: ['@entity_type.manager']

@@ -1,0 +1,28 @@
+id: kidiklik_adherents
+label: kidiklik CSV Migrate Adherents
+migration_tags:
+  - kidiklik Migrate Adherents
+source:
+  plugin: csv
+  path: modules/custom/kidiklik_migrate/sources/adherents.csv
+  ids: [id_adherent]
+process:
+  title: nom
+  uid:
+    plugin: default_value
+    default_value: 1
+  field_adresse: adresse
+  field_dept: dept
+  field_email: email
+  field_lien: url
+  field_telephone: telephone
+  field_ref_adherent: id_adherent
+  field_ref_client: ref_client
+  field_ref_ville: ref_ville
+
+  type:
+    plugin: default_value
+    default_value: adherent
+
+destination:
+  plugin: entity:node

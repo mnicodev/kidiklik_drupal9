@@ -1,0 +1,13 @@
+{
+    "name": "kidiklik_newsletter",
+    "type": "drupal-module",
+    "description": "Module permettant la création d'une newsletter par la méthode kidiklik",
+    "keywords": [
+    ],
+    "homepage": "https://www.drupal.org/project/kidiklik_newsletter",
+    "minimum-stability": "dev",
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/kidiklik_newsletter",
+        "source": "http://cgit.drupalcode.org/kidiklik_newsletter",
+    },
+}

@@ -1,0 +1,24 @@
+#newsletter-form fieldset legend {
+  border-bottom: 1px solid #ccc; }
+#newsletter-form #edit-information legend {
+  border-bottom: none; }
+#newsletter-form .select-bloc {
+  width: 50%;
+  padding-left: 15px;
+  padding-right: 15px;
+  float: left; }
+#newsletter-form #content_datas {
+  background: #eee;
+  margin-bottom: 20px;
+  padding: 30px; }
+#newsletter-form #blocs_datas .row {
+  border-top: 1px solid #ccc;
+  padding-top: 20px; }
+#newsletter-form #blocs_datas img {
+  width: 100%; }
+#newsletter-form #blocs_datas .space {
+  margin-bottom: 10px; }
+#newsletter-form #blocs_datas .pink {
+  background: #FA2661; }
+
+/*# sourceMappingURL=styles.css.map */

@@ -1,0 +1,13 @@
+{
+    "name": "kidiklik_analytics",
+    "type": "drupal-module",
+    "description": "Kidiklik Admin google analytics",
+    "keywords": [
+    ],
+    "homepage": "https://www.drupal.org/project/kidiklik_analytics",
+    "minimum-stability": "dev",
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/kidiklik_analytics",
+        "source": "http://cgit.drupalcode.org/kidiklik_analytics",
+    },
+}

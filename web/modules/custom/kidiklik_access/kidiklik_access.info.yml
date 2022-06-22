@@ -1,0 +1,6 @@
+name: 'kidiklik_access'
+type: module
+description: 'Access kidiklik'
+core: 8.x
+package: 'Custom'
+version: '9.0'

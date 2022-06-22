@@ -1,0 +1,7 @@
+kidiklik_front_newsletter.newsletter_form:
+  path: '/newsletter.html'
+  defaults:
+    _form: '\Drupal\kidiklik_front_newsletter\Form\DefaultForm'
+    _title: 'Inscription à la newsletter'
+  requirements:
+    _access: 'TRUE'

@@ -1,0 +1,12 @@
+name: Memcache Storage
+description: Provides integration with memcached backend for storing cached data.
+core_version_requirement: ^8 || ^9
+type: module
+package: Performance and scalability
+configure: memcache_storage.admin_statistics
+core: 8.x
+
+# Information added by Drupal.org packaging script on 2021-09-29
+version: '2.0.1'
+project: 'memcache_storage'
+datestamp: 1632902474

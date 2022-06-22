@@ -1,0 +1,16 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the image_slider module.
+ */
+
+use Drupal\image\Entity\ImageStyle;
+
+/**
+ * Implements hook_uninstall().
+ */
+function image_slider_uninstall() {
+  ImageStyle::load('image_slider_gallery')->delete();
+  ImageStyle::load('image_slider_vertical_thumb_gallery')->delete();
+}

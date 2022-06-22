@@ -1,0 +1,13 @@
+{
+    "name": "kidiklik_front_newsletter",
+    "type": "drupal-module",
+    "description": "Kidiklik newsletter",
+    "keywords": [
+    ],
+    "homepage": "https://www.drupal.org/project/kidiklik_front_newsletter",
+    "minimum-stability": "dev",
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/kidiklik_front_newsletter",
+        "source": "http://cgit.drupalcode.org/kidiklik_front_newsletter",
+    },
+}

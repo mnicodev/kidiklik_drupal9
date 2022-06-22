@@ -1,0 +1,43 @@
+id: kidiklik_clients
+label: kidiklik CSV Migrate Clients
+migration_tags:
+  - kidiklik Migrate Clients
+source:
+  plugin: csv
+  path: modules/custom/kidiklik_migrate/sources/clients.csv
+  ids: [id_client]
+process:
+  title: nom
+  uid:
+    plugin: default_value
+    default_value: 1
+  field_adresse: adresse
+
+  field_email: email
+  field_lien: url
+  field_telephone: telephone
+  field_dept: dept
+  field_ref_client: id_client
+  field_ref_ville: ref_ville
+  field_contact:
+    plugin: migration_lookup
+    migration: kidiklik_clients_contacts
+    source: ref_client
+  field_adherent:
+    plugin: migration_lookup
+    migration: kidiklik_adherents
+    source: ref_client
+  type:
+    plugin: default_value
+    default_value: client
+destination:
+  plugin: entity:node
+migration_dependencies:
+  optional:
+    - kidiklik_clients_contacts
+    - kidiklik_adherents
+
+dependencies:
+  enforced:
+    module:
+      - kidiklik_migrate

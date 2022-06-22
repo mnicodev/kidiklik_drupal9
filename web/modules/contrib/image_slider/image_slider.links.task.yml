@@ -1,0 +1,20 @@
+slider.settings_tab:
+  route_name: image_slider.slider_settings
+  title: Settings
+  base_route: image_slider.slider_settings
+
+slider.view:
+  route_name: entity.image_slider.canonical
+  base_route: entity.image_slider.canonical
+  title: View
+
+slider.page_edit:
+  route_name: entity.image_slider.edit_form
+  base_route: entity.image_slider.canonical
+  title: Edit
+
+slider.delete_confirm:
+  route_name:  entity.image_slider.delete_form
+  base_route:  entity.image_slider.canonical
+  title: Delete
+  weight: 10

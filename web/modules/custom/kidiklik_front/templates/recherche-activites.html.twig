@@ -1,0 +1,32 @@
+{% for result in results %}
+<div class="row  no-gutters activite-teaser"> <!-- bloc activite -->
+<div class="col-sm-12 col-md-4">
+{{ field_image }}
+<div class="actions ">
+<div class="favori">Ajouter</div>
+<div class="reserver"><a href="{{ view_node }}">Réserver</a></div>
+</div>
+</div>
+
+<div class="px-3 col-sm-12 col-md-8 content"><!-- bloc droite-->
+<div class="row"> 
+<div class="col-12 titre"><h5><a href="{{ view_node }}">{{ title }}</a></h5></div>
+</div>
+<div class="informations">
+<div class="row"> <!-- bloc information -->
+<div class="col-6 ville"><span class="fa fa-map-marker">Ville : </span>{{ field_ville_save }}</div>
+<div class="col-6 a-partir-de"><span class="fa fa-child">Public : </span>{{ field_a_partir_de }}</div>
+</div>
+<div class="row">
+<div class="col-6 date"><span class="fa fa-calendar-o">&nbsp;</span>{{ field_date }}</div>
+{% if field_horaires %}
+<div class="col-6"><span class="fa fa-clock-o">&nbsp;<span>{{ field_horaires }}</div>
+{% endif %}
+</div>
+</div>
+<div class="row">
+<div class="col-12 resume">{{ field_resume }}</div>
+</div>
+</div> <!-- fin bloc droite-->
+</div>
+{% endfor %}

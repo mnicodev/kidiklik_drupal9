@@ -1,0 +1,25 @@
+services:
+    kidiklik_event.node.insert:
+        class: Drupal\kidiklik_event\EventSubscriber\NodeInsertSubscriber
+        tags:
+            - { name: 'event_subscriber' }
+            
+    kidiklik_event.node.update:
+        class: Drupal\kidiklik_event\EventSubscriber\NodeUpdateSubscriber
+        tags:
+            - { name: 'event_subscriber' }
+
+    kidiklik_event.event_subscriber:
+        class: Drupal\kidiklik_event\EventSubscriber\UserSubscriber
+        tags:
+            - { name: 'event_subscriber' }
+
+    kidiklik_event.init:
+        class: Drupal\kidiklik_event\EventSubscriber\InitSubscriber
+        tags:
+            - { name: 'event_subscriber' }
+
+    kidiklik_event.node.view:
+        class: Drupal\kidiklik_event\EventSubscriber\NodeViewSubscriber
+        tags:
+            - { name: 'event_subscriber' }

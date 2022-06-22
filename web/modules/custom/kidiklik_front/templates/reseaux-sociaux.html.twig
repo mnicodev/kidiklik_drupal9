@@ -1,0 +1,24 @@
+<div class="suivez-nous">
+    <div class="caption">
+        <div class="title">Suivez-nous</div>
+        <div class="reseaux-sociaux">
+				<ul class="nav navbar" >
+				{% for rs in content %}
+				<li class="nav-item">
+                    <a href="{{ rs.link }}">
+					{% if rs.social == 'facebook' %}
+					<i class="fa fa-facebook-official" aria-hidden="true"></i>
+					{% elseif rs.social == 'twitter' %}
+					<i class="fa fa-twitter-square" aria-hidden="true"></i>
+					{% elseif rs.social == 'instagram' %}
+					<i class="fa fa-instagram" aria-hidden="true"></i>
+					{% elseif rs.social == 'pinterest' %}
+					<i class="fa fa-pinterest-square" aria-hidden="true"></i>
+					{% endif %}
+                    </a>
+					</li>
+				{% endfor %}
+				</ul>
+			</div>
+    </div>
+</div>

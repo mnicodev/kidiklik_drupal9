@@ -1,0 +1,11 @@
+diff --git a/taxonomy_delete.info.yml b/taxonomy_delete.info.yml
+index e22fa2b..25cc695 100644
+--- a/taxonomy_delete.info.yml
++++ b/taxonomy_delete.info.yml
+@@ -2,5 +2,6 @@ name: Taxonomy Delete
+ type: module
+ description: A utility module which will delete all the taxonomy under a Vocabulary.
+ core: 8.x
++core_version_requirement: ^8 || ^9
+ package: Taxonomy
+ configure: taxonomy_delete.ui
