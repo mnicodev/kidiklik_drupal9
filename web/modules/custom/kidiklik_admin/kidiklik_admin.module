@@ -785,13 +785,14 @@ function kidiklik_admin_form_node_publicite_form_alter(&$form, FormStateInterfac
   unset($form["field_date"]["widget"]["add_more"]);
   $form["#redirect"] = "/admin/publicites";
   $form["field_adherent"]["widget"]["#multiple"] = FALSE;
-
-  /*if (get_departement()!==0) {
+  $user = User::Load(\Drupal::currentUser()->id());
+  if (!$user->hasRole('administrator') && !$user->hasRole('administrateur_de_departement')) {
     unset($form["#group_children"]["group_partage"]);
     unset($form['field_tous_les_sites']);
     unset($form['field_national']);
     unset($form["field_partage_departements"]);
-  } else {*/
+  }
+  /*} else {*/
     unset($form['field_national']);
     $form["#submit"][] = "kidiklik_admin_form_submit";
     foreach ($form['field_partage_departements']['widget']['#options'] as $key => $item) {
