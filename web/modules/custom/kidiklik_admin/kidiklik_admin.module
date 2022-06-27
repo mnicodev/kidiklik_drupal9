@@ -786,14 +786,12 @@ function kidiklik_admin_form_node_publicite_form_alter(&$form, FormStateInterfac
   $form["#redirect"] = "/admin/publicites";
   $form["field_adherent"]["widget"]["#multiple"] = FALSE;
 
-  if (get_departement()!==0) {
+  /*if (get_departement()!==0) {
     unset($form["#group_children"]["group_partage"]);
     unset($form['field_tous_les_sites']);
     unset($form['field_national']);
     unset($form["field_partage_departements"]);
-
-
-  } else {
+  } else {*/
     unset($form['field_national']);
     $form["#submit"][] = "kidiklik_admin_form_submit";
     foreach ($form['field_partage_departements']['widget']['#options'] as $key => $item) {
@@ -802,7 +800,7 @@ function kidiklik_admin_form_node_publicite_form_alter(&$form, FormStateInterfac
       $form['field_partage_departements']['widget']['#options'][$key] = $nom_departement->get("field_nom")->value . " (" . $nom_departement->getName() . ")" . ($nom_departement->get("field_region")->value ? " - <i>" . $nom_departement->get("field_region")->value . "</i>" : "");
 
     }
-  }
+  //}
 
   $form["#attached"]["library"][] = "kidiklik_admin/kidiklik_admin.commands";
   $form["#validate"][] = "kidiklik_admin_form_publicite_validate";
@@ -836,24 +834,23 @@ function kidiklik_admin_form_alter(&$form, FormStateInterface $form_state, $form
     $user = User::Load(\Drupal::currentUser()->id());
     $user_dep = current($user->get('field_departement')->getValue())['target_id'];
     $term_dep = \Drupal::entityTypeManager()->getStorage("taxonomy_term")->load($user_dep);
-    if (!empty($term_dep) || $user->hasRole('administrator')) {
-      if ($term_dep->getName() !== "0") {
-        unset($form['field_partage_departements']);
-      } else {
-        $form['all_dep'] = [
-          '#type' => 'html_tag',
-          '#tag' => "a",
-          '#value' => 'Tous sélectionner',
-          '#attributes' => [
-            'href' => '#',
-            'id' => 'all_select_dep',
-            'data-checked' => -1
-          ],
-          '#weight' => -50
-        ];
-        $form['#group_children']['all_dep'] = "group_partage";
-      }
-    }
+    
+  }
+  if(in_array($form_id, ['node_publicite_form','node_publicite_edit_form','node_bloc_de_mise_en_avant_edit_form','node_bloc_de_mise_en_avant_form'])) {
+    if ($user->hasRole('administrator') || $user->hasRole('administrateur_de_departement')) {
+      $form['all_dep'] = [
+        '#type' => 'html_tag',
+        '#tag' => "a",
+        '#value' => 'Tous sélectionner',
+        '#attributes' => [
+          'href' => '#',
+          'id' => 'all_select_dep',
+          'data-checked' => -1
+        ],
+        '#weight' => -50
+      ];
+      $form['#group_children']['all_dep'] = "group_partage";
+  }
   }
 
 
