@@ -154,9 +154,12 @@ function kidiklik_front_form_alter(&$form, FormStateInterface $form_state, $form
   }
 
   if (!empty($form['#webform_id']) && $form['#webform_id'] === 'jeu_concours') {
-    $nid = \drupal::request()->get('node')->Id();
-    $form['elements']['which_content']['#value'] = $nid;
-    $form['#validate'][] = 'kidiklik_front_validate_jeu_concours';
+    if(!empty(\drupal::request()->get('node'))) {
+      $nid = \drupal::request()->get('node')->Id();
+      $form['elements']['which_content']['#value'] = $nid;
+      $form['#validate'][] = 'kidiklik_front_validate_jeu_concours';
+    }
+    
 
   }
 
