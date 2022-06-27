@@ -10,7 +10,9 @@
   src: url(../fonts/DidactGothic.ttf); }
 body {
   overflow-x: hidden;
-  font-family: 'Roboto'; }
+  font-family: 'Roboto';
+  font-size: 14px;
+  font-weight: 400; }
 
 h1, h2, h3, h4, h5 {
   font-family: 'DidactGothic';
@@ -56,7 +58,8 @@ h1, h2, h3, h4, h5 {
   margin-top: 20px; }
 
 h1 {
-  font-size: 1.8rem; }
+  font-size: 26px;
+  font-weight: 500; }
 
 #entete_national img {
   width: 100%; }
