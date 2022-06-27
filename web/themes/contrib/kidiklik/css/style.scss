@@ -469,7 +469,11 @@ footer .menu li.last {
 	padding-top: 35px;
 	a {
 		color: gray;
-		font-size: 14px;
+		span {
+			font-size: 14px;
+			display: block;
+		}
+		
 	}
 
 	@media (max-width: 768px) {
@@ -1047,11 +1051,11 @@ article {
 				flex: 1;
 				width: 100%;
 				@media(min-width: 992px) {
-					width: 250px;
+					width: 240px;
 					height: 247px;
 				}
 				@media(min-width: 1200px) {
-					width: 250px;
+					width: 240px;
 					height: 298px;
 				}
 				

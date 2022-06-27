@@ -367,8 +367,10 @@ footer .menu li.last {
 .accueil_dep {
   padding-top: 35px; }
   .accueil_dep a {
-    color: gray;
-    font-size: 14px; }
+    color: gray; }
+    .accueil_dep a span {
+      font-size: 14px;
+      display: block; }
   @media (max-width: 768px) {
     .accueil_dep {
       padding-top: 5%; }
@@ -795,12 +797,12 @@ article {
         @media (min-width: 992px) {
           .diaporama .views_slideshow_cycle_teaser_section .views-row .views-field-title,
           .diaporama .views_slideshow_cycle_slide .views-row .views-field-title {
-            width: 250px;
+            width: 240px;
             height: 247px; } }
         @media (min-width: 1200px) {
           .diaporama .views_slideshow_cycle_teaser_section .views-row .views-field-title,
           .diaporama .views_slideshow_cycle_slide .views-row .views-field-title {
-            width: 250px;
+            width: 240px;
             height: 298px; } }
         .diaporama .views_slideshow_cycle_teaser_section .views-row .views-field-title a,
         .diaporama .views_slideshow_cycle_slide .views-row .views-field-title a {
