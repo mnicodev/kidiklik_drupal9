@@ -1036,15 +1036,25 @@ article {
 	.views_slideshow_cycle_slide {
 		width: 100%!important;
 
-
 		.views-row {
 			position: relative;
 			display: flex;
 			@media(max-width: 992px) {
 				flex-direction: column;
+
 			}
 			.views-field-title {
 				flex: 1;
+				width: 100%;
+				@media(min-width: 992px) {
+					width: 250px;
+					height: 247px;
+				}
+				@media(min-width: 1200px) {
+					width: 250px;
+					height: 298px;
+				}
+				
 				display: block;
 				background: #db2a24;
 				padding: 20px;
@@ -1384,17 +1394,21 @@ article {
 				display: none;
 			}
 			.views_slideshow_controls_text_previous {
+				width: 15px;
 				left: 0;
 				a {
 					background: url(/assets/img/prev.png) no-repeat;
 					background-size: contain;
+					width: 100%;
 				}
 			}
 			.views_slideshow_controls_text_next {
 				right: 0;
+				width: 15px;
 				a {
 					background: url(/assets/img/next.png) no-repeat;
 					background-size: contain;
+					width: 100%;
 				}
 			}
 
