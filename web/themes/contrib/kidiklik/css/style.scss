@@ -467,16 +467,20 @@ footer .menu li.last {
 }
 .accueil_dep {
 	padding-top: 35px;
+	a {
+		color: gray;
+		font-size: 14px;
+	}
 
 	@media (max-width: 768px) {
 		padding-top: 5%;
 		span {
 			display: none;
 		}
-    img {
-      margin: auto;
-      display: block;
-    }
+		img {
+		margin: auto;
+		display: block;
+		}
 	}
 
   @media (max-width: 440px) {
