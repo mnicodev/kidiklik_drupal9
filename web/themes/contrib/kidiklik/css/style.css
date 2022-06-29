@@ -88,6 +88,9 @@ h1 {
       padding-top: 10px;
       padding-bottom: 10px; }
 
+@media (max-width: 768px) {
+  #views-exposed-form-activites-recherche-activites .voir-filtres {
+    display: none; } }
 @media (min-width: 768px) {
   .path-node #block-formulaireexposeactivitesrecherche-activites, .path-recherchehtml #block-formulaireexposeactivitesrecherche-activites {
     height: 50px;
