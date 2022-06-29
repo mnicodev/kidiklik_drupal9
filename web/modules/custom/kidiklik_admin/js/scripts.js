@@ -49,7 +49,12 @@ $(function(){
 				href = $('.node-form').attr('action') + '&create=1';
 				$('.node-form').attr('action', href);
 			} else {
-				search="?" + x[0] + "=" + $(this).attr('href') ;
+				if(x[0] !== '') {
+					search="?" + x[0] + "=" + $(this).attr('href') ;
+				} else {
+					search="?" + x[0] + "destination=" + $(this).attr('href') ;
+				}
+				
 				href=$(this).attr('href') + search
 			}
 
