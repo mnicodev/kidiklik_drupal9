@@ -102,7 +102,8 @@ h1 {
         margin: auto;
         padding: 5px;
         color: #ffffff;
-        text-align: center; }
+        text-align: center;
+        width: 250px; }
   .path-node #block-formulaireexposeactivitesrecherche-activites:hover, .path-recherchehtml #block-formulaireexposeactivitesrecherche-activites:hover {
     height: 280px; }
     .path-node #block-formulaireexposeactivitesrecherche-activites:hover #views-exposed-form-activites-recherche-activites, .path-recherchehtml #block-formulaireexposeactivitesrecherche-activites:hover #views-exposed-form-activites-recherche-activites {
