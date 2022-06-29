@@ -116,6 +116,91 @@ h1 {
   }
 
 }
+#views-exposed-form-activites-recherche-activites,
+#recherche-form {
+	.form-inline {
+		display: flex;
+		flex-direction: column;
+		@media (min-width: 768px) {
+			display: grid;
+			grid-template-columns: 33.33% 33.33% 33.33%;
+	 	}
+		label {
+			justify-content: left;
+		}
+		.form-item {
+			flex: 1;
+			padding: 10px;
+			width: 100%;
+		}
+	}
+	
+	margin: auto;
+	padding: 20px;
+	margin-bottom: 30px;
+	
+	padding-top: 0;
+	@media (max-width: 768px) {
+		padding-top: 20px;
+	}
+	
+	
+  .form-item-rubriques, .form-item-field-rubriques-activite-target-id {
+		background: #3ca0c0;
+		color: #fff;
+
+	}
+	select {
+		width: 100%;
+		border-radius: 0;
+	}
+	.select2-container {
+		width: 100%!important;
+		.select2-selection--single {
+			border-radius: 0;
+			border: 1px solid #ccc;
+			height: calc(1.5em + .75rem + 2px);
+			.select2-selection__rendered {
+				line-height: calc(1.5em + .75rem + 2px);
+			}
+			b {
+				margin-top: 2px;
+			}
+		}
+	}
+	.form-item-body-format, .form-item-search {
+		input {
+			width: 100%;
+			height: calc(1.5em + .75rem + 2px);
+      margin-top: 0;
+		}
+	}
+	.form-actions {
+		padding: 10px;
+		width: 100%;
+		.form-submit {
+			background: #db2a24;
+			margin-top: 28px;
+			width: 100%;
+			color: #fff;
+			border: none;
+			height: calc(1.5em + .75rem + 2px);
+		}
+	}
+
+	.form-type-date {
+		display: none;
+		background: #ccc;
+		color: #000;
+		input {
+			width: 100%;
+			height: calc(1.5em + .75rem + 2px);
+			border: 1px solid #ccc;
+			border-radius: 0;
+		}
+	}
+}
+
 @media (max-width: 768px) {
 	#views-exposed-form-activites-recherche-activites {
 		.voir-filtres {
@@ -132,6 +217,7 @@ h1 {
 				#views-exposed-form-activites-recherche-activites {
 					z-index: 1;
 					position: relative;
+					
 
 					overflow: hidden;
 					transition: all 0.5s;
@@ -152,6 +238,7 @@ h1 {
 				height: 280px;
 				#views-exposed-form-activites-recherche-activites {
 					top: 0;
+					box-shadow: 0px 3px 5px rgba(125, 125, 125, 0.5);
 					.voir-filtres {
 						display: none;
 					}
@@ -741,90 +828,7 @@ footer .menu li.last {
 		}
 	}
 }
-#views-exposed-form-activites-recherche-activites,
-#recherche-form {
-	.form-inline {
-		display: flex;
-		flex-direction: column;
-		@media (min-width: 768px) {
-			display: grid;
-			grid-template-columns: 33.33% 33.33% 33.33%;
-	 	}
-		label {
-			justify-content: left;
-		}
-		.form-item {
-			flex: 1;
-			padding: 10px;
-			width: 100%;
-		}
-	}
-	
-	margin: auto;
-	padding: 20px;
-	margin-bottom: 30px;
-	box-shadow: 0px 3px 5px rgba(125, 125, 125, 0.5);
-	padding-top: 0;
-	@media (max-width: 768px) {
-		padding-top: 20px;
-	}
-	
-	
-  .form-item-rubriques, .form-item-field-rubriques-activite-target-id {
-		background: #3ca0c0;
-		color: #fff;
 
-	}
-	select {
-		width: 100%;
-		border-radius: 0;
-	}
-	.select2-container {
-		width: 100%!important;
-		.select2-selection--single {
-			border-radius: 0;
-			border: 1px solid #ccc;
-			height: calc(1.5em + .75rem + 2px);
-			.select2-selection__rendered {
-				line-height: calc(1.5em + .75rem + 2px);
-			}
-			b {
-				margin-top: 2px;
-			}
-		}
-	}
-	.form-item-body-format, .form-item-search {
-		input {
-			width: 100%;
-			height: calc(1.5em + .75rem + 2px);
-      margin-top: 0;
-		}
-	}
-	.form-actions {
-		padding: 10px;
-		width: 100%;
-		.form-submit {
-			background: #db2a24;
-			margin-top: 28px;
-			width: 100%;
-			color: #fff;
-			border: none;
-			height: calc(1.5em + .75rem + 2px);
-		}
-	}
-
-	.form-type-date {
-		display: none;
-		background: #ccc;
-		color: #000;
-		input {
-			width: 100%;
-			height: calc(1.5em + .75rem + 2px);
-			border: 1px solid #ccc;
-			border-radius: 0;
-		}
-	}
-}
 
 .view-taxonomy-term .image {
 	float: left;

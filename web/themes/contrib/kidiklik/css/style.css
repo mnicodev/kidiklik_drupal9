@@ -88,6 +88,86 @@ h1 {
       padding-top: 10px;
       padding-bottom: 10px; }
 
+#views-exposed-form-activites-recherche-activites,
+#recherche-form {
+  margin: auto;
+  padding: 20px;
+  margin-bottom: 30px;
+  padding-top: 0; }
+  #views-exposed-form-activites-recherche-activites .form-inline,
+  #recherche-form .form-inline {
+    display: flex;
+    flex-direction: column; }
+    @media (min-width: 768px) {
+      #views-exposed-form-activites-recherche-activites .form-inline,
+      #recherche-form .form-inline {
+        display: grid;
+        grid-template-columns: 33.33% 33.33% 33.33%; } }
+    #views-exposed-form-activites-recherche-activites .form-inline label,
+    #recherche-form .form-inline label {
+      justify-content: left; }
+    #views-exposed-form-activites-recherche-activites .form-inline .form-item,
+    #recherche-form .form-inline .form-item {
+      flex: 1;
+      padding: 10px;
+      width: 100%; }
+  @media (max-width: 768px) {
+    #views-exposed-form-activites-recherche-activites,
+    #recherche-form {
+      padding-top: 20px; } }
+  #views-exposed-form-activites-recherche-activites .form-item-rubriques, #views-exposed-form-activites-recherche-activites .form-item-field-rubriques-activite-target-id,
+  #recherche-form .form-item-rubriques,
+  #recherche-form .form-item-field-rubriques-activite-target-id {
+    background: #3ca0c0;
+    color: #fff; }
+  #views-exposed-form-activites-recherche-activites select,
+  #recherche-form select {
+    width: 100%;
+    border-radius: 0; }
+  #views-exposed-form-activites-recherche-activites .select2-container,
+  #recherche-form .select2-container {
+    width: 100% !important; }
+    #views-exposed-form-activites-recherche-activites .select2-container .select2-selection--single,
+    #recherche-form .select2-container .select2-selection--single {
+      border-radius: 0;
+      border: 1px solid #ccc;
+      height: calc(1.5em + .75rem + 2px); }
+      #views-exposed-form-activites-recherche-activites .select2-container .select2-selection--single .select2-selection__rendered,
+      #recherche-form .select2-container .select2-selection--single .select2-selection__rendered {
+        line-height: calc(1.5em + .75rem + 2px); }
+      #views-exposed-form-activites-recherche-activites .select2-container .select2-selection--single b,
+      #recherche-form .select2-container .select2-selection--single b {
+        margin-top: 2px; }
+  #views-exposed-form-activites-recherche-activites .form-item-body-format input, #views-exposed-form-activites-recherche-activites .form-item-search input,
+  #recherche-form .form-item-body-format input,
+  #recherche-form .form-item-search input {
+    width: 100%;
+    height: calc(1.5em + .75rem + 2px);
+    margin-top: 0; }
+  #views-exposed-form-activites-recherche-activites .form-actions,
+  #recherche-form .form-actions {
+    padding: 10px;
+    width: 100%; }
+    #views-exposed-form-activites-recherche-activites .form-actions .form-submit,
+    #recherche-form .form-actions .form-submit {
+      background: #db2a24;
+      margin-top: 28px;
+      width: 100%;
+      color: #fff;
+      border: none;
+      height: calc(1.5em + .75rem + 2px); }
+  #views-exposed-form-activites-recherche-activites .form-type-date,
+  #recherche-form .form-type-date {
+    display: none;
+    background: #ccc;
+    color: #000; }
+    #views-exposed-form-activites-recherche-activites .form-type-date input,
+    #recherche-form .form-type-date input {
+      width: 100%;
+      height: calc(1.5em + .75rem + 2px);
+      border: 1px solid #ccc;
+      border-radius: 0; }
+
 @media (max-width: 768px) {
   #views-exposed-form-activites-recherche-activites .voir-filtres {
     display: none; } }
@@ -112,7 +192,8 @@ h1 {
   .path-node #block-formulaireexposeactivitesrecherche-activites:hover, .path-recherchehtml #block-formulaireexposeactivitesrecherche-activites:hover {
     height: 280px; }
     .path-node #block-formulaireexposeactivitesrecherche-activites:hover #views-exposed-form-activites-recherche-activites, .path-recherchehtml #block-formulaireexposeactivitesrecherche-activites:hover #views-exposed-form-activites-recherche-activites {
-      top: 0; }
+      top: 0;
+      box-shadow: 0px 3px 5px rgba(125, 125, 125, 0.5); }
       .path-node #block-formulaireexposeactivitesrecherche-activites:hover #views-exposed-form-activites-recherche-activites .voir-filtres, .path-recherchehtml #block-formulaireexposeactivitesrecherche-activites:hover #views-exposed-form-activites-recherche-activites .voir-filtres {
         display: none; } }
 #entete_national .logo-national {
@@ -561,87 +642,6 @@ footer .menu li.last {
     display: none; }
   #block-formulaireexposeactivitesrecherche-activites .filtres {
     display: block; } }
-
-#views-exposed-form-activites-recherche-activites,
-#recherche-form {
-  margin: auto;
-  padding: 20px;
-  margin-bottom: 30px;
-  box-shadow: 0px 3px 5px rgba(125, 125, 125, 0.5);
-  padding-top: 0; }
-  #views-exposed-form-activites-recherche-activites .form-inline,
-  #recherche-form .form-inline {
-    display: flex;
-    flex-direction: column; }
-    @media (min-width: 768px) {
-      #views-exposed-form-activites-recherche-activites .form-inline,
-      #recherche-form .form-inline {
-        display: grid;
-        grid-template-columns: 33.33% 33.33% 33.33%; } }
-    #views-exposed-form-activites-recherche-activites .form-inline label,
-    #recherche-form .form-inline label {
-      justify-content: left; }
-    #views-exposed-form-activites-recherche-activites .form-inline .form-item,
-    #recherche-form .form-inline .form-item {
-      flex: 1;
-      padding: 10px;
-      width: 100%; }
-  @media (max-width: 768px) {
-    #views-exposed-form-activites-recherche-activites,
-    #recherche-form {
-      padding-top: 20px; } }
-  #views-exposed-form-activites-recherche-activites .form-item-rubriques, #views-exposed-form-activites-recherche-activites .form-item-field-rubriques-activite-target-id,
-  #recherche-form .form-item-rubriques,
-  #recherche-form .form-item-field-rubriques-activite-target-id {
-    background: #3ca0c0;
-    color: #fff; }
-  #views-exposed-form-activites-recherche-activites select,
-  #recherche-form select {
-    width: 100%;
-    border-radius: 0; }
-  #views-exposed-form-activites-recherche-activites .select2-container,
-  #recherche-form .select2-container {
-    width: 100% !important; }
-    #views-exposed-form-activites-recherche-activites .select2-container .select2-selection--single,
-    #recherche-form .select2-container .select2-selection--single {
-      border-radius: 0;
-      border: 1px solid #ccc;
-      height: calc(1.5em + .75rem + 2px); }
-      #views-exposed-form-activites-recherche-activites .select2-container .select2-selection--single .select2-selection__rendered,
-      #recherche-form .select2-container .select2-selection--single .select2-selection__rendered {
-        line-height: calc(1.5em + .75rem + 2px); }
-      #views-exposed-form-activites-recherche-activites .select2-container .select2-selection--single b,
-      #recherche-form .select2-container .select2-selection--single b {
-        margin-top: 2px; }
-  #views-exposed-form-activites-recherche-activites .form-item-body-format input, #views-exposed-form-activites-recherche-activites .form-item-search input,
-  #recherche-form .form-item-body-format input,
-  #recherche-form .form-item-search input {
-    width: 100%;
-    height: calc(1.5em + .75rem + 2px);
-    margin-top: 0; }
-  #views-exposed-form-activites-recherche-activites .form-actions,
-  #recherche-form .form-actions {
-    padding: 10px;
-    width: 100%; }
-    #views-exposed-form-activites-recherche-activites .form-actions .form-submit,
-    #recherche-form .form-actions .form-submit {
-      background: #db2a24;
-      margin-top: 28px;
-      width: 100%;
-      color: #fff;
-      border: none;
-      height: calc(1.5em + .75rem + 2px); }
-  #views-exposed-form-activites-recherche-activites .form-type-date,
-  #recherche-form .form-type-date {
-    display: none;
-    background: #ccc;
-    color: #000; }
-    #views-exposed-form-activites-recherche-activites .form-type-date input,
-    #recherche-form .form-type-date input {
-      width: 100%;
-      height: calc(1.5em + .75rem + 2px);
-      border: 1px solid #ccc;
-      border-radius: 0; }
 
 .view-taxonomy-term .image {
   float: left;
