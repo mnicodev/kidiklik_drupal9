@@ -116,7 +116,7 @@ h1 {
 @media (min-width: 768px) {
 	.path-node, .path-recherchehtml {
 			#block-formulaireexposeactivitesrecherche-activites {
-				height: 40px;
+				height: 50px;
 				transition: all 0.5s;
 				#views-exposed-form-activites-recherche-activites {
 					z-index: 1;
@@ -124,13 +124,26 @@ h1 {
 
 					overflow: hidden;
 					transition: all 0.5s;
-					top: -250px;
+					top: -235px;
+					padding-bottom: 5px;
+
+					.filtres {
+						background:#0cacce;
+						margin: auto;
+						padding: 5px;
+						color: #ffffff;
+						text-align: center;
+					}
 				}
 			}
 			#block-formulaireexposeactivitesrecherche-activites:hover{
 				height: 280px;
 				#views-exposed-form-activites-recherche-activites {
 					top: 0;
+					.filtres {
+						display: none;
+					}
+
 				}
 			}
 			
@@ -683,12 +696,29 @@ footer .menu li.last {
 		text-align: center;
 		margin-top: 10px;
 		cursor: pointer;
+		.voir {
+			background: #3ca0c0;
+			color: #ffffff;
+			padding: 5px 10px;
+
+		}
 		.cacher {
 			display: none;
+			color: #3ca0c0;
+			font-size: 40px;
+			font-family: arial;
+			line-height: 40px;
 		}
 	}
 	#filtres {
 		display: none;
+
+		&:checked + label .voir {
+			display: none;
+		}
+		&:checked + label .cacher {
+			display: block;
+		}
 	}
 	@media (min-width: 768px) {
 		#filtres, .label_filtres {
