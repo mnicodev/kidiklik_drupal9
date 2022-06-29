@@ -56,6 +56,8 @@ h1, h2, h3, h4, h5 {
 
 .path-frontpage h1 {
   margin-top: 20px; }
+.path-frontpage .voir-filtres {
+  display: none !important; }
 
 h1 {
   font-size: 26px;
@@ -97,7 +99,7 @@ h1 {
       transition: all 0.5s;
       top: -235px;
       padding-bottom: 5px; }
-      .path-node #block-formulaireexposeactivitesrecherche-activites #views-exposed-form-activites-recherche-activites .filtres, .path-recherchehtml #block-formulaireexposeactivitesrecherche-activites #views-exposed-form-activites-recherche-activites .filtres {
+      .path-node #block-formulaireexposeactivitesrecherche-activites #views-exposed-form-activites-recherche-activites .voir-filtres, .path-recherchehtml #block-formulaireexposeactivitesrecherche-activites #views-exposed-form-activites-recherche-activites .voir-filtres {
         background: #0cacce;
         margin: auto;
         padding: 5px;
@@ -108,7 +110,7 @@ h1 {
     height: 280px; }
     .path-node #block-formulaireexposeactivitesrecherche-activites:hover #views-exposed-form-activites-recherche-activites, .path-recherchehtml #block-formulaireexposeactivitesrecherche-activites:hover #views-exposed-form-activites-recherche-activites {
       top: 0; }
-      .path-node #block-formulaireexposeactivitesrecherche-activites:hover #views-exposed-form-activites-recherche-activites .filtres, .path-recherchehtml #block-formulaireexposeactivitesrecherche-activites:hover #views-exposed-form-activites-recherche-activites .filtres {
+      .path-node #block-formulaireexposeactivitesrecherche-activites:hover #views-exposed-form-activites-recherche-activites .voir-filtres, .path-recherchehtml #block-formulaireexposeactivitesrecherche-activites:hover #views-exposed-form-activites-recherche-activites .voir-filtres {
         display: none; } }
 #entete_national .logo-national {
   background: url(/assets/img/piaf.jpg) no-repeat left center;

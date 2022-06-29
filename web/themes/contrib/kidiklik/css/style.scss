@@ -68,6 +68,9 @@ h1, h2, h3, h4, h5 {
 	h1 {
 		margin-top: 20px;
 	}
+	.voir-filtres {
+		display: none!important;
+	}
 }
 h1 {
 	font-size: 26px;
@@ -127,7 +130,7 @@ h1 {
 					top: -235px;
 					padding-bottom: 5px;
 
-					.filtres {
+					.voir-filtres {
 						background:#0cacce;
 						margin: auto;
 						padding: 5px;
@@ -141,7 +144,7 @@ h1 {
 				height: 280px;
 				#views-exposed-form-activites-recherche-activites {
 					top: 0;
-					.filtres {
+					.voir-filtres {
 						display: none;
 					}
 
