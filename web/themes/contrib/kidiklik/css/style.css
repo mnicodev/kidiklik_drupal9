@@ -105,10 +105,10 @@ h1 {
   padding-left: 230px; }
 
 .accueil {
-  padding-top: 90px;
-  background: url(/assets/img/lien_accueil.jpg) no-repeat;
+  padding: 52px 5px 5px 5px;
+  /*background: url(/assets/img/lien_accueil.jpg) no-repeat;
   background-position: 0px 30px;
-  background-size: contain;
+  background-size: contain;*/
   cursor: pointer; }
 
 #block-kidiklikentete span {
@@ -368,7 +368,8 @@ footer .menu li.last {
   border-right: none; }
 
 .accueil_dep {
-  padding-top: 35px; }
+  padding-top: 35px;
+  text-align: center; }
   .accueil_dep a {
     color: gray; }
     .accueil_dep a span {
