@@ -84,12 +84,18 @@ function kidiklik_preprocess_field(&$variables) {
 	
 	if(\Drupal::request()->attributes->get('node') !== null) {
 		$node = \Drupal::request()->attributes->get('node');
-		if($node->getType() === 'article') {
-			$variables['type_for_img'] = 'editos';
-		} else if($node->getType() === 'reportage') {
-			$variables['type_for_img'] = 'tests';
-		}
 		
+	//	ksm($node->get('field_type_reportage'));
+		if($node->getType() === 'article') {
+			$type=current(\Drupal::request()->attributes->get('node')->get('field_type_reportage')->getValue())['value'];
+
+			if((int)$type === 1) {
+				$variables['type_for_img'] = 'tests';
+			} else {
+				$variables['type_for_img'] = 'editos';
+			}
+			
+		} 		
 
 		//ksm(\Drupal::request()->attributes->all()['node_type']);
 	}

@@ -71,6 +71,10 @@ h1, h2, h3, h4, h5 {
 	.voir-filtres {
 		display: none!important;
 	}
+	#views-exposed-form-activites-recherche-activites {
+		box-shadow: 0px 3px 5px rgba(125, 125, 125, 0.5)!important;
+	}
+	
 }
 h1 {
 	font-size: 26px;
@@ -216,8 +220,7 @@ h1 {
 				transition: all 0.5s;
 				#views-exposed-form-activites-recherche-activites {
 					z-index: 1;
-					position: relative;
-					
+					position: relative;	
 
 					overflow: hidden;
 					transition: all 0.5s;

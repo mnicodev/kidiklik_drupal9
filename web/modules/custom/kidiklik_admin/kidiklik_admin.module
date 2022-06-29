@@ -455,7 +455,7 @@ function kidiklik_admin_form_node_bloc_de_mise_en_avant_edit_form_alter(&$form, 
 function kidiklik_admin_form_node_article_form_alter(&$form, FormStateInterface $form_state, $form_id)
 {
   $term_dep = get_term_departement();
-
+  //ksm(current(\Drupal::request()->attributes->get('node')->get('field_type_reportage')->getValue())['value']);
   $adherent_id = null;
   if (!empty(\Drupal::request()->query->get("adherent_id"))) {
     $adherent_id = \Drupal::request()->query->get("adherent_id");
