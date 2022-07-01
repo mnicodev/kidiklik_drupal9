@@ -53,9 +53,9 @@ class KidiklikCommands extends DrushCommands
     $desc=str_replace('NULL','',$desc);
     $desc=str_replace('&agrave;','à',$desc);
     $desc=str_replace('&amp;','&',$desc);
-    $desc=str_replace(['&lt;p&gt;','&lt;/p&gt;'],['<p>','</p>'],$desc);
+    //$desc=str_replace(['&lt;p&gt;','&lt;/p&gt;'],['<p>','</p>'],$desc);
     if($chariot===true) {
-      $desc=str_replace(['&#13','&#10;'],['<br>','<br>'],$desc);
+      //$desc=str_replace(['&#13','&#10;'],['<br>','<br>'],$desc);
     }
     
     
@@ -360,7 +360,7 @@ class KidiklikCommands extends DrushCommands
         if($name == "editos") {
           $sql.=" and id_edito > 6767";
         } else {
-          $sql.=" and id_test > 986";
+          $sql.=" and id_test > 1012";
         }
         $query = $connection->query($sql);
        
