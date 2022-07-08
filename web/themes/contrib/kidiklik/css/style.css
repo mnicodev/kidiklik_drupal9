@@ -61,6 +61,12 @@ h1, h2, h3, h4, h5 {
 .path-frontpage #views-exposed-form-activites-recherche-activites {
   box-shadow: 0px 3px 5px rgba(125, 125, 125, 0.5) !important; }
 
+.btn-rouge {
+  background: #e3001b;
+  color: #ffffff !important;
+  padding: 10px 100px;
+  margin: auto; }
+
 h1 {
   font-size: 26px;
   font-weight: 500; }
@@ -1119,6 +1125,8 @@ article {
 
 #block-bloc-liste-article-accueil-national .views-row {
   margin-bottom: 20px; }
+#block-bloc-liste-article-accueil-national .view-footer {
+  text-align: right; }
 
 #contact-message-contact-form input.form-text, #contact-message-contact-form input.form-email,
 #node-message-contact-form input.form-text,

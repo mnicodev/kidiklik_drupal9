@@ -76,6 +76,12 @@ h1, h2, h3, h4, h5 {
 	}
 	
 }
+.btn-rouge {
+	background: #e3001b;
+	color: #ffffff!important;
+	padding: 10px 100px;
+	margin: auto;
+}
 h1 {
 	font-size: 26px;
 	font-weight: 500;
@@ -1512,6 +1518,9 @@ article {
 #block-bloc-liste-article-accueil-national {
 	.views-row {
 		margin-bottom: 20px;
+	}
+	.view-footer {
+		text-align: right;
 	}
 }
 
