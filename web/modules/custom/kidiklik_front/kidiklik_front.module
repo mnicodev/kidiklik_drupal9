@@ -449,10 +449,10 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
     $node = Drupal::request()->get('node');
 
     if($node->__isset('field_rubriques_activite') !== false) {
-      $rub = current($node->get('field_rubriques_activite')->getValue())['target_id'];
+      $adh = current($node->get('field_adherent')->getValue())['target_id'];
       $configuration = array(
         'type' => 'LEFT',
-        'table' => 'node__field_rubriques_activite',
+        'table' => 'node__field_adherent',
         'field' => 'entity_id',
         'left_table' => 'node_field_data',
         'left_field' => 'nid',
@@ -460,9 +460,9 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
       );
       $join = \Drupal\views\Views::pluginManager('join')
         ->createInstance('standard', $configuration);
-      $rel = $query->addRelationship('node__field_rubriques_activite', $join, 'node__field_rubriques_activite');
-      $query->addTable('node__field_rubriques_activite', $rel, $join, 'node__field_rubriques_activite');
-      $query->addWhere('', 'node__field_rubriques_activite.field_rubriques_activite_target_id', $rub, '=');
+      $rel = $query->addRelationship('node__field_adherent', $join, 'node__field_adherent');
+      $query->addTable('node__field_adherent', $rel, $join, 'node__field_adherent');
+      $query->addWhere('', 'node__field_adherent.field_adherent_target_id', $adh, '=');
       $query->addWhere('', 'nid', $node->id(), '<>');
     }
    
