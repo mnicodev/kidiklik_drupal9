@@ -9,7 +9,13 @@
   position:relative;
   height:50px;
 }
-
+.form-item-field-type-reportage-value {
+  display: flex;
+  flex-direction: column-reverse;
+}
+.form-item-field-type-reportage-value label {
+  font-weight: bold;
+}
 .login-box .logo-lg > img {
   max-width: 100%;
 }
