@@ -8,6 +8,11 @@
 })(jQuery);
 
 jQuery(document).ready(function() {
+	jQuery('#edit-quand').change(function() {
+		if(jQuery(this).val() === 'date') {
+			jQuery('.form-type-date').show();
+		}
+	})
 	if(jQuery('.field--name-field-image').length) {
 		jQuery('.image_kidiklik_old').remove();
 	}
