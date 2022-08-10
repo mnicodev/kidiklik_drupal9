@@ -12,11 +12,13 @@ body {
   overflow-x: hidden;
   font-family: 'Roboto';
   font-size: 14px;
-  font-weight: 400; }
+  font-weight: 400;
+  color: gray; }
 
 h1, h2, h3, h4, h5 {
   font-family: 'DidactGothic';
-  color: #0cacce; }
+  color: #0cacce;
+  font-weight: bold !important; }
   h1 a, h2 a, h3 a, h4 a, h5 a {
     color: #0cacce; }
 
@@ -979,6 +981,8 @@ article {
     flex: auto;
     padding-right: 10px;
     text-align: center; }
+    #menu #navbarCollapse ul li a {
+      color: #000000; }
     #menu #navbarCollapse ul li.coeur {
       background: url(/assets/img/picto_coeur.jpg) no-repeat top center; }
       #menu #navbarCollapse ul li.coeur a {
