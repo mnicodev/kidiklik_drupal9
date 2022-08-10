@@ -7,24 +7,37 @@
   };
 })(jQuery);
 
-jQuery(document).ready(function() {
-	jQuery('#edit-quand').change(function() {
-		console.log(jQuery(this).val())
-		if(jQuery(this).val() === 'date') {
-			jQuery('.form-type-date').show();
-		}
-	})
+Drupal.behaviors.kidiklik = {
+	attach: function(context, settings) {
+		var charging_blocs = jQuery('[data-big-pipe-placeholder-id]').length;
+		console.log(charging_blocs)
+	      	if (charging_blocs ===1){
+			if(jQuery(".zone-flag").length) {
+				jQuery('.zone-image').append(jQuery(".zone-flag").html());
+			}
+			jQuery('#edit-quand').on('change',function() {
+				console.log(jQuery(this).val())
+				if(jQuery(this).val() === 'date') {
+					jQuery('.form-type-date').show();
+					jQuery('#views-exposed-form-activites-recherche-activites').addClass('with-dates');
+				} else {
+					jQuery('.form-type-date').hide();
+					jQuery('#views-exposed-form-activites-recherche-activites').removeClass('with-dates');
+				}
+			})
 	if(jQuery('.field--name-field-image').length) {
 		jQuery('.image_kidiklik_old').remove();
 	}
-	if(jQuery(".flag").length) {
-		jQuery('.zone-image').append(jQuery(".flag").html());
+      		}
+	}
+}
+
+jQuery(document).ready(function() {
+	if(jQuery('.field--name-field-image').length) {
+		jQuery('.image_kidiklik_old').remove();
 	}
 
-	
 	if(jQuery(".field--name-field-date").length) {
-
-
 		jQuery(".field--name-field-date .field--items").on('click', function() {
 			if(jQuery(".field--name-field-date").height() == '20') {
 				h="100%";
