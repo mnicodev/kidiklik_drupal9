@@ -374,21 +374,23 @@ h1 {
 #block-block-article-accueil .line .card .card-body {
   width: 70%; }
 
-article img {
-  max-width: 100%;
-  margin-bottom: 10px;
-  height: auto; }
-article i.fa, article i.fas {
-  color: #666666;
-  font-size: 20px; }
-article h1 {
-  font-size: 1.8rem; }
-article h2 {
-  font-weight: bold;
-  line-height: 18px;
-  font-size: 1.4rem; }
-article .field--name-field-paragraphes > .field--item {
-  margin-bottom: 20px; }
+article {
+  line-height: 16px; }
+  article img {
+    max-width: 100%;
+    margin-bottom: 10px;
+    height: auto; }
+  article i.fa, article i.fas {
+    color: #666666;
+    font-size: 20px; }
+  article h1 {
+    font-size: 1.8rem; }
+  article h2 {
+    font-weight: bold;
+    line-height: 18px;
+    font-size: 1.4rem; }
+  article .field--name-field-paragraphes > .field--item {
+    margin-bottom: 20px; }
 
 .suivez-nous {
   background: url(../images/suivez-nous.jpg) no-repeat;

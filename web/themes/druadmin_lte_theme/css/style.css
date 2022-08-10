@@ -5,6 +5,9 @@
   left: 50%;
   transform: translate(-50%,-50%);*/
 }
+#edit-field-type-reportage-wrapper input {
+  width: 20px;
+}
 #logo .logo-lg, #logo .logo-mini{
   position:relative;
   height:50px;
