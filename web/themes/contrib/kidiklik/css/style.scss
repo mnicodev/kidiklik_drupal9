@@ -234,6 +234,7 @@ h1 {
 					transition: all 0.5s;
 					top: -235px;
 					padding-bottom: 5px;
+					background: #ffffff;
 
 					.voir-filtres {
 						background:#0cacce;
@@ -245,7 +246,7 @@ h1 {
 					}
 
 					&.with-dates {
-						top: -315px!important;
+						top: -315px;
 					}
 				}
 			}
