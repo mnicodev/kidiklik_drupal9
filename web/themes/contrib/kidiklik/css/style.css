@@ -84,6 +84,8 @@ h1 {
   background: #ffffff;
   position: relative;
   z-index: 10; }
+  #entete .titre {
+    color: #000000; }
   @media (max-width: 400px) {
     #entete .bouton-burger button {
       padding: 0px; } }

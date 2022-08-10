@@ -105,7 +105,9 @@ h1 {
 	position: relative;
 	z-index: 10;
 
-
+	.titre {
+		color: #000000;
+	}
   @media (max-width: 400px) {
     .bouton-burger {
       button {
@@ -476,7 +478,7 @@ article  {
 	.zone-image {
 		text-align: right;
 		.ajout {
-			
+
 		}
 	}
 	line-height: 16px;
