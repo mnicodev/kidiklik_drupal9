@@ -781,6 +781,14 @@ aside .region section {
 
 article {
   margin-bottom: 20px; }
+  article .bloc-age {
+    display: flex;
+    flex-direction: row; }
+    article .bloc-age .field--name-field-jusque-age-de {
+      margin-top: 15px;
+      margin-left: 10px; }
+      article .bloc-age .field--name-field-jusque-age-de:before {
+        content: "-"; }
   article .en-bref {
     color: #0cacce; }
     article .en-bref:before {

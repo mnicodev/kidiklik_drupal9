@@ -1039,7 +1039,17 @@ aside .region {
 }
 article {
 	margin-bottom: 20px;
-
+	.bloc-age {
+		display: flex;
+		flex-direction: row;
+		.field--name-field-jusque-age-de  {
+			margin-top: 15px;
+			margin-left: 10px;
+			&:before {
+				content: "-";
+			}
+		}
+	}
 	.en-bref{
 		color: #0cacce;
 		&:before {
