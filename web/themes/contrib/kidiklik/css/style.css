@@ -379,6 +379,8 @@ h1 {
 
 article {
   line-height: 16px; }
+  article .zone-image {
+    text-align: right; }
   article img {
     max-width: 100%;
     height: auto; }
