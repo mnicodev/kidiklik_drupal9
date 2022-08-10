@@ -786,7 +786,7 @@ article {
     flex-direction: row; }
     article .bloc-age .field--name-field-jusque-age-de {
       margin-top: 15px;
-      margin-left: 10px; }
+      margin-left: 5px; }
       article .bloc-age .field--name-field-jusque-age-de:before {
         content: "-"; }
   article .en-bref {
