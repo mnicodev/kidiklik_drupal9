@@ -388,7 +388,7 @@ article {
     font-weight: bold;
     line-height: 18px;
     font-size: 1.4rem; }
-  article .field--name-field-paragraphes > .field--item {
+  article .field--name-field-paragraphes .field--item {
     margin: 15px 0px; }
 
 .suivez-nous {
