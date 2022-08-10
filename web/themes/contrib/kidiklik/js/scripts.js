@@ -9,6 +9,7 @@
 
 jQuery(document).ready(function() {
 	jQuery('#edit-quand').change(function() {
+		console.log(jQuery(this).val())
 		if(jQuery(this).val() === 'date') {
 			jQuery('.form-type-date').show();
 		}
