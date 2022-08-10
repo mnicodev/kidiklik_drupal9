@@ -8,6 +8,12 @@
 })(jQuery);
 
 jQuery(document).ready(function() {
+	if(jQuery('.field--name-field-image').length) {
+		jQuery('.image_kidiklik_old').remove();
+	}
+	if(jQuery(".flag").length) {
+		jQuery('.zone-image').append(jQuery(".flag").html());
+	}
 
 	
 	if(jQuery(".field--name-field-date").length) {

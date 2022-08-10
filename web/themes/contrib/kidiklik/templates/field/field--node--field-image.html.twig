@@ -40,22 +40,43 @@
 #}
 {%
   set classes = [
-  'field',
-  'field--name-' ~ field_name|clean_class,
-  'field--type-' ~ field_type|clean_class,
-  'field--label-' ~ label_display,
-]
+    'field',
+    'field--name-' ~ field_name|clean_class,
+    'field--type-' ~ field_type|clean_class,
+    'field--label-' ~ label_display,
+  ]
 %}
 {%
   set title_classes = [
-  'field--label',
-  label_display == 'visually_hidden' ? 'sr-only',
-]
+    'field--label',
+    label_display == 'visually_hidden' ? 'sr-only',
+  ]
 %}
-
-<div class="image_kidiklik_old zone-image">
-  {% for item in items %}
-  <img src="https://{% if dept == 0 %}www{% else %}{{ dept }}{% endif %}.kidiklik.fr/images/agendas/{{ item.content }}" />
-  {% endfor %}
+<div class="zone-image">
+{% if label_hidden %}
+  {% if multiple %}
+    <div{{ attributes.addClass(classes, 'field--items') }}>
+      {% for item in items %}
+        <div{{ item.attributes.addClass('field--item') }}>{{ item.content }}</div>
+      {% endfor %}
+    </div>
+  {% else %}
+    {% for item in items %}
+      <div{{ attributes.addClass(classes, 'field--item') }}>{{ item.content }}</div>
+    {% endfor %}
+  {% endif %}
+{% else %}
+  <div{{ attributes.addClass(classes) }}>
+    <div{{ title_attributes.addClass(title_classes) }}>{{ label }}</div>
+    {% if multiple %}
+      <div class="field--items">
+    {% endif %}
+    {% for item in items %}
+      <div{{ item.attributes.addClass('field--item') }}>{{ item.content|raw }}</div>
+    {% endfor %}
+    {% if multiple %}
+      </div>
+    {% endif %}
+  </div>
+{% endif %}
 </div>
-

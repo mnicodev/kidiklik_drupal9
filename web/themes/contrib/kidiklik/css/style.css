@@ -378,7 +378,6 @@ article {
   line-height: 16px; }
   article img {
     max-width: 100%;
-    margin-bottom: 10px;
     height: auto; }
   article i.fa, article i.fas {
     color: #666666;
@@ -390,7 +389,7 @@ article {
     line-height: 18px;
     font-size: 1.4rem; }
   article .field--name-field-paragraphes > .field--item {
-    margin-bottom: 20px; }
+    margin: 15px 0px; }
 
 .suivez-nous {
   background: url(../images/suivez-nous.jpg) no-repeat;
@@ -593,7 +592,10 @@ footer .menu li.last {
     display: flex; }
   .activite-teaser .informations {
     padding: 2px 20px;
-    font-size: 1em; }
+    font-size: 1em;
+    color: #0cacce; }
+    .activite-teaser .informations span {
+      color: gray; }
     .activite-teaser .informations .fa {
       font-family: 'Roboto'; }
       .activite-teaser .informations .fa:before {
