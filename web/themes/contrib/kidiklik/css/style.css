@@ -6,6 +6,9 @@
   font-family: 'Roboto';
   src: url(../fonts/Roboto-Regular.ttf); }
 @font-face {
+  font-family: 'Roboto-bold';
+  src: url(../fonts/Roboto-Bold.ttf); }
+@font-face {
   font-family: 'DidactGothic';
   src: url(../fonts/DidactGothic.ttf); }
 body {
