@@ -15,7 +15,7 @@ Drupal.behaviors.kidiklik = {
 			if(jQuery(".zone-flag").length) {
 				jQuery('.zone-image').append(jQuery(".zone-flag").html());
 			}
-			jQuery('#edit-quand').on('change',function() {
+			jQuery('.form-item-quand').find('select').on('change',function() {
 				console.log(jQuery(this).val())
 				if(jQuery(this).val() === 'date') {
 					jQuery('.form-type-date').show();

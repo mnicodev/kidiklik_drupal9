@@ -1,0 +1,77 @@
+<?php
+
+/**
+ * @file
+ * Main functions and hook implementations of the View Sort Expression module.
+ */
+
+use Drupal\views\ViewExecutable;
+use Drupal\views_sort_expression\Plugin\views\sort\ExpressionSort;
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function views_sort_expression_help($route_name, RouteMatchInterface $route_match) {
+  if ($route_name == 'help.page.views_sort_expression') {
+    $output = '';
+    $output .= '<h3>' . t('About') . '</h3>';
+    $output .= '<p>' . t('This is an advanced module as it basically requires you to know the SQL of the view and how to construct expression-based ORDER BYs.') . '</p>';
+    $output .= '<p>' . t('It aims to be a helper module which provides custom ordering that is normally not possible with default sort handlers.') . '</p>';
+    $output .= '<p>' . t('By sorting by expressions you can do things like, showing NULL items last when sorting by a numeric field, or creating a custom sort order putting some content types on top. The possibilities are endless.') . '</p>';
+    $output .= '<p>' . t('You may use whatever is currently available in the query. For that reason, you should always enable the "Show the SQL query" on the Views setting page to help you find the proper field aliases. Adding a field or the like to the view doesnt necessarily alter the SQL Query. You may find it useful to add what you need in the proper sort order, use it inside the expression, then rearrange your expression where you need it.') . '</p>';
+
+    // Add a link to the Drupal.org project.
+    $output .= '<p>';
+    $output .= t('Visit the <a href=":project_link">Views Sort Expression project page</a> on Drupal.org for more information.', [
+      ':project_link' => 'https://www.drupal.org/project/views_sort_expression',
+    ]);
+    $output .= '</p>';
+
+    return $output;
+  }
+}
+
+/**
+ * Implements hook_views_data_alter().
+ *
+ * Alter the table and field information from hook_views_data().
+ *
+ * @param array $data
+ *   An array of all information about Views tables and fields, collected from
+ *   hook_views_data(), passed by reference.
+ *
+ * @see hook_views_data()
+ */
+function views_sort_expression_views_data_alter(array &$data) {
+  $data['views']['views_sort_expression'] = [
+    'title' => t('Expression'),
+    'help' => t('Allow you to use an SQL expression.'),
+    'sort' => [
+      'id' => 'views_sort_expression',
+      ],
+  ];
+}
+
+/**
+ * Implements hook_views_post_build().
+ *
+ * Remove views_sort_expression from group by if it was configured as a group by
+ * manually
+ *
+ * @param \Drupal\views\ViewExecutable $view
+ *   The view object about to be processed.
+ *
+ * @see \Drupal\views\ViewExecutable
+ */
+function views_sort_expression_views_post_build(ViewExecutable $view) {
+  foreach ($view->sort as $handler) {
+    if ($handler instanceof ExpressionSort) {
+      if ($handler->options['aggregate']) {
+        $alias = $handler->realField . '_' . $handler->position;
+        $group_by =& $view->build_info['query']->getGroupBy();
+        unset($group_by[$alias]);
+      }
+    }
+  }
+}
