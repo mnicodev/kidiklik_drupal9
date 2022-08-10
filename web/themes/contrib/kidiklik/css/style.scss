@@ -477,8 +477,11 @@ h1 {
 article  {
 	.zone-image {
 		text-align: right;
-		.ajout {
-
+		.flag-resa {
+			display: inline-flex;
+			div {
+				max-width: 100%;
+			}
 		}
 	}
 	line-height: 16px;
