@@ -243,6 +243,10 @@ h1 {
 						text-align: center;
 						width: 250px;
 					}
+
+					&.with-dates {
+						top: -315px!important;
+					}
 				}
 			}
 			#block-formulaireexposeactivitesrecherche-activites:hover{
@@ -468,6 +472,9 @@ h1 {
 }
 
 article  {
+	.zone-image {
+
+	}
 	line-height: 16px;
   img {
     max-width: 100%;

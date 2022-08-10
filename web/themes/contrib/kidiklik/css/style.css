@@ -199,6 +199,8 @@ h1 {
         color: #ffffff;
         text-align: center;
         width: 250px; }
+      .path-taxonomy #block-formulaireexposeactivitesrecherche-activites #views-exposed-form-activites-recherche-activites.with-dates, .path-node #block-formulaireexposeactivitesrecherche-activites #views-exposed-form-activites-recherche-activites.with-dates, .path-recherchehtml #block-formulaireexposeactivitesrecherche-activites #views-exposed-form-activites-recherche-activites.with-dates {
+        top: -315px !important; }
   .path-taxonomy #block-formulaireexposeactivitesrecherche-activites:hover, .path-node #block-formulaireexposeactivitesrecherche-activites:hover, .path-recherchehtml #block-formulaireexposeactivitesrecherche-activites:hover {
     height: 280px; }
     .path-taxonomy #block-formulaireexposeactivitesrecherche-activites:hover #views-exposed-form-activites-recherche-activites, .path-node #block-formulaireexposeactivitesrecherche-activites:hover #views-exposed-form-activites-recherche-activites, .path-recherchehtml #block-formulaireexposeactivitesrecherche-activites:hover #views-exposed-form-activites-recherche-activites {
