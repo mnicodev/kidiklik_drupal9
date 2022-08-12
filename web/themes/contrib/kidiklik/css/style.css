@@ -573,10 +573,10 @@ footer .menu li.last {
   #block-views-block-activites-activites-associees .activites-associees {
     color: #3da1c3; }
     #block-views-block-activites-activites-associees .activites-associees img {
-      width: 100%; }
+      width: 100%;
+      margin-bottom: 10px; }
     #block-views-block-activites-activites-associees .activites-associees a {
-      color: #3da1c3;
-      padding-top: 10px; }
+      color: #3da1c3; }
 
 .activite-teaser {
   font-size: 0.95em; }
