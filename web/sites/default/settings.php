@@ -789,9 +789,9 @@ $config_directories['sync'] = '../config/sync';
 
 $host=explode(".",$_SERVER["SERVER_NAME"]);
 if((int)$host[0]) $settings["dep"]=$host[0];else $settings["dep"]=0;
-if((int)$settings["dep"] < 10) {
+/*if((int)$settings["dep"] < 10) {
 	$settings["dep"] = "0".$settings["dep"];
-}
+}*/
 //$settings["dep"]=45;
 $settings["available_content"]=[
 	"activite",
