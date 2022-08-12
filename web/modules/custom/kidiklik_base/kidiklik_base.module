@@ -56,10 +56,13 @@ function get_term_departement($dep=null, $option = null) {
 	$term_dep=current(\Drupal::entityTypeManager()
 		->getStorage("taxonomy_term")
 		->loadByProperties(['name'=>$dep]));
-	if($option === 'name') {
-		return $term_dep->getName();
+	if(!empty($term_dep)) {
+		if($option === 'name') {
+			return $term_dep->getName();
+		}
+		return $term_dep->id();
 	}
-	return $term_dep->id();
+	return null;
 }
 
 
