@@ -53,7 +53,8 @@ class KidiklikCommands extends DrushCommands
     $desc=str_replace('NULL','',$desc);
     $desc=str_replace('&agrave;','à',$desc);
     $desc=str_replace('&amp;','&',$desc);
-    $desc=str_replace(['&#13','&#10;'],['<br>','<br>'],$str);
+    $desc=str_replace('<br>',chr(10),$desc);
+    $desc=str_replace(['&#13','&#10;'],['<br>','<br>'],$desc);
     //$desc=str_replace(['&lt;p&gt;','&lt;/p&gt;'],['<p>','</p>'],$desc);
     if($chariot===true) {
       $desc=str_replace(['&#13','&#10;'],['<br>','<br>'],$str);
@@ -63,7 +64,8 @@ class KidiklikCommands extends DrushCommands
     $desc = str_replace(["&#39;","&#34;", '&#38;'], ["'",'"', '&'],$desc);
     //$desc = str_replace("&#34;", '"',$desc);
     //return html_entity_decode($str);
-    return htmlspecialchars_decode($desc);
+    //return htmlspecialchars_decode($desc);
+    return ($desc);
   }
 
   /**
@@ -149,10 +151,31 @@ class KidiklikCommands extends DrushCommands
               $node->save();
             }
           }
-          var_dump($node->id());
+	  var_dump($node->id());
+
+                      $query3 = $connection->query("select * from accueils_dates where ref_accueil='".$item->id_accueil."'");
+                      while($bloc = $query3->fetch()) {
+                        var_dump($bloc->date_debut);
+                        $date = \Drupal\paragraphs\Entity\Paragraph::create([
+                          'type' => 'date',
+                          'field_date_de_debut' => [
+                            'value' => $bloc->date_debut
+                          ],
+                          'field_date_de_fin' => [
+                            'value' => $bloc->date_fin
+                          ]
+  
+                        ]);
+                        $date->save();
+                        var_dump('Enregistrement de la date');
+                        
+                        $node->get('field_date')->appendItem($date);
+                        $node->validate();
+                        $node->save();
+                      }
         }
 
-      } else if($options['date'] === true) {
+      }else  if($options['date'] === true) {
 
      // }else {
         
@@ -1346,6 +1369,65 @@ var_dump('node id : '.$node->id());
 
       //
 
+    } else if($name === 'kidi_publicite') { 
+	    if($options['delete']===true) {
+		    $pa = \Drupal::entityTypeManager()->getStorage("node")->loadByProperties(['type'=>'publicite']);
+		    foreach($pa as $node) {
+			    var_dump($node->id());
+			    $node->delete();
+		    }
+
+	    } else { 
+        Database::setActiveConnection('kidiklik');
+        $connection = \Drupal\Core\Database\Database::getConnection();
+	$query = $connection->query('select * from publicites where date_fin>"2021-01-01" and id_publicite=5914 order by id_publicite asc');
+	while($item=$query->fetch()) {
+          	$dept=(int)$item->dept;
+		if($dept>=22) $dept--;
+                $term_dept = get_term_departement($dept);
+		var_dump($this->propre($dept));
+		$map = [
+			"1" => 95,
+			"2" => 97,
+			"3" => 98,
+			"5" => 957,
+		       "6" => 106	
+	       ];
+		if(!empty($item->titre)) {
+			$node=Node::Create([
+			'type' => 'publicite',
+			'title' => $this->propre($item->titre),
+			'field_format' => $map[$item->format],
+			'field_date_debut' => $item->date_debut,
+			'field_date_fin' => $item->date_fin,
+			'field_ref_adherent' => $item->ref_adherent,
+			'field_url' => $item->url,
+			'field_script' => $item->script,
+			'field_image_save' => $item->image,
+			'field_departement' => $term_dept,
+			'status' => $item->active
+			]);
+
+		$node->save();
+		var_dump($node->get('field_date_debut')->getValue());
+		}
+	}
+	    }
+
+
+    }  else if($name==='nettoyage_rubriques') {
+
+          $rubriques = \Drupal::entityTypeManager()
+		  ->getStorage('taxonomy_term')
+		  ->loadByProperties([
+			  'name' => "Au bord de l'eau"
+		  ]);
+	  foreach($rubriques as $rubrique) {
+		  var_dump($rubrique->id());
+		  $rubrique->delete();
+	  }
+	    
+
     }  else if ($name === 'paragraph') {
 
     	
@@ -1425,7 +1507,7 @@ var_dump('node id : '.$node->id());
                 
       } else {
         $connection = \Drupal::database();
-        $rs = $connection->query('select * from node where type=:type order by nid', [
+        $rs = $connection->query('select * from node where nid=294185 and type=:type order by nid', [
           ':type' => $name,
         ], [
           'fetch' => 'node'
@@ -1554,17 +1636,26 @@ var_dump('node id : '.$node->id());
                // var_dump("DELETE : ".$item->id());
                // $item->delete();
 
-                break;
+		break;
+	      case 'status':
+
+		      if(!empty($item->get('field_ref_'.$name)->value)) {
+                	Database::setActiveConnection('kidiklik');
+			$connection = \Drupal\Core\Database\Database::getConnection();
+			$query = $connection->query('select * from '.$type.'s where id_'.$type.'='.$item->get('field_ref_'.$name)->value);
+			var_dump($query->fetch());
+		      }
+			break;
               case 'filtres':
                 Database::setActiveConnection('kidiklik');
                 $connection = \Drupal\Core\Database\Database::getConnection();
-               var_dump($item->get('field_ref_'.$name)->value);
+               //var_dump('ref entite : '.$item->get('field_ref_'.$name)->value);
                 if(!empty($item->get('field_ref_'.$name)->value)) {
                   $item->__unset('field_filtres');
                   $item->save();
                   $content_filtres= [];
                   foreach($filtres as $filtre) {
-                    var_dump("select * from entite_filtre_".$filtre->identifiant."_valeur where entite='".$name."' and ref_entite=".$item->get('field_ref_'.$name)->value);
+                    //var_dump("select * from entite_filtre_".$filtre->identifiant."_valeur where entite='".$name."' and ref_entite=".$item->get('field_ref_'.$name)->value);
                     $query = $connection->query("select * from entite_filtre_".$filtre->identifiant."_valeur where entite='".$name."' and ref_entite=".$item->get('field_ref_'.$name)->value);
                     while($content = $query->fetch()) {
                       $content_filtres[$filtre->identifiant][] = $content->valeur;
@@ -1572,10 +1663,10 @@ var_dump('node id : '.$node->id());
                     }
 
                     /**/
-                  }
+		  }
                   if(!empty($content_filtres)) {
-
-                    $filtre = \Drupal\paragraphs\Entity\Paragraph::create([
+			var_dump('ajout des filtres ...');
+                    $drupal_filtre = \Drupal\paragraphs\Entity\Paragraph::create([
                       'type' => 'filtres',
                       'field_envies' => [
                         'value' => (isset($content_filtres['envie'])?($content_filtres['envie'][0]):null)
@@ -1584,23 +1675,24 @@ var_dump('node id : '.$node->id());
                         'value' => (isset($content_filtres['thematique'])?($content_filtres['thematique'][0]):null)
                       ],
                     ]);
-                    $filtre->save();
-                    foreach($content_filtres['vacances'] as $val) {
-                      $filtre->get('field_vacances')->appendItem($val);
+                    $drupal_filtre->save();
+		    
+		    foreach($content_filtres['vacances'] as $val) {
+                      $drupal_filtre->get('field_vacances')->appendItem(['value'=>ucfirst($val)]);
                     }
                     foreach($content_filtres['tranches_age'] as $val) {
                      // var_dump($val);
-                      preg_match("/([0-9]*)-([0-9]*)ans/",$val,$match);
+			    preg_match("/([0-9]*)-([0-9]*)ans/",$val,$match);
                       if(!empty($match)) {
                      //   $val=$match[1]."-".$match[2]."ans";
                         //$filtre->get('field_tranches_d_ages')->appendItem($val);
                       }
-                      $filtre->get('field_tranches_d_ages')->appendItem($val);
+                      $drupal_filtre->get('field_tranches_d_ages')->appendItem($val);
 
-                    }
-                    $filtre->save();
-                    $filtre->validate();
-                    $item->get('field_filtres')->appendItem($filtre);
+		    }
+                    $drupal_filtre->validate();
+                    $drupal_filtre->save();
+                    $item->get('field_filtres')->appendItem($drupal_filtre);
                       $item->validate();
                       $item->save();
                    // var_dump($content_filtres);
@@ -1868,8 +1960,8 @@ var_dump('node id : '.$node->id());
                   $item->__set('body', $this->propre(current($item->get('body')->getValue())['value']));
                   //$item->__set('body', html_entity_decode(current($item->get('body')->getValue())['value']));
                 }
-                if($item->__isset('field_resume')) {
-                  $item->__set('field_resume', $this->propre($item->get('field_resume')->value));
+		if($item->__isset('field_resume')) {
+                  $item->__set('field_resume', $this->propre(str_replace('<br>',chr(10),$item->get('field_resume')->value)));
                 }
                 if($item->__isset('field_coordonnees')) {
                   $item->__set('field_coordonnees', $this->propre($item->get('field_coordonnees')->value));
@@ -1906,9 +1998,9 @@ var_dump('node id : '.$node->id());
                 break;
               case 'adherent':
 
-                $item->__unset("field_adherent");
-                $item->save();
                 if($name === 'client') {
+                	$item->__unset("field_adherent");
+                	$item->save();
                   if($item->get("field_ref_client")->value !== NULL && !empty($item->get("field_ref_client")->value)) {
                     var_dump("ref_client : ".$item->get("field_ref_client")->value);
                     $adherent = current(\Drupal::entityTypeManager()->getStorage("node")->loadByProperties([
@@ -1930,12 +2022,15 @@ var_dump('node id : '.$node->id());
                 } else {
 
                   if (!empty($item->get("field_ref_adherent")->value)) {
+			  $item->__unset('field_adherent');
+			  $item->save();
 
                     $adherent = current(\Drupal::entityTypeManager()->getStorage("node")->loadByProperties([
                       'type' => 'adherent',
                       'field_ref_adherent' => (int)$item->get("field_ref_adherent")->value
                     ]));
                     if (!empty($adherent)) {
+                      var_dump($adherent->getTitle());
                       var_dump($adherent->id());
                       //$adherent->__set('title', str_replace("&#39;", "'", $adherent->getTitle()));
                       //$adherent->save();
