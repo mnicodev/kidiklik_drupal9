@@ -50,6 +50,9 @@ function get_term_departement($dep=null, $option = null) {
 	if($dep === null) {
 		$dep=get_departement();
 	}
+	if($dep<10 && strlen($dep)==1) {
+		$dep = "0".$dep;
+	}
 	$term_dep="";
 
 	$term_dep=current(\Drupal::entityTypeManager()
