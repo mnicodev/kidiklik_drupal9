@@ -339,16 +339,13 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
   }
  // ksm($view->current_display);
   if ($view->current_display == "diaporama" ||
-    $view->current_display == "block_article_accueil" ||
-    $view->current_display === 'bloc_jeux_concours') {
+    $view->current_display == "block_article_accueil") {
     /* la date de début du bloc de mise en avant doit être inférieur ou égal à la date du jour */
-    $query->where[1]["conditions"][2]["field"] = "DATE_FORMAT(node__field_date_debut.field_date_debut_value, '%Y-%m-%d') <= DATE_FORMAT('".date('Y-m-d')."', '%Y-%m-%d')";
-    $query->where[1]["conditions"][2]["operator"] = "formula";
-    $query->where[1]["conditions"][2]["value"] = [];
+    $query->where[1]["conditions"][2]["operator"] = "<=";
+    $query->where[1]["conditions"][2]["value"] = date('Y-m-d');
     /* la date de fin du bloc de mise en avant doit être supérieur ou égal à la date du jour */
-    $query->where[1]["conditions"][3]["field"] = "DATE_FORMAT(node__field_date_fin.field_date_fin_value, '%Y-%m-%d') >= DATE_FORMAT('".date('Y-m-d')."', '%Y-%m-%d')";
-    $query->where[1]["conditions"][3]["operator"] = "formula";
-    $query->where[1]["conditions"][3]["value"] = [];
+    $query->where[1]["conditions"][3]["operator"] = ">=";
+    $query->where[1]["conditions"][3]["value"] = date('Y-m-d');
     
     $query->where[1]["conditions"][] = current($query->where[0]['conditions']);
     unset($query->where[0]['conditions'][0]);
@@ -370,10 +367,56 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
     
     $query->where[0]["type"] = "OR";
 
-    ksm($query->where);
+  }
 
+  if($view->current_display === 'bloc_jeux_concours') {
+    /* la date de début du bloc de mise en avant doit être inférieur ou égal à la date du jour */
+    $query->where[1]["conditions"][2]["operator"] = "<=";
+    $query->where[1]["conditions"][2]["value"] = date('Y-m-d');
+    /* la date de fin du bloc de mise en avant doit être supérieur ou égal à la date du jour */
+    $query->where[1]["conditions"][3]["operator"] = ">=";
+    $query->where[1]["conditions"][3]["value"] = date('Y-m-d');
+    
+    //$query->where[0]["conditions"][] = current($query->where[0]['conditions']);
+    //unset($query->where[0]['conditions'][0]);
+
+    $configuration = array(
+      'type' => 'left',
+      'table' => 'node__field_partage_departements',
+      'field' => 'entity_id',
+      'left_table' => 'node_field_data',
+      'left_field' => 'nid',
+      'operator'   => '=',
+    );
+    $join = \Drupal\views\Views::pluginManager('join')
+		        ->createInstance('standard', $configuration);
+			$rel = $query->addRelationship('field_dep_part', $join, 'node_field_data');
+			$query->addTable('node__field_partage_departements', $rel, $join, 'field_dep_part');
+			$query->addWhere('', 'field_dep_part.field_partage_departements_target_id', get_term_departement(), 'in');
+
+	
+	$term_dep = get_term_departement();
+	$configuration = array(
+		'type' => 'INNER',
+		'table' => 'node__field_departement',
+		'field' => 'entity_id',
+		'left_table' => 'node_field_data',
+		'left_field' => 'nid',
+		'operator'   => '=',
+	);
+
+
+	$join = \Drupal\views\Views::pluginManager('join')
+	->createInstance('standard', $configuration);
+	$rel = $query->addRelationship('field_dep', $join, 'node_field_data');
+	$query->addTable('node__field_departement', $rel, $join, 'field_dep');
+	$query->addWhere('', 'field_dep.field_departement_target_id', $term_dep, '=');
+
+    
+    $query->where[0]["type"] = "OR";
 
   }
+
   if ($view->current_display == "articles_departement_accueil") {
     $deps = [];
     $deps[get_term_departement()] = (string)get_term_departement();
