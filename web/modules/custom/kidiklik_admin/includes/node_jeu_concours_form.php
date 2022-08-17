@@ -1,4 +1,6 @@
 <?php
+use Drupal\user\Entity\User;
+
 if($form_id=="node_jeu_concours_form" || $form_id=="node_jeu_concours_edit_form") {
 		unset($form["field_date"]["widget"]["add_more"]);
 		$node=\Drupal::routeMatch()->getParameters()->get("node");
