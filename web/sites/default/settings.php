@@ -824,11 +824,11 @@ $settings["available_form_for_dep"]=[
 $settings["add_dep_for_views"] = [
 //"rest_export_1",
 //"carre",
-"page_tous_les_articles"
+"page_tous_les_articles",
 "articles_dep_accueil_1",
 "articles_dep_accueil_2",
 "articles_dep_accueil_3",
-"bloc_jeux_concours",
+//"bloc_jeux_concours",
 "bloc_compteur_pub",
 "test_pub",
 "dashboard_all_content",
