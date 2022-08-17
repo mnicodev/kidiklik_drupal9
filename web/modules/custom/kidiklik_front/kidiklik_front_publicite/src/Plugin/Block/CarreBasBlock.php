@@ -71,13 +71,13 @@ LIMIT 1 OFFSET 0";
         $node=Node::load($item->nid);
         
         $fid=current($node->get("field_image")->getValue())["target_id"];
-	if(!empty($fid)) {
-        	$img=\Drupal::entityManager()->getStorage('file')->load($fid);
-		$result["img"]=file_create_url(($img->getFileUri()));
-	} else {
-		$img_save = $node->get("field_image_save")->getValue();
-		$result["img"]='https://www.kidiklik.fr/images/vendos/'.current($img_save)['value'];
-	}
+        if(!empty($fid)) {
+                $img=\Drupal::entityManager()->getStorage('file')->load($fid);
+            $result["img"]=file_create_url(($img->getFileUri()));
+        } else {
+            $img_save = $node->get("field_image_save")->getValue();
+            $result["img"]='https://www.kidiklik.fr/images/vendos/'.current($img_save)['value'];
+        }
         //$result["img"]=$style->buildUrl($img->uri->value);
         $result["url"]=current($node->get("field_url")->getValue())["uri"];
         $result["nid"]=$node->id();
