@@ -341,13 +341,14 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
   if ($view->current_display == "diaporama" ||
     $view->current_display == "block_article_accueil" ||
     $view->current_display === 'bloc_jeux_concours') {
-      ksm($view->current_display);
     /* la date de début du bloc de mise en avant doit être inférieur ou égal à la date du jour */
-    $query->where[1]["conditions"][2]["value"] = date("Y-m-d");
-    $query->where[1]["conditions"][2]["operator"] = "<=";
+    $query->where[1]["conditions"][2]["field"] = "DATE_FORMAT(node__field_date_debut.field_date_debut_value, '%Y-%m-%d') <= DATE_FORMAT('".date('Y-m-d')."', '%Y-%m-%d')";
+    $query->where[1]["conditions"][2]["operator"] = "formula";
+    $query->where[1]["conditions"][2]["value"] = [];
     /* la date de fin du bloc de mise en avant doit être supérieur ou égal à la date du jour */
-    $query->where[1]["conditions"][3]["value"] = date("Y-m-d");
-    $query->where[1]["conditions"][3]["operator"] = ">=";
+    $query->where[1]["conditions"][3]["field"] = "DATE_FORMAT(node__field_date_fin.field_date_fin_value, '%Y-%m-%d') >= DATE_FORMAT('".date('Y-m-d')."', '%Y-%m-%d')";
+    $query->where[1]["conditions"][3]["operator"] = "formula";
+    $query->where[1]["conditions"][3]["value"] = [];
     
     $query->where[1]["conditions"][] = current($query->where[0]['conditions']);
     unset($query->where[0]['conditions'][0]);
