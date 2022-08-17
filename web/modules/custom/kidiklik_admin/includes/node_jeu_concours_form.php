@@ -2,7 +2,19 @@
 if($form_id=="node_jeu_concours_form" || $form_id=="node_jeu_concours_edit_form") {
 		unset($form["field_date"]["widget"]["add_more"]);
 		$node=\Drupal::routeMatch()->getParameters()->get("node");
+		$user = User::Load(\Drupal::currentUser()->id());
+		foreach ($form['field_partage_departements']['widget']['#options'] as $key => $item) {
 
+			$nom_departement = \Drupal::entityTypeManager()->getStorage("taxonomy_term")->load($key);
+			$form['field_partage_departements']['widget']['#options'][$key] = $nom_departement->get("field_nom")->value . " (" . $nom_departement->getName() . ")" . ($nom_departement->get("field_region")->value ? " - <i>" . $nom_departement->get("field_region")->value . "</i>" : "");
+	  
+		  }
+		if (!$user->hasRole('administrator') && !$user->hasRole('administrateur_de_departement')) {
+		  unset($form["#group_children"]["group_partage"]);
+		  unset($form['field_tous_les_sites']);
+		  unset($form['field_national']);
+		  unset($form["field_partage_departements"]);
+		}
 		if(!empty($node)) {
 			$form["actions"]["voir"]=[
 			  "#type"=>"html_tag",
