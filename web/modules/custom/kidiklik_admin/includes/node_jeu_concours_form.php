@@ -12,9 +12,7 @@ if($form_id=="node_jeu_concours_form" || $form_id=="node_jeu_concours_edit_form"
 			];
 			$date = null;
 			if($node->__isset("field_date")) {
-				$periode_id=current($node->get("field_date")->getValue())["target_id"];
-				$periode=\Drupal::entityTypeManager()->getStorage("paragraph")->load($periode_id);
-				$date=["debut"=>strtotime($periode->get('field_date_de_debut')->value),"fin"=>strtotime($periode->get('field_date_de_fin')->value)];
+				$date=["debut"=>strtotime($node->get('field_date_debut')->value),"fin"=>strtotime($node->get('field_date_fin')->value)];
 			}
 
 			/* la date est dépassé, le jeu est terminé, on peut afficher le message ainsi que le bouton */
