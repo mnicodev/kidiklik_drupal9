@@ -1076,34 +1076,45 @@ article {
 .list-bloc-content .card-title, .list-bloc-content .card-text {
   padding: 10px; }
 
-#block-bloc-jeux-concours {
+#block-bloc-jeux-concours,
+#block-views-block-jeux-concours-bloc-jeux-concours {
   margin: auto;
   max-width: 265px; }
-  #block-bloc-jeux-concours .views_slideshow_cycle_teaser_section, #block-bloc-jeux-concours .views_slideshow_cycle_slide {
+  #block-bloc-jeux-concours .views_slideshow_cycle_teaser_section, #block-bloc-jeux-concours .views_slideshow_cycle_slide,
+  #block-views-block-jeux-concours-bloc-jeux-concours .views_slideshow_cycle_teaser_section,
+  #block-views-block-jeux-concours-bloc-jeux-concours .views_slideshow_cycle_slide {
     width: 100% !important; }
-  #block-bloc-jeux-concours img {
+  #block-bloc-jeux-concours img,
+  #block-views-block-jeux-concours-bloc-jeux-concours img {
     width: 100%;
     height: auto; }
-  #block-bloc-jeux-concours .card-img-top {
+  #block-bloc-jeux-concours .card-img-top,
+  #block-views-block-jeux-concours-bloc-jeux-concours .card-img-top {
     height: 160px;
     overflow: hidden; }
-  #block-bloc-jeux-concours .card-body {
+  #block-bloc-jeux-concours .card-body,
+  #block-views-block-jeux-concours-bloc-jeux-concours .card-body {
     background: #44aac7;
     height: 150px !important;
     overflow: hidden; }
-  #block-bloc-jeux-concours .card-title a {
+  #block-bloc-jeux-concours .card-title a,
+  #block-views-block-jeux-concours-bloc-jeux-concours .card-title a {
     font-size: 0.8em;
     font-weight: 700; }
-  #block-bloc-jeux-concours .card {
+  #block-bloc-jeux-concours .card,
+  #block-views-block-jeux-concours-bloc-jeux-concours .card {
     font-size: 14px;
     color: #fff;
     border-radius: 0;
     border: none; }
-    #block-bloc-jeux-concours .card a {
+    #block-bloc-jeux-concours .card a,
+    #block-views-block-jeux-concours-bloc-jeux-concours .card a {
       color: #fff; }
-  #block-bloc-jeux-concours .views-slideshow-controls-top {
+  #block-bloc-jeux-concours .views-slideshow-controls-top,
+  #block-views-block-jeux-concours-bloc-jeux-concours .views-slideshow-controls-top {
     position: relative; }
-    #block-bloc-jeux-concours .views-slideshow-controls-top .views_slideshow_controls_text {
+    #block-bloc-jeux-concours .views-slideshow-controls-top .views_slideshow_controls_text,
+    #block-views-block-jeux-concours-bloc-jeux-concours .views-slideshow-controls-top .views_slideshow_controls_text {
       top: 160px;
       width: 100%; }
 

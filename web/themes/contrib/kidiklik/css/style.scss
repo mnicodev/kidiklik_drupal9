@@ -1448,7 +1448,8 @@ article {
 	}
 
 
-#block-bloc-jeux-concours {
+#block-bloc-jeux-concours,
+#block-views-block-jeux-concours-bloc-jeux-concours {
 	margin: auto;
 	max-width: 265px;
 	.views_slideshow_cycle_teaser_section, .views_slideshow_cycle_slide {
@@ -1491,7 +1492,9 @@ article {
 		}
 	}
 }
-
+.webform-submission-jeu-concours-add-form {
+	
+}
 .views_slideshow_controls_text {
 			position: absolute;
 			z-index: 100;
