@@ -1089,10 +1089,6 @@ article {
     width: 100%;
     height: auto;
     max-width: 100%; }
-  #block-bloc-jeux-concours .card-img-top,
-  #block-views-block-jeux-concours-bloc-jeux-concours .card-img-top {
-    height: 160px;
-    overflow: hidden; }
   #block-bloc-jeux-concours .card-body,
   #block-views-block-jeux-concours-bloc-jeux-concours .card-body {
     background: #44aac7;
@@ -1100,6 +1096,7 @@ article {
     overflow: hidden; }
   #block-bloc-jeux-concours .card-title a,
   #block-views-block-jeux-concours-bloc-jeux-concours .card-title a {
+    font-family: 'roboto-bold';
     font-size: 0.8em;
     font-weight: 700; }
   #block-bloc-jeux-concours .card,
