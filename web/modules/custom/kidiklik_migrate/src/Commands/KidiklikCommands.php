@@ -47,21 +47,21 @@ class KidiklikCommands extends DrushCommands
   public function propre($str,$chariot=null) {
     $desc=str_replace('&eacute;','é',$str);
     $desc=str_replace('&egrave;','è',$desc);
-    $desc=str_replace('&ecirc;;','ê',$desc);
+    $desc=str_replace('&ecirc;','ê',$desc);
     $desc=str_replace('&ocirc;','ô',$desc);
     $desc=str_replace('&acirc;','â',$desc);
     $desc=str_replace('NULL','',$desc);
     $desc=str_replace('&agrave;','à',$desc);
     $desc=str_replace('&amp;','&',$desc);
     $desc=str_replace('<br>',chr(10),$desc);
-    $desc=str_replace(['&#13','&#10;'],['<br>','<br>'],$desc);
+    $desc=str_replace(['&#13;','&#10;'],['<br>','<br>'],$desc);
     //$desc=str_replace(['&lt;p&gt;','&lt;/p&gt;'],['<p>','</p>'],$desc);
     if($chariot===true) {
       $desc=str_replace(['&#13','&#10;'],['<br>','<br>'],$str);
     } else {
-	    $desc=str_replace(['&#13','&#10;'],['',''],$str);
+	    $desc=str_replace(['&#13;','&#10;'],['',''],$str);
     }
-    $desc = str_replace(["&#39;","&#34;", '&#38;'], ["'",'"', '&'],$desc);
+    $desc = str_replace(["&#39;","&#039;","&#034;","&#34;", '&#38;'], ["'","'",'"','"', '&'],$desc);
     //$desc = str_replace("&#34;", '"',$desc);
     //return html_entity_decode($str);
     //return htmlspecialchars_decode($desc);
@@ -117,16 +117,43 @@ class KidiklikCommands extends DrushCommands
       echo "- pour adherent : --contact, --delcontact\n";
 
     }else if ($name == "accueils") {
-      if($options['import'] === true) {
+
+	    if($options['repasse'] === true) {
+        $connection = \Drupal::database();
+        $query= $connection->select('node','n');
+                $query->fields('n',['nid']);
+                $query->join("node__field_ref_accueil","ra","ra.entity_id=n.nid");
+                //$query->leftJoin("paragraph__field_date_de_fin","fdd","fdd.entity_id=fd.field_date_target_id");
+                $query->fields('ra',['entity_id', 'field_ref_accueil_value']);
+                $query->condition('type','bloc_de_mise_en_avant','=');
+                $rs=$query->execute();
+
         Database::setActiveConnection('kidiklik');
         $connection = \Drupal\Core\Database\Database::getConnection();
-        $query2 = $connection->query("select * from accueils where id_accueil>59287");
+	while($item=$rs->fetch()) {
+		if(!empty($item->field_ref_accueil_value)) {
+			$query2 = $connection->query("select * from accueils where id_accueil=".$item->field_ref_accueil_value);
+			$content = $query2->fetch();
+			var_dump($content->titre);
+			var_dump($item->nid);
+			if($content->titre !== 'NULL' && !empty($item->nid) && $content->titre!==null) {
+			$node = Node::load($item->nid);
+			$node->__set('title',$this->propre($content->titre));
+			$node->__set('field_resume',$this->propre($content->description));
+			$node->save();
+			}
+		}
+	}
+      }else if($options['import'] === true) {
+        Database::setActiveConnection('kidiklik');
+        $connection = \Drupal\Core\Database\Database::getConnection();
+        $query2 = $connection->query("select * from accueils by id_accueil");
         
         while($item=$query2->fetch()) {
           $node = Node::create([
             'type' => 'bloc_de_mise_en_avant',
-            'title' => $item->titre,
-            'field_resume' => $item->description, 
+            'title' => $this->propre($item->titre),
+            'field_resume' => $this->propre($item->description), 
             'field_lien'=> $item->url,
             'field_type' =>  $item->type,
             'field_ref_accueil' => $item->id_accueil,
@@ -526,11 +553,11 @@ var_dump($node->id());
       $connection = \Drupal\Core\Database\Database::getConnection();
       if($options['import'] === true) {
 	      if($name === "adherents") {
-		      $query = $connection->query("select * from adherents where id_adherent > 7002");
+		      $query = $connection->query("select * from adherents where id_adherent > 7105");
 		      $type = 'adherent';
 	      } else {
 		      $type = 'client';
-		      $query = $connection->query("select * from clients where id_client > 5363");
+		      $query = $connection->query("select * from clients where id_client > 5420");
 	      }
         while($row = $query->fetch()) {
           $query2 = $connection->query("select * from villes where id_ville = :ville", [
@@ -608,7 +635,7 @@ var_dump($node->id());
         $type = 'clients';
       }
       if($options['import'] === true) {
-        $query = $connection->query("select * from ".$type."_contacts");
+        $query = $connection->query("select * from ".$type."_contacts where id_contact > 3094");
         while($row = $query->fetch()) {
           $dept=(int)$row->dept;
           if($dept>=22) $dept--;
@@ -1380,12 +1407,12 @@ var_dump('node id : '.$node->id());
 	    } else { 
         Database::setActiveConnection('kidiklik');
         $connection = \Drupal\Core\Database\Database::getConnection();
-	$query = $connection->query('select * from publicites where date_fin>"2021-01-01" and id_publicite=5914 order by id_publicite asc');
+	$query = $connection->query('select * from publicites where date_fin>"2021-01-01" order by id_publicite asc');
 	while($item=$query->fetch()) {
           	$dept=(int)$item->dept;
 		if($dept>=22) $dept--;
                 $term_dept = get_term_departement($dept);
-		var_dump($this->propre($dept));
+		var_dump($item->to_dept);
 		$map = [
 			"1" => 95,
 			"2" => 97,
@@ -1394,6 +1421,10 @@ var_dump('node id : '.$node->id());
 		       "6" => 106	
 	       ];
 		if(!empty($item->titre)) {
+			$tousite=0;
+			if($item->to_dept === "0") {
+				$tousite=1;
+			}
 			$node=Node::Create([
 			'type' => 'publicite',
 			'title' => $this->propre($item->titre),
@@ -1401,14 +1432,29 @@ var_dump('node id : '.$node->id());
 			'field_date_debut' => $item->date_debut,
 			'field_date_fin' => $item->date_fin,
 			'field_ref_adherent' => $item->ref_adherent,
+			'field_ref_publicite' => $item->id_publicite,
 			'field_url' => $item->url,
 			'field_script' => $item->script,
 			'field_image_save' => $item->image,
 			'field_departement' => $term_dept,
+			'field_tous_les_sites' => $tousite,
 			'status' => $item->active
 			]);
 
-		$node->save();
+			$node->save();
+			if($tousite === 1) {
+                            $query2 = \Drupal::entityQuery('taxonomy_term')
+                            ->condition('status', '1', '=')
+                            ->condition('vid', 'departement');
+                            $depts = Term::loadMultiple($query2->execute());
+                            foreach($depts as $dept) {
+                              $node->__get('field_partage_departements')->appendItem([
+                                'target_id' => $dept->id()
+                              ]);
+			    }
+			    
+			}
+			
 		var_dump($node->get('field_date_debut')->getValue());
 		}
 	}
@@ -1466,6 +1512,42 @@ var_dump('node id : '.$node->id());
         $rs = $connection->query('update node__body set body_format = "basic_html"');
        	$rs->execute(); 
 
+    }else if ($name==='kidi_jeu_concours') {
+        Database::setActiveConnection('kidiklik');
+        $connection = \Drupal\Core\Database\Database::getConnection();
+	$query = $connection->query("select c.*, cd.image as img, cd.description,cd.titre as sous_titre from concours c join concours_datas cd on c.id_concours=cd.ref_concours where date_fin > '2021-01-01' order by id_concours");
+	while($item = $query->fetch()) {
+		if($options['repasse'] === true) {
+			$node=\Drupal::entityTypeManager()->getStorage("node")->loadByProperties([
+
+			   ]);
+
+
+		} else {
+
+          	$dept=(int)$item->dept;
+		if($dept>=22) $dept--;
+                $term_dept = get_term_departement($dept);
+		var_dump($item->titre);
+		$node=Node::Create([
+			'type' => 'jeu_concours',
+			'title' => $this->propre($item->titre),
+			'field_sous_titre' => $this->propre($item->sous_titre),
+			'body' => $item->description,
+			'field_resume' => $this->propre($item->resume),
+			'field_date_debut' => $item->date_debut,
+			'field_date_fin' => $item->date_fin,
+			'field_ref_adherent' => $item->ref_adherent,
+			'field_image_save' => $item->img,
+			'status'=>$item->active,
+			'field_departement' => $term_dept,
+			'field_ref_jeu_concours' => $item->id_concours,
+		]);
+		$node->save();
+		var_dump($node->id());
+		}
+	}
+
     }else if ($name) {
 
       if($options['delete'] === true) {
@@ -1507,7 +1589,7 @@ var_dump('node id : '.$node->id());
                 
       } else {
         $connection = \Drupal::database();
-        $rs = $connection->query('select * from node where nid=294185 and type=:type order by nid', [
+        $rs = $connection->query('select * from node where type=:type order by nid desc', [
           ':type' => $name,
         ], [
           'fetch' => 'node'
@@ -1544,11 +1626,11 @@ var_dump('node id : '.$node->id());
         ->condition('a.id_agenda',$item->get('field_ref_agenda')->value, '=')
         ->execute()
         ->fetch();*/
-        //$item->__set('title', $this->propre($item->getTitle()));
+        $item->__set('title', $this->propre($item->getTitle()));
 
         //$item->__set('body', $this->propre($item->get('body')->value));
         //$item->validate();
-        //$item->save();
+        $item->save();
         //var_dump($query);
 
         // var_dump($item);
@@ -1586,7 +1668,6 @@ var_dump('node id : '.$node->id());
                             
                             $depts = Term::loadMultiple($query->execute());
                             foreach($depts as $dept) {
-                              
                               $item->__get('field_partage_departements')->appendItem([
                                 'target_id' => $dept->id()
                               ]);
@@ -1738,8 +1819,21 @@ var_dump('node id : '.$node->id());
                         	'type' => 'article',
 	                       'field_ref_entite' => $id_entite
 				]));
+			} else if($match[3]==='sorties-moment'){
+                	      $node=current(\Drupal::entityTypeManager()->getStorage("node")->loadByProperties([
+                        	'type' => 'agenda',
+	                       'field_ref_agenda' => $id_entite
+				]));
+
+			} else {
+                	      $node=current(\Drupal::entityTypeManager()->getStorage("node")->loadByProperties([
+                        	'type' => 'activite',
+	                       'field_ref_activite' => $id_entite
+				]));
 			}
-                      if(!empty($node)) {
+			if(!empty($node)) {
+				$item->__unset('field_lien');
+				$item->save();
                         var_dump($node->getTitle());
                         var_dump($lien);
                         $new_link=\Drupal::service('path_alias.manager')->getAliasByPath('/node/'.$node->Id());
