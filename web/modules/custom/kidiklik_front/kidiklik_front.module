@@ -493,10 +493,15 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
     //
     $node = Drupal::request()->get('node');
 
-    if($node->__isset('field_rubriques_activite') !== false) {
-      $adh = current($node->get('field_adherent')->getValue())['target_id'];
+//kint($node->get('field_adherent')); exit;
+	    $adh = current($node->get('field_adherent')->getValue())['target_id'];
+    //kint($view);exit;
+    if(empty($adh)) {
+	    $adh=-1;
+    }  
+
       $configuration = array(
-        'type' => 'LEFT',
+        'type' => 'INNER',
         'table' => 'node__field_adherent',
         'field' => 'entity_id',
         'left_table' => 'node_field_data',
@@ -509,8 +514,7 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
       $query->addTable('node__field_adherent', $rel, $join, 'node__field_adherent');
       $query->addWhere('', 'node__field_adherent.field_adherent_target_id', $adh, '=');
       $query->addWhere('', 'nid', $node->id(), '<>');
-    }
-   
+     
     //ksm($query->where);
   }
 
