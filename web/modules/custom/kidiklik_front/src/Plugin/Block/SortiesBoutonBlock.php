@@ -35,9 +35,21 @@ class SortiesBoutonBlock extends BlockBase {
         } else {
             $build['#ref_act'] = current($node->get('field_activite')->getValue())['target_id'];
       }
-    } 
-
+    }
+    
     if(empty($build['#ref_act'])) {
+      return null;
+    }
+
+    $adherent = 
+
+    $liste = \Drupal::entityTypeManager()->getStorage('node')->loadByProperties(
+      [
+        'type' => 'agenda',
+        'field_activite' => $build['#ref_act']
+      ]      
+    );
+    if(count($liste) === 0) {
       return null;
     }
 
