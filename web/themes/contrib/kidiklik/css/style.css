@@ -608,7 +608,9 @@ footer .menu li.last {
         font-size: 0.95em;
         color: #fff; }
     .activite-teaser .actions .reserver {
-      background: url(../images/ticket.jpg) no-repeat; }
+      background: url(../images/ticket.png) no-repeat #db2a24;
+      background-position: 0 50%;
+      padding-left: 30px; }
   .activite-teaser .paragraph--view-mode--liste {
     display: flex; }
     .activite-teaser .paragraph--view-mode--liste .field--name-field-date-de-fin {
