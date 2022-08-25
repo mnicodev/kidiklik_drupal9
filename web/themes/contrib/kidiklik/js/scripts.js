@@ -10,7 +10,6 @@
 Drupal.behaviors.kidiklik = {
 	attach: function(context, settings) {
 		var charging_blocs = jQuery('[data-big-pipe-placeholder-id]').length;
-		console.log(charging_blocs)
 	      	if (charging_blocs ===1){
 			if(jQuery(".zone-flag").length) {
 				jQuery('.zone-image').append(jQuery(".zone-flag").html());
@@ -25,10 +24,32 @@ Drupal.behaviors.kidiklik = {
 					jQuery('#views-exposed-form-activites-recherche-activites').removeClass('with-dates');
 				}
 			})
-	if(jQuery('.field--name-field-image').length) {
-		jQuery('.image_kidiklik_old').remove();
-	}
-      		}
+			if(jQuery('.field--name-field-image').length) {
+				jQuery('.image_kidiklik_old').remove();
+			}
+		}
+		if(jQuery('select[name="ville"]').val() === 'geo') {
+				getCurrentPosition();
+			//maPosition();
+		} else {
+			jQuery('input[name="center[coordinates][lng]"]').val('');
+			jQuery('input[name="center[coordinates][lat]"]').val('');
+		}
+		jQuery('select[name="ville"]').on('select2:select', function(e) {
+			var data = e.params.data;
+			console.log('ok')
+			if(data.id === "geo") {
+				getCurrentPosition();
+				//maPosition();
+			} else {
+				jQuery('input[name="center[coordinates][lng]"]').val('');
+				jQuery('input[name="center[coordinates][lat]"]').val('');
+			}
+		});
+		jQuery('select[name="ville"]').on('select2:clearing', function(e) {
+			jQuery('input[name="center[coordinates][lng]"]').val('');
+			jQuery('input[name="center[coordinates][lat]"]').val('');
+		});
 	}
 }
 
@@ -132,17 +153,23 @@ jQuery(document).ready(function() {
 
 		}
 	});
+	jQuery('select[name="ville"]').select2({
+		placeholder: 'Choisissez une ville ...',
+		allowClear: true
+	});
 	if(jQuery('select[name="ville"]').val() === 'geo') {
-		maPosition();
+			getCurrentPosition();
+		//maPosition();
 	} else {
 		jQuery('input[name="center[coordinates][lng]"]').val('');
 		jQuery('input[name="center[coordinates][lat]"]').val('');
 	}
 	jQuery('select[name="ville"]').on('select2:select', function(e) {
 		var data = e.params.data;
+		console.log('ok')
 		if(data.id === "geo") {
 			getCurrentPosition();
-			maPosition();
+			//maPosition();
 		} else {
 			jQuery('input[name="center[coordinates][lng]"]').val('');
 			jQuery('input[name="center[coordinates][lat]"]').val('');
@@ -158,10 +185,6 @@ jQuery(document).ready(function() {
 
 	//jQuery("#views-exposed-form-activites-recherche-activites").attr('action', '/recherche');
 
-	jQuery('select[name="ville"]').select2({
-		placeholder: 'Choisissez une ville ...',
-		allowClear: true
-	});
 
 	if(jQuery('select[name="quand"]').val() === 'date') {
 			jQuery('#views-exposed-form-activites-recherche-activites .form-type-date').show();
@@ -236,6 +259,7 @@ jQuery(document).ready(function() {
 	}
 	function erreur(err) {
 		console.log("erreur localisation : "+err.message)
+		window.alert("erreur localisation : "+err.message)
 		//$(".shadow").hide();
 	}
 
