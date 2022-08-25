@@ -192,10 +192,12 @@ h1 {
   #views-exposed-form-activites-recherche-activites .voir-filtres {
     display: none; } }
 @media (min-width: 768px) {
-  .path-taxonomy #block-formulaireexposeactivitesrecherche-activites, .path-node #block-formulaireexposeactivitesrecherche-activites, .path-recherchehtml #block-formulaireexposeactivitesrecherche-activites, .path-articleshtml #block-formulaireexposeactivitesrecherche-activites {
+  .path-taxonomy #block-formulaireexposeactivitesrecherche-activites, .path-node #block-formulaireexposeactivitesrecherche-activites, .path-recherchehtml #block-formulaireexposeactivitesrecherche-activites, .path-articleshtml #block-formulaireexposeactivitesrecherche-activites,
+  .path-sorties-momenthtml #block-formulaireexposeactivitesrecherche-activites {
     height: 50px;
     transition: all 0.5s; }
-    .path-taxonomy #block-formulaireexposeactivitesrecherche-activites #views-exposed-form-activites-recherche-activites, .path-node #block-formulaireexposeactivitesrecherche-activites #views-exposed-form-activites-recherche-activites, .path-recherchehtml #block-formulaireexposeactivitesrecherche-activites #views-exposed-form-activites-recherche-activites, .path-articleshtml #block-formulaireexposeactivitesrecherche-activites #views-exposed-form-activites-recherche-activites {
+    .path-taxonomy #block-formulaireexposeactivitesrecherche-activites #views-exposed-form-activites-recherche-activites, .path-node #block-formulaireexposeactivitesrecherche-activites #views-exposed-form-activites-recherche-activites, .path-recherchehtml #block-formulaireexposeactivitesrecherche-activites #views-exposed-form-activites-recherche-activites, .path-articleshtml #block-formulaireexposeactivitesrecherche-activites #views-exposed-form-activites-recherche-activites,
+    .path-sorties-momenthtml #block-formulaireexposeactivitesrecherche-activites #views-exposed-form-activites-recherche-activites {
       z-index: 1;
       position: relative;
       overflow: hidden;
@@ -203,21 +205,26 @@ h1 {
       top: -235px;
       padding-bottom: 5px;
       background: #ffffff; }
-      .path-taxonomy #block-formulaireexposeactivitesrecherche-activites #views-exposed-form-activites-recherche-activites .voir-filtres, .path-node #block-formulaireexposeactivitesrecherche-activites #views-exposed-form-activites-recherche-activites .voir-filtres, .path-recherchehtml #block-formulaireexposeactivitesrecherche-activites #views-exposed-form-activites-recherche-activites .voir-filtres, .path-articleshtml #block-formulaireexposeactivitesrecherche-activites #views-exposed-form-activites-recherche-activites .voir-filtres {
+      .path-taxonomy #block-formulaireexposeactivitesrecherche-activites #views-exposed-form-activites-recherche-activites .voir-filtres, .path-node #block-formulaireexposeactivitesrecherche-activites #views-exposed-form-activites-recherche-activites .voir-filtres, .path-recherchehtml #block-formulaireexposeactivitesrecherche-activites #views-exposed-form-activites-recherche-activites .voir-filtres, .path-articleshtml #block-formulaireexposeactivitesrecherche-activites #views-exposed-form-activites-recherche-activites .voir-filtres,
+      .path-sorties-momenthtml #block-formulaireexposeactivitesrecherche-activites #views-exposed-form-activites-recherche-activites .voir-filtres {
         background: #0cacce;
         margin: auto;
         padding: 5px;
         color: #ffffff;
         text-align: center;
         width: 250px; }
-      .path-taxonomy #block-formulaireexposeactivitesrecherche-activites #views-exposed-form-activites-recherche-activites.with-dates, .path-node #block-formulaireexposeactivitesrecherche-activites #views-exposed-form-activites-recherche-activites.with-dates, .path-recherchehtml #block-formulaireexposeactivitesrecherche-activites #views-exposed-form-activites-recherche-activites.with-dates, .path-articleshtml #block-formulaireexposeactivitesrecherche-activites #views-exposed-form-activites-recherche-activites.with-dates {
+      .path-taxonomy #block-formulaireexposeactivitesrecherche-activites #views-exposed-form-activites-recherche-activites.with-dates, .path-node #block-formulaireexposeactivitesrecherche-activites #views-exposed-form-activites-recherche-activites.with-dates, .path-recherchehtml #block-formulaireexposeactivitesrecherche-activites #views-exposed-form-activites-recherche-activites.with-dates, .path-articleshtml #block-formulaireexposeactivitesrecherche-activites #views-exposed-form-activites-recherche-activites.with-dates,
+      .path-sorties-momenthtml #block-formulaireexposeactivitesrecherche-activites #views-exposed-form-activites-recherche-activites.with-dates {
         top: -315px; }
-  .path-taxonomy #block-formulaireexposeactivitesrecherche-activites:hover, .path-node #block-formulaireexposeactivitesrecherche-activites:hover, .path-recherchehtml #block-formulaireexposeactivitesrecherche-activites:hover, .path-articleshtml #block-formulaireexposeactivitesrecherche-activites:hover {
+  .path-taxonomy #block-formulaireexposeactivitesrecherche-activites:hover, .path-node #block-formulaireexposeactivitesrecherche-activites:hover, .path-recherchehtml #block-formulaireexposeactivitesrecherche-activites:hover, .path-articleshtml #block-formulaireexposeactivitesrecherche-activites:hover,
+  .path-sorties-momenthtml #block-formulaireexposeactivitesrecherche-activites:hover {
     height: 280px; }
-    .path-taxonomy #block-formulaireexposeactivitesrecherche-activites:hover #views-exposed-form-activites-recherche-activites, .path-node #block-formulaireexposeactivitesrecherche-activites:hover #views-exposed-form-activites-recherche-activites, .path-recherchehtml #block-formulaireexposeactivitesrecherche-activites:hover #views-exposed-form-activites-recherche-activites, .path-articleshtml #block-formulaireexposeactivitesrecherche-activites:hover #views-exposed-form-activites-recherche-activites {
+    .path-taxonomy #block-formulaireexposeactivitesrecherche-activites:hover #views-exposed-form-activites-recherche-activites, .path-node #block-formulaireexposeactivitesrecherche-activites:hover #views-exposed-form-activites-recherche-activites, .path-recherchehtml #block-formulaireexposeactivitesrecherche-activites:hover #views-exposed-form-activites-recherche-activites, .path-articleshtml #block-formulaireexposeactivitesrecherche-activites:hover #views-exposed-form-activites-recherche-activites,
+    .path-sorties-momenthtml #block-formulaireexposeactivitesrecherche-activites:hover #views-exposed-form-activites-recherche-activites {
       top: 0;
       box-shadow: 0px 3px 5px rgba(125, 125, 125, 0.5); }
-      .path-taxonomy #block-formulaireexposeactivitesrecherche-activites:hover #views-exposed-form-activites-recherche-activites .voir-filtres, .path-node #block-formulaireexposeactivitesrecherche-activites:hover #views-exposed-form-activites-recherche-activites .voir-filtres, .path-recherchehtml #block-formulaireexposeactivitesrecherche-activites:hover #views-exposed-form-activites-recherche-activites .voir-filtres, .path-articleshtml #block-formulaireexposeactivitesrecherche-activites:hover #views-exposed-form-activites-recherche-activites .voir-filtres {
+      .path-taxonomy #block-formulaireexposeactivitesrecherche-activites:hover #views-exposed-form-activites-recherche-activites .voir-filtres, .path-node #block-formulaireexposeactivitesrecherche-activites:hover #views-exposed-form-activites-recherche-activites .voir-filtres, .path-recherchehtml #block-formulaireexposeactivitesrecherche-activites:hover #views-exposed-form-activites-recherche-activites .voir-filtres, .path-articleshtml #block-formulaireexposeactivitesrecherche-activites:hover #views-exposed-form-activites-recherche-activites .voir-filtres,
+      .path-sorties-momenthtml #block-formulaireexposeactivitesrecherche-activites:hover #views-exposed-form-activites-recherche-activites .voir-filtres {
         display: none; } }
 #entete_national .logo-national {
   background: url(/assets/img/piaf.jpg) no-repeat left center;

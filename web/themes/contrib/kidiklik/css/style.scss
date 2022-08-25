@@ -233,7 +233,8 @@ h1 {
 }
 
 @media (min-width: 768px) {
-	.path-taxonomy, .path-node, .path-recherchehtml, .path-articleshtml {
+	.path-taxonomy, .path-node, .path-recherchehtml, .path-articleshtml,
+	.path-sorties-momenthtml {
 			#block-formulaireexposeactivitesrecherche-activites {
 				height: 50px;
 				transition: all 0.5s;
