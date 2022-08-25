@@ -759,10 +759,13 @@ footer .menu li.last {
 			float: right;
 			background: #db2a24;
 			padding: 7px 10px;
-      a {
-        font-size: 0.95em;
-        color: #fff;
-      }
+			a {
+				font-size: 0.95em;
+				color: #fff;
+			}
+		}
+		.reserver {
+			background: url(../images/ticket.jpg) no-repeat;
 		}
 	}
 	.paragraph--view-mode--liste {

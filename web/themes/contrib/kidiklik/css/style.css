@@ -607,6 +607,8 @@ footer .menu li.last {
       .activite-teaser .actions .favori a, .activite-teaser .actions .reserver a {
         font-size: 0.95em;
         color: #fff; }
+    .activite-teaser .actions .reserver {
+      background: url(../images/ticket.jpg) no-repeat; }
   .activite-teaser .paragraph--view-mode--liste {
     display: flex; }
     .activite-teaser .paragraph--view-mode--liste .field--name-field-date-de-fin {
