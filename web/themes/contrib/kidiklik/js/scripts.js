@@ -141,7 +141,7 @@ jQuery(document).ready(function() {
 	jQuery('select[name="ville"]').on('select2:select', function(e) {
 		var data = e.params.data;
 		if(data.id === "geo") {
-			//getCurrentPosition();
+			getCurrentPosition();
 			maPosition();
 		} else {
 			jQuery('input[name="center[coordinates][lng]"]').val('');
