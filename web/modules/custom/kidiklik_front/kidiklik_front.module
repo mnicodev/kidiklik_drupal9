@@ -514,6 +514,9 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
       $query->addTable('node__field_adherent', $rel, $join, 'node__field_adherent');
       $query->addWhere('', 'node__field_adherent.field_adherent_target_id', $adh, '=');
       $query->addWhere('', 'nid', $node->id(), '<>');
+
+      $query->where[1]['conditions'][2]['value']= date('Y-m-d');
+      $query->where[1]['conditions'][2]['operator']= '>=';
      
     //ksm($query->where);
   }
