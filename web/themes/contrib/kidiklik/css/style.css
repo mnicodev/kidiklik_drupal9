@@ -1,7 +1,7 @@
 /**
  * If using a CSS pre-processor, tell it to overwrite this file. If not, place
  * your custom CSS modifications here.
- */ 
+ */
 @font-face {
   font-family: 'Roboto';
   src: url(../fonts/Roboto-Regular.ttf); }
@@ -875,7 +875,7 @@ article {
           .diaporama .views_slideshow_cycle_teaser_section .views-row .views-field-title,
           .diaporama .views_slideshow_cycle_slide .views-row .views-field-title {
             width: 240px;
-            height: 298px; } }
+            height: auto; } }
         .diaporama .views_slideshow_cycle_teaser_section .views-row .views-field-title a,
         .diaporama .views_slideshow_cycle_slide .views-row .views-field-title a {
           font-size: 16px;
@@ -1262,7 +1262,9 @@ article {
   margin-bottom: 10px; }
 
 .imagefield_slideshow-wrapper {
-  border: none; }
+  border: none;
+  margin: 0;
+  padding: 0; }
 
 #block-blocinscriptionnewsletter h3 {
   color: #ffffff; }
