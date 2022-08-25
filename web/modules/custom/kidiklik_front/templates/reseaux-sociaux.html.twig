@@ -1,18 +1,12 @@
 <div class="suivez-nous">
-    <div class="caption">
-        <div class="title">Suivez-nous</div>
-        <div class="reseaux-sociaux">
-				<ul class="nav navbar" >
-				{% for rs in content %}
-				<li class="nav-item">
+{% for rs in content %}
+				
                     <a href="{{ rs.link }}">
 					{% if rs.social == 'instagram' %}
 					<img src="/assets/img/instagram.jpg">
 					{% endif %}
                     </a>
-					</li> 
+				
 				{% endfor %}
-				</ul>
-			</div>
-    </div>
+   
 </div>
