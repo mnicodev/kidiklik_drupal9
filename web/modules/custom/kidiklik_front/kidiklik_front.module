@@ -526,6 +526,22 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
     $ou = \Drupal::request()->get("ville");
     $quand = \Drupal::request()->get("quand");
     $search = \Drupal::request()->get("search");
+    $ref_adherent =  \Drupal::request()->get("ref_adh") ?? \Drupal::request()->get("ref_adherent") ?? null;
+
+    if(!empty($ref_adherent)) {
+      $configuration = array(
+        'type' => 'INNER',
+        'table' => 'node__field_adherent',
+        'field' => 'entity_id',
+        'left_table' => 'node_field_data',
+        'left_field' => 'nid',
+        'operator' => '=',
+      );
+      $join = \Drupal\views\Views::pluginManager('join')->createInstance('standard', $configuration);
+      $rel = $query->addRelationship('node__field_adherent', $join, 'node__field_adherent');
+      $query->addTable('node__field_adherent', $rel, $join, 'node__field_adherent');
+      $query->addWhere('', 'node__field_adherent.field_adherent_target_id', $ref_adherent, '=');
+    }
 
     if (!empty($search)) {
       $configuration = array(
