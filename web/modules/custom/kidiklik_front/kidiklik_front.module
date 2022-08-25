@@ -165,7 +165,7 @@ function kidiklik_front_form_alter(&$form, FormStateInterface $form_state, $form
 
   if ($form['#id'] == "views-exposed-form-activites-recherche-activites") {
     $database = \Drupal::database();
-    $query = $database->query("select * from villes where code_postal like '" . get_departement() . "%'");
+    $query = $database->query("select * from villes where code_postal like '" . get_departement() . "%' order by commune");
     $villes = $query->fetchAll();
 
     $categories = \Drupal::entityTypeManager()->getStorage("taxonomy_term")->loadByProperties([
