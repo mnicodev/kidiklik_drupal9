@@ -33,9 +33,9 @@ Drupal.behaviors.kidiklik = {
 }
 
 jQuery(document).ready(function() {
-	if(jQuery('.field--name-field-image').length) {
+	/*if(jQuery('.field--name-field-image').length) {
 		jQuery('.image_kidiklik_old').remove();
-	}
+	}*/
 
 	if(jQuery(".field--name-field-date").length) {
 		jQuery(".field--name-field-date .field--items").on('click', function() {
