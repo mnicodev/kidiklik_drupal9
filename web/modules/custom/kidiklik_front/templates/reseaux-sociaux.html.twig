@@ -1,12 +1,13 @@
-<div class="suivez-nous">
+<div class="rs-suivez-nous">
 {% for rs in content %}
 				
-                    <a href="{{ rs.link }}">
+                    
 					{% if rs.social == 'instagram' %}
+					<a href="{{ rs.link }}">
 					<img src="/assets/img/instagram.jpg">
+					</a>
 					{% endif %}
-                    </a>
-				
+                    
 				{% endfor %}
    
 </div>
