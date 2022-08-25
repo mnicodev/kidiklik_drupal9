@@ -177,7 +177,7 @@ function kidiklik_front_form_alter(&$form, FormStateInterface $form_state, $form
 
     $output = null;
     $list_cat = [];
-    $list_cat['All'] = 'Choisissez une rubriques ...';
+    $list_cat['All'] = 'Choisissez ...';
     foreach ($categories as $cat) {
       $sous_categories = \Drupal::entityTypeManager()->getStorage("taxonomy_term")->loadByProperties([
         "vid" => "rubriques_activite",
