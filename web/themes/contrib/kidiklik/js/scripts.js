@@ -228,6 +228,7 @@ jQuery(document).ready(function() {
   function maPosition(position) {//position
 		lng = position.coords.longitude;
 		lat = position.coords.latitude;
+		console.log(position)
 		//lng=1.7945;
 		//lat=47.820614;
 		 jQuery('input[name="center[coordinates][lng]"]').val(lng);
