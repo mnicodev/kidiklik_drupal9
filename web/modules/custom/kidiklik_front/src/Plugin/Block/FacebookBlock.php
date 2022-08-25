@@ -24,7 +24,7 @@ class FacebookBlock extends BlockBase {
      $term_dep=\Drupal::entityTypeManager()->getStorage("taxonomy_term")->load(get_term_departement());
     
      $build['#content']=$term_dep->get('field_reseaux_sociaux2')->getValue();
-     $build['#theme'] = 'reseaux_sociaux';
+     
 
     return $build;
   }
