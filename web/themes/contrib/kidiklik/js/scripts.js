@@ -225,7 +225,7 @@ jQuery(document).ready(function() {
 
 
 
-  function maPosition() {//position
+  function maPosition(position) {//position
 		lng = position.coords.longitude;
 		lat = position.coords.latitude;
 		//lng=1.7945;
