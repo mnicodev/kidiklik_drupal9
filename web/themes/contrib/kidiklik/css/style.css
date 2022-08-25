@@ -870,7 +870,7 @@ article {
           .diaporama .views_slideshow_cycle_teaser_section .views-row .views-field-title,
           .diaporama .views_slideshow_cycle_slide .views-row .views-field-title {
             width: 240px;
-            height: 247px; } }
+            height: auto; } }
         @media (min-width: 1200px) {
           .diaporama .views_slideshow_cycle_teaser_section .views-row .views-field-title,
           .diaporama .views_slideshow_cycle_slide .views-row .views-field-title {
