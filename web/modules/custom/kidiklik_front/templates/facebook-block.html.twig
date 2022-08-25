@@ -11,7 +11,10 @@
 {% set classes = [
     'clear-both',
 ] %}
-
-<div class="fb-page" data-adapt-container-width="false" data-height="130" data-hide-cover="false" data-href="https://www.facebook.com/kidiklik{{  dept }}" data-show-facepile="false" data-small-header="false" data-tabs="timeline" data-width="255">
-  <blockquote cite="https://www.facebook.com/kidiklik{{  dept }}" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/kidiklik45">Le Meilleur des Sorties pour enfants</a></blockquote>
+{% for rs in content %}
+{% if rs.social == 'facebook' %}
+<div class="fb-page" data-adapt-container-width="false" data-height="130" data-hide-cover="false" data-href="{{ rs.link }}" data-show-facepile="false" data-small-header="false" data-tabs="timeline" data-width="255">
+  <blockquote cite="{{ rs.link }}" class="fb-xfbml-parse-ignore"><a href="{{ rs.link }}">Le Meilleur des Sorties pour enfants</a></blockquote>
 </div>
+{% endif %}
+{% endfor %}
