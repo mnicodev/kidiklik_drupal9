@@ -41,8 +41,6 @@ class SortiesBoutonBlock extends BlockBase {
       return null;
     }
 
-    $adherent = 
-
     $liste = \Drupal::entityTypeManager()->getStorage('node')->loadByProperties(
       [
         'type' => 'agenda',
