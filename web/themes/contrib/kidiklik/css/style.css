@@ -757,14 +757,14 @@ p.js-flag-message {
   color: white;
   z-index: 10000; }
 
-.activite .flag-resa .reservation a, .agenda .flag-resa .reservation a {
+.activite .reservation a, .agenda .reservation a {
   background: #db2a24;
   padding: 7px;
   color: #fff;
   width: 100%;
   display: block;
   text-align: center; }
-  .activite .flag-resa .reservation a:before, .agenda .flag-resa .reservation a:before {
+  .activite .reservation a:before, .agenda .reservation a:before {
     content: ""; }
 .activite .field--name-field-resume, .agenda .field--name-field-resume {
   margin-bottom: 10px; }

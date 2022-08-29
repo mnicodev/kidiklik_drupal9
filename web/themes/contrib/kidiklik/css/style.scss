@@ -978,24 +978,24 @@ p.js-flag-message {
 
 }
 .activite, .agenda {
+	.reservation {
+		a {
 
-	.flag-resa {
-		.reservation {
-			a {
+			background: #db2a24;
+			padding: 7px;
+			color: #fff;
+			width: 100%;
+			display: block;
+			text-align: center;
 
-				background: #db2a24;
-				padding: 7px;
-				color: #fff;
-				width: 100%;
-				display: block;
-				text-align: center;
-
-				&:before {
-					content: "";
-				}
-
+			&:before {
+				content: "";
 			}
+
 		}
+	}
+	.flag-resa {
+		
 	}
 	
 	.field--name-field-resume  {
