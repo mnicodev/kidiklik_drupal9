@@ -75,6 +75,11 @@ function kidiklik_front_theme()
       'variables' => [
         'content' => NULL,
       ]
+    ],
+    'reserver_bouton' => [
+      'variables' => [
+        'content' => NULL,
+      ]
     ]
   ];
 }
