@@ -465,7 +465,7 @@ function kidiklik_admin_form_node_article_form_alter(&$form, FormStateInterface 
   }
   
   if (get_departement() !== 0) {
-    $rub = $form["field_rubriques_activites"]["widget"]["#options"];
+    $rub = $form["field_rubriques_activite"]["widget"]["#options"];
     $tab = [];
     $n = "";
     foreach ($rub as $k => $r) {
@@ -480,9 +480,8 @@ function kidiklik_admin_form_node_article_form_alter(&$form, FormStateInterface 
         }
       }
     }
-    $form["field_rubriques_activites"]["widget"]["#options"] = $tab;
-
-    $form["field_rubriques_activites"]["widget"]["#size"] = 1;
+    $form["field_rubriques_activite"]["widget"]["#options"] = $tab;
+    $form["field_rubriques_activite"]["widget"]["#size"] = 1;
 
   }
 
@@ -678,7 +677,7 @@ function kidiklik_admin_form_node_agenda_form_alter(&$form, FormStateInterface $
     //
   }
 
-  $form['field_rubriques_activites']['widget']['#options'] = $list_cat;
+  $form['field_rubriques_activite']['widget']['#options'] = $list_cat;
 
   $form["type"] = "agenda";
   /* on vient d'une fiche adhérent */
