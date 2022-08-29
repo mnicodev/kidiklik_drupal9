@@ -32,10 +32,13 @@ class ReserverBlock extends BlockBase {
     if(empty($node)) {  
       return null;
     }
-    $id_resa = current($node->get('field_type_de_reservation')->getValue())['target_id'];
+    $id_resa = current($node->get('field_type_de_reservation')->getValue())['target_id'] ?? null;
+    if(!empty($id_resa)) {
+	    return null;
+    }
     $resa = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($id_resa);
-    ksm($resa->getName());
-    
+
+    $build['#type_resa'] = $resa->getName();
 
     return $build;
   }
