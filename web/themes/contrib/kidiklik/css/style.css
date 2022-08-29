@@ -402,6 +402,9 @@ article {
   article .zone-image {
     text-align: right;
     margin-bottom: 10px; }
+    article .zone-image .flag {
+      width: 33%;
+      margin-left: auto; }
   article img {
     max-width: 100%;
     height: auto; }
@@ -607,10 +610,6 @@ footer .menu li.last {
       .activite-teaser .actions .favori a, .activite-teaser .actions .reserver a {
         font-size: 0.95em;
         color: #fff; }
-    .activite-teaser .actions .reserver {
-      background: url(../images/ticket.png) no-repeat #db2a24;
-      background-position: 0 50%;
-      padding-left: 30px; }
   .activite-teaser .paragraph--view-mode--liste {
     display: flex; }
     .activite-teaser .paragraph--view-mode--liste .field--name-field-date-de-fin {
@@ -757,12 +756,14 @@ p.js-flag-message {
   z-index: 10000; }
 
 .reservation a {
-  background: #db2a24;
   padding: 7px;
   color: #fff;
   width: 100%;
   display: block;
-  text-align: center; }
+  text-align: center;
+  background: url(../images/ticket.png) no-repeat #db2a24;
+  background-position: 0 50%;
+  padding-left: 30px; }
   .reservation a:before {
     content: ""; }
 
