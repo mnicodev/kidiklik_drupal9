@@ -480,7 +480,7 @@ function kidiklik_admin_form_node_article_form_alter(&$form, FormStateInterface 
         }
       }
     }
-    $form["field_rubriques_activitess"]["widget"]["#options"] = $tab;
+    $form["field_rubriques_activites"]["widget"]["#options"] = $tab;
 
     $form["field_rubriques_activites"]["widget"]["#size"] = 1;
 
