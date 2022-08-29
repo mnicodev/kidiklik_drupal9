@@ -656,7 +656,7 @@ function kidiklik_admin_form_node_agenda_form_alter(&$form, FormStateInterface $
     //"field_departement"=>get_term_departement()
   ]);
 
-  $list_cat = [];
+ /* $list_cat = [];
   $list_cat['All'] = 'Choisissez une rubriques ...';
   foreach ($categories as $cat) {
     $sous_categories = \Drupal::entityTypeManager()->getStorage("taxonomy_term")->loadByProperties([
@@ -665,19 +665,39 @@ function kidiklik_admin_form_node_agenda_form_alter(&$form, FormStateInterface $
       "status" => 1,
       "field_departement" => get_term_departement()
     ]);
-    //$output.='<div class=""><a href="/_form_search/categories/'.$cat->Id().'" >'.$cat->getName().'</a></div>';
+    
 
     $list_cat[$cat->Id()] = $cat->getName();
     if (!empty($sous_categories)) {
       foreach ($sous_categories as $sc) {
-        //[$cat->getName()]
+
         $list_cat[$sc->Id()] = "-- " . $sc->getName();
       }
-    } //else $list_cat[$cat->Id()] = $cat->getName();
-    //
+    } 
+  }*/
+  if (get_departement() !== 0) {
+    $rub = $form["field_rubriques_activite"]["widget"]["#options"];
+    $tab = [];
+    $n = "";
+    foreach ($rub as $k => $r) {
+      if ($k != "_none") {
+        $t = taxonomy_term_load($k);
+        $p = current($t->parent->getValue()[0]);
+        if (!(int)$p) {
+          $n = current($t->name->getValue()[0]);
+        } else {
+          if (current($t->get("field_departement")->getValue())["target_id"] == $term_dep)
+            $tab[$n][$k] = current($t->name->getValue()[0]);
+        }
+      }
+    }
+    $form["field_rubriques_activite"]["widget"]["#options"] = $tab;
+
+    $form["field_rubriques_activite"]["widget"]["#size"] = 1;
+
   }
 
-  $form['field_rubriques_activite']['widget']['#options'] = $list_cat;
+  
 
   $form["type"] = "agenda";
   /* on vient d'une fiche adhérent */
@@ -1257,7 +1277,7 @@ function getAjaxCoordonnees(array &$form, FormStateInterface $form_state)
 
         $tab[$activite->id()] = $activite->getTitle();
       }
-      $form["field_activite"] = [
+      $form["field_activite_lie"] = [
         "#type" => "select",
         "#options" => $tab,
         "#title" => "Activités",
@@ -1312,7 +1332,7 @@ function getAjaxCoordonnees(array &$form, FormStateInterface $form_state)
     $form["coordonnee"][] = $form["field_email"];
     $form["coordonnee"][] = $form["field_lien"];
     $form["coordonnee"][] = $form["field_lieu"];
-    if ($form["type"] == "agenda") $form["coordonnee"][] = $form["field_activite"];
+    if ($form["type"] == "agenda") $form["coordonnee"][] = $form["field_activite_lie"];
     $form["coordonnee"][] = $form["field_ville_save"];
     //$form["coordonnee"][]=$form["field_activite_save"];
 
