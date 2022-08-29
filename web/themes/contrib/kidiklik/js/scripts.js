@@ -24,9 +24,7 @@ Drupal.behaviors.kidiklik = {
 					jQuery('#views-exposed-form-activites-recherche-activites').removeClass('with-dates');
 				}
 			})
-			if(jQuery('.field--name-field-image').length) {
-				jQuery('.image_kidiklik_old').remove();
-			}
+			
 		}
 		if(jQuery('select[name="ville"]').val() === 'geo') {
 				getCurrentPosition();
