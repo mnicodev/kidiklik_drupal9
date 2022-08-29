@@ -36,7 +36,6 @@ class SortiesBoutonBlock extends BlockBase {
             $build['#ref_act'] = current($node->get('field_activite_lie')->getValue())['target_id'];
       }
     }
-    
     if(empty($build['#ref_act'])) {
       return null;
     }

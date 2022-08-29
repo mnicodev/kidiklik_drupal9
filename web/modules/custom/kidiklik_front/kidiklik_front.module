@@ -337,9 +337,9 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
     $query->where[0]["type"] = "and";
 
   }
- // ksm($view->current_display);
   if ($view->current_display == "diaporama" ||
-    $view->current_display == "block_article_accueil") {
+	  $view->current_display == "block_article_accueil" ||
+	  $view->current_display == "bloc_liste_mise_en_avant") {
     /* la date de début du bloc de mise en avant doit être inférieur ou égal à la date du jour */
     $query->where[1]["conditions"][2]["operator"] = "<=";
     $query->where[1]["conditions"][2]["value"] = date('Y-m-d');
