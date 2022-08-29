@@ -977,23 +977,24 @@ p.js-flag-message {
 	z-index: 10000;
 
 }
-.activite, .agenda {
-	.reservation {
-		a {
+.reservation {
+	a {
 
-			background: #db2a24;
-			padding: 7px;
-			color: #fff;
-			width: 100%;
-			display: block;
-			text-align: center;
+		background: #db2a24;
+		padding: 7px;
+		color: #fff;
+		width: 100%;
+		display: block;
+		text-align: center;
 
-			&:before {
-				content: "";
-			}
-
+		&:before {
+			content: "";
 		}
+
 	}
+}
+.activite, .agenda {
+	
 	.flag-resa {
 		
 	}
