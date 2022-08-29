@@ -726,13 +726,13 @@ function kidiklik_admin_form_node_agenda_form_alter(&$form, FormStateInterface $
     $activites_list = ["" => "Choisissez l'activité"];
     foreach ($activites as $key => $activite) $activites_list[$key] = $activite->getTitle();
 
-    $form["field_activite"] = [
+    $form["field_activite_lie"] = [
       "#type" => "select",
       "#title" => "Activités",
       "#options" => $activites_list,
       "#weight" => 1,
     ];
-    $form["#group_children"]["field_activite"] = "group_coordonnees";
+    $form["#group_children"]["field_activite_lie"] = "group_coordonnees";
 
 
     $form["actions"]["retour"] = [
