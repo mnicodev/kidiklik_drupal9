@@ -8,7 +8,7 @@ use Drupal\Core\Block\BlockBase;
  * Provides a 'ReserverBlock' block.
  *
  * @Block(
- *  id = "sorties_bouton_block",
+ *  id = "reserver_block",
  *  admin_label = @Translation("Reserver block"),
  * )
  */
