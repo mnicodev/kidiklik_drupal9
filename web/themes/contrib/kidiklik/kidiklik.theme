@@ -17,6 +17,7 @@ function kidiklik_preprocess_page(&$variables) {
 	$variables["dep"] = get_departement();
 	$term_dep=\Drupal::entityTypeManager()->getStorage("taxonomy_term")->load(get_term_departement());
 	$variables["name_dep"] =$term_dep->get('field_nom')->value;
+	$variables["prefix"] =$term_dep->get('field_prefix')->value;
 	$tmp=\Drupal::entityTypeManager()->getStorage("taxonomy_term")->loadByProperties(['vid'=>'departement']);
 	$variables["liste_dep"]=[];
 	$variables["liste_dep"][]="Changer de département";
