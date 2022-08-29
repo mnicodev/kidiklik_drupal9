@@ -1873,11 +1873,13 @@ div.user-login, div.user-register {
 }
 
 .voir-actualites {
-	color: #0cacce;
-	border: 1px solid #0cacce;
+	
 	padding: 10px;
+	color: #fff;
+
+	background: #db2a24;
 	&:hover {
-		color: #0cacce;
+		text-decoration: underline;
 	}
 }
 
