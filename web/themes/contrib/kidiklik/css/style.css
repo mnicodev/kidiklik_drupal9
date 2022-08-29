@@ -394,15 +394,14 @@ h1 {
 #block-block-article-accueil .line .card .card-body {
   width: 70%; }
 
+.zone-flag {
+  display: flex; }
+
 article {
   line-height: 16px; }
   article .zone-image {
     text-align: right;
     margin-bottom: 10px; }
-    article .zone-image .flag-resa {
-      display: inline-flex; }
-      article .zone-image .flag-resa div {
-        max-width: 100%; }
   article img {
     max-width: 100%;
     height: auto; }
@@ -1390,7 +1389,8 @@ div.user-login, div.user-register {
   color: #fff;
   background: #db2a24; }
   .voir-actualites:hover {
-    text-decoration: underline; }
+    text-decoration: underline;
+    color: #fff; }
 
 @media (max-width: 700px) {
   .ui-widget-content {
