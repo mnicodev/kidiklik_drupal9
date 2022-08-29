@@ -9,10 +9,7 @@
 
 Drupal.behaviors.kidiklik = {
 	attach: function(context, settings) {
-		if(jQuery('.zone-flag').length) {
-			jQuery('.zone-flag').append(jQuery('#block-sortiesboutonblock').html());
-			jQuery('.zone-flag').append(jQuery('#block-reserverblock').html());
-		}
+
 		var charging_blocs = jQuery('[data-big-pipe-placeholder-id]').length;
 	      	if (charging_blocs ===1){
 			if(jQuery(".zone-flag").length) {
@@ -55,10 +52,10 @@ Drupal.behaviors.kidiklik = {
 }
 
 jQuery(document).ready(function() {
-	if(jQuery('.zone-flag').length) {
+	/*if(jQuery('.zone-flag').length) {
 		jQuery('.zone-flag').append(jQuery('#block-sortiesboutonblock').html());
 		jQuery('.zone-flag').append(jQuery('#block-reserverblock').html());
-	}
+	}*/
 
 	if(jQuery(".field--name-field-date").length) {
 		jQuery(".field--name-field-date .field--items").on('click', function() {
