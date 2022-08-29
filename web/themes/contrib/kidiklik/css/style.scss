@@ -483,17 +483,14 @@ h1 {
 #block-block-article-accueil .line .card .card-body {
 	width: 70%;
 }
-
+.zone-flag {
+	display: flex;
+}
 article  {
 	.zone-image {
 		text-align: right;
 		margin-bottom: 10px;;
-		.flag-resa {
-			display: inline-flex;
-			div {
-				max-width: 100%;
-			}
-		}
+		
 	}
 	line-height: 16px;
   img {
@@ -1881,6 +1878,7 @@ div.user-login, div.user-register {
 	background: #db2a24;
 	&:hover {
 		text-decoration: underline;
+		color:#fff;
 	}
 }
 

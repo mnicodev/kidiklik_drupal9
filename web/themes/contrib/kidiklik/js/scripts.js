@@ -35,7 +35,6 @@ Drupal.behaviors.kidiklik = {
 		}
 		jQuery('select[name="ville"]').on('select2:select', function(e) {
 			var data = e.params.data;
-			console.log('ok')
 			if(data.id === "geo") {
 				getCurrentPosition();
 				//maPosition();
@@ -52,9 +51,10 @@ Drupal.behaviors.kidiklik = {
 }
 
 jQuery(document).ready(function() {
-	/*if(jQuery('.field--name-field-image').length) {
-		jQuery('.image_kidiklik_old').remove();
-	}*/
+	if(jQuery('.zone-flag').length) {
+		jQuery('.zone-flag').append(jQuery('#block-sortiesboutonblock').html());
+		jQuery('.zone-flag').append(jQuery('#block-reserverblock').html());
+	}
 
 	if(jQuery(".field--name-field-date").length) {
 		jQuery(".field--name-field-date .field--items").on('click', function() {
