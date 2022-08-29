@@ -513,6 +513,17 @@ function kidiklik_admin_form_node_reportage_form_alter(&$form, FormStateInterfac
 function kidiklik_admin_form_node_article_edit_form_alter(&$form, FormStateInterface $form_state, $form_id)
 {
   kidiklik_admin_form_node_article_form_alter($form, $form_state, $form_id);
+	$cols = &$form['field_mise_en_avant']['widget']['entities']['#table_fields'];
+	$cols['field_type'] = [
+		'type' => 'field',
+		'label' => t('Type'),
+		'weight' => 1,
+	];
+	$cols['field_date'] = [
+		'type' => 'field',
+		'label' => t('Date'),
+		'weight' => 1,
+	];
 }
 
 function kidiklik_admin_form_node_reportage_edit_form_alter(&$form, FormStateInterface $form_state, $form_id)
@@ -631,7 +642,18 @@ function kidiklik_admin_form_node_activite_form_alter(&$form, FormStateInterface
 
 function kidiklik_admin_form_node_activite_edit_form_alter(&$form, FormStateInterface $form_state, $form_id)
 {
-  kidiklik_admin_form_node_activite_form_alter($form, $form_state, $form_id);
+	kidiklik_admin_form_node_activite_form_alter($form, $form_state, $form_id);
+	$cols = &$form['field_mise_en_avant']['widget']['entities']['#table_fields'];
+	$cols['field_type'] = [
+		'type' => 'field',
+		'label' => t('Type'),
+		'weight' => 1,
+	];
+	$cols['field_date'] = [
+		'type' => 'field',
+		'label' => t('Date'),
+		'weight' => 1,
+	];
 }
 
 function kidiklik_admin_form_node_agenda_form_alter(&$form, FormStateInterface $form_state, $form_id)
@@ -794,6 +816,17 @@ function kidiklik_admin_form_node_agenda_form_alter(&$form, FormStateInterface $
 function kidiklik_admin_form_node_agenda_edit_form_alter(&$form, FormStateInterface $form_state, $form_id)
 {
   kidiklik_admin_form_node_agenda_form_alter($form, $form_state, $form_id);
+	$cols = &$form['field_mise_en_avant']['widget']['entities']['#table_fields'];
+	$cols['field_type'] = [
+		'type' => 'field',
+		'label' => t('Type'),
+		'weight' => 1,
+	];
+	$cols['field_date'] = [
+		'type' => 'field',
+		'label' => t('Date'),
+		'weight' => 1,
+	];
   
   $adherent_id = $form["field_adherent"]["widget"]["#default_value"];
   $activites = NULL;
