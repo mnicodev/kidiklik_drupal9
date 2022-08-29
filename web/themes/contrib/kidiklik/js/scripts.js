@@ -9,6 +9,10 @@
 
 Drupal.behaviors.kidiklik = {
 	attach: function(context, settings) {
+		if(jQuery('.zone-flag').length) {
+			jQuery('.zone-flag').append(jQuery('#block-sortiesboutonblock').html());
+			jQuery('.zone-flag').append(jQuery('#block-reserverblock').html());
+		}
 		var charging_blocs = jQuery('[data-big-pipe-placeholder-id]').length;
 	      	if (charging_blocs ===1){
 			if(jQuery(".zone-flag").length) {
