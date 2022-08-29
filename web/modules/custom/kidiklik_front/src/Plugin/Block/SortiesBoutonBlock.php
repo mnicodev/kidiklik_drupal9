@@ -46,7 +46,7 @@ class SortiesBoutonBlock extends BlockBase {
     $liste = \Drupal::entityTypeManager()->getStorage('node')->loadByProperties(
       [
         'type' => 'agenda',
-        'field_activite' => $build['#ref_act']
+        'field_activite_lie' => $build['#ref_act']
       ]      
     );
     if(count($liste) === 0) {

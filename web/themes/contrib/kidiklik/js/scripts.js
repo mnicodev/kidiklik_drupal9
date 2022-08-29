@@ -74,9 +74,6 @@ jQuery(document).ready(function() {
 
 	}
 
-	jQuery('.btn-creer-compte').on('click', function() {
-
-	});
 
   if(jQuery('#edit-field-rubriques-activite-target-id').length) {
    /* jQuery('#edit-field-rubriques-activite-target-id').select2({
