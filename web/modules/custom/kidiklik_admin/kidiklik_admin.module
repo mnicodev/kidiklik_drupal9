@@ -726,13 +726,13 @@ function kidiklik_admin_form_node_agenda_form_alter(&$form, FormStateInterface $
     $activites_list = ["" => "Choisissez l'activité"];
     foreach ($activites as $key => $activite) $activites_list[$key] = $activite->getTitle();
 
-    $form["field_activite_lie"] = [
+    $form["field_activite"] = [
       "#type" => "select",
       "#title" => "Activités",
       "#options" => $activites_list,
       "#weight" => 1,
     ];
-    $form["#group_children"]["field_activite_lie"] = "group_coordonnees";
+    $form["#group_children"]["field_activite"] = "group_coordonnees";
 
 
     $form["actions"]["retour"] = [
@@ -800,8 +800,7 @@ function kidiklik_admin_form_node_agenda_edit_form_alter(&$form, FormStateInterf
   if (!empty($adherent_id)) {
     $activites = \Drupal::entityTypeManager()->getStorage("node")->loadByProperties(["type" => "activite", "field_adherent" => $adherent_id]);
   }
-
-
+  $node_agenda = \Drupal::request()->attributes->get('node');
   $activites_list = ["" => "Choisissez l'activité"];
   $form["field_activite"] = [
     "#type" => "select",
@@ -809,15 +808,16 @@ function kidiklik_admin_form_node_agenda_edit_form_alter(&$form, FormStateInterf
 
   ];
   $form["#group_children"]["field_activite"] = "group_coordonnees";
-
-  foreach ($activites as $key => $activite) $activites_list[$key] = $activite->getTitle();
+  foreach ($activites as $key => $activite) {
+	  $activites_list[$key] = $activite->getTitle();
+  }
   $form["field_activite"]["#options"] = $activites_list;
-  if ($form["field_activite_save"]["widget"][0]["value"]["#default_value"])
+  if (!empty($form["field_activite_save"]["widget"][0]["value"]["#default_value"])) {
     $form["field_activite"]["#default_value"] = $form["field_activite_save"]["widget"][0]["value"]["#default_value"];
-
-
+  }else if(!empty(current($node_agenda->get('field_activite_lie')->getValue())['target_id'])) {
+    $form["field_activite"]["#default_value"] = current($node_agenda->get('field_activite_lie')->getValue())['target_id'];
+  }
   $cp = $form["field_code_postal"]["widget"][0]["value"]["#default_value"];
-
 
 }
 
@@ -1277,7 +1277,7 @@ function getAjaxCoordonnees(array &$form, FormStateInterface $form_state)
 
         $tab[$activite->id()] = $activite->getTitle();
       }
-      $form["field_activite_lie"] = [
+      $form["field_activite"] = [
         "#type" => "select",
         "#options" => $tab,
         "#title" => "Activités",
@@ -1333,7 +1333,7 @@ function getAjaxCoordonnees(array &$form, FormStateInterface $form_state)
     $form["coordonnee"][] = $form["field_lien"];
     $form["coordonnee"][] = $form["field_lieu"];
     if ($form["type"] == "agenda") {
-      $form["coordonnee"][] = $form["field_activite_lie"];
+      $form["coordonnee"][] = $form["field_activite"];
     }
     $form["coordonnee"][] = $form["field_ville_save"];
     //$form["coordonnee"][]=$form["field_activite_save"];
