@@ -490,7 +490,10 @@ article  {
 	.zone-image {
 		text-align: right;
 		margin-bottom: 10px;;
-		
+		.flag {
+			width: 33%;
+			margin-left: auto;
+		}
 	}
 	line-height: 16px;
   img {
@@ -762,11 +765,7 @@ footer .menu li.last {
 				color: #fff;
 			}
 		}
-		.reserver {
-			background: url(../images/ticket.png) no-repeat #db2a24;
-			background-position: 0 50%;
-			padding-left: 30px;
-		}
+		
 	}
 	.paragraph--view-mode--liste {
 		display: flex;
@@ -977,7 +976,7 @@ p.js-flag-message {
 .reservation {
 	a {
 
-		background: #db2a24;
+
 		padding: 7px;
 		color: #fff;
 		width: 100%;
@@ -987,6 +986,9 @@ p.js-flag-message {
 		&:before {
 			content: "";
 		}
+		background: url(../images/ticket.png) no-repeat #db2a24;
+		background-position: 0 50%;
+		padding-left: 30px;
 
 	}
 }
