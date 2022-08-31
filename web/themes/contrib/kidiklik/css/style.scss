@@ -976,9 +976,10 @@ p.js-flag-message {
 	z-index: 10000;
 
 }
-.reservation {
-	a {
 
+a.reservation {
+
+		white-space: nowrap;
 
 		padding: 7px;
 		color: #fff;
@@ -993,8 +994,9 @@ p.js-flag-message {
 		background-position: 0 50%;
 		padding-left: 30px;
 
-	}
 }
+
+
 .activite, .agenda {
 	
 	.flag-resa {
