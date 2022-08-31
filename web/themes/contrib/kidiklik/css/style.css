@@ -759,9 +759,8 @@ p.js-flag-message {
 
 a.reservation {
   white-space: nowrap;
-  padding: 7px;
+  padding: 7px 15px;
   color: #fff;
-  width: 100%;
   display: block;
   text-align: center;
   background: url(../images/ticket.png) no-repeat #db2a24 !important;
