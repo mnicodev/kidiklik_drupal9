@@ -55,12 +55,13 @@ class NewsletterController extends ControllerBase
     $query->join("node__field_image", "img", "img.entity_id=n.nid");
     $query->leftJoin("node__field_partage_departements", "par", "par.entity_id=n.nid");
 
-    $query->fields("n", ["nid", "title"]);
+    $query->fields("n", ["nid", "title", "status"]);
     $query->fields("dd", ["field_date_debut_value"]);
     $query->fields("df", ["field_date_fin_value"]);
     $query->fields("img", ["field_image_target_id"]);
 
     $query->condition("n.type", "publicite", "=");
+    $query->condition("n.status", 1, "=");
 
     $orGroup = $query->orConditionGroup()
     ->condition("dep.field_departement_target_id", get_term_departement(), "=")
@@ -73,17 +74,15 @@ class NewsletterController extends ControllerBase
     $query->range(0,1);
     //kint($query->distinct()->__toString());
     $rs = current($query->execute()->fetchAll());
-
+//    kint($rs);
     $pub_img = \Drupal::entityTypeManager()->getStorage("file")->load($rs->field_image_target_id);
-    
     $file = null;
-
-    if($n->get("field_image_d_entete") !== null) {
-      $entetes = $n->get("field_image_d_entete")->getValue();
+    if((bool)$n->get("field_image_d_entete")->getValue() === true) {
+	    $entetes = $n->get("field_image_d_entete")->getValue();
       foreach($entetes as $item) {
-        $entete_img_term = Term::Load($item['target_id']);
-        $dept = (int)current($entete_img_term->get('field_departement')->getValue())['target_id'];
-        if($dept === get_term_departement()) {
+	      $entete_img_term = Term::Load($item['target_id']);
+	      $dept = (int)current($entete_img_term->get('field_departement')->getValue())['target_id'];
+        if($dept === (int)get_term_departement()) {
           $file = \Drupal::entityTypeManager()->getStorage("file")->load($entete_img_term->get("field_image")->first()->get("target_id")->getValue());
           break;
         }
@@ -98,16 +97,20 @@ class NewsletterController extends ControllerBase
     $blocs = $n->get('field_blocs_de_donnees')->getValue(); //\Drupal::entityTypeManager()->getStorage("node")->loadByProperties(["type"=>"bloc_de_mise_en_avant","field_newsletter"=>$nid,"status"=>1]);
     $blocs_nat = [];
     foreach($blocs as $key => $item) {//kint(get_term_departement(null,'name'));
-      $paragraph=\Drupal\paragraphs\Entity\Paragraph::load($item["target_id"]);
-      $dept_target_id = (int)current($paragraph->get("field_departement")->getValue())['target_id'];
-      $dept_bloc = (int)\Drupal::entityTypeManager()->getStorage("taxonomy_term")->load($dept_target_id)->getName();
+    	if(!empty($item["target_id"])){
+		$paragraph=\Drupal\paragraphs\Entity\Paragraph::load($item["target_id"]);
+		if((bool)($paragraph->get("field_departement")->getValue()) === true) {
+		      $dept_target_id = (int)current($paragraph->get("field_departement")->getValue())['target_id'];
+		      $dept_bloc = (int)\Drupal::entityTypeManager()->getStorage("taxonomy_term")->load($dept_target_id)->getName();
+		      if($dept_target_id !== (int)get_term_departement()) {
 
-		  if($dept_target_id !== (int)get_term_departement()) {
-        if($dept_bloc === 0) {
-          $blocs_nat[] = $item;
-        }
-        unset($blocs[$key]);
-      }
+			if($dept_bloc === 0) {
+			  $blocs_nat[] = $item;
+			}
+			unset($blocs[$key]);
+		      }
+		}
+    	}
     }
     
     $blocs = array_merge($blocs,$blocs_nat);
@@ -143,8 +146,8 @@ class NewsletterController extends ControllerBase
 
     }
     //kint(\Drupal::request()->server->get("HTTP_HOST"));
-    //kint($liste);
     //kint($newsletter->get("field_bandeau_rose")->value);
+    $entete['nom_dep'] = current($entete['dep']->get('field_nom')->getValue())['value'];
     $build = [
       '#type' => "page",
       '#theme' => 'kidiklik_newsletter',
@@ -155,8 +158,7 @@ class NewsletterController extends ControllerBase
       ],
 
     ];
-
-    //kint($output);
+    //kint($entete);
    // return $build;
     $output=\Drupal::service('renderer')->render($build);
 

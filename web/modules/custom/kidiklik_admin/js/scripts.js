@@ -80,38 +80,42 @@ $(function(){
       allowClear: true
     });
   }
-  $('#edit-field-client-wrapper select').select2({
-	placeholder: 'Choisissez un client ...',
-    allowClear: true,
-	ajax: {
-		url: '/admin/select/clients',
-		dataType: 'json',
-		data: function (params) {
+	if($('#edit-field-client-wrapper').length) {
+		  $('#edit-field-client-wrapper select').select2({
+			placeholder: 'Choisissez un client ...',
+			allowClear: true,
+			ajax: {
+				url: '/admin/select/clients',
+				dataType: 'json',
+				data: function (params) {
 
-			var query = {
-				search: params.term,
-				type: 'public'
+					var query = {
+						search: params.term,
+						type: 'public'
+					}
+					return query;
+				},
 			}
-			return query;
-		},
+		  })
 	}
-  })
-  $("#edit-field-adherent-wrapper select").select2({
-    placeholder: 'Choisissez un adhérent ...',
-    allowClear: true,
-	ajax: {
-		url: '/admin/select/adherents',
-		dataType: 'json',
-		data: function (params) {
+	if($('#edit-field-adherent-wrapper').length) {
+		  $("#edit-field-adherent-wrapper select").select2({
+		    placeholder: 'Choisissez un adhérent ...',
+		    allowClear: true,
+			ajax: {
+				url: '/admin/select/adherents',
+				dataType: 'json',
+				data: function (params) {
 
-			var query = {
-				search: params.term,
-				type: 'public'
+					var query = {
+						search: params.term,
+						type: 'public'
+					}
+					return query;
+				},
 			}
-			return query;
-		},
+		  });
 	}
-  });
   $('#edit-field-rubriques-activite').select2({
     placeholder: 'Choisissez des rubriques ...',
     allowClear: true

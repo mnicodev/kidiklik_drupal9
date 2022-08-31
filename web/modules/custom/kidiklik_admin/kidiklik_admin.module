@@ -956,17 +956,18 @@ function kidiklik_admin_form_alter(&$form, FormStateInterface $form_state, $form
     $arg = \Drupal::request()->query->get("destination");
     // puis l'id de la catégorie mère 
     $tab = explode("/", $arg);
+    $id_mere = null;
 
     $cat_mere = \Drupal::entityTypeManager()->getStorage("taxonomy_term")->load($tab[3]);
-
-    if (!empty($cat_mere))
+    if (!empty($cat_mere)) {
+    	$id_mere = $cat_mere->id();
       $form["cat_mere"] = [
         "#type" => "html_tag",
         "#tag" => "H3",
         "#value" => "Rubrique " . $cat_mere->getName(),
         "#weight" => 0,
       ];
-
+    }
     if (\Drupal::request()->attributes->get('_route') === 'entity.taxonomy_term.add_form') {
       $form["field_departement"]["widget"][0]["target_id"]["#default_value"] = taxonomy_term_load($term_dep);
     }
@@ -979,13 +980,17 @@ function kidiklik_admin_form_alter(&$form, FormStateInterface $form_state, $form
       "field_ref_parent" => "0",
     ]);
     $liste = [];
-
-    foreach ($tmp as $key => $item) {
+	foreach ($tmp as $key => $item) {
+	//kint($item);
       $liste[$key] = $item->getName();
+	}
+    $user = User::Load(\Drupal::currentUser()->id());
+    if ($user->id() !== "1") {
+	    unset($form['field_ref_parent']);
     }
 
     $form["relations"]["parent"]["#options"] = $liste;
-    $form["relations"]["parent"]["#default_value"] = $tab[3];
+    $form["relations"]["parent"]["#default_value"] = $id_mere;
     //	$form["relations"]["parent"]["#multiple"]=false;
 
   }

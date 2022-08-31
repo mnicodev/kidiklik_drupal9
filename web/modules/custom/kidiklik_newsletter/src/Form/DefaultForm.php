@@ -95,11 +95,10 @@ class DefaultForm extends FormBase
     $search_entete = $node->get('field_image_d_entete')->getValue();
     foreach($search_entete as $item) {
       $term = \Drupal::entityTypeManager()->getStorage("taxonomy_term")->load($item['target_id']);
-      if(get_term_departement() === (int)current($term->get('field_departement')->getValue())['target_id']) {
+      if((int)get_term_departement() === (int)current($term->get('field_departement')->getValue())['target_id']) {
         $default_value = $term->id();
       }
     }
-
     $list[null] = "Choix de l'image d'entête";
     foreach($img_entete as $key => $item) {
       $list[$key] = $item->getName();

@@ -91,8 +91,11 @@ $(function(){
 			$.ajax({
 				url: '/admin/newsletter/blocs-datas/'+nid,
 				success: function (result) {
+					if(result === null) {
+						return null;
+					}
+					console.log(result)
 					rs=JSON.parse(result);
-					console.log(rs)
 					for(item in rs) {
 						console.log(rs[item])
 						$("#blocs_datas").append(getBloc(rs[item]));

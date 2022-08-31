@@ -27,31 +27,32 @@ class BlocsDatasController extends ControllerBase {
 		
 		if(!empty($paragraph)) {
 			$dept_target_id = current($paragraph->get("field_departement")->getValue())['target_id'];
-			$term = \Drupal::entityTypeManager()->getStorage("taxonomy_term")->load($dept_target_id);
-
-			if($paragraph && (int)$term->getName() === (int)get_departement()) {
-				if(!empty($paragraph->get("field_image")->getValue())) {
-					$fid=current($paragraph->get("field_image")->getValue())["target_id"];
-					$image=current(\Drupal::entityTypeManager()->getStorage("file")->load($fid));
-					$url_image=file_create_url($image["uri"]["x-default"]);
-				} else if(!empty($paragraph->get('field_image_save')->getValue())) {
-					$url_image = current($paragraph->get('field_image_save')->getValue())['value'];
-				} else {
-					$url_image = null;
-				}
-				
-				
-				$json[]=[
-					"titre"=>$paragraph->get("field_titre")->value,
-					"resume"=>$paragraph->get("field_resume")->value,
-					"image"=>$url_image,
-					"pid"=>$paragraph->id(),
-					"fid"=>$fid,
-					"lien" => $paragraph->get("field_lien")->value,
-					"bloc_nid" => $paragraph->get("field_nid_bloc")->value,
+			if(!empty($dept_target_id)) {
+				$term = \Drupal::entityTypeManager()->getStorage("taxonomy_term")->load($dept_target_id);
+				if($paragraph && (int)$term->getName() === (int)get_departement()) {
+					if(!empty($paragraph->get("field_image")->getValue())) {
+						$fid=current($paragraph->get("field_image")->getValue())["target_id"];
+						$image=current(\Drupal::entityTypeManager()->getStorage("file")->load($fid));
+						$url_image=file_create_url($image["uri"]["x-default"]);
+					} else if(!empty($paragraph->get('field_image_save')->getValue())) {
+						$url_image = current($paragraph->get('field_image_save')->getValue())['value'];
+					} else {
+						$url_image = null;
+					}
 					
+					
+					$json[]=[
+						"titre"=>$paragraph->get("field_titre")->value,
+						"resume"=>$paragraph->get("field_resume")->value,
+						"image"=>$url_image,
+						"pid"=>$paragraph->id(),
+						"fid"=>$fid,
+						"lien" => $paragraph->get("field_lien")->value,
+						"bloc_nid" => $paragraph->get("field_nid_bloc")->value,
+						
 
-				];
+					];
+				}
 			}
 		}
 
