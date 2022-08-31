@@ -770,6 +770,8 @@ a.reservation {
     float: left !important; }
   #groupe-actions .zone-flag a {
     padding-right: 30px; }
+  #groupe-actions .voir-actualites {
+    float: left; }
 
 .activite .field--name-field-resume, .agenda .field--name-field-resume {
   margin-bottom: 10px; }
