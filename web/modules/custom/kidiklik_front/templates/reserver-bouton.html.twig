@@ -1,1 +1,1 @@
-<div class=" reservation"><a href="#">Réserver</a></div>
+<a class="reservation" target="blank" href="{% if type_resa == 'Email' %}mailto:{{ email }}{% elseif type_resa == 'Téléphone' %}tel:{{ tel }}{% else %}{{ lien }}{% endif %}">Réserver</a>

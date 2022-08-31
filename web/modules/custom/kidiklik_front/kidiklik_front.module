@@ -79,7 +79,10 @@ function kidiklik_front_theme()
     'reserver_bouton' => [
       'variables' => [
         'content' => NULL,
-        'type_resa' => null
+	'type_resa' => null,
+	'lien' => null,
+	'email' => null,
+	'tel' => null
       ]
     ]
   ];

@@ -12,8 +12,12 @@ Drupal.behaviors.kidiklik = {
 
 		var charging_blocs = jQuery('[data-big-pipe-placeholder-id]').length;
 	      	if (charging_blocs ===1){
-			if(jQuery(".zone-flag").length) {
-				jQuery('.zone-image').append(jQuery(".zone-flag").html());
+			if(jQuery("#groupe-actions").length) {
+				jQuery('#groupe-actions').append(jQuery('#block-reserverblock').html());
+				jQuery('#groupe-actions').append(jQuery('#block-sortiesboutonblock').html());
+				jQuery('.zone-image').append('<div id="groupe-actions">'+jQuery("#groupe-actions").html()+'</div>');
+				jQuery('#block-sortiesboutonblock').remove();
+				jQuery('#block-reserverblock').remove();
 			}
 			jQuery('.form-item-quand').find('select').on('change',function() {
 				console.log(jQuery(this).val())
