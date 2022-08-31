@@ -484,9 +484,7 @@ h1 {
 	width: 70%;
 }
 .zone-flag, .action-flag {
-	display: flex;
 	.ajout {
-		display: flex;
 		a {
 			padding-right: 30px;
 		}
@@ -497,8 +495,6 @@ article  {
 		text-align: right;
 		margin-bottom: 10px;;
 		.flag {
-			width: 33%;
-			margin-left: auto;
 		}
 	}
 	line-height: 16px;
@@ -998,7 +994,11 @@ a.reservation {
 
 }
 #groupe-actions {
-	display: flex;
+	display: inline-block;
+	.zone-flag, .reservation{
+		float: left!important;
+	}
+
 }
 
 .activite, .agenda {

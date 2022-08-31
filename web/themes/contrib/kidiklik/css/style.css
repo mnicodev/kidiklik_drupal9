@@ -394,21 +394,14 @@ h1 {
 #block-block-article-accueil .line .card .card-body {
   width: 70%; }
 
-.zone-flag, .action-flag {
-  display: flex; }
-  .zone-flag .ajout, .action-flag .ajout {
-    display: flex; }
-    .zone-flag .ajout a, .action-flag .ajout a {
-      padding-right: 30px; }
+.zone-flag .ajout a, .action-flag .ajout a {
+  padding-right: 30px; }
 
 article {
   line-height: 16px; }
   article .zone-image {
     text-align: right;
     margin-bottom: 10px; }
-    article .zone-image .flag {
-      width: 33%;
-      margin-left: auto; }
   article img {
     max-width: 100%;
     height: auto; }
@@ -772,7 +765,9 @@ a.reservation {
     content: ""; }
 
 #groupe-actions {
-  display: flex; }
+  display: inline-block; }
+  #groupe-actions .zone-flag, #groupe-actions .reservation {
+    float: left !important; }
 
 .activite .field--name-field-resume, .agenda .field--name-field-resume {
   margin-bottom: 10px; }
