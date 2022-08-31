@@ -394,9 +394,9 @@ h1 {
 #block-block-article-accueil .line .card .card-body {
   width: 70%; }
 
-.zone-flag {
+.zone-flag, .action-flag {
   display: flex; }
-  .zone-flag .ajout {
+  .zone-flag .ajout, .action-flag .ajout {
     display: flex; }
 
 article {
