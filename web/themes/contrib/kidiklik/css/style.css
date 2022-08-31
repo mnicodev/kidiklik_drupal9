@@ -768,6 +768,8 @@ a.reservation {
   display: inline-block; }
   #groupe-actions .zone-flag, #groupe-actions .reservation {
     float: left !important; }
+  #groupe-actions .zone-flag a {
+    padding-right: 30px; }
 
 .activite .field--name-field-resume, .agenda .field--name-field-resume {
   margin-bottom: 10px; }

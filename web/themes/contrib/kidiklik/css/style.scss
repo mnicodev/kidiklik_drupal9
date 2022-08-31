@@ -998,6 +998,11 @@ a.reservation {
 	.zone-flag, .reservation{
 		float: left!important;
 	}
+	.zone-flag {
+		a {
+			padding-right: 30px;
+		}
+	}
 
 }
 
