@@ -46,13 +46,14 @@ class InitSubscriber implements EventSubscriberInterface {
         //kint($user_roles);exit;
       }
     }
-
 	  	$dep_status=current(current(\Drupal::entityTypeManager()
 			->getStorage("taxonomy_term")
-			->loadByProperties(['name'=>get_departement()]))
+			->loadByProperties([
+				'name'=>get_departement(),
+				'vid' => 'departement'
+			]))
 			->get("status")
 			->getValue());
-
 //    $event->setResponse();
 		if(!(int)$dep_status["value"] && get_departement()!==0) {
 
