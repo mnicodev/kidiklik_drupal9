@@ -764,7 +764,7 @@ a.reservation {
   width: 100%;
   display: block;
   text-align: center;
-  background: url(../images/ticket.png) no-repeat #db2a24;
+  background: url(../images/ticket.png) no-repeat #db2a24 !important;
   background-position: 0 50%;
   padding-left: 30px; }
   a.reservation:before {
