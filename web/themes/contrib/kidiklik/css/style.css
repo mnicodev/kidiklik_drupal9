@@ -1388,6 +1388,7 @@ div.user-login, div.user-register {
       display: none; } }
 
 .voir-actualites {
+  white-space: nowrap;
   padding: 7px 20px;
   color: #fff;
   background: #db2a24; }
