@@ -769,6 +769,9 @@ a.reservation {
   a.reservation:before {
     content: ""; }
 
+#groupe-actions {
+  display: flex; }
+
 .activite .field--name-field-resume, .agenda .field--name-field-resume {
   margin-bottom: 10px; }
 .activite .flag-bookmark i, .agenda .flag-bookmark i {
