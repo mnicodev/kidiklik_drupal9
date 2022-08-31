@@ -983,14 +983,14 @@ a.reservation {
 
 		padding: 7px 15px;
 		color: #fff;
-		display: block;
+		display: inline-block;
 		text-align: center;
 
 		&:before {
 			content: "";
 		}
 		background: url(../images/ticket.png) no-repeat #db2a24!important;
-		background-position: 0 50%;
+		background-position: 0 50%!important;
 		padding-left: 30px;
 
 }
