@@ -398,6 +398,8 @@ h1 {
   display: flex; }
   .zone-flag .ajout, .action-flag .ajout {
     display: flex; }
+    .zone-flag .ajout a, .action-flag .ajout a {
+      padding-right: 30px; }
 
 article {
   line-height: 16px; }
