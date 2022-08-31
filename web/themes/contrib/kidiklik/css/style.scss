@@ -485,6 +485,9 @@ h1 {
 }
 .zone-flag {
 	display: flex;
+	.ajout {
+		display: flex;
+	}
 }
 article  {
 	.zone-image {
@@ -1874,7 +1877,7 @@ div.user-login, div.user-register {
 
 .voir-actualites {
 	
-	padding: 7px;
+	padding: 7px 20px;
 	color: #fff;
 
 	background: #db2a24;
