@@ -497,7 +497,7 @@ article  {
 		.flag {
 		}
 	}
-	line-height: 16px;
+	line-height: 20px;
   img {
     max-width: 100%;
     
@@ -1089,6 +1089,9 @@ aside .region {
 }
 article {
 	margin-bottom: 20px;
+	h2 {
+		font-size: 14px!important;
+	}
 	.bloc-age {
 		display: flex;
 		flex-direction: row;

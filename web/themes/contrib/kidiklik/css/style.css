@@ -398,7 +398,7 @@ h1 {
   padding-right: 30px; }
 
 article {
-  line-height: 16px; }
+  line-height: 20px; }
   article .zone-image {
     text-align: right;
     margin-bottom: 10px; }
@@ -819,6 +819,8 @@ aside .region section {
 
 article {
   margin-bottom: 20px; }
+  article h2 {
+    font-size: 14px !important; }
   article .bloc-age {
     display: flex;
     flex-direction: row; }
