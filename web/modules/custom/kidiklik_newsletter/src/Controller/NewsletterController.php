@@ -28,12 +28,11 @@ class NewsletterController extends ControllerBase
 
     $dep_id = get_term_departement();
     //$dep=get_departement();
-    $view_entete = Views::getView("liste_bloc_donnees_newsletter");
-    $view_entete->setDisplay("rest_export_2");
-    $view_entete->setArguments([$nid]);
+    $view_entete = Views::getView("entete_newsletter_departement");
+    $view_entete->setDisplay("rest_export_1");
+    $view_entete->setArguments([$dep_id]);
     $view_entete->execute();
     $json_entete = current(json_decode(\Drupal::service('renderer')->render($view_entete->render())));
-
     /*$view_pub = Views::getView("liste_bloc_donnees_newsletter");
     $view_pub->setDisplay("newsletter_json_pub");
     $view_pub->setArguments([$dep_id,  $json_entete->field_date_envoi, $json_entete->field_date_envoi]);
@@ -115,12 +114,11 @@ class NewsletterController extends ControllerBase
     
     $blocs = array_merge($blocs,$blocs_nat);
     
-    //kint(\Drupal::request());
     $entete = [
-      "sujet" => $json_entete->field_sujet, //$newsletter->get("field_sujet")->value,
-      "texte" => $json_entete->field_entete, //$newsletter->get("field_entete")->value,
-      'image' => $file ? file_create_url($file->getFileUri()) : null,
-      "bandeau_rose" => ($json_entete->field_bandeau_rose ? 1 : 0),
+      "sujet" => htmlspecialchars_decode($json_entete->field_sujet, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401) ?? null, //$newsletter->get("field_sujet")->value,
+      "texte" => htmlspecialchars_decode($json_entete->field_description) ?? null, //$newsletter->get("field_entete")->value,
+      'image' => $json_enete->image ?? $file ? file_create_url($file->getFileUri()) : null,
+      "bandeau_rose" => $json_entete->field_bandeau_rose,
       "pub" => $pub_img ? file_create_url($pub_img->getFileUri()) : null,
       "dep" => $dep,
       "url" => \Drupal::request()->getRequestUri()
@@ -136,13 +134,17 @@ class NewsletterController extends ControllerBase
 
         $url_image = file_create_url($file->getFileUri());
 
-      } else $url_image = "";
-      $liste[] = [
-        "titre" => $bloc->get('field_titre')->value,
-        "image" => $url_image,
-        "texte" => $bloc->get("field_resume")->value,
-        "lien"=>  $bloc->get("field_lien")->value,
-      ];
+      } else {
+	      $url_image = "";
+      }
+      if(!empty($bloc->get('field_titre')->value)) {
+	      $liste[] = [
+		"titre" => $bloc->get('field_titre')->value,
+		"image" => $url_image,
+		"texte" => $bloc->get("field_resume")->value,
+		"lien"=>  $bloc->get("field_lien")->value,
+	];
+      }
 
     }
     //kint(\Drupal::request()->server->get("HTTP_HOST"));

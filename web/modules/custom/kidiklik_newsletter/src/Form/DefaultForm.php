@@ -40,11 +40,28 @@ class DefaultForm extends FormBase
       "field_departement" => get_term_departement(),
     ]);
 
+    $term_dep = get_term_departement();
+
     $tab_mae = [];
     $tab_mae[null] = "Choisissez un bloc ...";
     foreach ($mise_en_avant as $key => $item) {
       $tab_mae[$key] = $item->getTitle();
     }
+    $paragraphs = $node->get('field_bloc_entete');
+    $sujet = null;
+    $desc = null;
+    $rose = null;
+    $default_value_img = null;
+	foreach($paragraphs as $key=>$item) {
+		$paragraph_entete = \Drupal\paragraphs\Entity\Paragraph::load($item->get('target_id')->getValue());
+		if(!empty($paragraph_entete) && (int)current($paragraph_entete->get('field_departement')->getValue())['target_id'] === (int)$term_dep) {
+	    		$sujet = $paragraph_entete->get("field_sujet")->value;
+			$desc = $paragraph_entete->get("field_description")->value;
+			$rose = $paragraph_entete->get("field_bandeau_rose")->value;
+			$default_value_img = $paragraph_entete->get("field_image_save")->value;
+			break;
+		}
+	}
 
     //kint($mise_en_avant);
 
@@ -74,31 +91,32 @@ class DefaultForm extends FormBase
       "#type" => "textfield",
       "#size" => 60,
       '#required' => TRUE,
-      '#value' => current($node->get("field_sujet")->getValue())["value"],
+      '#value' => $sujet ?? current($node->get("field_sujet")->getValue())["value"],
     ];
 
     $form["container"]["group1"]["entete"] = [
       "#title" => "Bloc d'entête",
-      "#type" => "textarea",
-      '#value' => current($node->get("field_entete")->getValue())["value"],
+      "#type" => "text_format",
+      '#wysiwyg' => true,
+      '#value' => $desc ?? current($node->get("field_entete")->getValue())["value"],
 
     ];
 
     $img_entete = \Drupal::entityTypeManager()->getStorage("taxonomy_term")->loadByProperties(
       [
         'vid' => 'entetes_newsletter',
-        'field_departement' => get_term_departement()
+        'field_departement' => $term_dep
       ]
     );
    
-    $list = [];
+    /*$list = [];
     $search_entete = $node->get('field_image_d_entete')->getValue();
     foreach($search_entete as $item) {
       $term = \Drupal::entityTypeManager()->getStorage("taxonomy_term")->load($item['target_id']);
       if((int)get_term_departement() === (int)current($term->get('field_departement')->getValue())['target_id']) {
         $default_value = $term->id();
       }
-    }
+    }*/
     $list[null] = "Choix de l'image d'entête";
     foreach($img_entete as $key => $item) {
       $list[$key] = $item->getName();
@@ -107,7 +125,7 @@ class DefaultForm extends FormBase
       '#type' => 'select',
       '#title' => 'Image entête',
       '#options' => $list,
-      '#default_value' => $default_value
+      '#default_value' => $default_value_img
     ];
 
     $form["container"]["group1"]["bloc"] = [
@@ -254,6 +272,7 @@ class DefaultForm extends FormBase
  
     $save_paragraph = [];
     $node = \Drupal::entityTypeManager()->getStorage("node")->load(\Drupal::routeMatch()->getParameters()->get("node")->id());
+    $term_dep = get_term_departement();
 
     $tb = $node->get("field_blocs_de_donnees")->getValue();
    // kint($tb);
@@ -267,7 +286,7 @@ class DefaultForm extends FormBase
       if (!empty($paragraph)) {
         $dept = (int)current($paragraph->get('field_departement')->getValue())['target_id'];
         //kint($dept);        kint(get_term_departement());exit;
-        if((int)$dept === (int)get_term_departement()) {
+        if((int)$dept === (int)$term_dep) {
           $paragraph->delete();
         } else {
           $save_paragraph[] = $paragraph;
@@ -295,7 +314,7 @@ class DefaultForm extends FormBase
             $node_bloc =  Node::Load($nid);
             $dept = get_departement();
             $image_save = current($node_bloc->get('field_image_save')->getValue())['value'];
-            $image_save = 'https://'.($dept===0?'www':$dept).'.kidiklik.fr/images/accueil/'.$image_save;
+            //$image_save = 'https://'.($dept===0?'www':$dept).'.kidiklik.fr/images/accueil/'.$image_save;
   
           }
           
@@ -304,7 +323,7 @@ class DefaultForm extends FormBase
         $paragraph->set("field_image_save", $image_save);
         $paragraph->set("field_image", $image);
         $paragraph->set("field_titre", $item);
-        $paragraph->set("field_departement", get_term_departement());
+        $paragraph->set("field_departement", $term_dep);
         $paragraph->set("field_resume", \Drupal::request()->request->get("resume_bloc")[$key]);
         $paragraph->set("field_lien", \Drupal::request()->request->get("lien")[$key]);
         $paragraph->set("field_nid_bloc", \Drupal::request()->request->get("nid_bloc")[$key]);
@@ -322,7 +341,7 @@ class DefaultForm extends FormBase
         $rose = false;
     }
     $entete_target_id = (int)\Drupal::request()->request->get('image_entete');
-    if($entete_target_id !== 0) {
+    /*if($entete_target_id !== 0) {
       $entetes = $node->get("field_image_d_entete")->getValue();
       
       $insert_entete = true;
@@ -339,14 +358,48 @@ class DefaultForm extends FormBase
       $save_entete[] = $entete_target_id;
       
       foreach($save_entete as $item) {
-        $node->get("field_image_d_entete")->appendItem(['target_id' => $item]);
+        //$node->get("field_image_d_entete")->appendItem(['target_id' => $item]);
       }
      
+    }*/
+    if(!empty(\Drupal::request()->request->get("sujet"))) {
+	    $paragraphs = $node->get('field_bloc_entete');
+    	$entete_img = \Drupal::entityTypeManager()->getStorage("taxonomy_term")->load($entete_target_id);
+	    if(!empty($entete_img)) {
+		    foreach($entete_img->get('field_image')->getValue() as $img) {
+			    $file = \Drupal::entityTypeManager()->getStorage("file")->load($img['target_id']);
+		    }
+	    }
+	$create_entete = 1;
+	foreach($paragraphs as $key=>$item) {
+		$paragraph_entete = \Drupal\paragraphs\Entity\Paragraph::load($item->get('target_id')->getValue());
+		if(!empty($paragraph_entete) && (int)current($paragraph_entete->get('field_departement')->getValue())['target_id'] === (int)$term_dep) {
+			$paragraph_entete->set("field_departement", $term_dep);
+	    		$paragraph_entete->set("field_sujet", \Drupal::request()->request->get("sujet"));
+			$paragraph_entete->set("field_description", \Drupal::request()->request->get("entete"));
+			$paragraph_entete->set("field_bandeau_rose", $rose);
+			$paragraph_entete->set("field_image", $file);
+			$paragraph_entete->set("field_image_save", $entete_target_id);
+			$paragraph_entete->save();
+			$create_entete = 0;
+			break;
+			//$paragraphs->removeItem($key);
+		}
+	}
+	if($create_entete === 1) {
+	    $paragraph_entete = \Drupal\paragraphs\Entity\Paragraph::create(["type" => "entete_newsletter",]);
+	    $paragraph_entete->set("field_sujet", \Drupal::request()->request->get("sujet"));
+	        $paragraph_entete->set("field_departement", $term_dep);
+ 	       	$paragraph_entete->set("field_description", \Drupal::request()->request->get("entete"));
+		$paragraph_entete->set("field_bandeau_rose", $rose);
+		$paragraph_entete->set("field_image", $file);
+		$paragraph_entete->set("field_image_save", $entete_target_id);
+		$paragraph_entete->save();
+		$node->get('field_bloc_entete')->appendItem($paragraph_entete);
+	}
     }
-    $node->set("field_bandeau_rose", $rose);
-     
-    $node->set("field_sujet", \Drupal::request()->request->get("sujet"));
-    $node->set("field_entete", \Drupal::request()->request->get("entete"));//
+    //$node->set("field_sujet", \Drupal::request()->request->get("sujet"));
+    //$node->set("field_entete", \Drupal::request()->request->get("entete"));//
     $node->validate();
     $node->save();
 

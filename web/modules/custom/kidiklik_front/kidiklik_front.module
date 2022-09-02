@@ -43,6 +43,7 @@ function kidiklik_front_theme()
     'sortie_moment_bouton' => [
       'variables' => [
         'ref_act' => NULL,
+        'ref_adh' => NULL,
         'dept' => NULL
       ],
     ],
@@ -532,12 +533,15 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
   if ($view->current_display == "page_recherche_test" ||
     $view->current_display == "recherche_activites") {
     $query->distinct = true;
-    
 
     $ou = \Drupal::request()->get("ville");
     $quand = \Drupal::request()->get("quand");
     $search = \Drupal::request()->get("search");
     $ref_adherent =  \Drupal::request()->get("ref_adh") ?? \Drupal::request()->get("ref_adherent") ?? null;
+
+    if(!empty(\Drupal::request()->get("ref_adh"))) {
+	$query->where[1]['conditions'][1]['value'] = ['agenda'];
+    }
 
     if(!empty($ref_adherent)) {
       $configuration = array(

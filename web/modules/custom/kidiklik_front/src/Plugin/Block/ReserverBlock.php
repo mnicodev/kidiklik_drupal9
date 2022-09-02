@@ -37,6 +37,9 @@ class ReserverBlock extends BlockBase {
 	    return null;
     }
     $resa = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($id_resa);
+    if(empty($resa)) {
+	    return null;
+    }
     $build['#type_resa'] = $resa->getName();
     $build['#tel'] = $node->get('field_telephone')->value ?? null;
     $build['#email'] = $node->get('field_email')->value ?? null;

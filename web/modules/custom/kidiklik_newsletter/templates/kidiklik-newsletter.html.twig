@@ -54,34 +54,6 @@
         </td>
       </tr>
       <!-- texte -->
-      <tr>
-        <td class="one-column">
-          <table style="border-spacing: 0; font-family: Arial, Helvetica, sans-serif; color: #8c8c8c;" width="100%">
-            <tbody>
-		{% if entete.sujet != null %}
-            <tr>
-              <td class="inner contents entete"
-                  style="padding: 15px 10px 15px 10px; width: 100%; padding-top: 15px; text-align: center; color: #000;">
-                <b style="Margin: 0; font-size: 14px; Margin-bottom: 10px;">
-                  {{ entete.sujet }}
-                </b>
-              </td>
-            </tr>
-		{% endif %}
-		{% if entete.texte != null %}
-            <tr>
-              <td class="inner contents entete"
-                  style="padding: 15px 10px 15px 10px; width: 100%; padding-top: 15px; text-align: center; color: #000;">
-                <p style="Margin: 0; font-size: 14px; Margin-bottom: 10px;">
-                  {{ entete.texte }}
-                </p>
-              </td>
-            </tr>
-		{% endif %}
-            </tbody>
-          </table>
-        </td>
-      </tr>
       <!-- pub -->
 	{% if entete.pub != null %}
       <tr>
@@ -204,6 +176,34 @@
         {% set cpt=cpt+1 %}
       {% endfor %}
       <tr>
+        <td class="one-column">
+          <table style="border-spacing: 0; font-family: Arial, Helvetica, sans-serif; color: #8c8c8c;" width="100%">
+            <tbody>
+		{% if entete.sujet != null %}
+            <tr>
+              <td class="inner contents entete"
+                  style="padding: 15px 10px 15px 10px; width: 100%; padding-top: 15px; text-align: center; color: #000;">
+                <b style="Margin: 0; font-size: 14px; Margin-bottom: 10px;">
+                  {{ entete.sujet|striptags }}
+                </b>
+              </td>
+            </tr>
+		{% endif %}
+		{% if entete.texte != null %}
+            <tr>
+              <td class="inner contents entete"
+                  style="padding: 15px 10px 15px 10px; width: 100%; padding-top: 15px; text-align: center; color: #000;">
+                <p style="Margin: 0; font-size: 14px; Margin-bottom: 10px;">
+                  {{ entete.texte|raw }}
+                </p>
+              </td>
+            </tr>
+		{% endif %}
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      <tr>
         <td>
           <table class="column cont-footer"
                  style="border-spacing: 0; font-family: Arial, Helvetica, sans-serif; color: #8c8c8c; margin: 0 auto; padding-top: 20px; border-top: 1px solid #ccc;"
@@ -221,9 +221,9 @@
                         <tbody>
                         <tr>
                           <td class="inner full-width-image" style="padding: 15px 10px 15px 10px;">
-                            <a href="https://45.kidiklik.fr" style="text-decoration: none; color: #8c8c8c;">
-                              <img src="https://45.kidiklik.fr/images/newsletters/piaf.png"
-                                   alt="Aller sur le site kidiklik 45" style="border: 0; width: 100%; height: auto;"
+                            <a href="https://{{ entete.dep.getName() }}.kidiklik.fr" style="text-decoration: none; color: #8c8c8c;">
+                              <img src="https://{{ entete.dep.getName() }}.kidiklik.fr/images/newsletters/piaf.png"
+                                   alt="Aller sur le site kidiklik {{ entete.dep.getName() }}" style="border: 0; width: 100%; height: auto;"
                                    width="100">
                             </a>
                           </td>
@@ -241,7 +241,7 @@
                           <td class="inner contents"
                               style="padding: 15px 10px 15px 10px; width: 100%; text-align: left; font-size: 14px;">
                             <p style="Margin: 0; font-size: 14px; Margin-bottom: 10px; margin-bottom: 0;">
-                              <a href="https://45.kidiklik.fr"
+                              <a href="https://{{ entete.dep.getName() }}.kidiklik.fr"
                                  style="text-decoration: none; color: #f00; text-transform: uppercase; font-size: 13px; font-weight: bold;">
                                 Aller sur le site kidiklik {{ entete.nom_dep }}
                               </a>

@@ -33,7 +33,7 @@ class SortiesBoutonBlock extends BlockBase {
       if($node->getType() === 'activite') {
           $build['#ref_act'] = $node->id();
         } else {
-            $build['#ref_act'] = current($node->get('field_activite_lie')->getValue())['target_id'];
+            $build['#ref_adh'] = current($node->get('field_adherent')->getValue())['target_id'];
       }
     }
     if(empty($build['#ref_act'])) {

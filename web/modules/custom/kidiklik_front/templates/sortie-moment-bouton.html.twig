@@ -1,1 +1,5 @@
+{% if ref_act %}
 <a href="/sorties-moment.html?ref_act={{  ref_act }}" class="voir-actualites">Voir les actualités du lieu</a>
+{% elseif ref_adh %}
+<a href="/recherche.html?ref_adh={{  ref_adh }}" class="voir-actualites">Voir les actualités de l'adhérent</a>
+{% endif %}

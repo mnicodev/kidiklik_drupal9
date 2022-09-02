@@ -798,9 +798,8 @@ var_dump($node->id());
       if($name === 'kidi_activites') {
         $query = $connection->query("select * from activites order by id_activite"); // where id_activite > 5240");
       } else {
-	      $n=Node::load(279663);if(!empty($n)) $n->delete();
 	      $type='agenda';
-        $query = $connection->query("select a.* from agendas a on a.id_agenda = ad.ref_agenda where ad.date_fin >= '2019-01-01' group by id_agenda order by id_agenda"); // where id_agenda > 56803");
+        $query = $connection->query("select a.* from agendas a join agendas_dates ad on a.id_agenda = ad.ref_agenda where ad.date_fin >= '2019-01-01' group by id_agenda order by id_agenda desc"); // where id_agenda > 56803");
       }
 
      /* $result = \Drupal::entityQuery('node')
@@ -951,13 +950,14 @@ var_dump('node id : '.$node->id());
                     'field_ref_activite' => $node->get("field_ref_activite")->value
                   ]));
                   
-                  if($name === 'agenda' && !empty($activite)) {
+                  if($type === 'agenda' && !empty($activite)) {
                     var_dump("RECUPERATION DE L'ACTIVITE :".$activite->id());
                     var_dump("SAUVEGARDE DANS : ".$node->id());
-                    $node->__set('field_activite', $activite->id());
+                    $node->__set('field_activite', ['target_id' => $activite->id()]);
+                    //$node->__set('field_activite', ['target_id' => 235129]);
 		  $save = 1;
                     //$item->validate();
-                   // $node->save();
+                    $node->save();
                   }
 		}
 	}
@@ -1020,7 +1020,7 @@ var_dump('node id : '.$node->id());
                       $node->save();
                   }
                 }
-	}	
+	}
 
           // var_dump(current($node->get('field_departement')->getValue())['target_id']);
             if ($options['images'] === true) {
@@ -1030,19 +1030,40 @@ var_dump('node id : '.$node->id());
                 $query2 = $connection->query("select * from agendas_galeries where ref_agenda = '" . $content->id_agenda . "'");
               }
 
-              while ($image = $query2->fetch()) {
+	      while ($image = $query2->fetch()) {
+		      if((fopen('https://www.kidiklik.fr/images/'.$type.'s/'.$image->image,'r')==true)) {
+			      $data = file_get_contents('https://www.kidiklik.fr/images/'.$type.'s/'.$image->image);
+		      }
+				if(!empty($data)) {
 
-                if ($node->get('field_image_save')->isEmpty()) {
-                  var_dump('insert image : ' . $image->image);
-                  try {
-                    $node->get('field_image_save')->appendItem($image->image);
-                    $node->validate();
-                    $node->save();
-                  } catch (\Exception $e) {
-                    var_dump($e->getMessage());
-                  }
+					var_dump('insert image : ' . $image->image);
+					$file = file_save_data($data,\Drupal::config('system.file')->get('default_scheme').'://'.$image->image);
+					if(!empty($file) && (int)$file->get('filesize')->value !== 13541) {
+						var_dump('record img');
+						var_dump($file->id());
+						$node->__set('field_image', ['target_id' => $file->id()]);
+						$node->save();
+					}
+				} else {
 
-                }
+					var_dump('insert image save: ' . $image->image);
+
+					try {
+
+						$node->get('field_image_save')->appendItem($image->image);
+
+						$node->validate();
+
+						$node->save();
+
+					} catch (\Exception $e) {
+
+						var_dump($e->getMessage());
+
+					}
+
+				}
+
 
               }
             }elseif ($options['rubrique'] === true) {
@@ -1587,7 +1608,7 @@ var_dump('node id : '.$node->id());
                 //$query->fields('fd',['entity_id']);
                 //$query->fields('fdd',['field_date_de_fin_value']);
                 $query->condition('type',$name,'=');
-                //$query->condition('nid',168785,'>=');
+                $query->condition('nid',264416,'<=');
                 //$query->condition('field_date_de_debut_value','2019-01-01','<'); /* pour contenu article etc */
 		//$query->condition('field_date_de_fin_value','2020-01-01','<');
 		$query->orderBy('nid','desc');
@@ -1595,9 +1616,10 @@ var_dump('node id : '.$node->id());
 		while($item=$rs->fetch()) {
 			
 			var_dump($item->nid);
-                  $node=Node::load($item->nid);
+			$node=Node::load($item->nid);
+
 			if(!empty($node)) {
-				$id_date = $node->get('field_date')->getValue();
+			/*	$id_date = $node->get('field_date')->getValue();
 				if(!empty($id_date)) {
 					foreach($id_date as $id) {
 						$pa = \Drupal::entityTypeManager()->getStorage("paragraph")->load($id['target_id']);
@@ -1605,10 +1627,14 @@ var_dump('node id : '.$node->id());
 						$pa->delete();
 					}
 				}
-                    var_dump($node->getTitle() .'...DELETED');
-                    $node->delete();
+			 */
+				var_dump($node->getTitle() .'...DELETED');
+
+				$node->delete();
+
                     
-                  }
+			}
+
                  // 
                   //var_dump($node->get('field_date')->getValue());
                   
@@ -1617,7 +1643,7 @@ var_dump('node id : '.$node->id());
                 
       } else {
         $connection = \Drupal::database();
-        $rs = $connection->query('select * from node where nid<=274919 and type=:type order by nid desc', [
+        $rs = $connection->query('select * from node where type=:type order by nid desc', [
           ':type' => $name,
         ], [
           'fetch' => 'node'

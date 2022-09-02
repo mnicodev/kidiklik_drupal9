@@ -46,6 +46,8 @@ class InitSubscriber implements EventSubscriberInterface {
         //kint($user_roles);exit;
       }
     }
+
+    //kint($t);
 	  	$dep_status=current(current(\Drupal::entityTypeManager()
 			->getStorage("taxonomy_term")
 			->loadByProperties([
