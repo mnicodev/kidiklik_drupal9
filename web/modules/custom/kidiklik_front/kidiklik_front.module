@@ -505,7 +505,6 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
 
 //kint($node->get('field_adherent')); exit;
 	    $adh = current($node->get('field_adherent')->getValue())['target_id'];
-    //kint($view);exit;
     if(empty($adh)) {
 	    $adh=-1;
     }  
@@ -525,8 +524,9 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
       $query->addWhere('', 'node__field_adherent.field_adherent_target_id', $adh, '=');
       $query->addWhere('', 'nid', $node->id(), '<>');
 
-      $query->where[1]['conditions'][2]['value']= date('Y-m-d');
-      $query->where[1]['conditions'][2]['operator']= '>=';
+      $query->where[1]['conditions'][2]['field']= "DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d') >= DATE_FORMAT('".date('Y-m-d')."', '%Y-%m-%d')";
+      //      $query->where[1]['conditions'][2]['operator']= '>=';
+//      unset($query->where[1]['conditions'][2]);
      
   }
 
