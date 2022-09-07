@@ -557,7 +557,7 @@ var_dump($node->id());
       $connection = \Drupal\Core\Database\Database::getConnection();
       if($options['import'] === true) {
 	      if($name === "adherents") {
-		      $query = $connection->query("select * from adherents order by id_adherent desc");
+		      $query = $connection->query("select * from adherents where id_adherent>7160 order by id_adherent desc");
 		      $type = 'adherent';
 	      } else {
 		      $type = 'client';
@@ -1558,6 +1558,7 @@ var_dump('node id : '.$node->id());
        	$rs->execute(); 
         $rs = $connection->query('update node__body set body_format = "basic_html"');
        	$rs->execute(); 
+        $rs = $connection->query('update node__field_resume set field_resume_value = "basic_html"');
 
     }else if ($name==='files') {
 			//$f=\Drupal::entityTypeManager()->getStorage('file')->load(280);			$f->delete();exit;
@@ -1565,7 +1566,7 @@ var_dump('node id : '.$node->id());
     }else if ($name==='kidi_jeu_concours') {
         Database::setActiveConnection('kidiklik');
         $connection = \Drupal\Core\Database\Database::getConnection();
-	$query = $connection->query("select c.*, cd.image as img, cd.description,cd.titre as sous_titre from concours c join concours_datas cd on c.id_concours=cd.ref_concours where id_concours>2119 order by id_concours");
+	$query = $connection->query("select c.*, cd.image as img, cd.description,cd.titre as sous_titre from concours c join concours_datas cd on c.id_concours=cd.ref_concours  order by id_concours");
 	while($item = $query->fetch()) {
 		if($options['repasse'] === true) {
 			$node=\Drupal::entityTypeManager()->getStorage("node")->loadByProperties([
@@ -1574,6 +1575,15 @@ var_dump('node id : '.$node->id());
 
 
 		} else {
+			$file = null;
+			if(!empty($item->img)) {
+
+				$data = file_get_contents('https://www.kidiklik.fr/images/concours/'.$item->img);
+				if(!empty($data)) {
+
+					$file = file_save_data($data,\Drupal::config('system.file')->get('default_scheme').'://'.$item->img);
+				}
+			}
 
           	$dept=(int)$item->dept;
 		if($dept>=22) $dept--;
@@ -1589,12 +1599,17 @@ var_dump('node id : '.$node->id());
 			'field_date_fin' => $item->date_fin,
 			'field_ref_adherent' => $item->ref_adherent,
 			'field_image_save' => $item->img,
+			//'field_image' => ['target_id' => $file->id()],
 			'status'=>$item->active,
 			'field_departement' => $term_dept,
 			'field_ref_jeu_concours' => $item->id_concours,
 			'status' => $item->active
 		]);
 		$node->save();
+		if(!empty($file)) {
+			$node->__set('field_image', ['target_id' => $file->id()]);
+			$node->save();
+		}
 		var_dump($node->id());
 		}
 	}
@@ -1612,7 +1627,7 @@ var_dump('node id : '.$node->id());
                 //$query->fields('fd',['entity_id']);
                 //$query->fields('fdd',['field_date_de_fin_value']);
                 $query->condition('type',$name,'=');
-                $query->condition('nid',264416,'<=');
+                //$query->condition('nid',264416,'<=');
                 //$query->condition('field_date_de_debut_value','2019-01-01','<'); /* pour contenu article etc */
 		//$query->condition('field_date_de_fin_value','2020-01-01','<');
 		$query->orderBy('nid','desc');
@@ -1647,7 +1662,7 @@ var_dump('node id : '.$node->id());
                 
       } else {
         $connection = \Drupal::database();
-        $rs = $connection->query('select * from node where nid<=177885 and type=:type order by nid desc', [
+        $rs = $connection->query('select * from node where type=:type order by nid desc', [
           ':type' => $name,
         ], [
           'fetch' => 'node'
@@ -1715,6 +1730,23 @@ var_dump('node id : '.$node->id());
           if ($option) {
 
 		  switch ($key) {
+		  case 'paragraph':
+                	Database::setActiveConnection('kidiklik');
+	                $connection = \Drupal\Core\Database\Database::getConnection();
+			$id_entity = $item->get('field_ref_entite')->value;
+			if($options['article'] === true) {
+                		$query = $connection->select('editos_datas','ed')
+				      ->fields('ed',['ref_edito', 'ordre'])
+				      ->condition('ed.ref_edito', $id_entity, '=')
+				      ->execute();
+				while($rs=$query->fetch()) {
+				var_dump($rs);
+				}
+
+
+			}
+
+			  break;
 		  case 'relation':
 			  $entite=null;
 			  if(!empty($item->get('field_entite')->value) && !empty($item->get('field_ref_entite')->value)) {
@@ -1832,12 +1864,16 @@ var_dump('node id : '.$node->id());
 						$data = file_get_contents('https://www.kidiklik.fr/images/agendas/'.$img);
 					}
 				} elseif($name ==='bloc_de_mise_en_avant') {
-					if((fopen('https://www.kidiklik.fr/images/acsueil/'.$img,'r')==true)) {
+					if((fopen('https://www.kidiklik.fr/images/accueil/'.$img,'r')==true)) {
 						$data = file_get_contents('https://www.kidiklik.fr/images/accueil/'.$img);
 					}
 				} elseif($name ==='publicite') {
 					if((fopen('https://www.kidiklik.fr/images/vendos/'.$img,'r')==true)) {
 						$data = file_get_contents('https://www.kidiklik.fr/images/vendos/'.$img);
+					}
+				} elseif($name ==='jeu_concours') {
+					if((fopen('https://www.kidiklik.fr/images/concours/'.$img,'r')==true)) {
+						$data = file_get_contents('https://www.kidiklik.fr/images/concours/'.$img);
 					}
 				}
 
@@ -1861,8 +1897,6 @@ var_dump('node id : '.$node->id());
               case 'partage':
                 Database::setActiveConnection('kidiklik');
                 $connection = \Drupal\Core\Database\Database::getConnection();
-                $item->__unset('field_partage_departements');
-                $item->save();
                 switch($name) {
                   case 'article':
                     $id_entity = current($item->get('field_ref_entite')->getValue())['value'];
@@ -1872,12 +1906,17 @@ var_dump('node id : '.$node->id());
                     break;
                   case 'agenda':
                       $id_entity = current($item->get('field_ref_agenda')->getValue())['value'];
-                      break;
+		      break;
+		  case 'bloc_de_mise_en_avant':
+                      $id_entity = $item->get('field_ref_accueil')->value;
+
+			  break;
                 }  
                 $query = $connection->select('partages','a')
                     ->fields('a',['ref_id', 'dept', 'to_dept'])
                     ->condition('a.ref_id', $id_entity, '=')
-                    ->execute()->fetch();
+		    ->execute()->fetch();
+		var_dump($query);
                     if($query->to_dept !== NULL && $query->to_dept !== 'NULL') {
                         if($query->to_dept === 0 || $query->to_dept === '0') {
                             $query = \Drupal::entityQuery('taxonomy_term')
@@ -1905,6 +1944,10 @@ var_dump('node id : '.$node->id());
 			    if(!empty($term_dept)) {
 				    var_dump('partage avec : '.$to_dept);
                               $dept = Term::load($term_dept);
+				    $item->__unset('field_partage_departements');
+
+				    $item->save();
+
                               $item->__set('field_partage_departements', $dept);
                               $item->save();
                             }
@@ -2028,7 +2071,7 @@ var_dump('node id : '.$node->id());
                   case 'bloc_de_mise_en_avant':
                     $id_entite = $item->get('field_ref_entite')->value;
                     $lien = current($item->get('field_lien')->getValue())['value'];
-                    preg_match('/([https:\/\/])([0-9]{2}).kidiklik.fr\/(.*)\/([0-9]*)-(.*).html/',$lien,$match);
+                    preg_match('/([https:\/\/])([0-9]{2}|[a-z]*).kidiklik.fr\/(.*)\/([0-9]*)-(.*).html/',$lien,$match);
                     var_dump($match);
                   var_dump($id_entite); 
 		    if(!empty($id_entite) && count($match)) {
@@ -2361,7 +2404,10 @@ var_dump('node id : '.$node->id());
                   }
 
 
-                } else {
+		} else {
+			if(count($item->__get('field_adherent')->getValue())) {
+				continue;
+			}
                   if (!empty($item->get("field_ref_adherent")->value)) {
 			  $item->__unset('field_adherent');
 			  $item->save();

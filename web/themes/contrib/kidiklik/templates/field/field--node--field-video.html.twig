@@ -38,5 +38,8 @@
  * @see template_preprocess_field()
  */
 #}
-                                    
+  
+    {% for item in items %}
+                                
 <iframe width="100%" height="430" src="https://www.youtube.com/embed/{{ item.content }}" frameborder="0" allowfullscreen></iframe>
+    {% endfor %}
