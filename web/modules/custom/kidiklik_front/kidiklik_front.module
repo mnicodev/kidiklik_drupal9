@@ -210,6 +210,7 @@ function kidiklik_front_form_alter(&$form, FormStateInterface $form_state, $form
 
     $form['field_rubriques_activite_target_id']['#options'] = $list_cat;
     $form['field_rubriques_activite_target_id']['#weight'] = -10;
+    $form['field_rubriques_activite_target_id']['#title'] = 'Activité';
     /* $form["sous_rubriques"] = [
        "#type"=>"html_tag",
        '#title' => 'Rubriques',

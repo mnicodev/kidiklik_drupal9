@@ -21,15 +21,14 @@ class BlocsDatasController extends ControllerBase {
 
   	$liste_blocs=$node->get("field_blocs_de_donnees")->getValue();
   	$json=[];
-
   	foreach($liste_blocs as $item) {  	  
   		$paragraph=\Drupal\paragraphs\Entity\Paragraph::load($item["target_id"]);
 		
 		if(!empty($paragraph)) {
 			$dept_target_id = current($paragraph->get("field_departement")->getValue())['target_id'];
 			if(!empty($dept_target_id)) {
-				$term = \Drupal::entityTypeManager()->getStorage("taxonomy_term")->load($dept_target_id);
-				if($paragraph && (int)$term->getName() === (int)get_departement()) {
+				//$term = \Drupal::entityTypeManager()->getStorage("taxonomy_term")->load($dept_target_id);
+				if((int)$dept_target_id === (int)get_term_departement()) {
 					if(!empty($paragraph->get("field_image")->getValue())) {
 						$fid=current($paragraph->get("field_image")->getValue())["target_id"];
 						$image=current(\Drupal::entityTypeManager()->getStorage("file")->load($fid));
@@ -43,7 +42,7 @@ class BlocsDatasController extends ControllerBase {
 					
 					$json[]=[
 						"titre"=>$paragraph->get("field_titre")->value,
-						"resume"=>$paragraph->get("field_resume")->value,
+						"resume"=>strip_tags($paragraph->get("field_resume")->value),
 						"image"=>$url_image,
 						"pid"=>$paragraph->id(),
 						"fid"=>$fid,

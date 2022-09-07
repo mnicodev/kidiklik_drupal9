@@ -25,14 +25,30 @@ class NewsletterController extends ControllerBase
   public function newsletterForMailjet($nid, $titre)
   {
     $n = Node::Load($nid);
-
     $dep_id = get_term_departement();
-    //$dep=get_departement();
-    $view_entete = Views::getView("entete_newsletter_departement");
-    $view_entete->setDisplay("rest_export_1");
-    $view_entete->setArguments([$dep_id]);
-    $view_entete->execute();
-    $json_entete = current(json_decode(\Drupal::service('renderer')->render($view_entete->render())));
+
+    $entetes = $n->get('field_bloc_entete')->getValue() ?? null;
+    $paragraph_entete = null;
+    if(!empty($entetes)) {
+	    foreach($entetes as $entete) {
+		    $paragraph_entete = \Drupal\paragraphs\Entity\Paragraph::load($entete['target_id']);
+		    $dep_term=current($paragraph_entete->get('field_departement')->getValue())['target_id'];
+		    if((int)$dep_term === (int)$dep_id) {
+			    break;
+		    }
+	    }
+    }
+    if(!empty($paragraph_entete)) {
+	    $img =  \Drupal::entityTypeManager()->getStorage("file")->load(current($paragraph_entete->get('field_image')->getValue())['target_id']);
+	    $json_entete = [
+		    'field_bandeau_rose' => $paragraph_entete->get('field_bandeau_rose')->value,
+		    'id' => $paragraph_entete->id(),
+		    'field_description' => $paragraph_entete->get('field_description')->value,
+		    'field_image' => $img->url(),
+		    'field_sujet' => $paragraph_entete->get('field_sujet')->value
+	    ];
+    }
+    
     /*$view_pub = Views::getView("liste_bloc_donnees_newsletter");
     $view_pub->setDisplay("newsletter_json_pub");
     $view_pub->setArguments([$dep_id,  $json_entete->field_date_envoi, $json_entete->field_date_envoi]);
@@ -111,20 +127,17 @@ class NewsletterController extends ControllerBase
 		}
     	}
     }
-    
-    $blocs = array_merge($blocs,$blocs_nat);
-    
+    //$blocs = array_merge($blocs,$blocs_nat);
     $entete = [
-      "sujet" => htmlspecialchars_decode($json_entete->field_sujet, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401) ?? null, //$newsletter->get("field_sujet")->value,
-      "texte" => htmlspecialchars_decode($json_entete->field_description) ?? null, //$newsletter->get("field_entete")->value,
-      'image' => $json_enete->image ?? $file ? file_create_url($file->getFileUri()) : null,
-      "bandeau_rose" => $json_entete->field_bandeau_rose,
+      "sujet" => htmlspecialchars_decode($json_entete['field_sujet'], ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401) ?? null, //$newsletter->get("field_sujet")->value,
+      "texte" => htmlspecialchars_decode($json_entete['field_description']) ?? null, //$newsletter->get("field_entete")->value,
+      'image' => $json_entete['field_image'],
+      "bandeau_rose" => $json_entete['field_bandeau_rose'],
       "pub" => $pub_img ? file_create_url($pub_img->getFileUri()) : null,
       "dep" => $dep,
       "url" => \Drupal::request()->getRequestUri()
     ];
     $liste = [];
-    //kint($blocs);exit;
     foreach ($blocs as $item) {
       $bloc = Paragraph::load($item['target_id']);
 
@@ -147,6 +160,30 @@ class NewsletterController extends ControllerBase
       }
 
     }
+    $liste_nat = [];
+    foreach ($blocs_nat as $item) {
+      $bloc = Paragraph::load($item['target_id']);
+
+      if (is_object($bloc->get("field_image")->first())) {
+        //kint($bloc->get("field_image")->first()->get("target_id")->getValue());
+        $file = \Drupal::entityTypeManager()->getStorage("file")->load($bloc->get("field_image")->first()->get("target_id")->getValue());
+
+        $url_image = file_create_url($file->getFileUri());
+
+      } else {
+	      $url_image = "";
+      }
+      if(!empty($bloc->get('field_titre')->value)) {
+	      $liste_nat[] = [
+		"titre" => $bloc->get('field_titre')->value,
+		"image" => $url_image,
+		"texte" => $bloc->get("field_resume")->value,
+		"lien"=>  $bloc->get("field_lien")->value,
+	];
+      }
+
+    }
+    //kint(\Drupal::request()->server->get("HTTP_HOST"));
     //kint(\Drupal::request()->server->get("HTTP_HOST"));
     //kint($newsletter->get("field_bandeau_rose")->value);
     $entete['nom_dep'] = current($entete['dep']->get('field_nom')->getValue())['value'];
@@ -155,6 +192,7 @@ class NewsletterController extends ControllerBase
       '#theme' => 'kidiklik_newsletter',
       '#entete' => $entete,
       "#blocs" => $liste,
+      "#blocs_nat" => $liste_nat,
       "#cache" => [
         "max-age" => 0,
       ],

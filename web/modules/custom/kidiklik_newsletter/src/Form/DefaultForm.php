@@ -142,11 +142,10 @@ class DefaultForm extends FormBase
       ];
     }
 
-
     $form["container"]["group2"]["bandeau_rose"] = [
       "#type" => "checkbox",
       "#title" => "Ajouter le bandeau rose",
-      "#attributes" => (current($node->get("field_bandeau_rose")->getValue())["value"] ? ["checked" => ["checked"]] : []),
+      "#attributes" => ($rose ? ["checked" => ["checked"]] : []),
       "#weight" => -10,
     ];
 
@@ -242,7 +241,7 @@ class DefaultForm extends FormBase
       
       $mea = [
         "titre" => $mise_en_avant->getTitle(),
-        "resume" => current($mise_en_avant->get("field_resume")->getValue())["value"],
+        "resume" => strip_tags(current($mise_en_avant->get("field_resume")->getValue())["value"]),
         "nid" => $mise_en_avant->id(),
         "image" => $url_image,
         "fid" => $fid,

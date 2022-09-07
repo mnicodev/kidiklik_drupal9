@@ -36,6 +36,7 @@ function kidiklik_newsletter_theme() {
       "variables" => [
 			"entete" => null,
 			"blocs" => null,
+			"blocs_nat" => null,
 		]
     ],
     'kidiklik_newsletter_for_mailjet' => [
