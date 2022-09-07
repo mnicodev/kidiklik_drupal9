@@ -376,7 +376,6 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
 
     
     $query->where[0]["type"] = "OR";
-
   }
 
   if($view->current_display === 'bloc_jeux_concours') {

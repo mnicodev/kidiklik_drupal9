@@ -788,7 +788,15 @@ $config_directories['sync'] = '../config/sync';
 
 
 $host=explode(".",$_SERVER["SERVER_NAME"]);
+switch($host[0]) {
+	case 'paris':
+		$settings["dep"]=75;
+
+	break;
+default:
 if((int)$host[0]) $settings["dep"]=$host[0];else $settings["dep"]=0;
+
+}
 if((int)$settings["dep"] < 10) {
 //	$settings["dep"] = "0".$settings["dep"];
 }
