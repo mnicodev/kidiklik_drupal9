@@ -619,7 +619,9 @@ footer .menu li.last {
   .activite-teaser .informations {
     padding: 2px 20px;
     font-size: 1em;
-    color: #0cacce; }
+    color: #0cacce;
+    height: 45px;
+    overflow: hidden; }
     .activite-teaser .informations span {
       color: gray; }
     .activite-teaser .informations .fa {
