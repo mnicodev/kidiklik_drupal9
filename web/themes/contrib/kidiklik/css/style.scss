@@ -1259,7 +1259,7 @@ article {
   cursor: pointer;
   display: none;
 }
-#menu {
+#menu, .menu {
   @media(max-width: 992px) {
     .navbar-haut {
       width: 260px;

@@ -954,7 +954,7 @@ article {
   display: none; }
 
 @media (max-width: 992px) {
-  #menu .navbar-haut {
+  #menu .navbar-haut, .menu .navbar-haut {
     width: 260px;
     height: 100%;
     overflow-y: auto;
@@ -971,111 +971,111 @@ article {
     background-size: auto;
     background-size: 170px;
     background-position: center 10px; }
-    #menu .navbar-haut #navbarCollapse {
+    #menu .navbar-haut #navbarCollapse, .menu .navbar-haut #navbarCollapse {
       width: 100%;
       top: 90px;
       position: absolute; }
-    #menu .navbar-haut .menu-user {
+    #menu .navbar-haut .menu-user, .menu .navbar-haut .menu-user {
       padding-left: 20px; }
-    #menu .navbar-haut .menu-footer {
+    #menu .navbar-haut .menu-footer, .menu .navbar-haut .menu-footer {
       padding-left: 60px; }
-    #menu .navbar-haut .reseaux-sociaux {
+    #menu .navbar-haut .reseaux-sociaux, .menu .navbar-haut .reseaux-sociaux {
       padding-left: 60px; }
-      #menu .navbar-haut .reseaux-sociaux a {
+      #menu .navbar-haut .reseaux-sociaux a, .menu .navbar-haut .reseaux-sociaux a {
         color: rgba(0, 0, 0, 0.5); } }
 @media (min-width: 992px) {
-  #menu .navbar {
+  #menu .navbar, .menu .navbar {
     position: relative !important; }
-  #menu #input-newsletter {
+  #menu #input-newsletter, .menu #input-newsletter {
     padding-left: 25px;
     background: url(/assets/img/newsletter.jpg) no-repeat 5px center; }
-  #menu #input-search {
+  #menu #input-search, .menu #input-search {
     padding-left: 20px;
     background: url(/assets/img/loupe.png) no-repeat 3px center; } }
-#menu .select2-selection--single {
+#menu .select2-selection--single, .menu .select2-selection--single {
   border-radius: 0px;
   border: none;
   background: url(/assets/img/picto_france.jpg) no-repeat top center;
   padding-top: 20px; }
-  #menu .select2-selection--single .select2-selection__arrow {
+  #menu .select2-selection--single .select2-selection__arrow, .menu .select2-selection--single .select2-selection__arrow {
     top: 20px; }
-#menu .menu-user .form-newsletter {
+#menu .menu-user .form-newsletter, .menu .menu-user .form-newsletter {
   border: 1px solid #ccc;
   margin-top: 20px !important;
   display: flex;
   flex-direction: row; }
-  #menu .menu-user .form-newsletter input {
+  #menu .menu-user .form-newsletter input, .menu .menu-user .form-newsletter input {
     flex: 2;
     border: none;
     width: 80% !important;
     margin-top: 0 !important; }
-    #menu .menu-user .form-newsletter input:focus {
+    #menu .menu-user .form-newsletter input:focus, .menu .menu-user .form-newsletter input:focus {
       border: none; }
-  #menu .menu-user .form-newsletter .btn-newsletter {
+  #menu .menu-user .form-newsletter .btn-newsletter, .menu .menu-user .form-newsletter .btn-newsletter {
     background: #ccc;
     border: none; }
-#menu .select2-container {
+#menu .select2-container, .menu .select2-container {
   width: 180px !important; }
-#menu .navbar {
+#menu .navbar, .menu .navbar {
   padding-left: 0;
   padding-right: 0;
   font-size: 13px; }
-#menu .menu-footer {
+#menu .menu-footer, .menu .menu-footer {
   border-top: 1px solid rgba(0, 0, 0, 0.5);
   margin-top: 20px;
   padding-top: 10px;
   padding-left: 40px; }
-  #menu .menu-footer ul {
+  #menu .menu-footer ul, .menu .menu-footer ul {
     flex-direction: column;
     display: block !important; }
-    #menu .menu-footer ul li {
+    #menu .menu-footer ul li, .menu .menu-footer ul li {
       text-align: left !important;
       padding: 0;
       padding-top: 10px; }
-      #menu .menu-footer ul li a {
+      #menu .menu-footer ul li a, .menu .menu-footer ul li a {
         color: rgba(0, 0, 0, 0.5); }
-#menu #navbarCollapse ul {
+#menu #navbarCollapse ul, .menu #navbarCollapse ul {
   display: flex;
   width: 100%; }
-  #menu #navbarCollapse ul li {
+  #menu #navbarCollapse ul li, .menu #navbarCollapse ul li {
     flex: auto;
     padding-right: 10px;
     text-align: center; }
-    #menu #navbarCollapse ul li a {
+    #menu #navbarCollapse ul li a, .menu #navbarCollapse ul li a {
       color: #000000; }
-    #menu #navbarCollapse ul li.coeur {
+    #menu #navbarCollapse ul li.coeur, .menu #navbarCollapse ul li.coeur {
       background: url(/assets/img/picto_coeur.jpg) no-repeat top center; }
-      #menu #navbarCollapse ul li.coeur a {
+      #menu #navbarCollapse ul li.coeur a, .menu #navbarCollapse ul li.coeur a {
         margin-top: 15px; }
-    #menu #navbarCollapse ul li.user {
+    #menu #navbarCollapse ul li.user, .menu #navbarCollapse ul li.user {
       background: url(/assets/img/picto_user.jpg) no-repeat top center;
       text-align: center; }
-      #menu #navbarCollapse ul li.user a {
+      #menu #navbarCollapse ul li.user a, .menu #navbarCollapse ul li.user a {
         margin-top: 15px; }
-    #menu #navbarCollapse ul li input {
+    #menu #navbarCollapse ul li input, .menu #navbarCollapse ul li input {
       margin-top: 20px;
       margin-left: auto;
       margin-right: auto;
       width: 100%; }
     @media (max-width: 992px) {
-      #menu #navbarCollapse ul li.change_dep {
+      #menu #navbarCollapse ul li.change_dep, .menu #navbarCollapse ul li.change_dep {
         display: none; }
-      #menu #navbarCollapse ul li.user {
+      #menu #navbarCollapse ul li.user, .menu #navbarCollapse ul li.user {
         text-align: left;
         background: url(/assets/img/picto_user.jpg) no-repeat center left; }
-        #menu #navbarCollapse ul li.user a {
+        #menu #navbarCollapse ul li.user a, .menu #navbarCollapse ul li.user a {
           padding-left: 40px;
           margin-top: 0px; }
-      #menu #navbarCollapse ul li.coeur {
+      #menu #navbarCollapse ul li.coeur, .menu #navbarCollapse ul li.coeur {
         text-align: left;
         background: url(/assets/img/picto_coeur.jpg) no-repeat center left; }
-        #menu #navbarCollapse ul li.coeur a {
+        #menu #navbarCollapse ul li.coeur a, .menu #navbarCollapse ul li.coeur a {
           padding-left: 40px;
           margin-top: 0px; }
-      #menu #navbarCollapse ul li.newsletter {
+      #menu #navbarCollapse ul li.newsletter, .menu #navbarCollapse ul li.newsletter {
         text-align: left;
         background: url(/assets/img/newsletter.jpg) no-repeat center left; }
-        #menu #navbarCollapse ul li.newsletter a {
+        #menu #navbarCollapse ul li.newsletter a, .menu #navbarCollapse ul li.newsletter a {
           padding-left: 40px;
           margin-top: 0px; } }
 
