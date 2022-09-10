@@ -92,11 +92,14 @@ class KidiklikCommands extends DrushCommands
     'repasse' => FALSE,
     'parent' => FALSE,
     'rubriques' => FALSE,
+    'article' => FALSE,
+    'reportage' => FALSE,
     'date' => FALSE,
     'activite' => FALSE,
     'unpublished' => FALSE,
     'geo' => FALSE,
     'import' => FALSE,
+    'paragraph' => FALSE,
     'content' => FALSE,
     'url'=>FALSE,
     'geolocation'=>FALSE,
@@ -427,7 +430,7 @@ var_dump($node->id());
       if($options['migrate']===TRUE || $options['import']===TRUE) {
         Database::setActiveConnection('kidiklik');
         $connection = \Drupal\Core\Database\Database::getConnection();
-        $sql = "select * from ".$name." where date_fin >= '2020-01-01'";
+        $sql = "select * from ".$name." where date_fin >= '2019-01-01' and date_fin<'2020-01-01'";
         if($name == "editos") {
           //$sql.=" and id_edito > 6767";
         } else {
@@ -437,7 +440,8 @@ var_dump($node->id());
        
 	while($edito=$query->fetch()) {
           $dept=(int)$edito->dept;
-          if($dept>=22) $dept--;
+	  if($dept>=22) $dept--;
+	  if($dept<10) $dept='0'.$dept;
 
           $adherent = null;
           if($edito->ref_adherent !== null) {
@@ -462,7 +466,8 @@ var_dump($node->id());
             'field_ref_adherent' => $edito->ref_adherent,
             'field_type_reportage' => ($name==='editos'?0:1),
             'field_ref_entite' => ($name==='editos'?$edito->id_edito:$edito->id_test),
-            'uid' => 1
+	    'uid' => 1,
+	    'status' => $edito->active
           ]);
           var_dump($edito->titre);
 
@@ -475,7 +480,7 @@ var_dump($node->id());
             $node->__set('field_departement',$term_dep->id());
           }
           if($adherent_id !== null) {
-            $node->__set('field_adherent', $adherent_id);
+            $node->__set('field_adherent', $adherent);
           }
           
 
@@ -517,38 +522,49 @@ var_dump($node->id());
 
 
           if($name === 'editos') {
-            $query3 = $connection->query("select * from editos_datas  where ref_edito =".$edito->id_edito);
+            $query3 = $connection->query("select * from editos_datas  where ref_edito =".$edito->id_edito.' order by ordre');
           } else {
-            $query3 = $connection->query("select * from tests_datas  where ref_test =".$edito->id_test);
+            $query3 = $connection->query("select * from tests_datas  where ref_test =".$edito->id_test.' order by ordre');
 	  }
 	  $prem = 1;
-          while($para_edito = $query3->fetch()) {
+	  while($para_edito = $query3->fetch()) {
             $desc=$this->propre($para_edito->description);
-            
-            $paragraph = \Drupal\paragraphs\Entity\Paragraph::create([
-              'type' => 'paragraphe',
-              'field_titre' => [
-                'value' => $this->propre($para_edito->titre)
-              ],
-              'field_description' => [
-                'value' => $desc
-              ],
-              'field_url'=> [
-                'value' => $para_edito->url??null
-              ],
-              'field_image_save'=> [
-                'value' => $para_edito->image
-              ],
-            ]);
-	    $node->get('field_paragraphes')->appendItem($paragraph);
-	    if($prem === 1) {
-		$node->__set('field_image_save',$para_edito->image);
-	    	$prem = 0;
+	    var_dump( 'https://www.kidiklik.fr/images/'.$name.'/'.$para_edito->image);
+	    $file = null;
+	    if(!empty($para_edito->image)) {
+		    $data_para = file_get_contents('https://www.kidiklik.fr/images/'.$name.'/'.$para_edito->image);//$paragraph->get('field_image_save')->value);
+	    
+		    $file = file_save_data($data_para,\Drupal::config('system.file')->get('default_scheme').'://'.$para_edito->image);
+									var_dump('record img paragraph');
 	    }
-	    $paragraph->save();
+	    //$paragraph->__set('field_image',['target_id' => $file->id()]);
+
+	    if($prem === 1) {
+		    $node->__set('field_image', !empty($file)?['target_id' => $file->id()]:null);
+	
+		    $node->__set('body', $para_edito->description);
+		    $node->save();
+		    $prem = 0;
+		} else {	
+		    $paragraph = \Drupal\paragraphs\Entity\Paragraph::create([
+		      'type' => 'paragraphe',
+		      'field_titre' => [
+			'value' => $this->propre($para_edito->titre)
+		      ],
+		      'field_description' => [
+			'value' => $desc
+		      ],
+		      'field_url'=> [
+			'value' => $para_edito->url??null
+		      ],
+		      'field_image'=> !empty($file)?['target_id' => $file->id()]:null,
+		    ]);
+	    		$paragraph->save();
+		    $node->get('field_paragraphes')->appendItem($paragraph);
+		}
           }
 
-          $node->save();
+	  $node->save();
         
         }
       }
@@ -1558,7 +1574,7 @@ var_dump('node id : '.$node->id());
        	$rs->execute(); 
         $rs = $connection->query('update node__body set body_format = "basic_html"');
        	$rs->execute(); 
-        $rs = $connection->query('update node__field_resume set field_resume_value = "basic_html"');
+        //$rs = $connection->query('update node__field_resume set field_resume_value = "basic_html"');
 
     }else if ($name==='files') {
 			//$f=\Drupal::entityTypeManager()->getStorage('file')->load(280);			$f->delete();exit;
@@ -1662,7 +1678,7 @@ var_dump('node id : '.$node->id());
                 
       } else {
         $connection = \Drupal::database();
-        $rs = $connection->query('select * from node where type=:type order by nid desc', [
+        $rs = $connection->query('select * from node where  type=:type order by nid desc', [
           ':type' => $name,
         ], [
           'fetch' => 'node'
@@ -1734,17 +1750,19 @@ var_dump('node id : '.$node->id());
                 	Database::setActiveConnection('kidiklik');
 	                $connection = \Drupal\Core\Database\Database::getConnection();
 			$id_entity = $item->get('field_ref_entite')->value;
-			if($options['article'] === true) {
-                		$query = $connection->select('editos_datas','ed')
-				      ->fields('ed',['ref_edito', 'ordre'])
-				      ->condition('ed.ref_edito', $id_entity, '=')
-				      ->execute();
-				while($rs=$query->fetch()) {
-				var_dump($rs);
-				}
+			if(!empty($id_entity)) {
+				if((int)$item->get('field_type_reportage')->value === 0) {
+
+                		$query = $connection->query('select * from editos_datas where ref_edito='.$id_entity);
+					while($rs_para=$query->fetch()) {
+				var_dump($rs_para);
+					}
+				exit;
 
 
 			}
+			}
+
 
 			  break;
 		  case 'relation':
@@ -2285,8 +2303,36 @@ var_dump('node id : '.$node->id());
 		  }*/
 		}
 
-                break;
-              case 'repasse':
+		      break;
+	      case 'repasse':
+                    Database::setActiveConnection('kidiklik');
+                    $connection = \Drupal\Core\Database\Database::getConnection();
+		      if($name === 'jeu_concours') {
+		    $query = $connection->query("select * from concours where id_concours = '".$item->get('field_ref_jeu_concours')->value."'");
+		    $rs_desc=$query->fetch();
+		    $item->__set('field_resume',$this->propre($rs_desc->resume));
+		    $item->save();
+
+		      } else if($name === 'activite') {
+		    $query = $connection->query("select * from activites where id_activite = '".$item->get('field_ref_activite')->value."'");
+		    $rs_desc=$query->fetch();
+		    $item->__set('field_resume',$this->propre($rs_desc->resume));
+		    $item->save();
+
+		      } else if($name === 'agenda') {
+		    $query = $connection->query("select * from agendas where id_agenda = '".$item->get('field_ref_agenda')->value."'");
+		    $rs_desc=$query->fetch();
+		    $item->__set('field_resume',$this->propre($rs_desc->resume));
+		    $item->save();
+
+		      } else if($name === 'bloc_de_mise_en_avant') {
+		    $query = $connection->query("select * from accueils where id_accueil = '".$item->get('field_ref_accueil')->value."'");
+		    $rs_desc=$query->fetch();
+		    var_dump($rs_desc->description);
+		    $item->__set('field_resume',$this->propre($rs_desc->description));
+		    $item->save();
+
+		      } else {
                 //var_dump($item->get('field_adresse')->value);
                 /**
                  * TRAITEMENT SUR DIFFERENTS CHAMPS A COMMENTER EN FOCNTION DE LA PRESENCE
@@ -2347,7 +2393,7 @@ var_dump('node id : '.$node->id());
 
                 $item->validate();
                 $item->save();
-
+		      }
                 break;
 	      case 'statut':
                     Database::setActiveConnection('kidiklik');

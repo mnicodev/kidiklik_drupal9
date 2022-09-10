@@ -90,12 +90,14 @@ jQuery(document).ready(function() {
   }
 
   jQuery(".icon-menu").on('click', function () {
+	 jQuery('#mobimenu').append(jQuery('#menu').html()); 
     jQuery('.shadow').show();
     jQuery('.navbar-haut').addClass('slide-menu');
     jQuery('.icon-menu-open').show();
 
     jQuery('.icon-menu-open').on('click', function () {
       jQuery('.shadow').hide();
+	 jQuery('#mobimenu').html(''); 
       jQuery('.icon-menu-open').hide();
       jQuery('.navbar-haut').removeClass('slide-menu');
     })
