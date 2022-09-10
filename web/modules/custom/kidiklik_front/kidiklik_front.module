@@ -479,7 +479,34 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
     $tb_child[] = $term_id;
     $query->where[0]["conditions"][0]["field"] = 'taxonomy_index.tid in ('.implode(',', $tb_child).')';
     $query->where[0]["conditions"][0]["value"] = [];
-    //ksm($query->where);
+    
+          $configuration = array(
+            'type' => 'LEFT',
+            'table' => 'paragraph__field_date_de_debut',
+            'field' => 'entity_id',
+            'left_table' => 'paragraphs_item_field_data_node__field_date',
+            'left_field' => 'id',
+            'operator' => '=',
+          );
+          $join = \Drupal\views\Views::pluginManager('join')->createInstance('standard', $configuration);
+          $rel = $query->addRelationship('paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut', $join, 'paragraphs_item_field_data_node__field_date');
+          $query->addTable('paragraph__field_date_de_debut', $rel, $join, 'paragraph__field_date_de_debut');
+          $query->addWhere('', 'paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value', [], '<>');
+	  
+	  $query->where[0]["conditions"][count($query->where[0]["conditions"])-1]["field"] = "((DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d')>=CURDATE()) or (CURDATE() BETWEEN DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') and DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d')))";
+	  $query->where[0]["conditions"][count($query->where[0]["conditions"])-1]["operator"] = "formula";
+	  $configuration = array(
+            'type' => 'LEFT',
+            'table' => 'paragraph__field_date_de_fin',
+            'field' => 'entity_id',
+            'left_table' => 'paragraphs_item_field_data_node__field_date',
+            'left_field' => 'id',
+            'operator' => '=',
+          );
+          $join = \Drupal\views\Views::pluginManager('join')->createInstance('standard', $configuration);
+          $rel = $query->addRelationship('paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin', $join, 'paragraphs_item_field_data_node__field_date');
+          $query->addTable('paragraph__field_date_de_fin', $rel, $join, 'paragraph__field_date_de_fin');
+
     /*$query->where[1]["conditions"][1]["value"] = get_term_departement();
     $query->where[1]["conditions"][1]["operator"] = "=";*/
     /*$configuration = array(
@@ -780,7 +807,6 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
       $query->addTable('node__field_geolocalisation', $rel, $join, 'node__field_geolocalisation');
       $query->addField(null, $field_geo,'node__field_geolocalisation_field_geolocalisation_proximity_');*/
     }
-
     //
 //
     //$param=\Drupal::entityTypeManager()->getStorage("paragraph");

@@ -769,6 +769,11 @@ $settings['entity_update_batch_size'] = 50;
 $settings['entity_update_backup'] = TRUE;
 
 
+/** memcache */
+$settings['cache']['default'] = 'cache.backend.memcache_storage';
+$settings['memcache_storage']['key_prefix'] = 'kd';
+$settings['memcache_storage']['memcached_servers'] =  ['127.0.0.1:11211' => 'default'];
+
 /**
  * Load local development override configuration, if available.
  *

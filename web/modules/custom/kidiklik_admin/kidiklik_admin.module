@@ -464,7 +464,6 @@ function kidiklik_admin_form_node_article_form_alter(&$form, FormStateInterface 
     $adherent_id = \Drupal::request()->query->get("ref_id");
   }
   
-  if (get_departement() !== 0) {
     $rub = $form["field_rubriques_activite"]["widget"]["#options"];
     $tab = [];
     $n = "";
@@ -474,16 +473,17 @@ function kidiklik_admin_form_node_article_form_alter(&$form, FormStateInterface 
         $p = current($t->parent->getValue()[0]);
         if (!(int)$p) {
           $n = current($t->name->getValue()[0]);
-        } else {
-          if (current($t->get("field_departement")->getValue())["target_id"] == $term_dep)
-            $tab[$n][$k] = current($t->name->getValue()[0]);
+	} else {
+
+          if (current($t->get("field_departement")->getValue())["target_id"] == $term_dep) {
+		  $tab[$n][$k] = current($t->name->getValue()[0]);
+	  }
         }
       }
     }
     $form["field_rubriques_activite"]["widget"]["#options"] = $tab;
     $form["field_rubriques_activite"]["widget"]["#size"] = 1;
 
-  }
 
   if ($adherent_id !== null) {
     $adherent = Node::load($adherent_id);
