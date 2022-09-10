@@ -273,7 +273,8 @@ h1 {
     padding-left: 15px; }
 
   #entete {
-    position: relative; }
+    position: relative;
+    z-index: 2; }
     #entete .row > div {
       padding-left: 5px;
       padding-right: 5px; }

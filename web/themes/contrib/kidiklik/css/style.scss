@@ -335,6 +335,7 @@ h1 {
 	}
 	#entete {
 		position: relative;
+		z-index: 2;
 
 		.row > div {
 			padding-left: 5px;
