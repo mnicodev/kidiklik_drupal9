@@ -125,18 +125,7 @@ h1 {
 
     }
   }
-  .reseaux-sociaux {
-    border-top: 1px solid rgba(0,0,0,.5);
-    padding-top: 20px;
-    margin-top: 20px;
-    li {
-      list-style: none;
-      text-align: left!important;
-      color: rgba(0,0,0,.5);
-      padding-top: 10px;
-      padding-bottom: 10px;
-    }
-  }
+  
 
 }
 #views-exposed-form-activites-recherche-activites,
@@ -1261,6 +1250,18 @@ article {
   display: none;
 }
 #menu, .menu {
+	.reseaux-sociaux {
+		border-top: 1px solid rgba(0,0,0,.5);
+		padding-top: 20px;
+		margin-top: 20px;
+		li {
+		  list-style: none;
+		  text-align: left!important;
+		  color: rgba(0,0,0,.5);
+		  padding-top: 10px;
+		  padding-bottom: 10px;
+		}
+	  }
   @media(max-width: 992px) {
     .navbar-haut {
       width: 260px;

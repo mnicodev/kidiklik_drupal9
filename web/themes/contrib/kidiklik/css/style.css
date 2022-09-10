@@ -97,16 +97,6 @@ h1 {
   @media (max-width: 400px) {
     #entete .bouton-burger button {
       padding: 0px; } }
-  #entete .reseaux-sociaux {
-    border-top: 1px solid rgba(0, 0, 0, 0.5);
-    padding-top: 20px;
-    margin-top: 20px; }
-    #entete .reseaux-sociaux li {
-      list-style: none;
-      text-align: left !important;
-      color: rgba(0, 0, 0, 0.5);
-      padding-top: 10px;
-      padding-bottom: 10px; }
 
 #views-exposed-form-activites-recherche-activites,
 #recherche-form {
@@ -954,6 +944,16 @@ article {
   cursor: pointer;
   display: none; }
 
+#menu .reseaux-sociaux, .menu .reseaux-sociaux {
+  border-top: 1px solid rgba(0, 0, 0, 0.5);
+  padding-top: 20px;
+  margin-top: 20px; }
+  #menu .reseaux-sociaux li, .menu .reseaux-sociaux li {
+    list-style: none;
+    text-align: left !important;
+    color: rgba(0, 0, 0, 0.5);
+    padding-top: 10px;
+    padding-bottom: 10px; }
 @media (max-width: 992px) {
   #menu .navbar-haut, .menu .navbar-haut {
     width: 260px;
