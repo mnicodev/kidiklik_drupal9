@@ -580,7 +580,8 @@ footer .menu li.last {
   font-size: 0.95em; }
   .activite-teaser img {
     max-width: 100%;
-    width: 100%; }
+    width: 100%;
+    height: auto; }
   .activite-teaser .image {
     float: left;
     margin-right: 20px;
