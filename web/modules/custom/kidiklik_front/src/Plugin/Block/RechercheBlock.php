@@ -12,19 +12,17 @@ use Drupal\Core\Block\BlockBase;
  *  admin_label = @Translation("Recherche block"),
  * )
  */
-class RechercheBlock extends BlockBase {
+class RechercheBlock extends BlockBase
+{
 
   /**
    * {@inheritdoc}
    */
-  public function build() {
-	  $form = \Drupal::formBuilder()->getForm('Drupal\kidiklik_front\Form\RechercheForm');
-	  return $form;
-    /*$build = [];
-    $build['#theme'] = 'recherche_block';
-     $build['recherche_block']['#markup'] = 'Implement RechercheBlock.';
+  public function build()
+  {
+    $form = \Drupal::formBuilder()->getForm('Drupal\kidiklik_front\Form\RechercheForm');
+    return $form;
 
-    return $build;*/
   }
 
 }

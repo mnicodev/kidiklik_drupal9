@@ -90,14 +90,18 @@ jQuery(document).ready(function() {
   }
 
   jQuery(".icon-menu").on('click', function () {
-	 jQuery('#mobimenu').append(jQuery('#menu').html()); 
+	 jQuery('#mobimenu').append(jQuery('#menu').html());
+    jQuery('.icon-menu-open').show();
+jQuery('#menu').hide();
+	  jQuery('#entete').css('z-index','0');
     jQuery('.shadow').show();
     jQuery('.navbar-haut').addClass('slide-menu');
-    jQuery('.icon-menu-open').show();
 
     jQuery('.icon-menu-open').on('click', function () {
       jQuery('.shadow').hide();
+	  jQuery('#entete').css('z-index','2');
 	 jQuery('#mobimenu').html(''); 
+	    jQuery('#menu').show();
       jQuery('.icon-menu-open').hide();
       jQuery('.navbar-haut').removeClass('slide-menu');
     })

@@ -74,7 +74,7 @@ function add_record_and_stay_button(&$form)
       '#value' => 'Enregistrer Rester',
       '#attributes' => [
         'data-type' => $type,
-        'data-ref-id' => '/node/add/'.$form['type'],
+        'data-ref-id' => '/node/add/' . $form['type'],
         'data-node' => 'create',
         'class' => 'btn btn-primary save-stay'
       ],
@@ -294,20 +294,8 @@ function kidiklik_admin_form_node_adherent_form_alter(&$form, FormStateInterface
   $term_dep = get_term_departement();
   $form["#attached"]["library"][] = "kidiklik_admin/kidiklik_admin.commands";
 
-  /* on va récupérer la liste des clients du département concerné */
-  /*$clients=\Drupal::entityTypeManager()->getStorage("node")->loadByProperties(["type"=>"client","field_departement"=>$term_dep]);
-
-  $tab=[];
-
-  $tab["_none"]="Veuillez choisir un client";
-  foreach($clients as $key=>$client) {
-    $tab[$key]=$client->getTitle();
-  }
-  $form["field_client"]["widget"]["#options"]=$tab;*/
-
   _get_ajax_code_postal($form);
   _get_field_ville($form, 4, "group_informations_generales");
-
 
   /* Vue des contenus d'un adhérents */
   $onglets = ["activite", "agenda", "article", "reportage", "bloc_de_mise_en_avant"];
@@ -376,13 +364,12 @@ function kidiklik_admin_form_node_adherent_edit_form_alter(&$form, FormStateInte
     $result = current($query->fetchAll());
     $entity_id = $result->entity_id;
   }
-  /*if($entity_id && !count($form["field_client"]["widget"]["#default_value"]))
-      $form["field_client"]["widget"]["#default_value"][]=(string)$entity_id;*/
+
 }
 
 function kidiklik_admin_form_node_newsletter_form_alter(&$form, FormStateInterface $form_state, $form_id)
 {
-  if(get_departement() !== 0) {
+  if (get_departement() !== 0) {
     $redirect = new RedirectResponse(Url::fromUserInput('/admin/newsletters')->toString());
     $redirect->send();
   }
@@ -395,14 +382,11 @@ function kidiklik_admin_form_node_newsletter_form_alter(&$form, FormStateInterfa
   }
 
   $form["field_image_d_entete"]["widget"]["#options"] = $tab;
-
 }
 
 function kidiklik_admin_form_node_newsletter_edit_form_alter(&$form, FormStateInterface $form_state, $form_id)
 {
   kidiklik_admin_form_node_newsletter_form_alter($form, $form_state, $form_id);
-  /*$form["#attached"]["library"][]="kidiklik_admin/kidiklik_admin.commands";*/
-
 
   $form["actions"]["view_content"] = [
     "#type" => "html_tag",
@@ -426,7 +410,6 @@ function kidiklik_admin_form_node_bloc_de_mise_en_avant_form_alter(&$form, FormS
   $term_dep = get_term_departement();
   $form["field_adherent"]["widget"]["#multiple"] = FALSE;
 
-  //	$adherents=\Drupal::entityTypeManager()->getStorage("node")->loadByProperties(["type"=>"adherent","field_departement"=>$term_dep]);
   $newsletters = \Drupal::entityTypeManager()->getStorage("node")->loadByProperties(["type" => "newsletter", "field_departement" => $term_dep]);
 
   $liste_newsletter = [];
@@ -437,12 +420,11 @@ function kidiklik_admin_form_node_bloc_de_mise_en_avant_form_alter(&$form, FormS
 
   $form['field_newsletter']['widget']['#options'] = $liste_newsletter;
 
-
   $form["#submit"][] = "_bloc_mise_en_avant_form_submit";
   $form["#validate"][] = "_bloc_mise_en_avant_form_validate";
-  if (current($form["field_type"]["widget"]["#default_value"]) == 2) {
-    //	unset($form["field_date"]);
-  }
+  /*if (current($form["field_type"]["widget"]["#default_value"]) == 2) {
+    unset($form["field_date"]);
+  }*/
   $form["#attached"]["library"][] = "kidiklik_admin/kidiklik_admin.commands";
   add_record_and_stay_button($form);
 }
@@ -463,26 +445,26 @@ function kidiklik_admin_form_node_article_form_alter(&$form, FormStateInterface 
   if (!empty(\Drupal::request()->query->get("ref_id"))) {
     $adherent_id = \Drupal::request()->query->get("ref_id");
   }
-  
-    $rub = $form["field_rubriques_activite"]["widget"]["#options"];
-    $tab = [];
-    $n = "";
-    foreach ($rub as $k => $r) {
-      if ($k != "_none") {
-        $t = taxonomy_term_load($k);
-        $p = current($t->parent->getValue()[0]);
-        if (!(int)$p) {
-          $n = current($t->name->getValue()[0]);
-	} else {
 
-          if (current($t->get("field_departement")->getValue())["target_id"] == $term_dep) {
-		  $tab[$n][$k] = current($t->name->getValue()[0]);
-	  }
+  $rub = $form["field_rubriques_activite"]["widget"]["#options"];
+  $tab = [];
+  $n = "";
+  foreach ($rub as $k => $r) {
+    if ($k != "_none") {
+      $t = taxonomy_term_load($k);
+      $p = current($t->parent->getValue()[0]);
+      if (!(int)$p) {
+        $n = current($t->name->getValue()[0]);
+      } else {
+
+        if (current($t->get("field_departement")->getValue())["target_id"] == $term_dep) {
+          $tab[$n][$k] = current($t->name->getValue()[0]);
         }
       }
     }
-    $form["field_rubriques_activite"]["widget"]["#options"] = $tab;
-    $form["field_rubriques_activite"]["widget"]["#size"] = 1;
+  }
+  $form["field_rubriques_activite"]["widget"]["#options"] = $tab;
+  $form["field_rubriques_activite"]["widget"]["#size"] = 1;
 
 
   if ($adherent_id !== null) {
@@ -496,7 +478,6 @@ function kidiklik_admin_form_node_article_form_alter(&$form, FormStateInterface 
   }
 
   add_record_and_stay_button($form);
-
 
   /* le champ est configuré par défaut en multiple valeur, on bloque à une simple valeur */
   $form["field_adherent"]["widget"]["#multiple"] = FALSE;
@@ -513,17 +494,17 @@ function kidiklik_admin_form_node_reportage_form_alter(&$form, FormStateInterfac
 function kidiklik_admin_form_node_article_edit_form_alter(&$form, FormStateInterface $form_state, $form_id)
 {
   kidiklik_admin_form_node_article_form_alter($form, $form_state, $form_id);
-	$cols = &$form['field_mise_en_avant']['widget']['entities']['#table_fields'];
-	$cols['field_type'] = [
-		'type' => 'field',
-		'label' => t('Type'),
-		'weight' => 1,
-	];
-	$cols['field_date'] = [
-		'type' => 'field',
-		'label' => t('Date'),
-		'weight' => 1,
-	];
+  $cols = &$form['field_mise_en_avant']['widget']['entities']['#table_fields'];
+  $cols['field_type'] = [
+    'type' => 'field',
+    'label' => t('Type'),
+    'weight' => 1,
+  ];
+  $cols['field_date'] = [
+    'type' => 'field',
+    'label' => t('Date'),
+    'weight' => 1,
+  ];
 }
 
 function kidiklik_admin_form_node_reportage_edit_form_alter(&$form, FormStateInterface $form_state, $form_id)
@@ -534,7 +515,6 @@ function kidiklik_admin_form_node_reportage_edit_form_alter(&$form, FormStateInt
 function kidiklik_admin_form_node_activite_form_alter(&$form, FormStateInterface $form_state, $form_id)
 {
   $term_dep = get_term_departement();
-  //dd(debug_backtrace());
 
   $form["#attached"]["library"][] = "kidiklik_admin/kidiklik_admin.commands";
   $form["type"] = "activite";
@@ -572,9 +552,7 @@ function kidiklik_admin_form_node_activite_form_alter(&$form, FormStateInterface
     $form["field_rubriques_activite"]["widget"]["#options"] = $tab;
 
     $form["field_rubriques_activite"]["widget"]["#size"] = 1;
-
   }
-
 
   unset($form["field_date"]["widget"]['add_more']);
 
@@ -592,12 +570,10 @@ function kidiklik_admin_form_node_activite_form_alter(&$form, FormStateInterface
     $form["field_adherent"]["widget"]["#default_value"] = $adherent_id;
     $form["field_adresse"]["widget"][0]["value"]['#default_value'] = $adherent->get("field_adresse")->value;
     $form["field_code_postal"]["widget"][0]["value"]['#default_value'] = $adherent->get("field_code_postal")->value;
-
     $form["#group_children"]["field_ville"] = "group_coordonnees";
     $form["field_telephone"]["widget"][0]["value"]['#default_value'] = $adherent->get("field_telephone")->value;
     $form["field_email"]["widget"][0]["value"]['#default_value'] = $adherent->get("field_email")->value;
     $form["field_lien"]["widget"][0]["value"]['#default_value'] = $adherent->get("field_lien")->value;
-    //ksm($form);
 
     $form["actions"]["retour"] = [
       "#type" => "html_tag",
@@ -615,8 +591,6 @@ function kidiklik_admin_form_node_activite_form_alter(&$form, FormStateInterface
   } else {/* formattage de la balise select avec affichage par catégorie */
 
     $form["#redirect"] = "/admin/activite";
-
-
     if ($adherent_id = \Drupal::request()->query->get("adherent")) {
       $form["actions"]["retour"] = [
         "#type" => "html_tag",
@@ -642,23 +616,23 @@ function kidiklik_admin_form_node_activite_form_alter(&$form, FormStateInterface
 
 function kidiklik_admin_form_node_activite_edit_form_alter(&$form, FormStateInterface $form_state, $form_id)
 {
-	kidiklik_admin_form_node_activite_form_alter($form, $form_state, $form_id);
-	$cols = &$form['field_mise_en_avant']['widget']['entities']['#table_fields'];
-	$cols['field_type'] = [
-		'type' => 'field',
-		'label' => t('Type'),
-		'weight' => 1,
-	];
-	$cols['field_date'] = [
-		'type' => 'field',
-		'label' => t('Date'),
-		'weight' => 1,
-	];
+  kidiklik_admin_form_node_activite_form_alter($form, $form_state, $form_id);
+  $cols = &$form['field_mise_en_avant']['widget']['entities']['#table_fields'];
+  $cols['field_type'] = [
+    'type' => 'field',
+    'label' => t('Type'),
+    'weight' => 1,
+  ];
+  $cols['field_date'] = [
+    'type' => 'field',
+    'label' => t('Date'),
+    'weight' => 1,
+  ];
 }
 
 function kidiklik_admin_form_node_agenda_form_alter(&$form, FormStateInterface $form_state, $form_id)
 {
-  
+
   $term_dep = get_term_departement();
   $user = \Drupal::currentUser()->getAccount();
   $form['#validate'][] = 'kidiklik_admin_form_bloc_validate';
@@ -678,25 +652,7 @@ function kidiklik_admin_form_node_agenda_form_alter(&$form, FormStateInterface $
     //"field_departement"=>get_term_departement()
   ]);
 
- /* $list_cat = [];
-  $list_cat['All'] = 'Choisissez une rubriques ...';
-  foreach ($categories as $cat) {
-    $sous_categories = \Drupal::entityTypeManager()->getStorage("taxonomy_term")->loadByProperties([
-      "vid" => "rubriques_activite",
-      "parent" => $cat->Id(),
-      "status" => 1,
-      "field_departement" => get_term_departement()
-    ]);
-    
 
-    $list_cat[$cat->Id()] = $cat->getName();
-    if (!empty($sous_categories)) {
-      foreach ($sous_categories as $sc) {
-
-        $list_cat[$sc->Id()] = "-- " . $sc->getName();
-      }
-    } 
-  }*/
   if (get_departement() !== 0) {
     $rub = $form["field_rubriques_activite"]["widget"]["#options"];
     $tab = [];
@@ -719,7 +675,6 @@ function kidiklik_admin_form_node_agenda_form_alter(&$form, FormStateInterface $
 
   }
 
-  
 
   $form["type"] = "agenda";
   /* on vient d'une fiche adhérent */
@@ -784,10 +739,7 @@ function kidiklik_admin_form_node_agenda_form_alter(&$form, FormStateInterface $
       $tab[$key] = $adherent->getTitle();
     }
     $form["field_adherent"]["widget"]["#options"] = $tab;
-  } /*else {
-        $adherents=\Drupal::entityTypeManager()->getStorage("node")->loadByProperties(["type"=>"adherent","field_departement"=>$term_dep]);
-    }*/
-
+  }
 
   /* le champ est configuré par défaut en multiple valeur, on bloque à une simple valeur */
   $form["field_adherent"]["widget"]["#multiple"] = FALSE;
@@ -816,18 +768,18 @@ function kidiklik_admin_form_node_agenda_form_alter(&$form, FormStateInterface $
 function kidiklik_admin_form_node_agenda_edit_form_alter(&$form, FormStateInterface $form_state, $form_id)
 {
   kidiklik_admin_form_node_agenda_form_alter($form, $form_state, $form_id);
-	$cols = &$form['field_mise_en_avant']['widget']['entities']['#table_fields'];
-	$cols['field_type'] = [
-		'type' => 'field',
-		'label' => t('Type'),
-		'weight' => 1,
-	];
-	$cols['field_date'] = [
-		'type' => 'field',
-		'label' => t('Date'),
-		'weight' => 1,
-	];
-  
+  $cols = &$form['field_mise_en_avant']['widget']['entities']['#table_fields'];
+  $cols['field_type'] = [
+    'type' => 'field',
+    'label' => t('Type'),
+    'weight' => 1,
+  ];
+  $cols['field_date'] = [
+    'type' => 'field',
+    'label' => t('Date'),
+    'weight' => 1,
+  ];
+
   $adherent_id = $form["field_adherent"]["widget"]["#default_value"];
   $activites = NULL;
   if (!empty($adherent_id)) {
@@ -842,13 +794,13 @@ function kidiklik_admin_form_node_agenda_edit_form_alter(&$form, FormStateInterf
   ];
   $form["#group_children"]["field_activite"] = "group_coordonnees";
   foreach ($activites as $key => $activite) {
-	  $activites_list[$key] = $activite->getTitle();
+    $activites_list[$key] = $activite->getTitle();
   }
   $form["field_activite"]["#options"] = $activites_list;
   if (!empty($form["field_activite_save"]["widget"][0]["value"]["#default_value"])) {
     $form["field_activite"]["#default_value"] = $form["field_activite_save"]["widget"][0]["value"]["#default_value"];
-  }else if(!empty(current($node_agenda->get('field_activite')->getValue())['target_id'])) {
-    $form["field_activite"]["#default_value"] = current($node_agenda->get('field_activite')->getValue())['target_id'];
+  } else if (!empty(current($node_agenda->get('field_activite')->getValue())['target_id'])) {
+    $form["field_activite"]["#default_value"] = current($node_agenda->get('field_activite_lie')->getValue())['target_id'];
   }
   $cp = $form["field_code_postal"]["widget"][0]["value"]["#default_value"];
 
@@ -860,17 +812,15 @@ function kidiklik_admin_form_node_publicite_form_alter(&$form, FormStateInterfac
   $form["#redirect"] = "/admin/publicites";
   $form["field_adherent"]["widget"]["#multiple"] = FALSE;
   $user = User::Load(\Drupal::currentUser()->id());
-  
-  /*} else {*/
-    unset($form['field_national']);
-    $form["#submit"][] = "kidiklik_admin_form_submit";
-    foreach ($form['field_partage_departements']['widget']['#options'] as $key => $item) {
 
-      $nom_departement = \Drupal::entityTypeManager()->getStorage("taxonomy_term")->load($key);
-      $form['field_partage_departements']['widget']['#options'][$key] = $nom_departement->get("field_nom")->value . " (" . $nom_departement->getName() . ")" . ($nom_departement->get("field_region")->value ? " - <i>" . $nom_departement->get("field_region")->value . "</i>" : "");
+  unset($form['field_national']);
+  $form["#submit"][] = "kidiklik_admin_form_submit";
+  foreach ($form['field_partage_departements']['widget']['#options'] as $key => $item) {
 
-    }
-  //}
+    $nom_departement = \Drupal::entityTypeManager()->getStorage("taxonomy_term")->load($key);
+    $form['field_partage_departements']['widget']['#options'][$key] = $nom_departement->get("field_nom")->value . " (" . $nom_departement->getName() . ")" . ($nom_departement->get("field_region")->value ? " - <i>" . $nom_departement->get("field_region")->value . "</i>" : "");
+
+  }
   if (!$user->hasRole('administrator') && !$user->hasRole('administrateur_de_departement')) {
     unset($form["#group_children"]["group_partage"]);
     unset($form['field_tous_les_sites']);
@@ -882,7 +832,6 @@ function kidiklik_admin_form_node_publicite_form_alter(&$form, FormStateInterfac
   $form["#validate"][] = "kidiklik_admin_form_publicite_validate";
   $form["#submit"][] = "kidiklik_admin_form_publicite_submit";
   add_record_and_stay_button($form);
-
 }
 
 function kidiklik_admin_form_node_publicite_edit_form_alter(&$form, FormStateInterface $form_state, $form_id)
@@ -896,23 +845,20 @@ function kidiklik_admin_form_node_publicite_edit_form_alter(&$form, FormStateInt
 
 function kidiklik_admin_form_alter(&$form, FormStateInterface $form_state, $form_id)
 {
-
   $term_dep = get_term_departement();
-
 
   if (in_array($form_id, ['node_article_edit_form', 'node_agenda_edit_form', 'node_activite_edit_form'])) {
     unset($form['actions']['preview']);
   };
 
-
-  if (in_array($form_id, ['node_publicite_form','node_publicite_edit_form','node_bloc_de_mise_en_avant_edit_form','node_bloc_de_mise_en_avant_form','node_article_form', 'node_article_edit_form', 'node_activite_form', 'node_agenda_form', 'node_agenda_edit_form', 'node_activite_edit_form'])) {
+  if (in_array($form_id, ['node_publicite_form', 'node_publicite_edit_form', 'node_bloc_de_mise_en_avant_edit_form', 'node_bloc_de_mise_en_avant_form', 'node_article_form', 'node_article_edit_form', 'node_activite_form', 'node_agenda_form', 'node_agenda_edit_form', 'node_activite_edit_form'])) {
     $form['actions']['submit']['#value'] = 'Enregistrer Quitter';
     $user = User::Load(\Drupal::currentUser()->id());
     $user_dep = current($user->get('field_departement')->getValue())['target_id'];
     $term_dep = \Drupal::entityTypeManager()->getStorage("taxonomy_term")->load($user_dep);
-    
   }
-  if(in_array($form_id, ['node_publicite_form','node_publicite_edit_form','node_bloc_de_mise_en_avant_edit_form','node_bloc_de_mise_en_avant_form'])) {
+
+  if (in_array($form_id, ['node_publicite_form', 'node_publicite_edit_form', 'node_bloc_de_mise_en_avant_edit_form', 'node_bloc_de_mise_en_avant_form'])) {
     if ($user->hasRole('administrator') || $user->hasRole('administrateur_de_departement')) {
       $form['all_dep'] = [
         '#type' => 'html_tag',
@@ -926,7 +872,7 @@ function kidiklik_admin_form_alter(&$form, FormStateInterface $form_state, $form
         '#weight' => -50
       ];
       $form['#group_children']['all_dep'] = "group_partage";
-  }
+    }
   }
 
 
@@ -934,33 +880,29 @@ function kidiklik_admin_form_alter(&$form, FormStateInterface $form_state, $form
     $form["#redirect"] = "/admin/partenaires";
   }
 
-
   include_once('includes/node_jeu_concours_form.php');
 
   if ($form_id == "taxonomy_term_departement_form") {
     $user = \Drupal::entityTypeManager()->getStorage("user")->load(\Drupal::currentUser()->id());
-    // pour l'édition des pages de contenu, on enléve certains champs, non dispensable pour les admin dep 
+    // pour l'édition des pages de contenu, on enléve certains champs, non dispensable pour les admin dep
     if ($user->hasRole("administrateur_de_departement")) {
       unset($form["relations"]);
       unset($form["name"]);
       unset($form["field_nom"]);
       unset($form["status"]);
-
     }
   }
 
   if ($form_id == "taxonomy_term_rubriques_activite_form") {
-
-
-    // on récupére le paramètre url destination 
+    // on récupére le paramètre url destination
     $arg = \Drupal::request()->query->get("destination");
-    // puis l'id de la catégorie mère 
+    // puis l'id de la catégorie mère
     $tab = explode("/", $arg);
     $id_mere = null;
 
     $cat_mere = \Drupal::entityTypeManager()->getStorage("taxonomy_term")->load($tab[3]);
     if (!empty($cat_mere)) {
-    	$id_mere = $cat_mere->id();
+      $id_mere = $cat_mere->id();
       $form["cat_mere"] = [
         "#type" => "html_tag",
         "#tag" => "H3",
@@ -973,39 +915,36 @@ function kidiklik_admin_form_alter(&$form, FormStateInterface $form_state, $form
     }
 
     //
-    // on va lister uniquement les catégorie mère 
+    // on va lister uniquement les catégorie mère
 
     $tmp = \Drupal::entityTypeManager()->getStorage("taxonomy_term")->loadByProperties([
       "vid" => "rubriques_activite",
       "field_ref_parent" => "0",
     ]);
     $liste = [];
-	foreach ($tmp as $key => $item) {
-	//kint($item);
-      $liste[$key] = $item->getName();
-	}
+    if(!empty($tmp)) {
+      foreach ($tmp as $key => $item) {
+        //kint($item);
+        $liste[$key] = $item->getName();
+      }
+    }
+
     $user = User::Load(\Drupal::currentUser()->id());
-    if ($user->id() !== "1") {
-	    unset($form['field_ref_parent']);
+
+    if ((!empty($user) && $user->id() !== "1") || empty($user)) {
+      unset($form['field_ref_parent']);
     }
 
     $form["relations"]["parent"]["#options"] = $liste;
     $form["relations"]["parent"]["#default_value"] = $id_mere;
-    //	$form["relations"]["parent"]["#multiple"]=false;
-
   }
 
   if ($form_id == "taxonomy_term_entetes_newsletter_form") {
-    
-    if(in_array('administrateur_de_departement',\Drupal::currentUser()->getAccount()->getRoles())) {
+    if (in_array('administrateur_de_departement', \Drupal::currentUser()->getAccount()->getRoles())) {
       $form["field_departement"]["widget"][0]["target_id"]["#default_value"] = taxonomy_term_load($term_dep);
     }
-    
   }
-
-
 }
-
 
 function _get_ajax_code_postal(&$form)
 {
@@ -1097,7 +1036,6 @@ function kidiklik_admin_form_rubriques_activites_validate(&$form, FormStateInter
 function _bloc_mise_en_avant_form_validate(&$form, FormStateInterface $form_state)
 {
 
-
 }
 
 /**
@@ -1129,9 +1067,7 @@ function kidiklik_admin_form_submit_redirect(&$form, FormStateInterface $form_st
 
 function form_redirect(&$form, FormStateInterface &$form_state)
 {
-  //'entity.node.edit_form', ['nid' => \Drupal::request()->get('node')->Id()]
   $node = \Drupal::request()->get('node');
-  //$form_state->setRedirectUrl(Url::fromUserInput('/node/'.\Drupal::request()->get('node')->Id().'/edit?destination=/admin/agenda'));
   $redirect = new RedirectResponse(Url::fromUserInput('/node/' . $node->Id() . '/edit?destination=/admin/' . $node->getType())->toString());
   $redirect->send();
 }
@@ -1261,38 +1197,10 @@ function getAjaxVille2(array &$form, FormStateInterface $form_state)
   //$response->addCommand(new InvokeCommand(NULL,"putSelect2", [['#edit-field-ville']] ));
   $response->addCommand(new ReplaceCommand('#edit-field-ville', $renderedField));
   return $response;
-
-
 }
-
-/*
-function getAjaxVille(array &$form, FormStateInterface $form_state) {
-	$cp=current($form_state->getValue("field_code_postal"));
-
-	$query=\Drupal::entityQuery('taxonomy_term');
-	$query->condition("field_code_postal",$cp);
-	//$ville_id=$query->execute();
-	//return $form["field_code_postal"];
-
-	$villes=Term::loadMultiple($query->execute());//current(\Drupal::entityTypeManager()->getStorage("taxonomy_term")->loadByProperties(["vid"=>"ville","tid"=>$ville_id]));
-	$tab=array();
-
-
-	foreach($villes as $ville) {
-		$tab[]=["key"=>$ville->id(),"val"=>$ville->getName()];
-		//$tab[$ville->id()]=$ville->getName();
-	}
-
-	$response = new AjaxResponse();
-	$response->addCommand(new InvokeCommand(NULL,"getAjaxVille", [$tab] ));
-	return $response;
-}
-**/
 
 function getAjaxCoordonnees(array &$form, FormStateInterface $form_state)
 {
-
-
   $response = new AjaxResponse();
   $select_id = current($form_state->getValue("field_adherent"));
   $adherent = current(\Drupal::entityTypeManager()->getStorage("node")->loadByProperties(["type" => "adherent", "nid" => $select_id]));
@@ -1326,13 +1234,12 @@ function getAjaxCoordonnees(array &$form, FormStateInterface $form_state)
 
       $poids_ville = 16;
 
-    } else $poids_ville = 28;
-
+    } else {
+      $poids_ville = 28;
+    }
 
     $ville = current($adherent->get("field_ville_save")->getValue())["value"];
-    //$form["field_ville_save"] = $ville;
-    //ksm($ville);
-    //ksm($adherent->get("field_ville_save")->getValue());
+
     if (!empty($ville)) {
       //$ville_term=\Drupal::entityTypeManager()->getStorage("taxonomy_term")->load($ville_id);
       $ville = [$ville => $ville];
@@ -1357,13 +1264,6 @@ function getAjaxCoordonnees(array &$form, FormStateInterface $form_state)
       "#suffix" => "</div>",
     ];
     $form["coordonnee"][] = $form["field_adresse"];
-    /*$form["coordonnee"][]=[
-      "#type"=>"html_tag",
-      "#tag"=>"b",
-      "#attributes"=>["class"=>"alert alert-light"],
-      "#value"=>"Pour sélectionner d'autres villes, il faut saisir un code postal ou cliquer sur le code postal",
-      "#weight"=>48
-    ];*/
     $form["coordonnee"][] = $form["field_code_postal"];
     $form["coordonnee"][] = $form["ville"];
     $form["coordonnee"][] = $form["field_telephone"];
@@ -1376,16 +1276,11 @@ function getAjaxCoordonnees(array &$form, FormStateInterface $form_state)
     $form["coordonnee"][] = $form["field_ville_save"];
     //$form["coordonnee"][]=$form["field_activite_save"];
 
-
     $renderer = \Drupal::service("renderer");
     $renderedField = $renderer->render($form["coordonnee"]);
 
     $response->addCommand(new ReplaceCommand('#coordonnees-adherent', $renderedField));
-
-
   }
-
-
   return $response;
 }
 
@@ -1436,84 +1331,9 @@ function kidiklik_admin_views_query_alter(Drupal\views\ViewExecutable $view, Dru
         $query->where[1]["conditions"][2]["field"] = "DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d') >= DATE_FORMAT('" . $date_fin . "', '%Y-%m-%d')
 				OR (DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d') BETWEEN '" . $date_deb . "' and '" . $date_fin . "')";
 
-    } else unset($query->where[1]["conditions"][2]);
-    //if($view->current_display=="adherent_publicites") ksm($query->where);
-    //ksm($query->where[1]["conditions"]);
-  }
-  if ($view->current_display === 'page_article') {
-    /*$query->where[1]['conditions'][3]['field'] = 'node__field_adherent.field_adherent_target_id like "%'.addslashes($query->where[1]['conditions'][3]['value']).'%"';
-    $query->where[1]['conditions'][3]['value'] = [];
-    $query->where[1]['conditions'][3]['operator'] = 'formula';*/
-    //ksm($query->where);
+    } else {
+      unset($query->where[1]["conditions"][2]);
+    }
   }
 
-
-  /*if($view->current_display=="contenus_adherent") {
-
-
-
-    if(!$date_deb=\Drupal::request()->get('field_date_de_debut_value')) {
-      $configuration = array(
-            'type' => 'LEFT',
-        'table' => 'paragraph__field_date_de_debut',
-        'field' => 'entity_id',
-        'left_table' => 'paragraphs_item_field_data_node__field_date',
-        'left_field' => 'id',
-        'operator'   => '=',
-      );
-
-
-      $join = \Drupal\views\Views::pluginManager('join')
-            ->createInstance('standard', $configuration);
-      $rel = $query->addRelationship('paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut', $join, 'paragraphs_item_field_data');
-      //$query->addTable('node__field_departement', $rel, $join, 'field_dep');
-      //$query->addWhere('', 'field_dep.field_departement_target_id', $term_id, '=');
-    }
-    if(!$date_fin=\Drupal::request()->get('field_date_de_fin_value')) {
-      $configuration = array(
-            'type' => 'LEFT',
-        'table' => 'paragraph__field_date_de_fin',
-        'field' => 'entity_id',
-        'left_table' => 'paragraphs_item_field_data_node__field_date',
-        'left_field' => 'id',
-        'operator'   => '=',
-      );
-
-
-      $join = \Drupal\views\Views::pluginManager('join')
-            ->createInstance('standard', $configuration);
-      $rel = $query->addRelationship('paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin', $join, 'paragraphs_item_field_data');
-    }
-
-
-    //kint($query->where);exit;
-    ///DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') >= DATE_FORMAT('2020-09-26T00:00:00', '%Y-%m-%d')
-    if($date_deb) {
-      //ksm($date_deb);
-      if(!$date_fin)
-        $query->where[1]["conditions"][0]["field"]="DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') >= DATE_FORMAT('".$date_deb."', '%Y-%m-%d')
-        OR ('".$date_deb."' between DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') and DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d'))";
-      else
-        $query->where[1]["conditions"][0]["field"]="DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') <= DATE_FORMAT('".$date_deb."', '%Y-%m-%d')
-        OR (DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') BETWEEN '".$date_deb."' and '".$date_fin."')";
-
-    }
-    if($date_fin) {
-      //ksm($date_fin);
-      if(!$date_deb) {
-        //unset()
-        $query->where[1]["conditions"][0]["field"]="DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d') <= DATE_FORMAT('".$date_fin."', '%Y-%m-%d')
-        OR ('".$date_fin."' between DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') and DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d'))";
-      } else
-        $query->where[1]["conditions"][1]["field"]="DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d') >= DATE_FORMAT('".$date_fin."', '%Y-%m-%d')
-        OR (DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d') BETWEEN '".$date_deb."' and '".$date_fin."')";
-
-    }
-
-
-
-
-
-
-  }*/
 }

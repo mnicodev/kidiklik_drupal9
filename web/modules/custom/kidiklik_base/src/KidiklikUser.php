@@ -15,7 +15,8 @@ class KidiklikUser
   }
 
 
-  static function getDepartement() {
+  static function getDepartement()
+  {
     $user = User::Load(\Drupal::currentUser()->id());
     $term = Term::Load(current($user->get('field_departement')->getValue())['target_id']);
     return $term->getName();

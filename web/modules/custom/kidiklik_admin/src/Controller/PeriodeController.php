@@ -8,7 +8,8 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Class PeriodeController.
  */
-class PeriodeController extends ControllerBase {
+class PeriodeController extends ControllerBase
+{
 
   /**
    * Content.
@@ -16,17 +17,14 @@ class PeriodeController extends ControllerBase {
    * @return string
    *   Return Hello string.
    */
-  public function content() {
-		
-		
-		
-		$build=[
-			"#theme"=>"periode_pub",
-			"#pub"=>"hello world",
-		];
-		
-		
-		return new Response(drupal_render($build));
+  public function content()
+  {
+    $build = [
+      "#theme" => "periode_pub",
+      "#pub" => "hello world",
+    ];
+
+    return new Response(drupal_render($build));
   }
 
 }

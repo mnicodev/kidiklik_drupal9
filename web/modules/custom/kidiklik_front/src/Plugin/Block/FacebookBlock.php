@@ -12,19 +12,21 @@ use Drupal\Core\Block\BlockBase;
  *  admin_label = @Translation("Facebook block"),
  * )
  */
-class FacebookBlock extends BlockBase {
+class FacebookBlock extends BlockBase
+{
 
   /**
    * {@inheritdoc}
    */
-  public function build() {
+  public function build()
+  {
     $build = [];
     $build['#theme'] = 'facebook_block';
 
-     $term_dep=\Drupal::entityTypeManager()->getStorage("taxonomy_term")->load(get_term_departement());
-    
-     $build['#content']=$term_dep->get('field_reseaux_sociaux2')->getValue();
-     
+    $term_dep = \Drupal::entityTypeManager()->getStorage("taxonomy_term")->load(get_term_departement());
+
+    $build['#content'] = $term_dep->get('field_reseaux_sociaux2')->getValue();
+
 
     return $build;
   }

@@ -17,13 +17,9 @@ class UserSubscriber implements EventSubscriberInterface {
 		if($user->hasRole("administrateur_de_departement")) {
 			$user_dep=(int)current(($user->get("field_departement")->getValue()))["target_id"];
 			$url_dep=get_term_departement();
-	//kint($user_dep);exit;
+
 			if($user_dep!==$url_dep){
 				$dep = \Drupal::entityTypeManager()->getStorage("taxonomy_term")->load($url_dep);
-				//	kint($dep->getName().'.kidiklik.dvm');exit;
-				//return AccessResult::forbidden();
-				//exit;
-				//$event->setResponse(new RedirectResponse("http://".$dep->getName().'.kidiklik.dvm'));
 			}
 
 		}
