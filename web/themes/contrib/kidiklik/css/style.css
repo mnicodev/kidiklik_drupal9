@@ -767,12 +767,10 @@ a.reservation {
   #groupe-actions .voir-actualites {
     float: left; }
 
-.activite .field--name-field-resume, .agenda .field--name-field-resume {
-  margin-bottom: 10px; }
-.activite .flag-bookmark i, .agenda .flag-bookmark i {
+.flag-bookmark i {
   color: #fff;
   padding-right: 5px; }
-.activite .flag-bookmark a, .agenda .flag-bookmark a {
+.flag-bookmark a {
   background: #db2a24;
   padding: 7px;
   padding-bottom: 6px;
@@ -780,6 +778,9 @@ a.reservation {
   width: 100%;
   display: block;
   text-align: center; }
+
+.activite .field--name-field-resume, .agenda .field--name-field-resume {
+  margin-bottom: 10px; }
 .activite .bloc1, .agenda .bloc1 {
   font-size: 14px;
   margin-bottom: 20px; }

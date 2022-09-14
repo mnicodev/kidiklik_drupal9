@@ -1001,18 +1001,7 @@ a.reservation {
 	}
 
 }
-
-.activite, .agenda {
-	
-	.flag-resa {
-		
-	}
-	
-	.field--name-field-resume  {
-		margin-bottom: 10px;
-	}
-
-  .flag-bookmark {
+.flag-bookmark {
 	
     i {
       color: #fff;
@@ -1028,6 +1017,18 @@ a.reservation {
 		text-align: center;
     }
   }
+  
+.activite, .agenda {
+	
+	.flag-resa {
+		
+	}
+	
+	.field--name-field-resume  {
+		margin-bottom: 10px;
+	}
+
+  
 	.bloc1 {
 		font-size: 14px;
     	margin-bottom: 20px;
