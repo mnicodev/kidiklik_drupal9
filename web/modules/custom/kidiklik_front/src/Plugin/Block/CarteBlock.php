@@ -12,15 +12,17 @@ use Drupal\Core\Block\BlockBase;
  *  admin_label = @Translation("Carte block"),
  * )
  */
-class CarteBlock extends BlockBase {
+class CarteBlock extends BlockBase
+{
 
   /**
    * {@inheritdoc}
    */
-  public function build() {
+  public function build()
+  {
     $build = [];
     $build['#theme'] = 'carte_block';
-    
+
     return $build;
   }
 

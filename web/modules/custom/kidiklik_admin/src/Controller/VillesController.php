@@ -9,9 +9,11 @@ use Drupal\kidiklik_base\kidiklikEntity;
 /**
  * Class VillesController.
  */
-class VillesController extends ControllerBase {
+class VillesController extends ControllerBase
+{
 
-  public function get() {
+  public function get()
+  {
 
   }
 
@@ -21,11 +23,12 @@ class VillesController extends ControllerBase {
    * @return string
    *   Return Hello string.
    */
-  public function getGPS($ville) {
-    $database=\Drupal::database();
-    $query=$database->query("select * from villes where commune='".$ville."'");
-    $rs=current($query->fetchAll());
-   
+  public function getGPS($ville)
+  {
+    $database = \Drupal::database();
+    $query = $database->query("select * from villes where commune='" . $ville . "'");
+    $rs = current($query->fetchAll());
+
     return new JsonResponse($rs);
   }
 
@@ -35,21 +38,21 @@ class VillesController extends ControllerBase {
    * @return string
    *   Return Hello string.
    */
-  public function getByCp($cp) {
-    $database=\Drupal::database();
-    $query=$database->query("select * from villes where code_postal='".$cp."'");
-    $rs=($query->fetchAll());
+  public function getByCp($cp)
+  {
+    $database = \Drupal::database();
+    $query = $database->query("select * from villes where code_postal='" . $cp . "'");
+    $rs = ($query->fetchAll());
 
-    foreach($rs as $item) {
-      $tab[]=[
-        "tid"=>$item->id_ville,
-        "name"=>$item->commune,
+    foreach ($rs as $item) {
+      $tab[] = [
+        "tid" => $item->id_ville,
+        "name" => $item->commune,
       ];
     }
-    
-//kint($tab);exit;
+
     return new JsonResponse($tab);
-    
+
   }
 
 }

@@ -12,19 +12,22 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 /**
  * Class DefaultForm.
  */
-class DefaultForm extends FormBase {
+class DefaultForm extends FormBase
+{
 
   /**
    * {@inheritdoc}
    */
-  public function getFormId() {
+  public function getFormId()
+  {
     return 'newsletter_form';
   }
 
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state) {
+  public function buildForm(array $form, FormStateInterface $form_state)
+  {
     $form['group'] = [
       '#type' => 'fieldset',
     ];
@@ -73,7 +76,8 @@ class DefaultForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function validateForm(array &$form, FormStateInterface $form_state) {
+  public function validateForm(array &$form, FormStateInterface $form_state)
+  {
     foreach ($form_state->getValues() as $key => $value) {
       // @TODO: Validate fields.
 
@@ -84,23 +88,18 @@ class DefaultForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function submitForm(array &$form, FormStateInterface $form_state) {
+  public function submitForm(array &$form, FormStateInterface $form_state)
+  {
     // Display result.
-    $database=\Drupal::database();
+    $database = \Drupal::database();
 
-    $sql = "insert into inscrits_newsletters (email, nom, prenom, dept) values ('".$form_state->getValue('email')."','".$form_state->getValue('nom')."','".$form_state->getValue('prenom')."','".get_departement()."')";
-    $query=$database->query($sql);
+    $sql = "insert into inscrits_newsletters (email, nom, prenom, dept) values ('" . $form_state->getValue('email') . "','" . $form_state->getValue('nom') . "','" . $form_state->getValue('prenom') . "','" . get_departement() . "')";
+    $query = $database->query($sql);
 
-    //$dest = '/email_to_newsletter.php';
-    //$url = Url
-    $response = new RedirectResponse('newsletter.html?record_email='.$form_state->getValue('email'));
-    //new TrustedRedirectResponse('/email_to_newsletter.php?email='.$form_state->getValue('email')."&dept=".get_departement());
+    $response = new RedirectResponse('newsletter.html?record_email=' . $form_state->getValue('email'));
+
     $form_state->setResponse($response);
- //   return new RedirectResponse('activite-decouverte');
-    //return new RedirectResponse
-    /*foreach ($form_state->getValues() as $key => $value) {
-      \Drupal::messenger()->addMessage($key . ': ' . ($key === 'text_format'?$value['value']:$value));
-    }*/
+
   }
 
 }

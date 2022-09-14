@@ -7,7 +7,8 @@ use Drupal\Core\Controller\ControllerBase;
 /**
  * Class NewsletterInscritsController.
  */
-class NewsletterInscritsController extends ControllerBase {
+class NewsletterInscritsController extends ControllerBase
+{
 
   /**
    * List.
@@ -15,35 +16,34 @@ class NewsletterInscritsController extends ControllerBase {
    * @return string
    *   Return Hello string.
    */
-  public function list() {
+  public function list()
+  {
     $start = \Drupal::request()->get('start');
     $step = \Drupal::request()->get('step');
-    if(empty($start)) {
+    if (empty($start)) {
       $start = 0;
     }
-    if(empty($step)) {
-      $step= 20;
+    if (empty($step)) {
+      $step = 20;
     }
 
-    $database=\Drupal::database();
-    $sql = "select * from  inscrits_newsletters where dept='".get_departement()."' order by inscription desc";
-    $query=$database->query($sql);
+    $database = \Drupal::database();
+    $sql = "select * from  inscrits_newsletters where dept='" . get_departement() . "' order by inscription desc";
+    $query = $database->query($sql);
     $list = $query->fetchAll();
     $taille = count($list) - 20;
 
-    $sql = "select * from  inscrits_newsletters where dept='".get_departement()."' order by inscription desc limit $start, $step";
-    $query=$database->query($sql);
+    $sql = "select * from  inscrits_newsletters where dept='" . get_departement() . "' order by inscription desc limit $start, $step";
+    $query = $database->query($sql);
     $list = $query->fetchAll();
 
-
-
-     return [
-      "#theme"=>"inscrits_newsletter",
-      "#list"=>$list,
-      "#prec" => ($start>0?$start - $step:0),
+    return [
+      "#theme" => "inscrits_newsletter",
+      "#list" => $list,
+      "#prec" => ($start > 0 ? $start - $step : 0),
       "#suiv" => $start + $step,
       "#step" => $step,
-       "#count_list" => $taille
+      "#count_list" => $taille
     ];
   }
 

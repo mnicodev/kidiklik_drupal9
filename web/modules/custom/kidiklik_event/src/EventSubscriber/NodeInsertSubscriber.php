@@ -15,7 +15,7 @@ class NodeInsertSubscriber implements EventSubscriberInterface
   public function onNodeInsert(NodeInsertEvent $event)
   {
     global $_POST, $_SERVER;
-    if(!empty($_SERVER['SHELL'])) {
+    if (!empty($_SERVER['SHELL'])) {
       return;
     }
     /* on récupére le département de la config */
@@ -77,9 +77,7 @@ class NodeInsertSubscriber implements EventSubscriberInterface
             $bloc->set('field_lien', \Drupal::service('path.alias_manager')->getAliasByPath('/node/' . $entity->id()));
             $bloc->save();
           }
-
         }
-
       }
       $image_target_id = current($entity->get('field_image')->getValue())['target_id'];
       $dates = $entity->get('field_date')->getValue();
@@ -119,18 +117,6 @@ class NodeInsertSubscriber implements EventSubscriberInterface
       }
     }
 
-    if ($type == "activite" || $type == "agenda") {
-      /*$ville=\Drupal::entityTypeManager()
-      ->getStorage("taxonomy_term")
-      ->load($entity->get("field_ville_save")->value);
-      $database=\Drupal::database();
-      $query=$database->query("select * from villes where id_ville='".$entity->get("field_ville_save")->value."'");
-      $ville=$query->fetchAll();
-      $entity->__set("field_commune",$ville->commune);
-      $entity->save();*/
-      //KidiklikEntity::setGPS($entity);
-    }
-
     if ($type == "bloc_de_mise_en_avant") {
 
       $adherent = \Drupal::entityTypeManager()
@@ -155,16 +141,7 @@ class NodeInsertSubscriber implements EventSubscriberInterface
        *  On ne prend plus en compte le champ bloc mise en avant
        * les bloc de newsletter seront indépendants et marqué par le champs newsletter du bloc
        */
-      /*$newsletter=\Drupal::entityTypeManager()
-        ->getStorage("node")
-        ->load(current($entity->get("field_newsletter")->getValue())["target_id"]);
 
-      if(!empty($newsletter)) {
-
-        $newsletter->get("field_bloc_de_mise_en_avant")->appendItem($entity);
-        $newsletter->validate();
-        $newsletter->save();
-      }*/
     }
 
   }

@@ -12,33 +12,35 @@ use Drupal\Core\Block\BlockBase;
  *  admin_label = @Translation("Reserver block"),
  * )
  */
-class ReserverBlock extends BlockBase {
+class ReserverBlock extends BlockBase
+{
 
   /**
    * {@inheritdoc}
    */
-  public function build() {
+  public function build()
+  {
     $build = [
       "#cache" => [
-        "max-age"=>0,
-        "contexts"=>[],
-        "tags"=>[],
+        "max-age" => 0,
+        "contexts" => [],
+        "tags" => [],
       ],
     ];
-    
+
     $build['#theme'] = 'reserver_bouton';
     $node = \Drupal::request()->get('node');
 
-    if(empty($node)) {  
+    if (empty($node)) {
       return null;
     }
     $id_resa = current($node->get('field_type_de_reservation')->getValue())['target_id'] ?? null;
-    if(empty($id_resa)) {
-	    return null;
+    if (empty($id_resa)) {
+      return null;
     }
     $resa = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($id_resa);
-    if(empty($resa)) {
-	    return null;
+    if (empty($resa)) {
+      return null;
     }
     $build['#type_resa'] = $resa->getName();
     $build['#tel'] = $node->get('field_telephone')->value ?? null;

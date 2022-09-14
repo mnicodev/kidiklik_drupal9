@@ -14,7 +14,7 @@ class NodeUpdateSubscriber implements EventSubscriberInterface
   {
     global $_SERVER;
     $entity = $event->getEntity();
-    if(!empty($_SERVER['SHELL'])) {
+    if (!empty($_SERVER['SHELL'])) {
       return;
     }
 
@@ -24,27 +24,11 @@ class NodeUpdateSubscriber implements EventSubscriberInterface
 
       $path = \Drupal::service('path.alias_manager')->getAliasByPath($entity->url());
       $blocs = $entity->get("field_mise_en_avant")->getValue();
-      /*foreach($blocs as $bloc) {
-        $node=\Drupal::entityTypeManager()->getStorage("node")->load($bloc["target_id"]);
 
-        if(!empty($path)) {
-          $node->set("field_lien",$path);
-        }
-
-        $node->set("field_adherent",$entity->get("field_adherent")->getValue());
-        if($entity->__isset("field_image"))
-          $node->set("field_image",$entity->get("field_image")->getValue());
-        if($type=="agenda") {
-          $node->set("field_date",$entity->get("field_date")->getValue());
-        }
-        $node->validate();
-        $node->save();
-      }*/
     }
 
 
     if ($type == "adherent") {
-
       $client = \Drupal::entityTypeManager()
         ->getStorage("node")
         ->load(current($entity->get("field_client")->getValue())["target_id"]);
@@ -67,7 +51,6 @@ class NodeUpdateSubscriber implements EventSubscriberInterface
     }
 
     if ($type == "activite" || $type == "agenda" || $type == "article" || $type == "reportage") {
-
       $adherent = \Drupal::entityTypeManager()
         ->getStorage("node")
         ->load(current($entity->get("field_adherent")->getValue())["target_id"]);
@@ -86,13 +69,13 @@ class NodeUpdateSubscriber implements EventSubscriberInterface
         if (!empty($image_target_id)) {
           $n->__set('field_image', ['target_id' => $image_target_id]);
         }
-        if (!empty($dates)) {
-          $n->__unset("field_date");
+        if (!empty($dates)) { // on retire ce process
+          /*$n->__unset("field_date");
           $n->save();
           foreach ($dates as $date) {
             $d = Paragraph::Load($date['target_id']);
             if ($type == "agenda") {
-              $dda = date('Y-m-d', strtotime($d->get('field_date_de_debut')->value . ' - 5 days'));
+              $dda = $d->get('field_date_de_debut')->value; //date('Y-m-d', strtotime($d->get('field_date_de_debut')->value . ' - 5 days'));
               $dfa = $d->get('field_date_de_fin')->value; //date('Y-m-d', strtotime($d->get('field_date_de_fin')->value . ' - 7 days'));
             } else {
               $dda = $d->get('field_date_de_debut')->value;
@@ -109,25 +92,11 @@ class NodeUpdateSubscriber implements EventSubscriberInterface
             ]);
 
             $n->get("field_date")->appendItem($nd);
-
-          }
+          }*/
         }
         $n->save();
       }
     }
-
-    if ($type == "publicite") {
-      $cond_aff = current($entity->get("field_conditionne_nombre_aff")->getValue())['value'];
-      /* if($cond_aff) {
-           $entity->set('field_date_debut',null);
-           $entity->set('field_date_fin',null);
-           $entity->validate();
-       $entity->save();
-       }*/
-
-    }
-
-
   }
 
   public static function getSubscribedEvents()

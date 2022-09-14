@@ -430,7 +430,7 @@ var_dump($node->id());
       if($options['migrate']===TRUE || $options['import']===TRUE) {
         Database::setActiveConnection('kidiklik');
         $connection = \Drupal\Core\Database\Database::getConnection();
-        $sql = "select * from ".$name." where date_fin >= '2019-01-01' and date_fin<'2020-01-01'";
+        $sql = "select * from ".$name." where date_fin >= '2019-01-01'";
         if($name == "editos") {
           //$sql.=" and id_edito > 6767";
         } else {
@@ -813,10 +813,10 @@ var_dump($node->id());
       Database::setActiveConnection('kidiklik');
       $connection = \Drupal\Core\Database\Database::getConnection();
       if($name === 'kidi_activites') {
-        $query = $connection->query("select * from activites order by id_activite"); // where id_activite > 5240");
+        $query = $connection->query("select * from activites where id_activite > 5410 order by id_activite"); // where id_activite > 5240");
       } else {
 	      $type='agenda';
-        $query = $connection->query("select a.* from agendas a join agendas_dates ad on a.id_agenda = ad.ref_agenda where id_agenda>60746 and ad.date_fin >= '2019-01-01' group by id_agenda order by id_agenda desc"); // where id_agenda > 56803");
+        $query = $connection->query("select * from agendas   order by id_agenda"); // where id_agenda > 56803");
       }
 
      /* $result = \Drupal::entityQuery('node')
@@ -1678,7 +1678,7 @@ var_dump('node id : '.$node->id());
                 
       } else {
         $connection = \Drupal::database();
-        $rs = $connection->query('select * from node where  type=:type order by nid desc', [
+        $rs = $connection->query('select * from node where type=:type order by nid desc', [
           ':type' => $name,
         ], [
           'fetch' => 'node'
@@ -1830,7 +1830,14 @@ var_dump('node id : '.$node->id());
 			$img = current($item->get('field_image_save')->getValue())['value'];
 			var_dump($img);
 			if(empty($img)) {
-				break;
+                		/*Database::setActiveConnection('kidiklik');
+				$connection = \Drupal\Core\Database\Database::getConnection();
+				switch($name) {
+				case 'agenda':
+
+					break;
+				}*/
+
 			}
 
 			$data=null;
@@ -1878,6 +1885,7 @@ var_dump('node id : '.$node->id());
 						$data = file_get_contents('https://www.kidiklik.fr/images/activites/'.$img);
 					}
 				} elseif($name ==='agenda') {
+
 					if((fopen('https://www.kidiklik.fr/images/agendas/'.$img,'r')==true)) {
 						$data = file_get_contents('https://www.kidiklik.fr/images/agendas/'.$img);
 					}
@@ -2340,7 +2348,12 @@ var_dump('node id : '.$node->id());
                 if($item->__isset('field_telephone')) {
                   if($item->get('field_telephone')->value === 'NULL') {
                     $item->set('field_telephone', null);
-                  }
+		  }else {
+			  $item->set('field_telephone', $this->propre($item->get('field_telephone')->value));
+
+		  }
+
+
                 }
 
                 if($item->__isset('field_email')) {
@@ -2533,8 +2546,23 @@ var_dump('node id : '.$node->id());
                       }
                     }
                   }
-                } else {
-                  $dept = (int)$item->get("field_ref_dept")->value;
+		} elseif($name === 'article') {
+			if(!count($item->get('field_departement')->getValue())) {
+/*                    Database::setActiveConnection('kidiklik');
+                    $connection = \Drupal\Core\Database\Database::getConnection();
+				if($item->get('field_type_reportage')->value === 0) {
+
+					$query = $connection->query("select * from editos where id_edito='".$item->get('field_ref_entite')->value."'");
+				} else {
+					$query = $connection->query("select * from tests where id_test='".$item->get('field_ref_entite')->value."'");
+				}
+$tmp = $query->fetch();*/
+				var_dump($item->get('field_departement')->getValue());
+					$item->__set('field_departement', ['target_id'=>63]);
+					$item->save();
+			}
+		} else {
+			$dept = (int)$item->get("field_ref_dept")->value;
 
                   if ($dept) {
                     echo "Traitement dept " . $dept . " ... ";
@@ -2548,7 +2576,8 @@ var_dump('node id : '.$node->id());
                     );
 
                     if ($term) {
-                      $item->__set("field_departement", current($term)->id());
+			    
+			    $item->__set("field_departement", current($term)->id());
                       $item->validate();
                       $item->save();
                       echo ".";

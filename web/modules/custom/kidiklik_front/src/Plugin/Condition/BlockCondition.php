@@ -18,12 +18,14 @@ use Drupal\Core\Plugin\Context\ContextDefinition;
  * )
  *
  */
-class BlockCondition extends ConditionPluginBase {
+class BlockCondition extends ConditionPluginBase
+{
 
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition)
+  {
     $instance = parent::create($container, $configuration, $plugin_id, $plugin_definition);
     return $instance;
   }
@@ -31,12 +33,13 @@ class BlockCondition extends ConditionPluginBase {
   /**
    * {@inheritdoc}
    */
-  public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
+  public function buildConfigurationForm(array $form, FormStateInterface $form_state)
+  {
 
     $options = [
-		'',
-		'national' => 'National',
-		'departemental' => 'Départemental'
+      '',
+      'national' => 'National',
+      'departemental' => 'Départemental'
     ];
 
     $form['type_site'] = [
@@ -44,7 +47,7 @@ class BlockCondition extends ConditionPluginBase {
       '#title' => $this->t('Type de site'),
       '#default_value' => $this->configuration['type_site'],
       '#options' => $options,
-       '#description' => $this->t('Condition d\'affichage'),
+      '#description' => $this->t('Condition d\'affichage'),
     ];
 
     return parent::buildConfigurationForm($form, $form_state);
@@ -53,7 +56,8 @@ class BlockCondition extends ConditionPluginBase {
   /**
    * {@inheritdoc}
    */
-  public function submitConfigurationForm(array &$form, FormStateInterface $form_state) {
+  public function submitConfigurationForm(array &$form, FormStateInterface $form_state)
+  {
     $this->configuration['type_site'] = $form_state->getValue('type_site');
     parent::submitConfigurationForm($form, $form_state);
   }
@@ -61,7 +65,8 @@ class BlockCondition extends ConditionPluginBase {
   /**
    * {@inheritdoc}
    */
-  public function defaultConfiguration() {
+  public function defaultConfiguration()
+  {
     return ['type_site' => ''] + parent::defaultConfiguration();
   }
 
@@ -71,25 +76,27 @@ class BlockCondition extends ConditionPluginBase {
    * @return bool
    *   TRUE if the condition has been met, FALSE otherwise.
    */
-  public function evaluate() {
-	  
-		if((get_departement() === 0 && $this->configuration['type_site'] === 'national') || 
-		(get_departement() !== 0 && $this->configuration['type_site'] === 'departemental')) 
-			return true;
-		if((get_departement() === 0 && $this->configuration['type_site'] === 'departemental') ||
-		(get_departement() !== 0 && $this->configuration['type_site'] === 'national'))
-			return false;
-		return true;
+  public function evaluate()
+  {
+
+    if ((get_departement() === 0 && $this->configuration['type_site'] === 'national') ||
+      (get_departement() !== 0 && $this->configuration['type_site'] === 'departemental'))
+      return true;
+    if ((get_departement() === 0 && $this->configuration['type_site'] === 'departemental') ||
+      (get_departement() !== 0 && $this->configuration['type_site'] === 'national'))
+      return false;
+    return true;
   }
 
   /**
    * Provides a human readable summary of the condition's configuration.
    */
-  public function summary() {
+  public function summary()
+  {
     $module = $this->getContextValue('type_site');
     $modules = system_rebuild_module_data();
 
-    $status = ($modules[$module]->status)?t('enabled'):t('disabled');
+    $status = ($modules[$module]->status) ? t('enabled') : t('disabled');
 
     return t('The module @module is @status.', ['@module' => $module, '@status' => $status]);
   }

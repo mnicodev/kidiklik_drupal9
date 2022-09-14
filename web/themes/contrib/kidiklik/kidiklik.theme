@@ -39,15 +39,8 @@ function kidiklik_preprocess_page(&$variables) {
 
 	}
 	ksort($variables["liste_dep"]);
-	//ksm($variables["liste_dep"]);
-	/*$paragraph_storage=\Drupal::entityTypeManager()->getStorage("paragraph");
-	$n=\Drupal::entityTypeManager()->getStorage("node")->load(11);
-	$paragraph_field_items=$n->get('field_filtres')->getValue();
-	$ids = array_column($paragraph_field_items, 'target_id');
-	$paragraphs_objects = $paragraph_storage->loadMultiple($ids);
-			kint($paragraphs_objects);exit;*/
-	$variables['reseaux_sociaux']=$term_dep->get('field_reseaux_sociaux2')->getValue();
 
+	$variables['reseaux_sociaux']=$term_dep->get('field_reseaux_sociaux2')->getValue();
 }
 
 function kidiklik_preprocess_html(&$variables) {
@@ -59,20 +52,17 @@ function kidiklik_preprocess_html(&$variables) {
 	if(\Drupal::request()->get('record_email')) {
 	  $variables['email'] = \Drupal::request()->get('record_email');
 	}
-	//ksm(\Drupal::request()->get('email'));
-//	kint($variables);exit;
+
 }
 
 function kidiklik_preprocess_page_title(&$variables, $hook) {
 
   if(isset(\Drupal::request()->attributes->all()['node_type'])) {
-
 	  $node_type = \Drupal::request()->attributes->all()['node_type'];
 	  if(!empty($node_type) && $node_type->get('type') === 'message_contact') {
   		unset($variables['title']);
 	  }
 	}
-
 
 }
 
@@ -82,11 +72,10 @@ function kidiklik_preprocess_menu(&$variables, $hook) {
 
 function kidiklik_preprocess_field(&$variables) {
 	$variables['dept'] = get_departement();
-	
+
 	if(\Drupal::request()->attributes->get('node') !== null) {
 		$node = \Drupal::request()->attributes->get('node');
-		
-	//	ksm($node->get('field_type_reportage'));
+
 		if($node->getType() === 'article') {
 			$type=current(\Drupal::request()->attributes->get('node')->get('field_type_reportage')->getValue())['value'];
 
@@ -95,10 +84,9 @@ function kidiklik_preprocess_field(&$variables) {
 			} else {
 				$variables['type_for_img'] = 'editos';
 			}
-			
-		} 		
 
-		//ksm(\Drupal::request()->attributes->all()['node_type']);
+		}
+
 	}
 
 }
@@ -177,7 +165,5 @@ function kidiklik_preprocess_views_view_unformatted(&$vars) {
 	if(!empty($tab)) {
 		$vars["pub"]=$tab;
 	}
-	
-	//kint($tab);exit;
 
 }
