@@ -752,13 +752,15 @@ a.reservation {
     content: ""; }
 
 #groupe-actions {
-  display: flex; }
-  #groupe-actions .zone-flag, #groupe-actions .reservation {
-    float: left !important; }
+  display: inline-block;
+  overflow: hidden;
+  background: #db2a24; }
+  #groupe-actions .zone-flag, #groupe-actions .reservation, #groupe-actions .field {
+    float: right !important; }
   #groupe-actions .zone-flag a {
     padding-right: 30px; }
   #groupe-actions .voir-actualites {
-    float: left; }
+    float: right; }
 
 .flag-bookmark i {
   color: #fff;

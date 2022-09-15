@@ -986,9 +986,11 @@ a.reservation {
 
 }
 #groupe-actions {
-	display: flex;
-	.zone-flag, .reservation{
-		float: left!important;
+	display: inline-block;
+	overflow: hidden;
+	background: #db2a24;
+	.zone-flag, .reservation, .field{
+		float: right!important;
 	}
 	.zone-flag {
 		a {
@@ -996,7 +998,7 @@ a.reservation {
 		}
 	}
 	.voir-actualites {
-		float: left;
+		float: right;
 	}
 
 }
