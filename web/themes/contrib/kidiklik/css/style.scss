@@ -986,7 +986,7 @@ a.reservation {
 
 }
 #groupe-actions {
-	display: inline-block;
+	display: flex;
 	.zone-flag, .reservation{
 		float: left!important;
 	}

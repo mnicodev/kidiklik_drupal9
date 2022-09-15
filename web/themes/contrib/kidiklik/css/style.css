@@ -752,7 +752,7 @@ a.reservation {
     content: ""; }
 
 #groupe-actions {
-  display: inline-block; }
+  display: flex; }
   #groupe-actions .zone-flag, #groupe-actions .reservation {
     float: left !important; }
   #groupe-actions .zone-flag a {
