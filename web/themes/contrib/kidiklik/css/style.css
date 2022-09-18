@@ -760,7 +760,7 @@ a.reservation {
   background: #db2a24; }
   #groupe-actions .zone-flag, #groupe-actions .reservation, #groupe-actions .field {
     float: right !important; }
-  #groupe-actions .zone-flag a {
+  #groupe-actions .ajout a {
     padding: 7px !important; }
   #groupe-actions .voir-actualites {
     float: right; }
