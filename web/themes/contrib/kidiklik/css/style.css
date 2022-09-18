@@ -540,7 +540,8 @@ footer .menu li.last {
   box-shadow: 0px 3px 5px rgba(125, 125, 125, 0.5); }
   .bloc-fiche .bloc-information h5 {
     margin-top: 5px;
-    font-size: 1.2em; }
+    font-size: 1.2em;
+    margin-bottom: 0 !important; }
   .bloc-fiche .bloc-information .content {
     padding-top: 5px;
     padding-bottom: 5px; }
