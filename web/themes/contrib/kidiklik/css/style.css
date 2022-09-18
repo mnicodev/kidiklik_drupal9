@@ -280,7 +280,10 @@ h1 {
   #entete .accueil_dep {
     /*position: absolute;
     top:0;
-    left:0;*/ } }
+    left:0;*/ }
+    #entete .accueil_dep img {
+      width: 70px;
+      height: auto; } }
 @media (max-width: 768px) {
   .logo-dep .titre {
     padding-left: 0px;
