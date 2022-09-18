@@ -762,6 +762,11 @@ a.reservation {
     float: right !important; }
   #groupe-actions .ajout a {
     padding: 7px !important; }
+    #groupe-actions .ajout a:before {
+      font-family: "Font Awesome 5 Free";
+      font-weight: 400;
+      content: "\f004";
+      margin-right: 10px; }
   #groupe-actions .voir-actualites {
     float: right; }
 
