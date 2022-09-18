@@ -30,7 +30,6 @@ Drupal.behaviors.kidiklik = {
 				jQuery('#block-reserverblock').remove();
 			}
 			jQuery('.form-item-quand').find('select').on('change',function() {
-				console.log(jQuery(this).val())
 				if(jQuery(this).val() === 'date') {
 					jQuery('.form-type-date').show();
 					jQuery('#views-exposed-form-activites-recherche-activites').addClass('with-dates');
@@ -39,7 +38,12 @@ Drupal.behaviors.kidiklik = {
 					jQuery('#views-exposed-form-activites-recherche-activites').removeClass('with-dates');
 				}
 			})
-			
+			if(jQuery('select[name="quand"]').val() === 'date') {
+					jQuery('.form-type-date').show();
+					jQuery('#views-exposed-form-activites-recherche-activites').addClass('with-dates');
+
+			}
+						
 		}
 		if(jQuery('select[name="ville"]').val() === 'geo') {
 				getCurrentPosition();
