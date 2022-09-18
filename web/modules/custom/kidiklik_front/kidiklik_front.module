@@ -588,6 +588,10 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
       $rel = $query->addRelationship('field_dep', $join, 'node_field_data');
       $query->addTable('node__field_departement', $rel, $join, 'field_dep');
       $query->addWhere('', 'field_dep.field_departement_target_id', get_term_departement(), '=');
+      
+      unset($query->where[1]["conditions"][2]);
+
+      unset($query->where[1]["conditions"][3]);
 
       if(!empty($ou)) {
 	      $configuration = array(
@@ -722,7 +726,6 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
           $query->where[0]["conditions"][1]["operator"] = "formula";
           //kint($query->where[1]["conditions"]);
           //ksm($query->where[0]["conditions"][1]);
-          unset($query->where[1]["conditions"][2]);
         } else {
           $query->where[1]["conditions"][3]["field"] = "DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d') >= DATE_FORMAT('" . $date_fin . "', '%Y-%m-%d')
 				OR (DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d') BETWEEN '" . $date_deb . "' and '" . $date_fin . "')";
@@ -779,7 +782,6 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
       $query->addWhere('', 'node__field_ville_save.field_ville_save_value', \Drupal::Request()->get('field_ville'), '=');*/
 
     }
-//ksm($query->where);
   } /** fin query recherche */
 
 
