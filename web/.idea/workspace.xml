@@ -1,18 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0699e32c-812c-4439-b55e-3772efa514db" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/modules/custom/kidiklik_base/src/KidiklikUser.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/custom/kidiklik_admin/kidiklik_admin.module" beforeDir="false" afterPath="$PROJECT_DIR$/modules/custom/kidiklik_admin/kidiklik_admin.module" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/custom/kidiklik_newsletter/js/scripts.js" beforeDir="false" afterPath="$PROJECT_DIR$/modules/custom/kidiklik_newsletter/js/scripts.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/custom/kidiklik_newsletter/src/Controller/BlocsDatasController.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/custom/kidiklik_newsletter/src/Controller/BlocsDatasController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/custom/kidiklik_newsletter/src/Controller/NewsletterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/custom/kidiklik_newsletter/src/Controller/NewsletterController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/custom/kidiklik_newsletter/src/Form/DefaultForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/custom/kidiklik_newsletter/src/Form/DefaultForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/custom/kidiklik_newsletter/templates/kidiklik-newsletter.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/modules/custom/kidiklik_newsletter/templates/kidiklik-newsletter.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/themes/contrib/druadmin_lte_theme/templates/layout/page.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/themes/contrib/druadmin_lte_theme/templates/layout/page.html.twig" afterDir="false" />
-    </list>
+    <list default="true" id="0699e32c-812c-4439-b55e-3772efa514db" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -44,7 +33,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$USER_HOME$/mount" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="yarn" />
@@ -72,6 +61,7 @@
       <workItem from="1644913179772" duration="15116000" />
       <workItem from="1645000182839" duration="843000" />
       <workItem from="1645001534227" duration="33000" />
+      <workItem from="1663173427240" duration="2476000" />
     </task>
     <servers />
   </component>

@@ -11,11 +11,21 @@ Drupal.behaviors.kidiklik = {
 	attach: function(context, settings) {
 
 		var charging_blocs = jQuery('[data-big-pipe-placeholder-id]').length;
-	      	if (charging_blocs ===1){
+		console.log(charging_blocs)
+	      	if (charging_blocs ===1 || charging_blocs === 0){
 			if(jQuery("#groupe-actions").length) {
+				if(jQuery('#block-boutonfavorinonconnecte').length) {
+
+					jQuery('#groupe-actions').append(jQuery('#block-boutonfavorinonconnecte').html());
+
+					jQuery('#block-boutonfavorinonconnecte').remove();
+
+				}
 				jQuery('#groupe-actions').append(jQuery('#block-reserverblock').html());
 				jQuery('#groupe-actions').append(jQuery('#block-sortiesboutonblock').html());
-				jQuery('.zone-image').append('<div id="groupe-actions">'+jQuery("#groupe-actions").html()+'</div>');
+				if(!jQuery('.zone-image').find('#groupe-actions').length) {
+					jQuery('.zone-image').append('<div id="groupe-actions">'+jQuery("#groupe-actions").html()+'</div>');
+				}
 				jQuery('#block-sortiesboutonblock').remove();
 				jQuery('#block-reserverblock').remove();
 			}

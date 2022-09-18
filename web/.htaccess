@@ -61,6 +61,45 @@ AddEncoding gzip svgz
 <IfModule mod_rewrite.c>
   RewriteEngine on
 
+RewriteCond %{HTTP_HOST}	92.kidiklik\.fr [NC]
+RewriteRule ^/?(.*)	http://78.kidiklik.fr/$1 [L,R=301]
+RewriteCond %{HTTP_HOST}	93.kidiklik\.fr [NC]
+RewriteRule ^/?(.*)	http://78.kidiklik.fr/$1 [L,R=301]
+RewriteCond %{HTTP_HOST}	95.kidiklik\.fr [NC]
+RewriteRule ^/?(.*)	http://78.kidiklik.fr/$1 [L,R=301]
+RewriteCond %{HTTP_HOST}	91.kidiklik\.fr [NC]
+RewriteRule ^/?(.*)	http://78.kidiklik.fr/$1 [L,R=301]
+RewriteCond %{HTTP_HOST}	94.kidiklik\.fr [NC]
+RewriteRule ^/?(.*)	http://78.kidiklik.fr/$1 [L,R=301]
+RewriteCond %{HTTP_HOST}	77.kidiklik\.fr [NC]
+RewriteRule ^/?(.*)	http://78.kidiklik.fr/$1 [L,R=301]
+RewriteCond %{HTTP_HOST}	16.kidiklik\.fr [NC]
+RewriteRule ^/?(.*)	http://17.kidiklik.fr/$1 [L,R=301]
+
+RewriteCond %{HTTP_HOST}	89.kidiklik\.fr [NC]
+RewriteRule ^/?(.*)	http://21.kidiklik.fr/$1 [L,R=301]
+RewriteCond %{HTTP_HOST}	58.kidiklik\.fr [NC]
+RewriteRule ^/?(.*)	http://21.kidiklik.fr/$1 [L,R=301]
+RewriteCond %{HTTP_HOST}	71.kidiklik\.fr [NC]
+RewriteRule ^/?(.*)	http://21.kidiklik.fr/$1 [L,R=301]
+
+RewriteCond %{HTTP_HOST}	68.kidiklik\.fr [NC]
+RewriteRule ^/?(.*)	http://67.kidiklik.fr/$1 [L,R=301]
+
+RewriteCond %{HTTP_HOST}	23.kidiklik\.fr [NC]
+RewriteRule ^/?(.*)	http://87.kidiklik.fr/$1 [L,R=301]
+RewriteCond %{HTTP_HOST}	19.kidiklik\.fr [NC]
+RewriteRule ^/?(.*)	http://87.kidiklik.fr/$1 [L,R=301]
+
+RewriteCond %{HTTP_HOST}	10.kidiklik\.fr [NC]
+RewriteRule ^/?(.*)	http://51.kidiklik.fr/$1 [L,R=301]
+
+RewriteCond %{HTTP_HOST}	09.kidiklik\.fr [NC]
+RewriteRule ^/?(.*)	http://31.kidiklik.fr/$1 [L,R=301]
+RewriteCond %{HTTP_HOST}	11.kidiklik\.fr [NC]
+RewriteRule ^/?(.*)	http://31.kidiklik.fr/$1 [L,R=301]
+RewriteCond %{HTTP_HOST}	32.kidiklik\.fr [NC]
+RewriteRule ^/?(.*)	http://31.kidiklik.fr/$1 [L,R=301]
   # Set "protossl" to "s" if we were accessed via https://.  This is used later
   # if you enable "www." stripping or enforcement, in order to ensure that
   # you don't bounce between http and https.
