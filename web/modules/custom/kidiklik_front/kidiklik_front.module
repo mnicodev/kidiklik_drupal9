@@ -105,7 +105,19 @@ function kidiklik_front_form_alter(&$form, FormStateInterface $form_state, $form
         ]
       ]
     ];
-    $form['msg_label_creer_compte'] = [
+    $form['msg_label_forget_passwd'] = [
+      "#type" => "html_tag",
+      '#title' => 'Mot de passe oublié ? ',
+      '#value' => 'Mot de passe oublié ? ',
+      "#tag" => "a",
+      '#attributes' => [
+        'href' => '/X255zTZB9ytq/password',
+        'class' => [
+          'msg-passwd-forget col'
+        ]
+      ]
+    ];
+    /*$form['msg_label_creer_compte'] = [
       "#type" => "html_tag",
       '#title' => 'Pas encore de compte ? ',
       '#value' => 'Pas encore de compte ? ',
@@ -115,7 +127,7 @@ function kidiklik_front_form_alter(&$form, FormStateInterface $form_state, $form
           'msg-creer-compte'
         ]
       ]
-    ];
+    ];*/
 
     $form['btn_creer_compte'] = [
       '#type' => 'html_tag',
@@ -123,11 +135,11 @@ function kidiklik_front_form_alter(&$form, FormStateInterface $form_state, $form
       '#value' => 'Créer un compte',
       "#tag" => "a",
       '#attributes' => [
-        'href' => '/user/register',
+        'href' => '/X255zTZB9ytq/register',
         'data-dialog-type' => 'modal',
         'data-dialog-options' => '{"width":700,"dialogClass":"user-register"}',
         'class' => [
-          'btn-creer-compte use-ajax login-popup-form'
+          'btn-creer-compte use-ajax login-popup-form col'
         ]
       ]
     ];
@@ -395,6 +407,8 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
     $view->current_display == "article_national_3" ||
     $view->current_display == "articles_dep_accueil_1" ||
     $view->current_display == "articles_dep_accueil_2" ||
+    $view->current_display == "bloc_mise_en_avant_nat" ||
+    $view->current_display == "bloc_mise_en_avant_dep" ||
     $view->current_display == "articles_dep_accueil_3") {
     $query->where[1]["conditions"][2]["value"] = date("Y-m-d");
     $query->where[1]["conditions"][2]["operator"] = "<=";
@@ -517,7 +531,7 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
 
     $ou = \Drupal::request()->get("ville");
     $quand = \Drupal::request()->get("quand");
-    $search = \Drupal::request()->get("search");
+    $search = explode(' ',trim(\Drupal::request()->get("search")));
     $ref_adherent = \Drupal::request()->get("ref_adh") ?? \Drupal::request()->get("ref_adherent") ?? null;
 
     if (!empty(\Drupal::request()->get("ref_adh"))) {
@@ -551,7 +565,12 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
       $join = \Drupal\views\Views::pluginManager('join')->createInstance('standard', $configuration);
       $rel = $query->addRelationship('field_body', $join, 'node_field_data');
       $query->addTable('node__body', $rel, $join, 'field_body');
-      $query->addWhere('', 'field_body.body_value', '%' . $search . '%', 'like');
+      foreach($search as $item) {
+	      if(strlen($item) > 3) {
+		      $query->addWhere('', 'field_body.body_value', '%' . $item . '%', 'like');
+
+	      }
+      }
     }
 
     if ($ou !== 'geo') {
@@ -569,6 +588,23 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
       $rel = $query->addRelationship('field_dep', $join, 'node_field_data');
       $query->addTable('node__field_departement', $rel, $join, 'field_dep');
       $query->addWhere('', 'field_dep.field_departement_target_id', get_term_departement(), '=');
+
+      if(!empty($ou)) {
+	      $configuration = array(
+		'type' => 'INNER',
+		'table' => 'node__field_ville_save',
+		'field' => 'entity_id',
+		'left_table' => 'node_field_data',
+		'left_field' => 'nid',
+		'operator' => '=',
+	      );
+
+	      $join = \Drupal\views\Views::pluginManager('join')->createInstance('standard', $configuration);
+	      $rel = $query->addRelationship('field_ville', $join, 'node_field_data');
+	      $query->addTable('node__field_ville_save', $rel, $join, 'field_ville');
+	      $query->addWhere('', 'field_ville.field_ville_save_value', $ou, '=');
+      }
+      
     }
 
 
@@ -721,15 +757,14 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
         $rel = $query->addRelationship('paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin', $join, 'paragraphs_item_field_data_node__field_date');
         $query->addTable('paragraph__field_date_de_fin', $rel, $join, 'paragraph__field_date_de_fin');
 
-//kint($query);
       }
 
-    }
+    } 
 
 
     if (Drupal::Request()->get('field_ville') !== 'geo' && !empty(Drupal::Request()->get('field_ville'))) {
 
-      $configuration = array(
+     /* $configuration = array(
         'type' => 'LEFT',
         'table' => 'node__field_ville_save',
         'field' => 'entity_id',
@@ -741,10 +776,11 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
         ->createInstance('standard', $configuration);
       $rel = $query->addRelationship('node__field_ville_save', $join, 'node_field_data');
       $query->addTable('node__field_ville_save', $rel, $join, 'node__field_ville_save');
-      $query->addWhere('', 'node__field_ville_save.field_ville_save_value', \Drupal::Request()->get('field_ville'), '=');
+      $query->addWhere('', 'node__field_ville_save.field_ville_save_value', \Drupal::Request()->get('field_ville'), '=');*/
 
     }
-  }
+//ksm($query->where);
+  } /** fin query recherche */
 
 
 }

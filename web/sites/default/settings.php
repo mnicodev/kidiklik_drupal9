@@ -794,9 +794,45 @@ $config_directories['sync'] = '../config/sync';
 
 $host=explode(".",$_SERVER["SERVER_NAME"]);
 switch($host[0]) {
+case 91:
+case 92:
+case 93:
+case 94:
+case 95:
+	case 'iledefrance':
+		$settings["dep"]=78;
+		break;
 	case 'paris':
 		$settings["dep"]=75;
-
+		break;
+	case 11:
+	case 9:
+	case 32:
+	case 'toulouse':
+		$settings["dep"]=31;
+		break;
+	case 51:
+	case 10:
+	case 'champagne':
+		$settings["dep"]=51;
+	break;
+	case 16:
+		$settings["dep"]=17;
+		break;
+	case 23:
+	case 87:
+	case 'limousin':
+		$settings["dep"]=19;
+		break;
+	case 58:
+	case 71:
+	case 89:
+	case 'bourgogne':
+		$settings["dep"]=21;
+		break;
+	case 68:
+	case 'alsace':
+		$settings["dep"]=67;
 	break;
 default:
 if((int)$host[0]) $settings["dep"]=$host[0];else $settings["dep"]=0;
@@ -866,6 +902,8 @@ $settings["add_dep_for_views"] = [
 "page_adherent",
 "page_reportages",
 "page_maj",
+"page_ordonnancer_mea",
 "page_jeu_concours",
 "activites_associees",
-"rubriques_activites"];
+"rubriques_activites",
+"bloc_mise_en_avant_dep"];

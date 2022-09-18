@@ -38,9 +38,8 @@ class SortiesBoutonBlock extends BlockBase
         $build['#ref_adh'] = current($node->get('field_adherent')->getValue())['target_id'];
       }
     }
-
     if (empty($build['#ref_act']) || empty($build['#ref_adh'])) {
-      return null;
+     // return null;
     }
 
     return $build;
