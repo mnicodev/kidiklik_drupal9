@@ -280,10 +280,7 @@ h1 {
   #entete .accueil_dep {
     /*position: absolute;
     top:0;
-    left:0;*/ }
-    #entete .accueil_dep img {
-      width: 70px;
-      height: auto; } }
+    left:0;*/ } }
 @media (max-width: 768px) {
   .logo-dep .titre {
     padding-left: 0px;
@@ -495,6 +492,9 @@ footer .menu li.last {
     .accueil_dep a span {
       font-size: 14px;
       display: block; }
+  .accueil_dep img {
+    width: 70px;
+    height: auto; }
   @media (max-width: 768px) {
     .accueil_dep {
       padding-top: 5%; }
