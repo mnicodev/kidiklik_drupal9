@@ -378,9 +378,6 @@ h1 {
 #block-block-article-accueil .line .card .card-body {
   width: 70%; }
 
-.zone-flag .ajout a, .action-flag .ajout a {
-  padding-right: 30px; }
-
 article {
   line-height: 20px; }
   article .zone-image {
@@ -591,8 +588,7 @@ footer .menu li.last {
     float: right; }
     .activite-teaser .actions .favori, .activite-teaser .actions .reserver {
       float: right;
-      background: #db2a24;
-      padding: 7px 10px; }
+      background: #db2a24; }
       .activite-teaser .actions .favori a, .activite-teaser .actions .reserver a {
         font-size: 0.95em;
         color: #fff; }
@@ -725,7 +721,7 @@ footer .menu li.last {
     margin-right: 10px; }
 
 .action-flag a.use-ajax {
-  padding-bottom: 9px; }
+  padding: 7px 15px; }
   .action-flag a.use-ajax:before {
     font-family: "Font Awesome 5 Free";
     font-weight: 400;
@@ -762,7 +758,7 @@ a.reservation {
   #groupe-actions .zone-flag, #groupe-actions .reservation, #groupe-actions .field {
     float: right !important; }
   #groupe-actions .ajout a {
-    padding: 7px !important; }
+    padding: 7px 15px !important; }
   #groupe-actions .voir-actualites {
     float: right; }
 

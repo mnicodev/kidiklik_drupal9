@@ -475,7 +475,6 @@ h1 {
 .zone-flag, .action-flag {
 	.ajout {
 		a {
-			padding-right: 30px;
 		}
 	}
 }
@@ -756,7 +755,7 @@ footer .menu li.last {
 		.favori, .reserver {
 			float: right;
 			background: #db2a24;
-			padding: 7px 10px;
+			
 			a {
 				font-size: 0.95em;
 				color: #fff;
@@ -950,7 +949,7 @@ footer .menu li.last {
 
 .action-flag {
 	a.use-ajax{
-		padding-bottom: 9px;
+		padding: 7px 15px;
 		&:before {
 			font-family: "Font Awesome 5 Free";
 			font-weight: 400;
@@ -999,7 +998,7 @@ a.reservation {
 	}
 	.ajout {
 		a {
-			padding: 7px!important;
+			padding: 7px 15px!important;
 			
 		}
 	}
