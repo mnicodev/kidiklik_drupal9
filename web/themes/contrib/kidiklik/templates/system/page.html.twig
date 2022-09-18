@@ -114,7 +114,12 @@
 
 				  {% if dep != "0" %}
 					<div class="col-sm-2 col-lg-2 col-2 accueil_dep" role="heading">
-						<a href="/"><img src="/assets/img/pictos/{{ dep }}.png" />
+						<a href="/">
+						{% if picto %}
+						<img src="{{ picto }}" />
+						{% else %}
+						<img src="/assets/img/pictos/{{ dep }}.png" />
+						{% endif %}
 						</a>
 					</div>
 					<div class="col-sm-8 col-lg-10 col-8 logo-dep">
