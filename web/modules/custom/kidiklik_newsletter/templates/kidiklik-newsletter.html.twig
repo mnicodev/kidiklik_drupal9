@@ -340,8 +340,8 @@ body {
                    style="Margin: 0; font-size: 14px; Margin-bottom: 10px; text-align: center; color: #000; margin-bottom: 0;">
                   {% for rs in entete.dep.get("field_reseaux_sociaux2").getIterator() %}
 
-                    <a href="https://{{ rs.get('link').value }}" style="color: #ee6a56; text-decoration: none;">
-                      <img src="https://45.kidiklik.fr/images/newsletters/rs/{{ rs.get('social').value }}.png"
+                    <a href="{{ rs.get('link').value }}" style="color: #ee6a56; text-decoration: none;">
+                      <img src="https://www.kidiklik.fr/images/newsletters/rs/{{ rs.get('social').value }}.png"
                            alt="Facebook Kidiklik 45" style="border: 0;">
                     </a>
                   {% endfor %}
