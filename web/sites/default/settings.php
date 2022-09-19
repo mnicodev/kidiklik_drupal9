@@ -820,9 +820,9 @@ case 95:
 		$settings["dep"]=17;
 		break;
 	case 23:
-	case 87:
+	case 19:
 	case 'limousin':
-		$settings["dep"]=19;
+		$settings["dep"]=87;
 		break;
 	case 58:
 	case 71:
