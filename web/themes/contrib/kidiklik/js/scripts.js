@@ -263,7 +263,9 @@ jQuery('#menu').hide();
       url = dep + "." + window.domain_name;
 
       window.location = "https://" + url;
-    } else window.location = window.domain_name+"/kidiklik-recrute.html";
+    } else {
+	    window.location = "/kidiklik-recrute.html";
+    }
   });
 
 
