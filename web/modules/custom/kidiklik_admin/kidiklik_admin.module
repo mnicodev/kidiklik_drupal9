@@ -792,6 +792,7 @@ function kidiklik_admin_form_node_agenda_edit_form_alter(&$form, FormStateInterf
     "#title" => "Activités",
 
   ];
+  //kint($node_agenda);
   $form["#group_children"]["field_activite"] = "group_coordonnees";
   foreach ($activites as $key => $activite) {
     $activites_list[$key] = $activite->getTitle();
@@ -800,7 +801,7 @@ function kidiklik_admin_form_node_agenda_edit_form_alter(&$form, FormStateInterf
   if (!empty($form["field_activite_save"]["widget"][0]["value"]["#default_value"])) {
     $form["field_activite"]["#default_value"] = $form["field_activite_save"]["widget"][0]["value"]["#default_value"];
   } else if (!empty(current($node_agenda->get('field_activite')->getValue())['target_id'])) {
-    $form["field_activite"]["#default_value"] = current($node_agenda->get('field_activite_lie')->getValue())['target_id'];
+    $form["field_activite"]["#default_value"] = current($node_agenda->get('field_activite')->getValue())['target_id'];
   }
   $cp = $form["field_code_postal"]["widget"][0]["value"]["#default_value"];
 
