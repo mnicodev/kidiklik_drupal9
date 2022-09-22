@@ -171,6 +171,8 @@ class NewsletterController extends ControllerBase
       }
 
     }
+    $globalSettings = \Drupal::service("settings");
+    $entete['domaine'] = $globalSettings->get("domain_name");
 
     $entete['nom_dep'] = current($entete['dep']->get('field_nom')->getValue())['value'];
     $build = [
