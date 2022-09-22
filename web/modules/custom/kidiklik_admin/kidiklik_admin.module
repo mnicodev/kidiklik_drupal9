@@ -1130,11 +1130,11 @@ function kidiklik_admin_form_publicite_validate($form, FormStateInterface $form_
       }
       $andGroup1 = $query->andConditionGroup()
         ->condition("ddd.field_date_debut_value", $date_deb, "<=")
-        ->condition("ddf.field_date_fin_value", $date_deb, ">=");
-      //->condition("ddd.field_date_de_debut_value",$date_deb,">");
+        ->condition("ddf.field_date_fin_value", [$date_deb,$date_fin], "between");
 
       $andGroup2 = $query->andConditionGroup()
-        ->condition("ddf.field_date_fin_value", $date_fin, ">=");
+        ->condition("ddf.field_date_fin_value", [$date_deb,$date_fin], "between")
+        ->condition("ddd.field_date_debut_value", [$date_deb,$date_fin], "between");
       //->condition("ddd.field_date_de_debut_value",$date_fin,"<")
       //->condition("ddd.field_date_de_debut_value",$date_deb,"<=");
 
@@ -1142,14 +1142,16 @@ function kidiklik_admin_form_publicite_validate($form, FormStateInterface $form_
         ->condition("ddd.field_date_debut_value", $date_deb, "<=")
         ->condition("ddf.field_date_fin_value", $date_fin, ">=");
 
+      $andGroup4 = $query->andConditionGroup()
+        ->condition("ddd.field_date_debut_value", [$date_deb,$date_fin], "between")
+        ->condition("ddf.field_date_fin_value", $date_fin, ">=");
       $orGroup = $query->orConditionGroup()
         ->condition($andGroup1)
         ->condition($andGroup2)
-        ->condition($andGroup3);
+        ->condition($andGroup3)
+        ->condition($andGroup4);
 
       $query->condition($orGroup);
-echo "<pre>";var_dump($format);
-      var_dump($query->distinct()->__toString());exit;
       if (count($query->distinct()->execute()->fetchAll())) {
         $form_state->setErrorByName("periode_zone", "Une publicité est déjà présente à cette période dans ce format.");
       }
