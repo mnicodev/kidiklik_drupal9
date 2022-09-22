@@ -48,9 +48,9 @@ class NewsletterController extends ControllerBase
         'field_bandeau_rose' => $paragraph_entete->get('field_bandeau_rose')->value,
         'id' => $paragraph_entete->id(),
         'field_description' => $paragraph_entete->get('field_description')->value,
-        'field_image' => $img_url,
+        'field_image' => $url_img,
         'field_sujet' => $paragraph_entete->get('field_sujet')->value
-      ];
+	];
     }
 
     $database = \Drupal::database();
