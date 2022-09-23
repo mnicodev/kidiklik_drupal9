@@ -906,4 +906,6 @@ $settings["add_dep_for_views"] = [
 "page_jeu_concours",
 "activites_associees",
 "rubriques_activites",
+"page_agenda_adherent",
+"page_contenu_adherent",
 "bloc_mise_en_avant_dep"];
