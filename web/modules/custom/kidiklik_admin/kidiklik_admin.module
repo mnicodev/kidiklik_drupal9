@@ -792,6 +792,7 @@ function kidiklik_admin_form_node_agenda_edit_form_alter(&$form, FormStateInterf
     "#title" => "Activités",
 
   ];
+  //kint($node_agenda);
   $form["#group_children"]["field_activite"] = "group_coordonnees";
   foreach ($activites as $key => $activite) {
     $activites_list[$key] = $activite->getTitle();
@@ -800,7 +801,7 @@ function kidiklik_admin_form_node_agenda_edit_form_alter(&$form, FormStateInterf
   if (!empty($form["field_activite_save"]["widget"][0]["value"]["#default_value"])) {
     $form["field_activite"]["#default_value"] = $form["field_activite_save"]["widget"][0]["value"]["#default_value"];
   } else if (!empty(current($node_agenda->get('field_activite')->getValue())['target_id'])) {
-    $form["field_activite"]["#default_value"] = current($node_agenda->get('field_activite_lie')->getValue())['target_id'];
+    $form["field_activite"]["#default_value"] = current($node_agenda->get('field_activite')->getValue())['target_id'];
   }
   $cp = $form["field_code_postal"]["widget"][0]["value"]["#default_value"];
 
@@ -1130,11 +1131,11 @@ function kidiklik_admin_form_publicite_validate($form, FormStateInterface $form_
       }
       $andGroup1 = $query->andConditionGroup()
         ->condition("ddd.field_date_debut_value", $date_deb, "<=")
-        ->condition("ddf.field_date_fin_value", $date_deb, ">=");
-      //->condition("ddd.field_date_de_debut_value",$date_deb,">");
+        ->condition("ddf.field_date_fin_value", [$date_deb,$date_fin], "between");
 
       $andGroup2 = $query->andConditionGroup()
-        ->condition("ddf.field_date_fin_value", $date_fin, ">=");
+        ->condition("ddf.field_date_fin_value", [$date_deb,$date_fin], "between")
+        ->condition("ddd.field_date_debut_value", [$date_deb,$date_fin], "between");
       //->condition("ddd.field_date_de_debut_value",$date_fin,"<")
       //->condition("ddd.field_date_de_debut_value",$date_deb,"<=");
 
@@ -1142,13 +1143,16 @@ function kidiklik_admin_form_publicite_validate($form, FormStateInterface $form_
         ->condition("ddd.field_date_debut_value", $date_deb, "<=")
         ->condition("ddf.field_date_fin_value", $date_fin, ">=");
 
+      $andGroup4 = $query->andConditionGroup()
+        ->condition("ddd.field_date_debut_value", [$date_deb,$date_fin], "between")
+        ->condition("ddf.field_date_fin_value", $date_fin, ">=");
       $orGroup = $query->orConditionGroup()
         ->condition($andGroup1)
         ->condition($andGroup2)
-        ->condition($andGroup3);
+        ->condition($andGroup3)
+        ->condition($andGroup4);
 
       $query->condition($orGroup);
-      //kint($query->distinct()->__toString());exit;
       if (count($query->distinct()->execute()->fetchAll())) {
         $form_state->setErrorByName("periode_zone", "Une publicité est déjà présente à cette période dans ce format.");
       }
@@ -1287,7 +1291,96 @@ function getAjaxCoordonnees(array &$form, FormStateInterface $form_state)
 
 function kidiklik_admin_views_query_alter(Drupal\views\ViewExecutable $view, Drupal\views\Plugin\views\query\QueryPluginBase $query)
 {
+	if($view->id() === 'content') {
+		//unset($query->where[1]['conditions'][2]);
+		$date_deb = \Drupal::request()->request->get('field_date_de_debut_value');
+		$date_fin = \Drupal::request()->request->get('field_date_de_fin_value');
+	//	ksm($query->where);
+	      if (!empty($date_deb)) {
 
+		$query->where[1]["conditions"][2]["operator"] = "formula";
+		if (empty($date_fin)) {
+		  $configuration = array(
+		    'type' => 'LEFT',
+		    'table' => 'paragraph__field_date_de_fin',
+		    'field' => 'entity_id',
+		    'left_table' => 'paragraphs_item_field_data_node__field_date',
+		    'left_field' => 'id',
+		    'operator' => '=',
+		  );
+		  $join = \Drupal\views\Views::pluginManager('join')->createInstance('standard', $configuration);
+		  $rel = $query->addRelationship('paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin', $join, 'paragraphs_item_field_data_node__field_date');
+		  $query->addTable('paragraph__field_date_de_fin', $rel, $join, 'paragraph__field_date_de_fin');
+
+		  $query->where[1]["conditions"][2]["field"] = "DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') >= '" . $date_deb . "'
+		  OR ('" . $date_deb . "' between DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') and
+		  DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d'))";
+		  unset($query->where[1]["conditions"][3]);
+		} else {
+		  $query->where[1]["conditions"][2]["field"] = "DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') <= '" . $date_deb . "'
+					  OR (DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') BETWEEN '" . $date_deb . "' and '" . $date_fin . "')";
+		}
+	      }
+	      if (!empty($date_fin)) {
+
+		if (empty($date_deb)) {
+		  $configuration = array(
+		    'type' => 'LEFT',
+		    'table' => 'paragraph__field_date_de_debut',
+		    'field' => 'entity_id',
+		    'left_table' => 'paragraphs_item_field_data_node__field_date',
+		    'left_field' => 'id',
+		    'operator' => '=',
+		  );
+		  $join = \Drupal\views\Views::pluginManager('join')->createInstance('standard', $configuration);
+		  $rel = $query->addRelationship('paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut', $join, 'paragraphs_item_field_data_node__field_date');
+		  $query->addTable('paragraph__field_date_de_debut', $rel, $join, 'paragraph__field_date_de_debut');
+		  $query->addWhere('', 'paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value', [], '<>');
+
+		  $query->where[0]["conditions"][1]["field"] = "DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d') <= DATE_FORMAT('" . $date_fin . "', '%Y-%m-%d')
+					OR ('" . $date_fin . "' between DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d')
+					and DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d'))";
+		  $query->where[0]["conditions"][1]["operator"] = "formula";
+		  //kint($query->where[1]["conditions"]);
+		  //ksm($query->where[0]["conditions"][1]);
+		} else {
+		  $query->where[1]["conditions"][3]["field"] = "DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d') >= DATE_FORMAT('" . $date_fin . "', '%Y-%m-%d')
+					OR (DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d') BETWEEN '" . $date_deb . "' and '" . $date_fin . "')";
+		}
+	      }
+	      /*if (empty($date_deb) && empty($date_fin)) {
+		$configuration = array(
+		  'type' => 'LEFT',
+		  'table' => 'paragraph__field_date_de_debut',
+		  'field' => 'entity_id',
+		  'left_table' => 'paragraphs_item_field_data_node__field_date',
+		  'left_field' => 'id',
+		  'operator' => '=',
+		);
+		$join = \Drupal\views\Views::pluginManager('join')->createInstance('standard', $configuration);
+		$rel = $query->addRelationship('paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut', $join, 'paragraphs_item_field_data_node__field_date');
+		$query->addTable('paragraph__field_date_de_debut', $rel, $join, 'paragraph__field_date_de_debut');
+		$query->addWhere('', 'paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value', [], '<>');
+
+	//	ksm($query->where);
+		$query->where[0]["conditions"][count($query->where[0]["conditions"]) - 1]["field"] = "((DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d')>=CURDATE()) or (CURDATE() BETWEEN DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') and DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d')))";
+		$query->where[0]["conditions"][count($query->where[0]["conditions"]) - 1]["operator"] = "formula";
+
+		$configuration = array(
+		  'type' => 'LEFT',
+		  'table' => 'paragraph__field_date_de_fin',
+		  'field' => 'entity_id',
+		  'left_table' => 'paragraphs_item_field_data_node__field_date',
+		  'left_field' => 'id',
+		  'operator' => '=',
+		);
+		$join = \Drupal\views\Views::pluginManager('join')->createInstance('standard', $configuration);
+		$rel = $query->addRelationship('paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin', $join, 'paragraphs_item_field_data_node__field_date');
+		$query->addTable('paragraph__field_date_de_fin', $rel, $join, 'paragraph__field_date_de_fin');
+
+	//	ksm($query->where);
+	      }*/
+	}
   if ($view->id() === 'entite_reference') {
     $configuration = array(
       'type' => 'INNER',

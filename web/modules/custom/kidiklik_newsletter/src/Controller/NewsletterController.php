@@ -39,14 +39,18 @@ class NewsletterController extends ControllerBase
       }
     }
     if (!empty($paragraph_entete)) {
-      $img = \Drupal::entityTypeManager()->getStorage("file")->load(current($paragraph_entete->get('field_image')->getValue())['target_id']);
+	    $img_url = null;
+	    if((bool)$paragraph_entete->get('field_image')->getValue() === true) {
+		    $img = \Drupal::entityTypeManager()->getStorage("file")->load(current($paragraph_entete->get('field_image')->getValue())['target_id']);
+		    $url_img=$img->url();
+	    }
       $json_entete = [
         'field_bandeau_rose' => $paragraph_entete->get('field_bandeau_rose')->value,
         'id' => $paragraph_entete->id(),
         'field_description' => $paragraph_entete->get('field_description')->value,
-        'field_image' => $img->url(),
+        'field_image' => $url_img,
         'field_sujet' => $paragraph_entete->get('field_sujet')->value
-      ];
+	];
     }
 
     $database = \Drupal::database();
@@ -167,6 +171,8 @@ class NewsletterController extends ControllerBase
       }
 
     }
+    $globalSettings = \Drupal::service("settings");
+    $entete['domaine'] = $globalSettings->get("domain_name");
 
     $entete['nom_dep'] = current($entete['dep']->get('field_nom')->getValue())['value'];
     $build = [

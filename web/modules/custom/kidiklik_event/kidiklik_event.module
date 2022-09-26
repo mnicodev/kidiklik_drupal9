@@ -57,7 +57,7 @@ function kidiklik_event_node_presave(Drupal\node\NodeInterface $node)
       ->getStorage("node")
       ->load($node->get("field_activite_save")->value);
 
-    $node->set("field_activite_lie", $activite);
+    $node->set("field_activite", $activite);
   }
 
   if ($type == "activite" || $type == "agenda") {

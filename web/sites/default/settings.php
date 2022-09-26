@@ -769,11 +769,6 @@ $settings['entity_update_batch_size'] = 50;
 $settings['entity_update_backup'] = TRUE;
 
 
-/** memcache */
-$settings['cache']['default'] = 'cache.backend.memcache_storage';
-$settings['memcache_storage']['key_prefix'] = 'kd';
-$settings['memcache_storage']['memcached_servers'] =  ['127.0.0.1:11211' => 'default'];
-
 /**
  * Load local development override configuration, if available.
  *
@@ -906,4 +901,6 @@ $settings["add_dep_for_views"] = [
 "page_jeu_concours",
 "activites_associees",
 "rubriques_activites",
+"page_agenda_adherent",
+"page_contenu_adherent",
 "bloc_mise_en_avant_dep"];
