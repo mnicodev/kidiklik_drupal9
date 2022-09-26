@@ -162,6 +162,7 @@ function kidiklik_front_form_alter(&$form, FormStateInterface $form_state, $form
     }
   }
 
+  /** formulaire de recherche */
   if ($form['#id'] == "views-exposed-form-activites-recherche-activites") {
     $database = \Drupal::database();
     $query = $database->query("select * from villes where code_postal like '" . get_departement() . "%' order by commune");
@@ -574,6 +575,8 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
     }
 
     if (!empty($search)) {
+	unset($query->where[1]["conditions"][count($query->where[1]["conditions"]) - 1]);
+
       $configuration = array(
         'type' => 'INNER',
         'table' => 'node__body',
@@ -586,13 +589,14 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
       $rel = $query->addRelationship('field_body', $join, 'node_field_data');
       $query->addTable('node__body', $rel, $join, 'field_body');
       foreach($search as $item) {
-	      if(strlen($item) > 3) {
-		      $query->addWhere('', 'field_body.body_value', '%' . $item . '%', 'like');
+	      if(!empty($item) && strlen($item) > 3) {
+		      $query->addWhere(3, 'field_body.body_value', '%' . $item . '%', 'like');
+		      $query->addWhere(3, 'title', '%' . $item . '%', 'like');
 
 	      }
       }
+      $query->where[3]['type'] = 'OR';
     }
-
     if ($ou !== 'geo') {
 
       $configuration = array(
@@ -608,10 +612,6 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
       $rel = $query->addRelationship('field_dep', $join, 'node_field_data');
       $query->addTable('node__field_departement', $rel, $join, 'field_dep');
       $query->addWhere('', 'field_dep.field_departement_target_id', get_term_departement(), '=');
-      
-      unset($query->where[1]["conditions"][2]);
-
-      unset($query->where[1]["conditions"][3]);
 
       if(!empty($ou)) {
 	      $configuration = array(
@@ -655,6 +655,12 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
           $date_fin = \Drupal::request()->get("date_fin");
           break;
 
+      }
+      if(!empty($date_deb)) {
+	      unset($query->where[1]["conditions"][2]);
+      }
+      if(!empty($date_fin)) {
+	      unset($query->where[1]["conditions"][3]);
       }
 
       //kint($query->where);
