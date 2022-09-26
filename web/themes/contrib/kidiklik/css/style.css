@@ -571,7 +571,8 @@ footer .menu li.last {
       color: #3da1c3; }
 
 .activite-teaser {
-  font-size: 0.95em; }
+  font-size: 0.95em;
+  height: 175px; }
   .activite-teaser img {
     max-width: 100%;
     width: 100%;
