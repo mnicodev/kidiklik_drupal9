@@ -385,6 +385,7 @@ article {
     margin-bottom: 10px; }
   article img {
     max-width: 100%;
+    width: 100%;
     height: auto; }
   article i.fa, article i.fas {
     color: #666666;
