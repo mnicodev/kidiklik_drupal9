@@ -573,7 +573,9 @@ footer .menu li.last {
 
 .activite-teaser {
   font-size: 0.95em;
-  height: 175px; }
+  /*@media (min-width: 768px) {
+  	height: 175px;
+  }*/ }
   .activite-teaser img {
     max-width: 100%;
     width: 100%;
