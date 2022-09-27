@@ -1682,6 +1682,7 @@ var_dump('node id : '.$node->id());
                 //$query->condition('field_date_de_debut_value','2019-01-01','<'); /* pour contenu article etc */
 		//$query->condition('field_date_de_fin_value','2020-01-01','<');
 		$query->orderBy('nid','desc');
+		$query->groupBy('ni');
                 $rs=$query->execute();
 		while($item=$rs->fetch()) {
 			
@@ -1713,11 +1714,24 @@ var_dump('node id : '.$node->id());
                 
       } else {
         $connection = \Drupal::database();
-        $rs = $connection->query('select * from node where type=:type order by nid desc', [
+        /*$rs = $connection->query('select * from node where type=:type order by nid desc', [
           ':type' => $name,
         ], [
           'fetch' => 'node'
-  ]);
+  ]);*/
+                $query= $connection->select('node','n');
+                $query->fields('n',['nid']);
+                $query->join("node__field_date","fd","fd.entity_id=n.nid");
+                $query->join("paragraph__field_date_de_debut","fdd","fdd.entity_id=fd.field_date_target_id");
+                //$query->fields('n',['nid']);
+                //$query->fields('fd',['entity_id']);
+                //$query->fields('fdd',['field_date_de_fin_value']);
+                $query->condition('type',$name,'=');
+                //$query->condition('nid',264416,'<=');
+                $query->condition('field_date_de_debut_value','2022-09-01','>'); /* pour contenu article etc */
+		//$query->condition('field_date_de_fin_value','2020-01-01','<');
+		$query->orderBy('nid','desc');
+                $rs=$query->execute();
 	if($name === 'paragraphe') {
 		$rs = $connection->query('select * from paragraphs_item where type="paragraphe" order by id desc', [
 			':type' => $name,
@@ -1750,6 +1764,12 @@ var_dump('node id : '.$node->id());
 		$item = \Drupal\paragraphs\Entity\Paragraph::load($result->id);
 	}else {
 		$item = Node::Load($nid);
+
+		// a delete
+		//var_dump($item->get('field_ref_dept')->value);
+		/*if($item->get('field_ref_dept')->value !== '1') {
+			continue;
+		}*/
 	}
 	/*$val=$item->get('field_date')->getValue()[1]['target_id'];
 	$d = \Drupal\paragraphs\Entity\Paragraph::load($val);
@@ -2082,7 +2102,8 @@ var_dump('node id : '.$node->id());
 			var_dump($query->fetch());
 		      }
 			break;
-              case 'filtres':
+	      case 'filtres':
+		      //if((bool)$item->get('field_filtres')->getValue() ===true) continue;
                 Database::setActiveConnection('kidiklik');
                 $connection = \Drupal\Core\Database\Database::getConnection();
                //var_dump('ref entite : '.$item->get('field_ref_'.$name)->value);
@@ -2636,9 +2657,12 @@ $tmp = $query->fetch();*/
 					$item->save();
 			}
 		} else {
-			$dept = (int)$item->get("field_ref_dept")->value;
+			$dept = $item->get("field_ref_dept")->value;
 
-                  if ($dept) {
+			if (!empty($dept)) {
+				if($dept<10) {
+				//	$dept='0'.$dept;
+				}
                     echo "Traitement dept " . $dept . " ... ";
 
                     $term = \Drupal::entityTypeManager()->getStorage("taxonomy_term")->loadByProperties(
@@ -2648,10 +2672,9 @@ $tmp = $query->fetch();*/
                         //"field_type_contact"=>"client"
                       ]
                     );
-
                     if ($term) {
-			    
-			    $item->__set("field_departement", current($term)->id());
+			   var_dump(current($term)->id()); 
+			    $item->__set("field_departement", ['target_id' => current($term)->id()]);
                       $item->validate();
                       $item->save();
                       echo ".";
