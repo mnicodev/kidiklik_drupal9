@@ -515,10 +515,14 @@ function kidiklik_admin_form_node_reportage_edit_form_alter(&$form, FormStateInt
 function kidiklik_admin_form_node_activite_form_alter(&$form, FormStateInterface $form_state, $form_id)
 {
   $term_dep = get_term_departement();
-
   $form["#attached"]["library"][] = "kidiklik_admin/kidiklik_admin.commands";
   $form["type"] = "activite";
   /* le champ est configuré par défaut en multiple valeur, on bloque à une simple valeur */
+  $liste_adherents['_none'] = '';
+  foreach($form["field_adherent"]["widget"]["#options"] as $key => $item) {
+	  $liste_adherents[$key] = $item;
+  }
+  $form["field_adherent"]["widget"]["#options"] = $liste_adherents;
   $form["field_adherent"]["widget"]["#multiple"] = FALSE;
   $form["field_adherent"]["widget"]["#ajax"] = [
     "callback" => "getAjaxCoordonnees",
@@ -532,7 +536,6 @@ function kidiklik_admin_form_node_activite_form_alter(&$form, FormStateInterface
     ],
 
   ];
-
   if (get_departement() !== 0) {
     $rub = $form["field_rubriques_activite"]["widget"]["#options"];
     $tab = [];
@@ -563,7 +566,6 @@ function kidiklik_admin_form_node_activite_form_alter(&$form, FormStateInterface
   if (!empty(\Drupal::request()->query->get("ref_id"))) {
     $adherent_id = \Drupal::request()->query->get("ref_id");
   }
-
   if ($adherent_id !== null && $form_id == "node_activite_form") {
     $adherent = Node::load($adherent_id);
 
@@ -636,6 +638,10 @@ function kidiklik_admin_form_node_agenda_form_alter(&$form, FormStateInterface $
   $term_dep = get_term_departement();
   $user = \Drupal::currentUser()->getAccount();
   $form['#validate'][] = 'kidiklik_admin_form_bloc_validate';
+  $liste_adherents[''] = '';
+  foreach($form["field_adherent"]["widget"]["#options"] as $key => $item) {
+	  $liste_adherents[$key] = $item;
+  }
 
   $user_roles = $user->getRoles();
   $administrator = false;
