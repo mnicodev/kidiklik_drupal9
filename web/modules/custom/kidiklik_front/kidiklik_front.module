@@ -574,7 +574,7 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
       $query->addWhere('', 'node__field_adherent.field_adherent_target_id', $ref_adherent, '=');
     }
 
-    if (!empty($search)) {
+    /*if (!empty($search)) {
 	unset($query->where[1]["conditions"][count($query->where[1]["conditions"]) - 1]);
 
       $configuration = array(
@@ -596,7 +596,7 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
 	      }
       }
       $query->where[3]['type'] = 'OR';
-    }
+    }*/
     if ($ou !== 'geo') {
 
       $configuration = array(
