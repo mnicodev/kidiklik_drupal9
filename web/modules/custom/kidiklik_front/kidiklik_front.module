@@ -629,6 +629,11 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
 	      $query->addWhere('', 'field_ville.field_ville_save_value', $ou, '=');
       }
       
+    } else {
+	    $query->where[1]['conditions'][1]['value'] = [
+		    'agenda',
+		    'activite'
+	    ];
     }
 
 
