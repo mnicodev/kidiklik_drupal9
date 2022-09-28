@@ -64,6 +64,12 @@ function kidiklik_event_node_presave(Drupal\node\NodeInterface $node)
     $node = KidiklikEntity::setGPS($node);
   }
 
+  if($type === 'article') {
+    if(get_departement() !== 0) {
+      $node->set("field_canonical_url", null);
+    }
+  }
+
   if ($type == "bloc_de_mise_en_avant") {
     $adherent = \Drupal::entityTypeManager()
       ->getStorage("node")
