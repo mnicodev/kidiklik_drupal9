@@ -16,8 +16,6 @@ class InitSubscriber implements EventSubscriberInterface
   public function checkRedirect(GetResponseEvent $event)
   {
 	  $request = $event->getRequest();
-	  $response = $event->getResponse();
-	  $response->headers->set('Referrer-Policy', 'strict-origin', FALSE);
 
     $node = \Drupal::routeMatch()->getParameters()->get("node");
     if (!empty($node)) {
