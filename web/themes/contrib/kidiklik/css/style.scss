@@ -215,6 +215,11 @@ h1 {
 @media (max-width: 992px) {
 	.main-container .bloc-publicite  {
 		display: block!important;
+		max-width: 380px;
+		margin: auto;
+	  	margin-bottom: auto;
+		margin-bottom: 20px;
+
 	}
 }
 @media (max-width: 768px) {
