@@ -13,26 +13,13 @@ Drupal.behaviors.kidiklik = {
 		var charging_blocs = jQuery('[data-big-pipe-placeholder-id]').length;
 		console.log(charging_blocs)
 	      	if (charging_blocs ===1 || charging_blocs === 0){
-			function maPosition(position) {//position
-				lng = position.coords.longitude;
-				lat = position.coords.latitude;
-				console.log(position)
-				//lng=1.7945;
-				//lat=47.820614;
-				 jQuery('input[name="center[coordinates][lng]"]').val(lng);
-				 jQuery('input[name="center[coordinates][lat]"]').val(lat);
-			}
-			function erreur(err) {
-				console.log("erreur localisation : "+err.message)
-				window.alert("erreur localisation : "+err.message)
-				//$(".shadow").hide();
-			}
-
-			function getCurrentPosition() {
-				if(navigator.geolocation) {
-					navigator.geolocation.getCurrentPosition(maPosition,erreur);
-				}
-			}
+			jQuery('#block-views-block-diaporama-diaporama').after(jQuery('#block-carreblock').html());
+			jQuery('.main-container').find('.bloc-publicite').css('display','none');
+	jQuery('select[name="ville"]').select2({
+		placeholder: 'Choisissez une ville ...',
+		allowClear: true,
+		tags: true,
+	});
 			if(jQuery("#groupe-actions").length) {
 				if(jQuery('#block-boutonfavorinonconnecte').length) {
 
@@ -65,17 +52,13 @@ Drupal.behaviors.kidiklik = {
 			}
 						
 		}
-		/*if(jQuery('select[name="ville"]').val() === 'geo') {
+		if(jQuery('select[name="ville"]').val() === 'geo') {
 				getCurrentPosition();
 			//maPosition();
 		} else {
 			jQuery('input[name="center[coordinates][lng]"]').val('');
 			jQuery('input[name="center[coordinates][lat]"]').val('');
-		}*/
-		jQuery('select[name="ville"]').select2({
-			placeholder: 'Choisissez une ville ...',
-			allowClear: true
-		});
+		}
 		jQuery('select[name="ville"]').on('select2:select', function(e) {
 			var data = e.params.data;
 			if(data.id === "geo") {
@@ -199,15 +182,16 @@ jQuery('#menu').hide();
 	});
 	jQuery('select[name="ville"]').select2({
 		placeholder: 'Choisissez une ville ...',
-		allowClear: true
+		allowClear: true,
+		tags: true,
 	});
-	/*if(jQuery('select[name="ville"]').val() === 'geo') {
+	if(jQuery('select[name="ville"]').val() === 'geo') {
 			getCurrentPosition();
 		//maPosition();
 	} else {
 		jQuery('input[name="center[coordinates][lng]"]').val('');
 		jQuery('input[name="center[coordinates][lat]"]').val('');
-	}*/
+	}
 	jQuery('select[name="ville"]').on('select2:select', function(e) {
 		var data = e.params.data;
 		console.log('ok')
@@ -294,4 +278,24 @@ jQuery('#menu').hide();
 
 
 
+  function maPosition(position) {//position
+		lng = position.coords.longitude;
+		lat = position.coords.latitude;
+		console.log(position)
+		//lng=1.7945;
+		//lat=47.820614;
+		 jQuery('input[name="center[coordinates][lng]"]').val(lng);
+		 jQuery('input[name="center[coordinates][lat]"]').val(lat);
+	}
+	function erreur(err) {
+		console.log("erreur localisation : "+err.message)
+		window.alert("erreur localisation : "+err.message)
+		//$(".shadow").hide();
+	}
+
+	function getCurrentPosition() {
+		if(navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(maPosition,erreur);
+		}
+	}
 })
