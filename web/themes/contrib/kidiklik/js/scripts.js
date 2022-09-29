@@ -13,6 +13,13 @@ Drupal.behaviors.kidiklik = {
 		var charging_blocs = jQuery('[data-big-pipe-placeholder-id]').length;
 		console.log(charging_blocs)
 	      	if (charging_blocs ===1 || charging_blocs === 0){
+			jQuery('#block-views-block-diaporama-diaporama').after(jQuery('#block-carreblock').html());
+			jQuery('.main-container').find('.bloc-publicite').css('display','none');
+	jQuery('select[name="ville"]').select2({
+		placeholder: 'Choisissez une ville ...',
+		allowClear: true,
+		tags: true,
+	});
 			if(jQuery("#groupe-actions").length) {
 				if(jQuery('#block-boutonfavorinonconnecte').length) {
 
@@ -175,7 +182,8 @@ jQuery('#menu').hide();
 	});
 	jQuery('select[name="ville"]').select2({
 		placeholder: 'Choisissez une ville ...',
-		allowClear: true
+		allowClear: true,
+		tags: true,
 	});
 	if(jQuery('select[name="ville"]').val() === 'geo') {
 			getCurrentPosition();
