@@ -17,7 +17,7 @@ class InitSubscriber implements EventSubscriberInterface
   {
 	  $request = $event->getRequest();
 	  $response = $event->getResponse();
-	  $reponse->headers->set('Referrer-Policy', 'strict-origin', FALSE);
+	  $response->headers->set('Referrer-Policy', 'strict-origin', FALSE);
 
     $node = \Drupal::routeMatch()->getParameters()->get("node");
     if (!empty($node)) {
