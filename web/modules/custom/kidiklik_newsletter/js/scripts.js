@@ -11,7 +11,7 @@ function blocAction(o) {
 }
 
 function getBloc(obj) {
-
+console.log(obj.nid);
 	bloc=document.createElement("div");
 	bloc_image=document.createElement("div");
 	bloc_data=document.createElement("div");
@@ -30,7 +30,7 @@ function getBloc(obj) {
 	$(fid).val(obj.fid);
 	$(nid).attr("type","hidden");
 	$(nid).attr("name","nid_bloc[]");
-	$(nid).val(obj.bloc_nid);
+	$(nid).val(obj.nid);
 
   $(lien).val(obj.lien);
   $(lien).attr('type','hidden');
