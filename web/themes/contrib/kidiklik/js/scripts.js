@@ -13,7 +13,7 @@ Drupal.behaviors.kidiklik = {
 		var charging_blocs = jQuery('[data-big-pipe-placeholder-id]').length;
 		console.log(charging_blocs)
 	      	if (charging_blocs ===1 || charging_blocs === 0){
-			jQuery('#block-carre1copie').after(jQuery('#block-carreblock').html());
+			jQuery('#block-carre1copie').html(jQuery('#block-carreblock').html());
 	jQuery('select[name="ville"]').select2({
 		placeholder: 'Choisissez une ville ...',
 		allowClear: true,
