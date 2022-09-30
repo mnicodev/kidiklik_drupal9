@@ -1937,3 +1937,10 @@ div.user-login, div.user-register {
 	}
 	
 }
+
+#block-colonneblock .bloc-publicite, 
+#block-carrebasblock .bloc-publicite, 
+#block-rectangleblock .bloc-publicite, 
+#block-largeblock-3 .bloc-publicite{
+	display:block!important;
+}

@@ -1416,4 +1416,10 @@ div.user-login, div.user-register {
     width: 100% !important;
     left: 0 !important; } }
 
+#block-colonneblock .bloc-publicite,
+#block-carrebasblock .bloc-publicite,
+#block-rectangleblock .bloc-publicite,
+#block-largeblock-3 .bloc-publicite {
+  display: block !important; }
+
 /*# sourceMappingURL=style.css.map */
