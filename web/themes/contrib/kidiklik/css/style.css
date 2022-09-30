@@ -178,13 +178,16 @@ h1 {
       border: 1px solid #ccc;
       border-radius: 0; }
 
+#block-carre1copie {
+  display: none;
+  max-width: 380px;
+  margin: auto;
+  margin-bottom: auto;
+  margin-bottom: 20px; }
+
 @media (max-width: 992px) {
-  .main-container .bloc-publicite {
-    display: block !important;
-    max-width: 380px;
-    margin: auto;
-    margin-bottom: auto;
-    margin-bottom: 20px; } }
+  #block-carre1copie {
+    display: block; } }
 @media (max-width: 768px) {
   #views-exposed-form-activites-recherche-activites .voir-filtres {
     display: none; } }
