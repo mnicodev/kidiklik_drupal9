@@ -802,7 +802,7 @@ a.reservation {
     display: inline-block; }
   .activite .bloc1 .field--name-field-a-partir-de, .agenda .bloc1 .field--name-field-a-partir-de {
     display: block;
-    margin-top: 10px; }
+    margin-top: 0px; }
     .activite .bloc1 .field--name-field-a-partir-de .field--item:before, .agenda .bloc1 .field--name-field-a-partir-de .field--item:before {
       content: "Public : "; }
   .activite .bloc1 .field--name-field-date, .agenda .bloc1 .field--name-field-date {
@@ -828,7 +828,7 @@ article {
     display: flex;
     flex-direction: row; }
     article .bloc-age .field--name-field-jusque-age-de {
-      margin-top: 15px;
+      margin-top: 3px;
       margin-left: 5px; }
       article .bloc-age .field--name-field-jusque-age-de:before {
         content: "-"; }
