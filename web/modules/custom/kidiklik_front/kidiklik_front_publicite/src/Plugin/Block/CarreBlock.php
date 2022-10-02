@@ -47,7 +47,6 @@ left JOIN node__field_nombre_affichage_possible nb_aff_poss ON node_field_data.n
         (node_field_data.type IN ('publicite'))
     )
     AND (
-        (node__field_departement.field_departement_target_id = '" . get_term_departement() . "') OR
         (node__field_tous_les_sites.field_tous_les_sites_value = '1') OR
         (node__field_partage_departements.field_partage_departements_target_id = '" . get_term_departement() . "')
     ) AND (

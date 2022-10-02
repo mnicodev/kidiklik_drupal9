@@ -30,7 +30,7 @@ body {
   <div class="webkit" style="max-width: 600px;">
                       <p style="Margin: 0; font-size: 11px; Margin-bottom: 10px; text-align: center; color: #000000;">
                          <a
-                          href="{{ url }}"
+                          href="{{ entete.url }}"
                           style="color: #000000; text-decoration: underline; font-size: 11px;">Consulter la version en ligne.</a>
                       </p>
     <!--[if (gte mso 9)|(IE)]>
@@ -78,46 +78,9 @@ body {
       {% set cpt=0 %}
       {% for key,bloc in blocs %}
         <tr>
-          <td class="left-sidebar item immanquable" style="{% if entete.bandeau_rose == 1 and key == 0 %}background: #db2a24;{% endif %}padding: 10px 0;{% if key != 0 %}border-top: 1px dotted #db2a24{% endif %}">
-            {% if cpt%2 == 0 %}
 
 
-                    <table class="column left"
-                           style="border-spacing: 0; font-family: Arial, Helvetica, sans-serif; color: #000000; width: 100%; display: inline-block; vertical-align: middle; max-width: 335px;">
-                      <tbody>
-                      <tr>
-                        <td class="inner contents"
-                            style="padding: 15px 10px 15px 10px; width: 100%; font-size: 14px; text-align: left;{% if entete.bandeau_rose == 1 %}color:#ffffff{% endif %}">
-                          <p class="h2"
-                             style="Margin: 0; font-weight: bold; Margin-bottom: 9px; line-height: 18px; font-size: 18px; color: #000000;">
-                            <a href="https://{{ entete.dep.getName() }}.{{ entete.domaine }}{{ bloc.lien }}" style="text-decoration: none; {% if entete.bandeau_rose == 1 and key == 0 %}color:#ffffff{% else %}color: #000000;{% endif %}">
-                              {{ bloc.titre }}</a></p>
-                          <p style="Margin: 0;">
-                            <a href="https://{{ entete.dep.getName() }}.{{ entete.domaine }}{{ bloc.lien }}" style="text-decoration: none; {% if entete.bandeau_rose == 1  and key == 0 %}color:#ffffff{% else %}color: #000000;{% endif %}">
-                              {{ bloc.texte }}
-                            </a>
-                          </p>
-                        </td>
-                      </tr>
-                      </tbody>
-                    </table>
-
-
-                    <table class="column right"
-                           style="border-spacing: 0; font-family: Arial, Helvetica, sans-serif; color: #000000; width: 100%; display: inline-block; vertical-align: middle; max-width: 259px;">
-                      <tbody>
-                      <tr>
-                        <td class="inner full-width-image" style="padding: 0;">
-                          <a href="https://{{ entete.dep.getName() }}.{{ entete.domaine }}{{ bloc.lien }}" style="text-decoration: none; color: #000000;" align="right">
-                            <img src="{{ bloc.image }}"   style="border: 0; width: 100%; height: auto;" width="265">
-                          </a>
-                        </td>
-                      </tr>
-                      </tbody>
-                    </table>
-
-
-            {% else %}
+          <td class="left-sidebar item immanquable" style="{% if entete.bandeau_rose == 1 and key == 0 %}background: #db2a24;color:white;{% endif %}padding: 10px 0;{% if key != 0 %}border-top: 1px dotted #db2a24{% endif %}">
 
 
                     <table class="column left"
@@ -136,17 +99,17 @@ body {
 
 
                     <table class="column right"
-                           style="border-spacing: 0; font-family: Arial, Helvetica, sans-serif; color: #000000; width: 100%; display: inline-block; vertical-align: middle; max-width: 335px;">
+                           style="{% if entete.bandeau_rose == 1 and key == 0 %}color:white;{% endif %}border-spacing: 0; font-family: Arial, Helvetica, sans-serif; color: #000000; width: 100%; display: inline-block; vertical-align: middle; max-width: 335px;">
                       <tbody>
                       <tr>
                         <td class="inner contents"
                             style="padding: 15px 10px 15px 10px; width: 100%; font-size: 14px; text-align: left;">
                           <p class="h2"
                              style="Margin: 0; font-weight: bold; Margin-bottom: 9px; line-height: 18px; font-size: 18px; color: #000000;">
-                            <a href="https://{{ entete.dep.getName() }}.{{ entete.domaine }}{{ bloc.lien }}" style="text-decoration: none; color: #000000;">
+                            <a href="https://{{ entete.dep.getName() }}.{{ entete.domaine }}{{ bloc.lien }}" style="text-decoration: none; color: #000000;{% if entete.bandeau_rose == 1 and key == 0 %}color:white;{% endif %}">
                               {{ bloc.titre }}</a></p>
                           <p style="Margin: 0;">
-                            <a href="https://{{ entete.dep.getName() }}.{{ entete.domaine }}{{ bloc.lien }}" style="text-decoration: none; color: #000000;">
+                            <a href="https://{{ entete.dep.getName() }}.{{ entete.domaine }}{{ bloc.lien }}" style="text-decoration: none; color: #000000;{% if entete.bandeau_rose == 1 and key == 0 %}color:white;{% endif %}">
                               {{ bloc.texte }}
                             </a>
                           </p>
@@ -156,7 +119,6 @@ body {
                     </table>
 
 
-            {% endif %}
           </td>
         </tr>
         {% set cpt=cpt+1 %}
@@ -182,46 +144,9 @@ body {
 	{% endif %}
       {% for key,bloc in blocs_nat %}
         <tr>
+
+
           <td class="left-sidebar item immanquable" style="padding: 10px 0;{% if key != 0 %}border-top: 1px dotted #db2a24{% endif %}">
-            {% if cpt%2 == 0 %}
-
-
-                    <table class="column left"
-                           style="border-spacing: 0; font-family: Arial, Helvetica, sans-serif; color: #000000; width: 100%; display: inline-block; vertical-align: middle; max-width: 335px;">
-                      <tbody>
-                      <tr>
-                        <td class="inner contents"
-                            style="padding: 15px 10px 15px 10px; width: 100%; font-size: 14px; text-align: left;{% if entete.bandeau_rose == 1 %}color:#ffffff{% endif %}">
-                          <p class="h2"
-                             style="Margin: 0; font-weight: bold; Margin-bottom: 9px; line-height: 18px; font-size: 18px; color: #000000;">
-                            <a href="https://{{ entete.dep.getName() }}.{{ entete.domaine }}{{ bloc.lien }}" style="text-decoration: none; color: #000000;">
-                              {{ bloc.titre }}</a></p>
-                          <p style="Margin: 0;">
-                            <a href="https://{{ entete.dep.getName() }}.{{ entete.domaine }}{{ bloc.lien }}" style="text-decoration: none; color: #000000;">
-                              {{ bloc.texte }}
-                            </a>
-                          </p>
-                        </td>
-                      </tr>
-                      </tbody>
-                    </table>
-
-
-                    <table class="column right"
-                           style="border-spacing: 0; font-family: Arial, Helvetica, sans-serif; color: #000000; width: 100%; display: inline-block; vertical-align: middle; max-width: 259px;">
-                      <tbody>
-                      <tr>
-                        <td class="inner full-width-image" style="padding: 0;">
-                          <a href="https://{{ entete.dep.getName() }}.{{ entete.domaine }}{{ bloc.lien }}" style="text-decoration: none; color: #000000;" align="right">
-                            <img src="{{ bloc.image }}"   style="border: 0; width: 100%; height: auto;" width="265">
-                          </a>
-                        </td>
-                      </tr>
-                      </tbody>
-                    </table>
-
-
-            {% else %}
 
 
                     <table class="column left"
@@ -259,7 +184,6 @@ body {
                     </table>
 
 
-            {% endif %}
           
 
 	  </td>
@@ -378,7 +302,7 @@ body {
 
                       <p style="Margin: 0; font-size: 11px; Margin-bottom: 10px; text-align: center; color: #000000;">
                         Si vous ne parvenez pas à afficher cet e-mail, veuillez consulter la version en <a
-                          href="{{ url }}"
+                          href="{{ entete.url }}"
                           style="color: #000000; text-decoration: underline; font-size: 11px;">ligne.</a>
                       </p>
                       <p style="Margin: 0; font-size: 11px; Margin-bottom: 10px; text-align: center; color: #000000;">

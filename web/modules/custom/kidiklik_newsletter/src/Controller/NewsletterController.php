@@ -26,7 +26,6 @@ class NewsletterController extends ControllerBase
   {
     $n = Node::Load($nid);
     $dep_id = get_term_departement();
-
     $entetes = $n->get('field_bloc_entete')->getValue() ?? null;
     $paragraph_entete = null;
     if (!empty($entetes)) {
@@ -104,12 +103,20 @@ class NewsletterController extends ControllerBase
         $paragraph = \Drupal\paragraphs\Entity\Paragraph::load($item["target_id"]);
         if ((bool)($paragraph->get("field_departement")->getValue()) === true) {
           $dept_target_id = (int)current($paragraph->get("field_departement")->getValue())['target_id'];
+	  if(!empty($paragraph->get("field_nid_bloc")->value)) {
+	  	$partage_nat = Node::Load($paragraph->get("field_nid_bloc")->value)->get('field_partage_departements')->getValue();
+		$dep_part = [];
+		foreach($partage_nat as $part) {
+			
+			$dep_part[] = Term::Load($part['target_id'])->getName();
+		}
+	 }
           $dept_bloc = (int)\Drupal::entityTypeManager()->getStorage("taxonomy_term")->load($dept_target_id)->getName();
           if ($dept_target_id !== (int)get_term_departement()) {
 
-            if ($dept_bloc === 0) {
-              $blocs_nat[] = $item;
-            }
+            if (($dept_bloc === 0 && in_array(get_departement(), $dep_part)) || ($dept_bloc === 0 && !count($dep_part))) {
+              		$blocs_nat[] = $item;
+	   }
             unset($blocs[$key]);
           }
         }
@@ -173,7 +180,7 @@ class NewsletterController extends ControllerBase
     }
     $globalSettings = \Drupal::service("settings");
     $entete['domaine'] = $globalSettings->get("domain_name");
-
+	$entete['url'] = 'https://'.$entete['dep']->getName().'.'.$globalSettings->get("domain_name").'/newsletter/'.$n->id().$n->url();
     $entete['nom_dep'] = current($entete['dep']->get('field_nom')->getValue())['value'];
     $build = [
       '#type' => "page",
