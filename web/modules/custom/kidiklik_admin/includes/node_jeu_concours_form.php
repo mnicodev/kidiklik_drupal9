@@ -24,7 +24,7 @@ if($form_id=="node_jeu_concours_form" || $form_id=="node_jeu_concours_edit_form"
 			  "#type"=>"html_tag",
 			  "#tag"=>"a",
 			  "#value"=>"Voir",
-			  "#attributes"=>["class"=>"btn btn-primary","target"=>"blank","href"=>""/*$node->url()*/],
+			  "#attributes"=>["class"=>"btn btn-primary","target"=>"blank","onclick"=>"window.open('".$node->url()."')"],
 			];
 			$date = null;
 			if($node->__isset("field_date")) {
