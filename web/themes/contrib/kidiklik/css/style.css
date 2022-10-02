@@ -1425,4 +1425,7 @@ div.user-login, div.user-register {
 #block-largeblock-3 .bloc-publicite {
   display: block !important; }
 
+.page-standard .statistics-counter {
+  display: none; }
+
 /*# sourceMappingURL=style.css.map */
