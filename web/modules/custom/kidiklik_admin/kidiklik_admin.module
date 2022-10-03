@@ -1238,6 +1238,9 @@ function getAjaxCoordonnees(array &$form, FormStateInterface $form_state)
     $form["field_email"]["widget"][0]["value"]["#value"] = current($adherent->get("field_email")->getValue());
     $form["field_lien"]["widget"][0]["value"]["#value"] = current($adherent->get("field_lien")->getValue());
     $form["field_ville_save"]["widget"][0]["value"]["#value"] = current($adherent->get("field_ville_save")->getValue());
+
+    /*$db = \Drupal\Core\Database\Database::getConnection();
+    $rs = $db->query('select * from villes where commune = "%'.current($adherent->get("field_ville_save")->getValue()).'%"')->fetchAll();*/
     //$form["field_activite_save"]["widget"][0]["value"]["#value"]=$form_state->getValue("field_activite_save");
 
     if ($form["type"] == "agenda") {
@@ -1251,7 +1254,7 @@ function getAjaxCoordonnees(array &$form, FormStateInterface $form_state)
         "#options" => $tab,
         "#title" => "Activités",
         "#attributes" => [
-          "id" => "activites_lie",
+          "id" => "activites",
         ]
       ];
 
