@@ -34,7 +34,7 @@ class CompteurPubliciteController extends ControllerBase
 
 
     $query->fields("f", ["field_format_target_id"]);
-    //$query->fields("tf",["name"]);
+    $query->fields("tf",["name"]);
     $query->fields("ddd", ["field_date_debut_value"]);
     $query->fields("ddf", ["field_date_fin_value"]);
     $query->condition("n.type", "publicite", "=");

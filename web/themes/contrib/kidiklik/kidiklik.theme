@@ -79,7 +79,11 @@ function kidiklik_preprocess_field(&$variables) {
 	$variables['dept'] = get_departement();
 	if($variables['field_name'] === 'field_date') {
 		$node = \Drupal::request()->attributes->get('node');
-	//if(isset($_GET['dev']))	var_dump($node->get('field_date')->getValue());	
+		$tb_date = $node->get('field_date')->getValue();
+		$now = date('Y-m-d');
+		foreach($tb as $item) {
+			$date =\Drupal::entityTypeManager()->getStorage("paragraph")->load($item['target_id']);
+		}		
 		
 	}
 	if(\Drupal::request()->attributes->get('node') !== null) {
