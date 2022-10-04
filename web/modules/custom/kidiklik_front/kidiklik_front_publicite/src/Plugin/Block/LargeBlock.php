@@ -67,7 +67,6 @@ LIMIT 1 OFFSET 0";
     $result = [];
 
     $style = ImageStyle::load("crop_850_212");
-kint($style);
     foreach ($rs as $item) {
       $node = Node::load($item->nid);
       $fid = current($node->get("field_image")->getValue())["target_id"];
@@ -83,7 +82,6 @@ kint($style);
       $result["nid"] = $node->id();
     }
     $result["class"] = "large";
-kint($result);
 
     $path_stat = \Drupal::request()->getBasePath() . "/" . drupal_get_path("module", "statistics") . "/statistics.php";
 
