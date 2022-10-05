@@ -80,9 +80,13 @@ function kidiklik_preprocess_field(&$variables) {
 	if($variables['field_name'] === 'field_date') {
 		$node = \Drupal::request()->attributes->get('node');
 		$tb_date = $node->get('field_date')->getValue();
-		$now = date('Y-m-d');
-		foreach($tb as $item) {
+		$now = date('Ymd');
+		foreach($tb_date as $key => $item) {
 			$date =\Drupal::entityTypeManager()->getStorage("paragraph")->load($item['target_id']);
+			$tab = $date->toArray();
+			if((int)str_replace('-','',current($tab['field_date_de_debut'])['value']) < (int)$now) {
+				unset($variables['items'][$key]);
+			}
 		}		
 		
 	}
