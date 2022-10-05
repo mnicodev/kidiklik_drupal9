@@ -257,11 +257,11 @@ $(function(){
 			 * on insert le titre et résumé dans un bloc de mise en vant
 			 */
 			if($("#edit-group-mise-en-avant").find(".field--name-title").find("input").val() === '' || $("#edit-group-mise-en-avant").find(".field--name-title").find("input").val() === null) {
-				$("#edit-group-mise-en-avant").find(".field--name-title").find("input").val($("#edit-title-wrapper").find("input").val());
+			//	$("#edit-group-mise-en-avant").find(".field--name-title").find("input").val($("#edit-title-wrapper").find("input").val());
 			}
 			if($("#edit-group-mise-en-avant").find(".field--name-field-resume").find("textarea").val() === '' || $("#edit-group-mise-en-avant").find(".field--name-field-resume").find("textarea").val() === null) {
 				var resume = $("#edit-field-resume-wrapper").find("textarea").val()??$("#edit-body-wrapper").find("textarea").val();
-				$("#edit-group-mise-en-avant").find(".field--name-field-resume").find("textarea").val(resume);
+				//$("#edit-group-mise-en-avant").find(".field--name-field-resume").find("textarea").val(resume.replace(/(<([^>]+)>)/gi, ""));
 			}
 
 			/* cas où on ajoute un adhérent depuis le formulaire client */
