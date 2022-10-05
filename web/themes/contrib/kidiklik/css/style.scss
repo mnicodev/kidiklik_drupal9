@@ -493,7 +493,10 @@ article  {
 	.zone-image {
 		text-align: right;
 		margin-bottom: 10px;;
-		.flag {
+		.field--name-field-image {
+			.field--item {
+				display: block;
+			}
 		}
 	}
 	line-height: 20px;

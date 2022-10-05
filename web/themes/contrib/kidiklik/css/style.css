@@ -393,6 +393,8 @@ article {
   article .zone-image {
     text-align: right;
     margin-bottom: 10px; }
+    article .zone-image .field--name-field-image .field--item {
+      display: block; }
   article img {
     max-width: 100%;
     width: 100%;
