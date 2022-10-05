@@ -833,9 +833,10 @@ a.reservation {
       .activite .bloc1 .field--name-field-date .field--items .paragraph .field--name-field-date-de-fin:before, .agenda .bloc1 .field--name-field-date .field--items .paragraph .field--name-field-date-de-fin:before {
         content: " au "; }
 
-.btn-coir-autres-dates {
-  color: #db2a24;
-  cursor: pointer; }
+.btn-voir-autres-dates {
+  color: #0cacce;
+  cursor: pointer;
+  text-decoration: underline; }
 
 aside .region section {
   margin-bottom: 20px; }
