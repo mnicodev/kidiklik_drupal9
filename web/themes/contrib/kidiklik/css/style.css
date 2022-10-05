@@ -606,7 +606,8 @@ footer .menu li.last {
       .activite-teaser .actions .favori a, .activite-teaser .actions .reserver a {
         font-size: 0.95em;
         color: #fff;
-        padding: 7px 15px; }
+        padding: 7px 15px;
+        display: block; }
     .activite-teaser .actions .reserver {
       background: url(../images/ticket.png) no-repeat #db2a24 !important;
       background-position: 0 50% !important;
