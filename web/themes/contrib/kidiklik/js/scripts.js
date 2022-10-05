@@ -13,6 +13,10 @@ Drupal.behaviors.kidiklik = {
 		var charging_blocs = jQuery('[data-big-pipe-placeholder-id]').length;
 		console.log(charging_blocs)
 	      	if (charging_blocs ===1 || charging_blocs === 0){
+			jQuery('.ajout-non-connect').unbind('click');
+			jQuery('.ajout-non-connect').click(function() {
+				jQuery('.menu-user').find('.login-popup-form').click()
+			});
 			jQuery('#block-carre1copie').html(jQuery('#block-carreblock').html());
 	jQuery('select[name="ville"]').select2({
 		placeholder: 'Choisissez une ville ...',
@@ -76,6 +80,9 @@ Drupal.behaviors.kidiklik = {
 }
 
 jQuery(document).ready(function() {
+			jQuery('.ajout-non-connect').click(function() {
+				jQuery('.menu-user').find('.login-popup-form').click()
+			});
 	/*if(jQuery('.zone-flag').length) {
 		jQuery('.zone-flag').append(jQuery('#block-sortiesboutonblock').html());
 		jQuery('.zone-flag').append(jQuery('#block-reserverblock').html());
