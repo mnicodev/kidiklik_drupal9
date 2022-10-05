@@ -256,9 +256,13 @@ $(function(){
 			/*
 			 * on insert le titre et résumé dans un bloc de mise en vant
 			 */
-			$("#edit-group-mise-en-avant").find(".field--name-title").find("input").val($("#edit-title-wrapper").find("input").val());
-			var resume = $("#edit-field-resume-wrapper").find("textarea").val()??$("#edit-body-wrapper").find("textarea").val();
-			$("#edit-group-mise-en-avant").find(".field--name-field-resume").find("textarea").val(resume);
+			if($("#edit-group-mise-en-avant").find(".field--name-title").find("input").val() === '' || $("#edit-group-mise-en-avant").find(".field--name-title").find("input").val() === null) {
+			i	$("#edit-group-mise-en-avant").find(".field--name-title").find("input").val($("#edit-title-wrapper").find("input").val());
+			}
+			if($("#edit-group-mise-en-avant").find(".field--name-field-resume").find("textarea").val() === '' || $("#edit-group-mise-en-avant").find(".field--name-field-resume").find("textarea").val() === null) {
+				var resume = $("#edit-field-resume-wrapper").find("textarea").val()??$("#edit-body-wrapper").find("textarea").val();
+				$("#edit-group-mise-en-avant").find(".field--name-field-resume").find("textarea").val(resume);
+			}
 
 			/* cas où on ajoute un adhérent depuis le formulaire client */
 			if($("#adherent-client").length && $("#node-client-edit-form").length) {
