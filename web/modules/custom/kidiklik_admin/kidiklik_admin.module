@@ -221,9 +221,16 @@ function kidiklik_admin_inline_entity_form_entity_form_alter(&$entity_form, &$fo
   }
 
   if ($entity_form["#bundle"] == "bloc_de_mise_en_avant") {
-    $node = \Drupal::request()->attributes->get('node');
+	  $node = \Drupal::request()->attributes->get('node');
     if (!empty($node)) {
       $entity_form['field_lien']['widget'][0]['value']['#default_value'] = \Drupal::service('path.alias_manager')->getAliasByPath('/node/' . $node->id());
+
+    	if($entity_form['title']['widget'][0]['value']['#default_value'] === null) {
+	    $entity_form['title']['widget'][0]['value']['#default_value'] = $node->getTitle();
+    	}
+    	if($entity_form['field_resume']['widget'][0]['value']['#default_value'] === null) {
+	    $entity_form['field_resume']['widget'][0]['value']['#default_value'] = preg_replace_callback("/(&#[0-9]+;)/", function($m) { return mb_convert_encoding($m[1], "UTF-8", "HTML-ENTITIES"); },html_entity_decode(strip_tags(current($node->get('body')->getValue())['value']), ENT_COMPAT, 'UTF-8'));
+    	}
     }
     $values = $form_state->getValues();
     $field_image_content = $values['field_image'];
