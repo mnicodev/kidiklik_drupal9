@@ -1049,7 +1049,12 @@ a.reservation {
   }
 
 .activite, .agenda {
-	
+	.field--name-field-telephone, .field--name-field-lien {
+		a {
+			color: #3da1c3;
+			text-decoration: underline;
+		}
+	}
 	.flag-resa {
 		
 	}
