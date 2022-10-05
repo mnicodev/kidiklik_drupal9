@@ -800,6 +800,8 @@ a.reservation {
 .agenda .field--name-field-email a {
   color: #3da1c3;
   text-decoration: underline; }
+.activite .field--name-field-ville-save .field--item, .agenda .field--name-field-ville-save .field--item {
+  padding-left: 5px !important; }
 .activite .field--name-field-adresse, .agenda .field--name-field-adresse {
   margin-bottom: 5px !important; }
 .activite .field--name-field-lieu, .agenda .field--name-field-lieu {
