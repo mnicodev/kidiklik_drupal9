@@ -814,8 +814,7 @@ a.reservation {
   .activite .bloc1 .field--name-field-date, .agenda .bloc1 .field--name-field-date {
     margin-top: 10px;
     height: 20px;
-    overflow: hidden;
-    cursor: pointer; }
+    overflow: hidden; }
     .activite .bloc1 .field--name-field-date .field--items, .agenda .bloc1 .field--name-field-date .field--items {
       display: inline-grid; }
       .activite .bloc1 .field--name-field-date .field--items .paragraph .field, .agenda .bloc1 .field--name-field-date .field--items .paragraph .field {
