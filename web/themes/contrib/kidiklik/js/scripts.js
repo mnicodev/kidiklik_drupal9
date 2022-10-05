@@ -81,18 +81,14 @@ jQuery(document).ready(function() {
 		jQuery('.zone-flag').append(jQuery('#block-reserverblock').html());
 	}*/
 
-	if(jQuery(".field--name-field-date").length) {
-		jQuery(".field--name-field-date .field--items").on('click', function() {
+	if(jQuery(".btn-voir-autres-dates").length) {
+		jQuery(".btn-voir-autres-dates").on('click', function() {
 			if(jQuery(".field--name-field-date").height() == '20') {
-				h="100%";
+				h="auto";
 			} else {
 				h="20px";
 			}
-			jQuery(".field--name-field-date").animate({
-				height: h,
-			}, 100, function() {
-
-			});
+			jQuery(".field--name-field-date").css('height',h);
 		})
 
 	}
