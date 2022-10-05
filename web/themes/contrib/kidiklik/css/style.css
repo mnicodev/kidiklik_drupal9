@@ -836,7 +836,8 @@ a.reservation {
 .btn-voir-autres-dates {
   color: #0cacce;
   cursor: pointer;
-  text-decoration: underline; }
+  text-decoration: underline;
+  margin-left: 20px; }
 
 aside .region section {
   margin-bottom: 20px; }
