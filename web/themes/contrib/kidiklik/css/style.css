@@ -802,6 +802,8 @@ a.reservation {
   text-decoration: underline; }
 .activite .field--name-field-adresse, .agenda .field--name-field-adresse {
   margin-bottom: 5px !important; }
+.activite .field--name-field-lieu, .agenda .field--name-field-lieu {
+  margin-top: 10px; }
 .activite .field--name-field-resume, .agenda .field--name-field-resume {
   margin-bottom: 10px; }
 .activite .bloc1, .agenda .bloc1 {
