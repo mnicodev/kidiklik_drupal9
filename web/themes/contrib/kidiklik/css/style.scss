@@ -493,7 +493,10 @@ article  {
 	.zone-image {
 		text-align: right;
 		margin-bottom: 10px;;
-		.flag {
+		.field--name-field-image {
+			.field--item {
+				display: block;
+			}
 		}
 	}
 	line-height: 20px;
@@ -854,6 +857,9 @@ footer .menu li.last {
 
 }
 #block-formulaireexposeactivitesrecherche-activites {
+	select, input {
+		font-size: 14px;
+	}
 	label {
 		width: 100%;
 	}
@@ -1056,6 +1062,9 @@ a.reservation {
 			color: #3da1c3;
 			text-decoration: underline;
 		}
+	}
+	.field--name-field-ville-save .field--item{
+		padding-left: 5px!important;
 	}
 	.field--name-field-adresse {
 		margin-bottom: 5px!important;

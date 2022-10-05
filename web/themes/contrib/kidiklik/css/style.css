@@ -393,6 +393,8 @@ article {
   article .zone-image {
     text-align: right;
     margin-bottom: 10px; }
+    article .zone-image .field--name-field-image .field--item {
+      display: block; }
   article img {
     max-width: 100%;
     width: 100%;
@@ -661,6 +663,8 @@ footer .menu li.last {
 @media (min-width: 768px) {
   .filtres {
     display: none; } }
+#block-formulaireexposeactivitesrecherche-activites select, #block-formulaireexposeactivitesrecherche-activites input {
+  font-size: 14px; }
 #block-formulaireexposeactivitesrecherche-activites label {
   width: 100%; }
 #block-formulaireexposeactivitesrecherche-activites .label_filtres {
@@ -800,6 +804,8 @@ a.reservation {
 .agenda .field--name-field-email a {
   color: #3da1c3;
   text-decoration: underline; }
+.activite .field--name-field-ville-save .field--item, .agenda .field--name-field-ville-save .field--item {
+  padding-left: 5px !important; }
 .activite .field--name-field-adresse, .agenda .field--name-field-adresse {
   margin-bottom: 5px !important; }
 .activite .field--name-field-lieu, .agenda .field--name-field-lieu {
