@@ -663,6 +663,8 @@ footer .menu li.last {
 @media (min-width: 768px) {
   .filtres {
     display: none; } }
+#block-formulaireexposeactivitesrecherche-activites select {
+  font-size: 14px; }
 #block-formulaireexposeactivitesrecherche-activites label {
   width: 100%; }
 #block-formulaireexposeactivitesrecherche-activites .label_filtres {
