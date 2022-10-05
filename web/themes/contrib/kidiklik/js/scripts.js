@@ -80,6 +80,16 @@ Drupal.behaviors.kidiklik = {
 }
 
 jQuery(document).ready(function() {
+	jQuery('.paragraph--type--paragraphe').each(function() {
+		let url = jQuery(this).find('.field--name-field-url a').attr('href');
+		if(url !== undefined) {
+			jQuery('img').css('cursor','pointer');
+		}
+	})
+	jQuery('.paragraph--type--paragraphe').find('img').click(function() {
+		let url = jQuery(this).closest('.paragraph').find('.field--name-field-url a').attr('href');
+		window.open(url,'_blank','');
+	})
 			jQuery('.ajout-non-connect').click(function() {
 				jQuery('.menu-user').find('.login-popup-form').click()
 			});
