@@ -188,7 +188,7 @@ function kidiklik_front_form_alter(&$form, FormStateInterface $form_state, $form
       $list_cat[$cat->Id()] = $cat->getName();
       if (!empty($sous_categories)) {
         foreach ($sous_categories as $sc) {
-          $list_cat[$sc->Id()] = "-- " . $sc->getName();
+          $list_cat[$sc->Id()] = "- " . $sc->getName();
         }
       }
     }
@@ -204,16 +204,16 @@ function kidiklik_front_form_alter(&$form, FormStateInterface $form_state, $form
     foreach ($villes as $ville) {
       $options['Par ville'][$ville->commune] = $ville->commune;
     }
-    //$form['field_rubriques_activite_target_id']["#weight"] = -10;
-    $form['date_debut']["#weight"] = -6;
-    $form['date_fin']["#weight"] = -5;
-    $form['field_tranches_d_ages_value']["#weight"] = -8;
-    $form['ville'] = [
+    /*$form['ville'] = [
       "#type" => "select",
       "#title" => "Où ?",
       "#options" => $options,
       "#weight" => -9
-    ];
+    ];*/
+    //$form['field_rubriques_activite_target_id']["#weight"] = -10;
+    $form['date_debut']["#weight"] = -6;
+    $form['date_fin']["#weight"] = -5;
+    $form['field_tranches_d_ages_value']["#weight"] = -8;
 
     $form['quand'] = [
       "#type" => "select",

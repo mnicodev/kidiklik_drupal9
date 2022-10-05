@@ -45,7 +45,7 @@ class ReserverBlock extends BlockBase
     $build['#type_resa'] = $resa->getName();
     $build['#tel'] = $node->get('field_telephone')->value ?? null;
     $build['#email'] = $node->get('field_email')->value ?? null;
-    $build['#lien'] = $node->get('field_lien')->value ?? null;
+    $build['#lien'] = $node->get('field_coordonnees')->value ?? null;
     return $build;
   }
 
