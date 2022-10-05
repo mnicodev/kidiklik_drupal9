@@ -793,6 +793,15 @@ a.reservation {
   display: block;
   text-align: center; }
 
+.activite .field--name-field-telephone a,
+.activite .field--name-field-lien a,
+.activite .field--name-field-email a, .agenda .field--name-field-telephone a,
+.agenda .field--name-field-lien a,
+.agenda .field--name-field-email a {
+  color: #3da1c3;
+  text-decoration: underline; }
+.activite .field--name-field-adresse, .agenda .field--name-field-adresse {
+  margin-bottom: 5px !important; }
 .activite .field--name-field-resume, .agenda .field--name-field-resume {
   margin-bottom: 10px; }
 .activite .bloc1, .agenda .bloc1 {
