@@ -965,9 +965,10 @@ footer .menu li.last {
 
 }
 
-.action-flag {
-	a.use-ajax{
+.action-flag, .actions {
+	a.use-ajax, a.login-popup-form {
 		padding: 7px 15px;
+		display: block;;
 		&:before {
 			font-family: "Font Awesome 5 Free";
 			font-weight: 400;

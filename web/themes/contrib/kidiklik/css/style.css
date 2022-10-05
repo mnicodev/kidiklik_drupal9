@@ -735,9 +735,10 @@ footer .menu li.last {
     content: "\f004";
     margin-right: 10px; }
 
-.action-flag a.use-ajax {
-  padding: 7px 15px; }
-  .action-flag a.use-ajax:before {
+.action-flag a.use-ajax, .action-flag a.login-popup-form, .actions a.use-ajax, .actions a.login-popup-form {
+  padding: 7px 15px;
+  display: block; }
+  .action-flag a.use-ajax:before, .action-flag a.login-popup-form:before, .actions a.use-ajax:before, .actions a.login-popup-form:before {
     font-family: "Font Awesome 5 Free";
     font-weight: 400;
     content: "\f004";
