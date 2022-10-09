@@ -118,7 +118,7 @@ function kidiklik_base_views_query_alter(Drupal\views\ViewExecutable $view, Drup
         }
       }
       if (count($liste_enfant)) {
-        unset($query->where[0]);
+        unset($query->where[0]['conditions'][0]);
 
         $configuration = array(
           'type' => 'INNER',
@@ -133,7 +133,7 @@ function kidiklik_base_views_query_alter(Drupal\views\ViewExecutable $view, Drup
           ->createInstance('standard', $configuration);
         $rel = $query->addRelationship('taxonomy_idx', $join, 'node_field_data');
         $query->addTable('taxonomy_index', $rel, $join, 'taxonomy_idx');
-        $query->addWhere('', 'taxonomy_idx.tid', $liste_enfant, 'in');
+		$query->addWhere('8', 'taxonomy_idx.tid', $liste_enfant, 'in');
       }
     }
   }
@@ -146,7 +146,7 @@ function kidiklik_base_views_query_alter(Drupal\views\ViewExecutable $view, Drup
   }
 
   /* C'est de l'admin !!!! */
-  $view_display = array("bloc_jeux_concours", "recherche_activites", "bloc_compteur_pub", "test_pub", "dashboard_all_content", "dashboard_publicite", "dashboard_reportage", "dashboard_activite", "dashboard_agenda", "dashboard_article", "pane_tc_new",
+  $view_display = array("bloc_jeux_concours",  "bloc_compteur_pub", "test_pub", "dashboard_all_content", "dashboard_publicite", "dashboard_reportage", "dashboard_activite", "dashboard_agenda", "dashboard_article", "pane_tc_new",
     "page_contenu", "nos_partenaires", "page_partenaires", "page_messages", "page_newsletters", "diaporama", "page_activites", "page_agenda", "page_activites_tri", "page_pub",
     "page_article", "page_clients", "page_adherent", "page_reportages", "page_maj", "page_jeu_concours");
 
