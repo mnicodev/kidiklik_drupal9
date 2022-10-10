@@ -196,6 +196,12 @@ function kidiklik_front_form_alter(&$form, FormStateInterface $form_state, $form
     $form['field_rubriques_activite_target_id']['#options'] = $list_cat;
     $form['field_rubriques_activite_target_id']['#weight'] = -10;
     $form['field_rubriques_activite_target_id']['#title'] = 'Activité';
+    
+    $form['lieu'] = [
+      "#type" => "textfield",
+      "#title" => "Où ?",
+      "#weight" => -9
+    ];
 
     $options[''] = 'Filtrer par zone';
     $options['Géolocalisé'] = [
@@ -550,7 +556,8 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
     $view->current_display == "recherche_activites") {
     $query->distinct = true;
 
-    $ou = \Drupal::request()->get("ville");
+    $ou = \Drupal::request()->get("lieu");
+    //$ou = \Drupal::request()->get("ville");
     $quand = \Drupal::request()->get("quand");
     $search = explode(' ', trim(\Drupal::request()->get("search")));
     $ref_adherent = \Drupal::request()->get("ref_adh") ?? \Drupal::request()->get("ref_adherent") ?? null;
@@ -597,8 +604,37 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
       }
       $query->where[3]['type'] = 'OR';
     }*/
-    if ($ou !== 'geo') {
+    if (!empty($ou)) {
+        $configuration = array(
+          'type' => 'INNER',
+          'table' => 'node__field_ville_save',
+          'field' => 'entity_id',
+          'left_table' => 'node_field_data',
+          'left_field' => 'nid',
+          'operator' => '=',
+        );
 
+        $join = \Drupal\views\Views::pluginManager('join')->createInstance('standard', $configuration);
+        $rel = $query->addRelationship('field_ville', $join, 'node_field_data');
+        $query->addTable('node__field_ville_save', $rel, $join, 'field_ville');
+	$query->addWhere('10', 'field_ville.field_ville_save_value', $ou.'%', 'like');
+	
+	$configuration = array(
+          'type' => 'INNER',
+          'table' => 'node__field_code_postal',
+          'field' => 'entity_id',
+          'left_table' => 'node_field_data',
+          'left_field' => 'nid',
+          'operator' => '=',
+        );
+
+        $join = \Drupal\views\Views::pluginManager('join')->createInstance('standard', $configuration);
+        $rel = $query->addRelationship('field_cp', $join, 'node_field_data');
+        $query->addTable('node__field_code_postal', $rel, $join, 'field_cp');
+
+	$query->addWhere('10', 'field_cp.field_code_postal_value', $ou.'%', 'like');
+	$query->where[10]['type'] = 'OR';
+    } else {
       $configuration = array(
         'type' => 'INNER',
         'table' => 'node__field_departement',
@@ -613,28 +649,12 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
       $query->addTable('node__field_departement', $rel, $join, 'field_dep');
       $query->addWhere('3', 'field_dep.field_departement_target_id', get_term_departement(), '=');
 
-      if (!empty($ou)) {
-        $configuration = array(
-          'type' => 'INNER',
-          'table' => 'node__field_ville_save',
-          'field' => 'entity_id',
-          'left_table' => 'node_field_data',
-          'left_field' => 'nid',
-          'operator' => '=',
-        );
-
-        $join = \Drupal\views\Views::pluginManager('join')->createInstance('standard', $configuration);
-        $rel = $query->addRelationship('field_ville', $join, 'node_field_data');
-        $query->addTable('node__field_ville_save', $rel, $join, 'field_ville');
-        $query->addWhere('', 'field_ville.field_ville_save_value', $ou, '=');
-      }
-
-    } else {
+    } /*else {
       $query->where[1]['conditions'][1]['value'] = [
         'agenda',
         'activite'
       ];
-    }
+      }*/
 
 
     if (!empty($quand)) {
