@@ -104,6 +104,11 @@ h1 {
   padding: 20px;
   margin-bottom: 30px;
   padding-top: 0; }
+  #views-exposed-form-activites-recherche-activites .form-text,
+  #recherche-form .form-text {
+    width: 100%;
+    height: calc(1.5em + .75rem + 2px);
+    margin-top: 0; }
   #views-exposed-form-activites-recherche-activites .form-inline,
   #recherche-form .form-inline {
     display: flex;
