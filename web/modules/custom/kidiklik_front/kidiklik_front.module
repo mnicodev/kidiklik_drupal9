@@ -198,7 +198,10 @@ function kidiklik_front_form_alter(&$form, FormStateInterface $form_state, $form
     $form['field_rubriques_activite_target_id']['#title'] = 'Activité';
     
     $form['lieu'] = [
-      "#type" => "textfield",
+	    "#type" => "textfield",
+	    '#attributes' => [
+		    'placeholder' => 'Ville ou Code Postal ?',
+	    ],
       "#title" => "Où ?",
       "#weight" => -9
     ];
