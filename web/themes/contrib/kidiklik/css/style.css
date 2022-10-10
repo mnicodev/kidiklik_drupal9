@@ -1149,7 +1149,9 @@ article {
 #block-bloc-jeux-concours,
 #block-views-block-jeux-concours-bloc-jeux-concours {
   margin: auto;
-  max-width: 265px; }
+  max-width: 265px;
+  min-height: 250px;
+  background: #44aac7; }
   #block-bloc-jeux-concours .views_slideshow_cycle_teaser_section, #block-bloc-jeux-concours .views_slideshow_cycle_slide,
   #block-views-block-jeux-concours-bloc-jeux-concours .views_slideshow_cycle_teaser_section,
   #block-views-block-jeux-concours-bloc-jeux-concours .views_slideshow_cycle_slide {
