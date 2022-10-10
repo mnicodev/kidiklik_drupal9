@@ -898,7 +898,10 @@ article {
 
 .diaporama {
   position: relative;
-  width: 100%; }
+  width: 100%;
+  max-height: 305px;
+  overflow: hidden;
+  margin-bottom: 20px; }
   .diaporama .views_slideshow_cycle_teaser_section,
   .diaporama .views_slideshow_cycle_slide {
     width: 100% !important; }

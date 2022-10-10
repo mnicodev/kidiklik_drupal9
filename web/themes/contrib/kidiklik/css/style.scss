@@ -1216,6 +1216,9 @@ article {
 .diaporama {
 	position: relative;
 	width: 100%;
+	max-height: 305px;
+	overflow: hidden;
+	margin-bottom: 20px;
 
 	.views_slideshow_cycle_teaser_section,
 	.views_slideshow_cycle_slide {
