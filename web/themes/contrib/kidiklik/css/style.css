@@ -101,7 +101,6 @@ h1 {
 #views-exposed-form-activites-recherche-activites,
 #recherche-form {
   margin: auto;
-  padding: 20px;
   margin-bottom: 30px;
   padding-top: 0; }
   #views-exposed-form-activites-recherche-activites .form-text,
@@ -195,7 +194,11 @@ h1 {
     display: block; } }
 @media (max-width: 768px) {
   #views-exposed-form-activites-recherche-activites .voir-filtres {
-    display: none; } }
+    display: none; }
+
+  #block-formulaireexposeactivitesrecherche-activites {
+    max-width: 400px;
+    margin: auto; } }
 @media (min-width: 768px) {
   body:not(.path-frontpage) #block-formulaireexposeactivitesrecherche-activites {
     height: 50px;

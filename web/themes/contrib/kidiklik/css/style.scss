@@ -154,7 +154,7 @@ h1 {
 	}
 	
 	margin: auto;
-	padding: 20px;
+	
 	margin-bottom: 30px;
 	
 	padding-top: 0;
@@ -235,6 +235,10 @@ h1 {
 		.voir-filtres {
 			display: none;
 		}
+	}
+	#block-formulaireexposeactivitesrecherche-activites {
+		max-width: 400px;
+		margin: auto;
 	}
 }
 
