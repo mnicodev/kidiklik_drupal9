@@ -355,7 +355,8 @@ h1 {
       width: 100%;
       border-radius: 0; }
     .view-articles-content .field-content h5 {
-      margin-top: 5px; }
+      margin-top: 5px;
+      margin-bottom: 0 !important; }
 
 #block-block-article-accueil a {
   font-size: 16px;
