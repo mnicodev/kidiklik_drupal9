@@ -9,6 +9,7 @@ use Drupal\Core\Routing\TrustedRedirectResponse;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Drupal\node\Entity\Node;
 
 class InitSubscriber implements EventSubscriberInterface
 {
@@ -17,13 +18,25 @@ class InitSubscriber implements EventSubscriberInterface
   {
 	  $request = $event->getRequest();
 
-    $node = \Drupal::routeMatch()->getParameters()->get("node");
+	  $node = \Drupal::routeMatch()->getParameters()->get("node");
     if (!empty($node)) {
       if (in_array($node->getType(), ['client', 'adherent']) && strstr($request->getPathInfo(), 'edit') === false) {
         $redirect = new RedirectResponse('/');
         $redirect->send();
       }
+
+    } else {
+	    preg_match('/\/(.*)\/(\d*)(.*)/',$request->getPathInfo(), $match);
+	    if(!empty($match[2])) {
+		    $test_node = Node::Load($match[2]);
+		    if(!empy($test_node)) {
+			    $redirect = new RedirectResponse($test_node->url());
+			    $redirect->send();
+		    }
+
+	    }
     }
+
 
     preg_match("/admin/", $request->getRequestUri(), $rs);
     if (count($rs) > 0 && !in_array('administrator', \Drupal::currentUser()->getAccount()->getRoles())) {
