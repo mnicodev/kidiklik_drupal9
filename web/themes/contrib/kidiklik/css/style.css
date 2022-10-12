@@ -551,17 +551,17 @@ footer .menu li.last {
 @media (max-width: 559px) {
   .view-taxonomy-term .views-field-field-image {
     padding-right: 0px; } }
-.bloc-fiche .bloc-information {
+.bloc-fiche .bloc-information, .bloc-fiche article.teaser {
   margin-bottom: 20px;
   border: 1px solid #ccc;
   display: block;
   overflow: hidden;
   box-shadow: 0px 3px 5px rgba(125, 125, 125, 0.5); }
-  .bloc-fiche .bloc-information h5 {
+  .bloc-fiche .bloc-information h5, .bloc-fiche article.teaser h5 {
     margin-top: 5px;
     font-size: 1.2em;
     margin-bottom: 0 !important; }
-  .bloc-fiche .bloc-information .content {
+  .bloc-fiche .bloc-information .content, .bloc-fiche article.teaser .content {
     padding-top: 5px;
     padding-bottom: 5px; }
 .bloc-fiche .favori .reservation {
