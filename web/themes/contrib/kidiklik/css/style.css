@@ -564,6 +564,16 @@ footer .menu li.last {
   .bloc-fiche .bloc-information .content, .bloc-fiche article.teaser .content {
     padding-top: 5px;
     padding-bottom: 5px; }
+  .bloc-fiche .bloc-information .informations, .bloc-fiche article.teaser .informations {
+    color: #3da1c3; }
+    .bloc-fiche .bloc-information .informations .field--label, .bloc-fiche article.teaser .informations .field--label {
+      font-weight: 700; }
+    .bloc-fiche .bloc-information .informations:before, .bloc-fiche article.teaser .informations:before {
+      content: '';
+      font-size: 12px;
+      display: block;
+      padding-bottom: 10px;
+      font-family: 'DidactGothic'; }
 .bloc-fiche .favori .reservation {
   display: none; }
 @media (max-width: 768px) {
