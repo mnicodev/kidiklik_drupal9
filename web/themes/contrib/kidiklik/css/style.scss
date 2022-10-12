@@ -715,7 +715,14 @@ footer .menu li.last {
 				padding-top: 5px;
 				padding-bottom: 5px;
 			}
-			
+			.informations {
+
+				color: #3da1c3;
+				.field--label {
+					font-weight: 700;
+				}
+				
+			}
 		}
 	.favori {
 		.reservation {
