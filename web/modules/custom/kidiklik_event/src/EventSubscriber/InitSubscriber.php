@@ -29,7 +29,7 @@ class InitSubscriber implements EventSubscriberInterface
 	    preg_match('/\/(.*)\/(\d*)(.*)/',$request->getPathInfo(), $match);
 	    if(!empty($match[2])) {
 		    $test_node = Node::Load($match[2]);
-		    if(!empy($test_node)) {
+		    if(!empty($test_node)) {
 			    $redirect = new RedirectResponse($test_node->url());
 			    $redirect->send();
 		    }
