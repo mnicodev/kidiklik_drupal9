@@ -2,6 +2,10 @@
 <head>
 <title></title>
 <style type="text/css">
+@font-face {
+  font-family: 'Roboto';
+  src: url(httpw://www.kidiklik.fr/themes/contrib/kidiklik/fonts/Roboto-Regular.ttf);
+}
   /*Media Queries*/
   @media screen and (max-width: 480px) {
     .left-sidebar.item .left,
@@ -22,6 +26,7 @@
   }
 body {
 	color: gray;
+	font-family: 'Roboto';
 }
 </style>
 <body>
@@ -39,10 +44,10 @@ body {
         <td>
     <![endif]-->
     <table class="outer" align="center"
-           style="border-spacing: 0; font-family: Arial, Helvetica, sans-serif; color: #8c8c8c; Margin: 0 auto; width: 100%; max-width: 600px;">
+           style="border-spacing: 0; font-family: Roboto,  sans-serif; color: #8c8c8c; Margin: 0 auto; width: 100%; max-width: 600px;">
       <tr>
         <td class="one-column">
-          <table style="border-spacing: 0; font-family: Arial, Helvetica, sans-serif; color: #8c8c8c;" width="100%">
+          <table style="border-spacing: 0; font-family: Roboto,  sans-serif; color: #8c8c8c;" width="100%">
             <tbody>
             <tr>
               <td class="inner contents entete"
@@ -59,7 +64,7 @@ body {
       <!-- texte -->
       <tr>
         <td class="one-column">
-          <table style="border-spacing: 0; font-family: Arial, Helvetica, sans-serif; color: #8c8c8c;" width="100%">
+          <table style="border-spacing: 0; font-family: Roboto,  sans-serif; color: #8c8c8c;" width="100%">
             <tbody>
 		{% if entete.texte != null %}
             <tr>
@@ -84,7 +89,7 @@ body {
 
 
                     <table class="column left"
-                           style="border-spacing: 0; font-family: Arial, Helvetica, sans-serif; color: #000000; width: 100%; display: inline-block; vertical-align: middle; max-width: 259px;">
+                           style="border-spacing: 0; font-family: Roboto,  sans-serif; color: #000000; width: 100%; display: inline-block; vertical-align: middle; max-width: 259px;">
                       <tbody>
                       <tr>
                         <td class="inner full-width-image" style="padding: 0;">
@@ -99,17 +104,17 @@ body {
 
 
                     <table class="column right"
-                           style="{% if entete.bandeau_rose == 1 and key == 0 %}color:white;{% endif %}border-spacing: 0; font-family: Arial, Helvetica, sans-serif; color: #000000; width: 100%; display: inline-block; vertical-align: middle; max-width: 335px;">
+                           style="{% if entete.bandeau_rose == 1 and key == 0 %}color:white;{% endif %}border-spacing: 0; font-family: Roboto,  sans-serif; color: #000000; width: 100%; display: inline-block; vertical-align: middle; max-width: 335px;">
                       <tbody>
                       <tr>
                         <td class="inner contents"
                             style="padding: 15px 10px 15px 10px; width: 100%; font-size: 14px; text-align: left;">
                           <p class="h2"
-                             style="Margin: 0; font-weight: bold; Margin-bottom: 9px; line-height: 18px; font-size: 18px; color: #000000;">
-                            <a href="https://{{ entete.dep.getName() }}.{{ entete.domaine }}{{ bloc.lien }}" style="text-decoration: none; color: #000000;{% if entete.bandeau_rose == 1 and key == 0 %}color:white;{% endif %}">
+                             style="Margin: 0; font-weight: bold; Margin-bottom: 9px; line-height: 18px; font-size: 18px; color: #0cacce;">
+                            <a href="https://{{ entete.dep.getName() }}.{{ entete.domaine }}{{ bloc.lien }}" style="text-decoration: none; color: #0cacce;{% if entete.bandeau_rose == 1 and key == 0 %}color:white;{% endif %}">
                               {{ bloc.titre }}</a></p>
                           <p style="Margin: 0;">
-                            <a href="https://{{ entete.dep.getName() }}.{{ entete.domaine }}{{ bloc.lien }}" style="text-decoration: none; color: #000000;{% if entete.bandeau_rose == 1 and key == 0 %}color:white;{% endif %}">
+                            <a href="https://{{ entete.dep.getName() }}.{{ entete.domaine }}{{ bloc.lien }}" style="text-decoration: none; color: gray;{% if entete.bandeau_rose == 1 and key == 0 %}color:white;{% endif %}">
                               {{ bloc.texte }}
                             </a>
                           </p>
@@ -127,7 +132,7 @@ body {
 	{% if entete.pub != null %}
       <tr>
         <td class="one-column">
-          <table style="border-spacing: 0; font-family: Arial, Helvetica, sans-serif; color: #8c8c8c;" width="100%">
+          <table style="border-spacing: 0; font-family: Roboto,  sans-serif; color: #8c8c8c;" width="100%">
             <tbody>
             <tr>
               <td class="inner contents entete"
@@ -150,12 +155,12 @@ body {
 
 
                     <table class="column left"
-                           style="border-spacing: 0; font-family: Arial, Helvetica, sans-serif; color: #000000; width: 100%; display: inline-block; vertical-align: middle; max-width: 259px;">
+                           style="border-spacing: 0; font-family: Roboto,  sans-serif; color: #000000; width: 100%; display: inline-block; vertical-align: middle; max-width: 259px;">
                       <tbody>
                       <tr>
                         <td class="inner full-width-image" style="padding: 0;">
                           <a href="https://{{ entete.dep.getName() }}.{{ entete.domaine }}{{ bloc.lien }}" style="text-decoration: none; color: #000000;">
-                            <img src="{{ bloc.image }}" alt="Dossier spécial Vacances de Toussaint dans le Loiret"
+                            <img src="{{ bloc.image }}" alt=""
                                  style="border: 0; width: 100%; height: auto;" width="265">
                           </a>
                         </td>
@@ -164,17 +169,17 @@ body {
                     </table>
 
                     <table class="column right"
-                           style="border-spacing: 0; font-family: Arial, Helvetica, sans-serif; color: #000000; width: 100%; display: inline-block; vertical-align: middle; max-width: 335px;">
+                           style="border-spacing: 0; font-family: Roboto,  sans-serif; color: #000000; width: 100%; display: inline-block; vertical-align: middle; max-width: 335px;">
                       <tbody>
                       <tr>
                         <td class="inner contents"
                             style="padding: 15px 10px 15px 10px; width: 100%; font-size: 14px; text-align: left;">
                           <p class="h2"
                              style="Margin: 0; font-weight: bold; Margin-bottom: 9px; line-height: 18px; font-size: 18px; color: #000000;">
-                            <a href="https://{{ entete.dep.getName() }}.{{ entete.domaine }}{{ bloc.lien }}" style="text-decoration: none; color: #000000;">
+                            <a href="https://{{ entete.dep.getName() }}.{{ entete.domaine }}{{ bloc.lien }}" style="text-decoration: none; color: #0cacce;">
                               {{ bloc.titre }}</a></p>
                           <p style="Margin: 0;">
-                            <a href="https://{{ entete.dep.getName() }}.{{ entete.domaine }}{{ bloc.lien }}" style="text-decoration: none; color: #000000;">
+                            <a href="https://{{ entete.dep.getName() }}.{{ entete.domaine }}{{ bloc.lien }}" style="text-decoration: none; color: gray;">
                               {{ bloc.texte }}
                             </a>
                           </p>
@@ -194,7 +199,7 @@ body {
       <tr>
         <td>
           <table class="column cont-footer"
-                 style="border-spacing: 0; font-family: Arial, Helvetica, sans-serif; color: #8c8c8c; margin: 0 auto; padding-top: 20px; border-top: 1px solid #ccc;"
+                 style="border-spacing: 0; font-family: Roboto,  sans-serif; color: #8c8c8c; margin: 0 auto; padding-top: 20px; border-top: 1px solid #ccc;"
                  align="center">
             <tbody>
             <tr>
@@ -205,7 +210,7 @@ body {
                     <td width="100">
 
                       <table class="column left"
-                             style="border-spacing: 0; font-family: Arial, Helvetica, sans-serif; color: #8c8c8c; width: 100%; display: inline-block; vertical-align: middle; max-width: 100px;">
+                             style="border-spacing: 0; font-family: Roboto,  sans-serif; color: #8c8c8c; width: 100%; display: inline-block; vertical-align: middle; max-width: 100px;">
                         <tbody>
                         <tr>
                           <td class="inner full-width-image" style="padding: 15px 10px 15px 10px;">
@@ -223,7 +228,7 @@ body {
                     <td width="100">
 
                       <table class="column right"
-                             style="border-spacing: 0; font-family: Arial, Helvetica, sans-serif; color: #8c8c8c; width: 100%; display: inline-block; vertical-align: middle; max-width: 100px;">
+                             style="border-spacing: 0; font-family: Roboto,  sans-serif; color: #8c8c8c; width: 100%; display: inline-block; vertical-align: middle; max-width: 100px;">
                         <tbody>
                         <tr>
                           <td class="inner contents"
@@ -251,7 +256,7 @@ body {
       </tr>
       <tr>
         <td>
-          <table style="border-spacing: 0; font-family: Arial, Helvetica, sans-serif; color: #8c8c8c;" width="100%">
+          <table style="border-spacing: 0; font-family: Roboto,  sans-serif; color: #8c8c8c;" width="100%">
             <tbody>
             <tr>
               <td class="inner contents rs"
@@ -289,7 +294,7 @@ body {
             <tbody>
             <tr>
               <td class="one-column" style="padding: 0;">
-                <table style="border-spacing: 0; font-family: Arial, Helvetica, sans-serif; color: #8c8c8c;"
+                <table style="border-spacing: 0; font-family: Roboto,  sans-serif; color: #8c8c8c;"
                        width="100%">
                   <tbody>
                   <tr>
