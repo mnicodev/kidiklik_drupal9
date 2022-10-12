@@ -58,28 +58,31 @@ class NewsletterController extends ControllerBase
     $query->join("node__field_date_debut", "dd", "dd.entity_id=n.nid");
     $query->join("node__field_date_fin", "df", "df.entity_id=n.nid");
     $query->join("node__field_image", "img", "img.entity_id=n.nid");
+    $query->join("node__field_format", "format", "format.entity_id=n.nid");
     $query->leftJoin("node__field_partage_departements", "par", "par.entity_id=n.nid");
 
     $query->fields("n", ["nid", "title", "status"]);
     $query->fields("dd", ["field_date_debut_value"]);
     $query->fields("df", ["field_date_fin_value"]);
     $query->fields("img", ["field_image_target_id"]);
+    $query->fields("format", ["field_format_target_id"]);
 
     $query->condition("n.type", "publicite", "=");
     $query->condition("n.status", 1, "=");
+    $query->condition("format.field_format_target_id", 106, "=");
 
     $orGroup = $query->orConditionGroup()
       ->condition("dep.field_departement_target_id", get_term_departement(), "=")
       ->condition("par.field_partage_departements_target_id", [get_term_departement()], "in");
     $query->condition($orGroup);
-
-    $query->condition("dd.field_date_debut_value", $json_entete->field_date_envoi, "<=");
-    $query->condition("df.field_date_fin_value", $json_entete->field_date_envoi, ">=");
+    //$date=explode('-',$n->get('field_date_envoi')->value);
+    $date_envoi = $n->get('field_date_envoi')->value; //date('Y-m-d',mktime(0,0,0,$date_envoi[1],$date_envoi[2],$date_envoi[0]));
+    $query->condition("dd.field_date_debut_value",$date_envoi, "<=");
+    $query->condition("df.field_date_fin_value", $date_envoi, ">=");
     $query->orderRandom();
     $query->range(0, 1);
     //kint($query->distinct()->__toString());
     $rs = current($query->execute()->fetchAll());
-//    kint($rs);
     $pub_img = \Drupal::entityTypeManager()->getStorage("file")->load($rs->field_image_target_id);
     $file = null;
     if ((bool)$n->get("field_image_d_entete")->getValue() === true) {
