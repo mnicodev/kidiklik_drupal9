@@ -215,7 +215,7 @@ body {
                         <tr>
                           <td class="inner full-width-image" style="padding: 15px 10px 15px 10px;">
                             <a href="https://{{ entete.dep.getName() }}.kidiklik.fr" style="text-decoration: none; color: #8c8c8c;">
-                              <img src="https://{% if entete.dep.getName() = 0 %}www{% else %}{{ entete.dep.getName() }}{% endif %}.kidiklik.fr/assets/img/piaf.jpg"
+                              <img src="https://{% if entete.dep.getName() == 0 %}www{% else %}{{ entete.dep.getName() }}{% endif %}.kidiklik.fr/assets/img/piaf.jpg"
                                    alt="accéder à Kidiklik {{ entete.dep.getName() }}" style="border: 0; width: 100%; height: auto;"
                                    width="100">
                             </a>
