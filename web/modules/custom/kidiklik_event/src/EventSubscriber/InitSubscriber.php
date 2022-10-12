@@ -27,7 +27,7 @@ class InitSubscriber implements EventSubscriberInterface
 
     } else {
 	    preg_match('/\/(.*)\/(\d*)(.*)/',$request->getPathInfo(), $match);
-	    if(!empty($match[2])) {
+	    if(!empty($match[2]) && !empty($match[3])) {
 		    $test_node = Node::Load($match[2]);
 		    if(!empty($test_node)) {
 			    $redirect = new RedirectResponse($test_node->url());
