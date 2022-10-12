@@ -21,8 +21,6 @@ class MiseEnAvantBlock extends BlockBase {
 	public function build() {
 		$view_entete = Views::getView("articles_content");
 		$view_entete->setDisplay("bloc_mise_en_avant_dep");
-
-
 		$view_entete->execute();
 
 		$render_dep = $view_entete->render();
