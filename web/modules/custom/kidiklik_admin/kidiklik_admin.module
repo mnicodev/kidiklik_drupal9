@@ -229,7 +229,7 @@ function kidiklik_admin_inline_entity_form_entity_form_alter(&$entity_form, &$fo
 	    $entity_form['title']['widget'][0]['value']['#default_value'] = $node->getTitle();
     	}
     	if($entity_form['field_resume']['widget'][0]['value']['#default_value'] === null) {
-	    $entity_form['field_resume']['widget'][0]['value']['#default_value'] = preg_replace_callback("/(&#[0-9]+;)/", function($m) { return mb_convert_encoding($m[1], "UTF-8", "HTML-ENTITIES"); },html_entity_decode(strip_tags(current($node->get('body')->getValue())['value']), ENT_COMPAT, 'UTF-8'));
+	    $entity_form['field_resume']['widget'][0]['value']['#default_value'] = preg_replace_callback("/(&#[0-9]+;)/", function($m) { return mb_convert_encoding($m[1], "UTF-8", "HTML-ENTITIES"); },html_entity_decode(strip_tags(current($node->get('field_resume')->getValue())['value']), ENT_COMPAT, 'UTF-8'));
     	}
     }
     $values = $form_state->getValues();
