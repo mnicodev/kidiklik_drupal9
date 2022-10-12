@@ -564,16 +564,6 @@ footer .menu li.last {
   .bloc-fiche .bloc-information .content, .bloc-fiche article.teaser .content {
     padding-top: 5px;
     padding-bottom: 5px; }
-  .bloc-fiche .bloc-information .informations, .bloc-fiche article.teaser .informations {
-    color: #3da1c3; }
-    .bloc-fiche .bloc-information .informations .field--label, .bloc-fiche article.teaser .informations .field--label {
-      font-weight: 700; }
-    .bloc-fiche .bloc-information .informations:before, .bloc-fiche article.teaser .informations:before {
-      content: '';
-      font-size: 12px;
-      display: block;
-      padding-bottom: 10px;
-      font-family: 'DidactGothic'; }
 .bloc-fiche .favori .reservation {
   display: none; }
 @media (max-width: 768px) {
@@ -867,49 +857,49 @@ a.reservation {
 aside .region section {
   margin-bottom: 20px; }
 
-article {
+article.full {
   margin-bottom: 20px; }
-  article h2 {
+  article.full h2 {
     font-size: 14px !important; }
-  article .bloc-age {
+  article.full .bloc-age {
     display: flex;
     flex-direction: row; }
-    article .bloc-age .field--name-field-jusque-age-de {
+    article.full .bloc-age .field--name-field-jusque-age-de {
       margin-top: 3px;
       margin-left: 5px; }
-      article .bloc-age .field--name-field-jusque-age-de:before {
+      article.full .bloc-age .field--name-field-jusque-age-de:before {
         content: "-"; }
-  article .en-bref {
+  article.full .en-bref {
     color: #0cacce; }
-    article .en-bref:before {
+    article.full .en-bref:before {
       content: 'En bref';
       font-size: 18px;
       display: block;
       padding-bottom: 15px; }
-  article .informations {
+  article.full .informations {
     color: #3da1c3; }
-    article .informations .field--label {
+    article.full .informations .field--label {
       font-weight: 700; }
-    article .informations:before {
+    article.full .informations:before {
       content: 'Informations';
       font-size: 22px;
       display: block;
       padding-bottom: 10px;
       font-family: 'DidactGothic'; }
-    article .informations .field {
+    article.full .informations .field {
       margin-bottom: 15px;
       display: block; }
-      article .informations .field:before {
+      article.full .informations .field:before {
         color: #000; }
-      article .informations .field .field--label {
+      article.full .informations .field .field--label {
         font-weight: 700;
         display: inline-block; }
-        article .informations .field .field--label:after {
+        article.full .informations .field .field--label:after {
           content: " : "; }
-      article .informations .field .field--item {
+      article.full .informations .field .field--item {
         font-weight: 500;
         padding-left: 20px; }
-    article .informations .field--name-field-lien .field--label:after {
+    article.full .informations .field--name-field-lien .field--label:after {
       content: ""; }
 
 .carre .views-row {
