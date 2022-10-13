@@ -25,7 +25,7 @@ class InitSubscriber implements EventSubscriberInterface
         $redirect->send();
       }
 
-    } else {
+    } /*else {
 	    preg_match('/\/(.*)\/(\d*)(.*)/',$request->getPathInfo(), $match);
 	    if(!empty($match[2]) && !empty($match[3])) {
 		    $test_node = Node::Load($match[2]);
@@ -35,7 +35,7 @@ class InitSubscriber implements EventSubscriberInterface
 		    }
 
 	    }
-    }
+      }*/
 
 
     preg_match("/admin/", $request->getRequestUri(), $rs);

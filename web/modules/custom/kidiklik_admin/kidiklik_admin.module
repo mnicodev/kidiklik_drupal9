@@ -227,10 +227,14 @@ function kidiklik_admin_inline_entity_form_entity_form_alter(&$entity_form, &$fo
 
     	if($entity_form['title']['widget'][0]['value']['#default_value'] === null) {
 	    $entity_form['title']['widget'][0]['value']['#default_value'] = $node->getTitle();
-    	}
-    	if($entity_form['field_resume']['widget'][0]['value']['#default_value'] === null) {
-	    $entity_form['field_resume']['widget'][0]['value']['#default_value'] = preg_replace_callback("/(&#[0-9]+;)/", function($m) { return mb_convert_encoding($m[1], "UTF-8", "HTML-ENTITIES"); },html_entity_decode(strip_tags(current($node->get('field_resume')->getValue())['value']), ENT_COMPAT, 'UTF-8'));
-    	}
+	}
+      if($entity_form['#op'] === 'add') {
+	      if($node->__isset('field_resume')) {
+		      $entity_form['field_resume']['widget'][0]['value']['#default_value'] = preg_replace_callback("/(&#[0-9]+;)/", function($m) { return mb_convert_encoding($m[1], "UTF-8", "HTML-ENTITIES"); },html_entity_decode(strip_tags(current($node->get('field_resume')->getValue())['value']), ENT_COMPAT, 'UTF-8'));
+	      } else if($node->__isset('body')) {
+		      $entity_form['field_resume']['widget'][0]['value']['#default_value'] = preg_replace_callback("/(&#[0-9]+;)/", function($m) { return mb_convert_encoding($m[1], "UTF-8", "HTML-ENTITIES"); },html_entity_decode(strip_tags(current($node->get('body')->getValue())['value']), ENT_COMPAT, 'UTF-8'));
+	      }
+      }
     }
     $values = $form_state->getValues();
     $field_image_content = $values['field_image'];
