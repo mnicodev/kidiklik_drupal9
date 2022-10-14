@@ -519,7 +519,7 @@ if ($settings['hash_salt']) {
  * must exist and be writable by Drupal. This directory must be relative to
  * the Drupal installation directory and be accessible over the web.
  */
-# $settings['file_public_path'] = 'sites/default/files';
+// $settings['file_public_path'] = 'sites/default/files_old';
 
 /**
  * Private file path:
@@ -783,8 +783,8 @@ $settings['entity_update_backup'] = TRUE;
 if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
    include $app_root . '/' . $site_path . '/settings.local.php';
 }
-$config_directories['sync'] = '../config/sync';
-
+//$config_directories['sync'] = '../config/sync';
+$settings['config_sync_directory'] = '../config/sync';
 
 
 $host=explode(".",$_SERVER["SERVER_NAME"]);
