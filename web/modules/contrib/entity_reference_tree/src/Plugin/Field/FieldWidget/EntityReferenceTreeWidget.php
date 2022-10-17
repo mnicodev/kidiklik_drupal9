@@ -29,7 +29,7 @@ class EntityReferenceTreeWidget extends EntityReferenceAutocompleteWidget {
     $arr_element = parent::formElement($items, $delta, $element, $form, $form_state);
     $form['#attached']['library'][] = 'core/drupal.dialog.ajax';
     $form['#attached']['library'][] = 'entity_reference_tree/widget';
-    $arr_target = $arr_element['target_id']['#selection_settings']['target_bundles'];
+    $arr_target = empty($arr_element['target_id']['#selection_settings']['target_bundles']) ? [] : $arr_element['target_id']['#selection_settings']['target_bundles'];
     $str_target_type = $arr_element['target_id']['#target_type'];
     // Target bundle of the entity tree.
     if (empty($arr_target)) {
@@ -69,6 +69,14 @@ class EntityReferenceTreeWidget extends EntityReferenceAutocompleteWidget {
       $label = $this->t('@label', ['@label' => $label]);
     }
 
+    $dialog_title = $this->getSetting('dialog_title');
+    if (empty($dialog_title)) {
+      $dialog_title = $label;
+    }
+    else {
+      $dialog_title = $this->t('@title', ['@title' => $dialog_title]);
+    }
+
     $arr_element['dialog_link'] = [
       '#type' => 'link',
       '#title' => $label,
@@ -80,6 +88,7 @@ class EntityReferenceTreeWidget extends EntityReferenceAutocompleteWidget {
             'entity_type' => $str_target_type,
             'theme' => $this->getSetting('theme'),
             'dots' => $this->getSetting('dots'),
+            'dialog_title' => $dialog_title,
             'limit' => $this->fieldDefinition->getFieldStorageDefinition()->getCardinality(),
           ]),
       '#attributes' => [
@@ -111,6 +120,8 @@ class EntityReferenceTreeWidget extends EntityReferenceAutocompleteWidget {
         'dots' => 0,
         // Button label.
         'label' => '',
+        // Dialog title.
+        'dialog_title' => '',
     ] + parent::defaultSettings();
   }
 
@@ -151,6 +162,12 @@ class EntityReferenceTreeWidget extends EntityReferenceAutocompleteWidget {
       '#default_value' => $this->getSetting('label'),
     ];
 
+    $element['dialog_title'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Dialog title'),
+      '#default_value' => $this->getSetting('dialog_title'),
+    ];
+
     return $element;
   }
 
@@ -164,6 +181,10 @@ class EntityReferenceTreeWidget extends EntityReferenceAutocompleteWidget {
     // Button label.
     if ($label = $this->getSetting('label')) {
       $summary[] = t('Button label: @label', ['@label' => $label]);
+    }
+    // Dialog title.
+    if ($label = $this->getSetting('dialog_title')) {
+      $summary[] = t('Dialog title: @title', ['@title' => $label]);
     }
     
     return $summary;
