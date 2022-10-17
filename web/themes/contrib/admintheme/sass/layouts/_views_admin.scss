@@ -1,0 +1,46 @@
+
+#main-content-wrapper {
+  .views-admin {
+    .btn, .button {
+      font-weight: lighter;
+    }
+    .dropbutton-wrapper {
+      #views-display-extra-actions { 
+        a {
+          font-size: 13px;
+          padding: 10px;
+        }
+      }
+      .dropbutton {
+        a {
+          padding: 0px 10px;
+        }
+        .dropbutton-action {
+          .button {
+            font-size: 12px;
+            padding: 3px 10px;
+          } 
+        }
+      }
+    }
+
+    .label {
+      color: $header-color;
+      line-height: inherit;
+    }
+    .views-displays {
+      .tabs {
+        .action-list {
+          z-index: 100;
+          li {
+            .add-display {
+              padding: 5px;
+              text-align: left;
+              width: 100%;
+            }
+          }
+        }
+      }
+    } 
+  }
+}

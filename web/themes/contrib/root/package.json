@@ -1,0 +1,21 @@
+{
+  "name": "Root",
+  "version": "1.0.0",
+  "description": "Drupal admin theme for Seeds distribution",
+  "main": "gulpfile.js",
+  "scripts": {
+    "build": "gulp build",
+    "watch": "gulp watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sprintive",
+  "license": "ISC",
+  "devDependencies": {
+    "del": "^3.0.0",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^6.0.0",
+    "gulp-sass": "^5.1.0",
+    "gulp-sourcemaps": "^2.6.4",
+    "sass": "^1.53.0"
+  }
+}

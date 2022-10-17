@@ -1,0 +1,19 @@
+bootstrap:
+  version: VERSION
+  css:
+    base:
+      bootstrap/css/bootstrap.min.css: { weight: 0 }
+      tether/dist/css/tether.min.css: { weight: 0 }
+      font-awesome/font-awesome.min.css: { weight: 0 }
+  js:
+    tether/dist/js/tether.min.js: {}
+    bootstrap/js/bootstrap.min.js: {}
+  dependencies:
+    - core/jquery 
+       
+css-styling:
+  version: VERSION
+  css:
+    base:
+      stylesheets/screen.css: {} 
+       

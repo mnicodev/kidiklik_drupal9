@@ -1,0 +1,105 @@
+
+#main-content-wrapper, .ui-dialog {
+  //Moved table out of the block so it could be reused for all pages.align-content: // Table like File, content, comment
+  table {
+    width: 100%;
+    max-width: 100%;
+    th {
+      background-color: $table-header-bg-color;
+      border-bottom: 1px solid $table-header-border-color;
+      color: $white;
+      font-size: 18px;
+      padding: 20px 10px 20px 20px;
+      a {
+        color: $white;
+      }
+    }
+    // Reports/status
+    th.system-status-report__status-title {
+      padding: 10px 6px 10px 40px;
+      font-size: inherit;
+      color: inherit;
+      background-color: transparent;
+    }
+    tbody {
+      font-size: 14px;
+      tr:nth-of-type(2n+1) {
+        background-color: $table-row-bg-color;
+        border-bottom: 1px solid $general-border-color;
+        border-top: 1px solid $general-border-color;
+      }
+
+      //This one only use on Block page draggable
+      tr.draggable.odd {
+        background-color: transparent;
+      }
+      // Use for sort column
+      td.is-active {
+        background-color: $button-action-bg-color;
+        color: $white;
+      }
+      td {
+        padding: 10px 10px 10px 20px;
+        vertical-align: middle;
+        //This details show up on extends page
+        details {
+          min-height: 30px;
+          summary {
+            background-color: transparent;
+            border-bottom: none;
+            padding: 5px;
+            cursor: pointer;
+          }
+        }
+
+        label {
+          font-size: 14px;
+        }
+
+        //Blocks page
+        .region-title__action {
+          .button:before {
+            font-family: FontAwesome;
+            content: "\f047";
+            display: inline-block;
+            padding-right: 10px;
+            vertical-align: middle;
+          }
+          .button {
+            padding: 3px 5px;
+          }
+        }
+        // Block page draggable handle
+        .tabledrag-handle {
+          overflow: visible;
+          .handle {
+            height: 25px;
+            margin-top: -9px;
+            width: 30px;
+          }
+        }
+
+        .views-ui-view-title {
+          color: $header-color;
+          font-size: 14px;
+        }
+        .views-ui-view-displays, .views-ui-view-machine-name {
+          color: $description-color;
+          font-weight: 100;
+          line-height: 20px;
+        } 
+      } 
+    }
+  }
+  // Permission
+  #permissions, #menu-overview {
+    //Bootstrap 3 causing issue by display: block;
+    th.checkbox, td.checkbox {
+      display: table-cell;
+      vertical-align: top;
+    }
+    th {
+      border-bottom: 1px solid $form-elements-border-color;
+    }
+  }
+}

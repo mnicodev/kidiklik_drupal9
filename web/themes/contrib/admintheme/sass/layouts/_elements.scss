@@ -1,0 +1,253 @@
+
+body { 
+  font-weight: lighter;
+  font-family: $font_family;
+  background-color: $body-color;
+  h1 {
+    font-size: 25px;
+    font-weight: normal; 
+    margin: 5px 0px;
+    text-transform: none;
+  }
+  h2 {
+    font-size: 22px;
+    font-weight: normal; 
+    margin: 5px 0px;
+  }
+  h3 {
+    font-size: 18px;
+    font-weight: normal; 
+    margin: 5px 0px;
+  }
+  h4 {
+    font-size: 15px;
+    font-weight: normal; 
+    margin: 5px 0px;
+  }
+
+  span.dropdown-select {
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+    font-family: $font_family;
+    &:before, &:after {
+      content: "";
+      position: absolute;
+    }
+    &:after {
+      font-family: $font_family;
+      color: $form-elements-border-color;
+      font-family: "Fontawesome";
+      font-size: 15px;
+      line-height: 10px;
+      content: "\f107";
+      padding: 0.5em;
+      pointer-events: none;
+      right: 0.3em; 
+      top: 8%;
+      vertical-align: middle;
+    }
+  }
+  #main-content-wrapper, .ui-dialog {
+    .btn, .button {
+      background: $button-general-bg-color none repeat scroll 0 0;
+      border: 1px solid $button-general-border-color; 
+      border-radius: 0;
+      box-shadow: none;
+      color: $white;
+      padding: 10px 20px;
+      font: 700 12px/1 $font_family;
+      font-weight: 400;
+      line-height: 14px;
+      margin-bottom: 0;
+      margin-top: 0px; //-2
+    }
+    .button--danger, a.button--danger, .button.button--danger {
+      background-color: $button-danger-bg-color;
+      border: medium none; 
+      padding: 9px 20px;
+    }
+
+    .form--inline .form-item-separator {
+      margin-top: 1.5em;
+    }
+    // textbox, dropdown box
+    .form-select, 
+    input.form-time, 
+    input.form-date,
+    input.form-autocomplete,
+    input.form-text,
+    input.form-tel,
+    input.form-email,
+    input.form-url,
+    input.form-search,
+    input.form-number,
+    input.form-color,
+    input.form-file,
+    textarea.form-textarea {
+      border: 1px solid $general-border-color;
+      border-radius: 4px;
+      color: $description-color;
+      font-size: 14px;
+      font-weight: normal;
+      min-height: 30px;
+      padding: 5px 10px;
+      max-width: 100%;
+      option {
+        padding: 5px;
+      }
+    }
+    .form-select { 
+      cursor: pointer;
+      font-family: $font_family;
+      // Sass specific RGBA mixin
+      background: rgba($white,0.3); 
+      font-size: 12px;
+      padding: 0 25px;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+    }
+    button:focus, input:focus, select:focus, textarea:focus {
+      border-color: $breadcrumb;
+    }
+
+    // give some space on the right on the content filter.
+    .form-item {
+      label {
+        color: $header-color;
+        font-size: 14px;
+        font-weight: 600;
+        padding-right: 10px;
+      }
+      label.option {
+        font-weight: normal;
+        padding-left: 5px;
+      }
+    }
+    .form-type-textarea {
+      label {
+        padding-bottom: 5px;
+      }
+    }
+
+    // Dropbutton on content page
+    .dropbutton {
+      a {
+        padding: 8px;
+        color: $white;
+      }
+      button {
+        border: none;
+        border-radius: none;
+      }
+      .dropbutton-action {
+        background: $button-general-bg-color none repeat scroll 0 0;
+      }
+    }
+
+    /*Start Config Page*/
+    .panel {
+      border: 1px solid $general-border-color;
+      border-radius: 0;
+      padding: 0px;
+
+      h3:before {
+        font-family: FontAwesome;
+        content: "\f013";
+        display: inline-block;
+        padding-right: 10px;
+        vertical-align: middle;
+      }
+      h3 {
+        font-size: 16px;
+        color: $header-color; //Dark purple
+        background-color: $title-header-bg-color;
+        border-bottom: 1px solid $horizontal-bar-color; 
+        padding: 10px;
+        margin: 0px;
+      }
+    }
+
+    dl {
+      padding: 10px;
+      dt {
+        margin-top: 15px;
+        padding-bottom: 5px;
+      }
+      dd {
+        padding-left: 10px;
+        color: $description-color;
+        font-weight: 100;
+        line-height: 20px;
+        font-size: 13px;
+      }
+    }
+
+    // Add icon to "add content" node type list
+    dl.node-type-list {
+      dt:before {
+        font-family: FontAwesome;
+        content: "\f055";
+        display: inline-block;
+        vertical-align: middle;
+        font-size: 14px;
+        padding-bottom: 2px;
+        padding-right: 8px;
+        color: $button-action;
+      }
+      dd {
+        padding-left: 20px;
+      }
+    }
+
+    .details-wrapper {
+      width: 100%;
+    }
+
+    .vertical-tabs__menu-item.is-selected {  
+      background-color: $white; 
+      border-top: 2px solid red;
+      font-size: 14px;
+      font-weight: 600;
+      .vertical-tabs__menu-item-title {
+        color: $header-color;
+        font-size: 14px;
+        font-weight: 600;
+      }
+      .vertical-tabs__menu-item-summary {
+        color: $description-color; 
+        font-size: 13px;
+        font-weight: lighter;
+        line-height: normal; 
+      }
+    }
+    .vertical-tabs__menu-item {
+      background-color: $title-header-bg-color;
+      .vertical-tabs__menu-item-title {
+        color: $breadcrumb;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 20px;
+      }
+      .vertical-tabs__menu-item-summary {
+        color: $description-color; 
+        font-size: 13px;
+        font-weight: lighter;
+        line-height: normal; 
+      }
+    }
+
+    //fieldset
+    .fieldset-legend {
+      color: $header-color;
+      font-size: 14px;
+    }
+
+    p, .theme-info__description, .description, .list-group__description, .details-description, .project-updates__details, .project-update__status {
+      color: $description-color;
+      font-weight: 100; 
+      line-height: 20px;
+    }
+  }
+}

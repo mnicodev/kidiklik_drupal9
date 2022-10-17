@@ -1,0 +1,34 @@
+
+.ui-dialog {
+  font-family: $font_family; 
+  background-color: $white;
+  .ui-dialog-titlebar {
+    color: $header-color;
+  }
+  .ui-dialog-title {
+    font-size: 25px;
+    font-weight: normal; 
+    margin: 5px 0px;
+    text-transform: none;
+  }
+  .ui-dialog-title:before {
+    font-family: FontAwesome;
+    content: "\f064";
+    display: inline-block;
+    padding-right: 10px;
+    vertical-align: middle;
+  }
+  .form-item label {
+    margin-bottom: 5px;
+  }
+  .form-select {
+    display: table;
+  }
+  table {
+    tbody {
+      td {
+        color: $header-color;
+      }
+    }
+  }
+}

@@ -1,0 +1,273 @@
+
+#main-content-wrapper, .ui-dialog {
+  // Admin breadcrumb
+  #block-hostinstantly-admin-breadcrumbs {
+    padding: 0px;
+    .breadcrumb {
+      margin: 0px;
+      background-color: $title-header-bg-color;
+      border-radius: 0px;
+      color: $breadcrumb;
+      font-size: 14px;
+      font-weight: lighter;
+      text-align: center;
+      a {
+        color: $breadcrumb;
+      }
+    }
+  }
+
+  .block {
+    background-color: $white;
+    padding: 20px;
+
+    .tabs {
+      .primary  {
+        border-bottom: 1px solid $tab-border-color;
+        li.is-active {
+          border-top: 3px solid $button-primary-border-color;
+          margin-top: 0;
+          position: relative;
+          a {
+            background-color: $white;
+            border-left: 1px solid $tab-border-color;
+            border-right: 1px solid $tab-border-color;
+          }
+        } 
+      }
+      .secondary {
+        .is-active {
+          background-color: $button-secondary-bg-color;
+          color: $white;
+        }
+      }
+      a {
+        padding: 15px;
+      }
+    }
+
+    .views-element-container, .comment-admin-overview {
+      font-size: 13px;
+      padding: 0px 15px;
+      border: 1px solid $general-border-color;
+    }
+
+    // Like Add Button on the top of the page. Orange color
+    .button-action {
+      background-color: $button-action-bg-color;
+      border: 1px solid $button-action;
+      color: $white; 
+      padding: 0.5em 1em; 
+    }
+
+    .help-page {
+      ul {
+        margin: 5px 0px;
+        li {
+          font-size: 15px;
+          padding: 5px;
+        }
+        li:before {
+          font-family: FontAwesome;
+          content: "\f02d";
+          display: inline-block;
+          padding-right: 15px;
+          vertical-align: middle;
+        }
+      }
+    }
+
+    h3 {
+      color: $header-color;
+    }
+    .project-update__version-title {
+      color: $header-color;
+      font-size: 15px;
+      font-weight: 400;
+    }
+    .project-update__title {
+      color: $description-color;
+      font-size: 100%;
+      font-weight: 600;
+    }
+  }
+
+  // Page title for all admin page
+  .block-page-title-block {
+    border-bottom: 1px solid $title-border-bottom;
+    text-transform: uppercase;
+    font-size: 16px;
+    font-weight: 700;
+    color: $header-color;
+    h1:before {
+      font-family: FontAwesome;
+      content: "\f064";
+      display: inline-block;
+      padding-right: 15px;
+      vertical-align: middle;
+    }
+  } 
+
+  #block-hostinstantly-admin-help {
+    background-color: $help-region-bg-color;
+    color: $white;
+    line-height: 20px;
+    ol {
+      list-style: inside none decimal;
+      margin: 10px;
+    }
+    p {
+      color: $white;
+    }
+    a {
+      color: $white;
+      font-weight: bolder;
+      text-decoration: underline;
+    }
+  }
+  // Summary at the bottom of the Appearance page
+  summary:before {
+    font-family: FontAwesome;
+    background: none;
+    content: "\f068";
+    display: inline-block;
+    margin-right: 7px;  
+    vertical-align: middle;
+    font-size: 14px;
+    color: $summary-icon-color;
+  }
+  summary {
+    background-color: $title-header-bg-color;
+    border-bottom: 1px solid $summary-border-color;
+    padding: 10px;
+    color: $header-color;
+    padding-right: 7px;
+  }
+
+  .form-wrapper:not([open]) > summary:before { 
+    color: $form-elements-border-color;
+    vertical-align: middle;
+    font-family: FontAwesome;
+    background: none;
+    content: "\f067";
+    margin-right: 7px;
+  }
+
+  //CKeditor
+  .cke_chrome {
+    box-shadow: none;
+    border: 1px solid $general-border-color;
+  }
+
+  .cke_top, .cke_bottom {
+    background: $title-header-bg-color none repeat scroll 0 0;
+  }
+  .a.cke_combo_button{
+    background-color: transparent;
+    background: none;
+  }
+  a.cke_combo_button {
+    background: none;
+  }
+  .cke_toolgroup {
+    background-color: transparent!important;
+    background: none!important;
+  }
+  .ckeditor-buttons {
+    li {
+      .cke-icon-only {
+        width: 30px;
+      }
+    }
+  }
+} 
+
+/* Start Theme page*/
+.system-themes-list {
+  .system-themes-list__header {
+    margin-bottom: 5px;
+  }
+  .theme-info__header {
+    color: $header-color;
+    font-weight: normal;
+    padding: 10px 0;
+  }
+}
+
+.system-themes-list-installed,  {
+  .theme-selector {
+    padding: 20px;
+    border-top: 1px solid $general-border-color;
+    border-left: 1px solid $general-border-color;
+    border-right: 1px solid $general-border-color;
+  }
+
+  div.theme-selector:nth-of-type(2n+1) {
+    background-color: $table-row-bg-color;
+    border-top: 1px solid $general-border-color;
+    border-left: 1px solid $general-border-color;
+    border-right: 1px solid $general-border-color;
+  }
+  .theme-selector:last-child {
+    border-bottom: 1px solid $general-border-color;
+  }
+}
+
+.system-themes-list-uninstalled {
+  .theme-selector {
+    padding: 20px !important;
+    border-top: 1px solid $general-border-color;
+    border-bottom: 1px solid $general-border-color;
+    border-right: 1px solid $general-border-color;
+  }
+
+  div.theme-selector:nth-of-type(2n+1) {
+    background-color: $table-row-bg-color;
+    border-top: 1px solid $general-border-color;
+    border-bottom: 1px solid $general-border-color;
+    border-left: 1px solid $general-border-color;
+    padding: 20px;
+  }
+}
+
+.region-footer {
+  background-color: $table-row-bg-color;
+  border-top: 1px solid $general-border-color;
+}
+
+
+/* Landscape phones and down */
+@media (max-width: 480px) { 
+  #main-content-wrapper , .ui-dialog {
+    table {
+      position: relative;
+      tbody {
+        td {
+          .tabledrag-handle {
+            .handle {
+              height: 100%;
+              width: 100%;
+            } 
+          }
+          .dropbutton-multiple {
+            padding-right: 0px;
+          }
+        }
+      }
+    }
+    .form-select {
+      padding: 5px 20px 5px 5px;
+      width: 100%;
+    }
+
+    .btn-primary {
+      margin-top: 5px;
+      margin-left: 0px;
+    }
+    a.button--danger {
+      margin-top: 5px;
+      float: right;
+      margin-right: 0px;
+    } 
+  }
+}

@@ -675,7 +675,11 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
           $date_fin = date('Y-m-d', strtotime('sunday'));
           break;
         case 'semaine':
-          $date_deb = date('Y-m-d', strtotime('last monday'));
+	  if(date('Ymd') < date('Ymd', strtotime('monday'))) {
+          	$date_deb = date('Y-m-d', strtotime('last monday'));
+	  } else {
+          	$date_deb = date('Y-m-d', strtotime('monday'));
+	  }
           $date_fin = date('Y-m-d', strtotime('sunday'));
           break;
         case 'date':

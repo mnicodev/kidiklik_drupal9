@@ -1,0 +1,816 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&subset=latin,greek);
+/* line 5, ../../../../../../usr/local/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+/* line 22, ../../../../../../usr/local/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+html {
+  line-height: 1;
+}
+
+/* line 24, ../../../../../../usr/local/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+ol, ul {
+  list-style: none;
+}
+
+/* line 26, ../../../../../../usr/local/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* line 28, ../../../../../../usr/local/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+/* line 30, ../../../../../../usr/local/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+q, blockquote {
+  quotes: none;
+}
+/* line 103, ../../../../../../usr/local/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+/* line 32, ../../../../../../usr/local/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+a img {
+  border: none;
+}
+
+/* line 116, ../../../../../../usr/local/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+  display: block;
+}
+
+/* line 4, ../sass/layouts/_page_structure.scss */
+#main-content-wrapper #block-hostinstantly-admin-breadcrumbs, .ui-dialog #block-hostinstantly-admin-breadcrumbs {
+  padding: 0px;
+}
+/* line 6, ../sass/layouts/_page_structure.scss */
+#main-content-wrapper #block-hostinstantly-admin-breadcrumbs .breadcrumb, .ui-dialog #block-hostinstantly-admin-breadcrumbs .breadcrumb {
+  margin: 0px;
+  background-color: #f9fafc;
+  border-radius: 0px;
+  color: #1bbae1;
+  font-size: 14px;
+  font-weight: lighter;
+  text-align: center;
+}
+/* line 14, ../sass/layouts/_page_structure.scss */
+#main-content-wrapper #block-hostinstantly-admin-breadcrumbs .breadcrumb a, .ui-dialog #block-hostinstantly-admin-breadcrumbs .breadcrumb a {
+  color: #1bbae1;
+}
+/* line 20, ../sass/layouts/_page_structure.scss */
+#main-content-wrapper .block, .ui-dialog .block {
+  background-color: #fff;
+  padding: 20px;
+}
+/* line 25, ../sass/layouts/_page_structure.scss */
+#main-content-wrapper .block .tabs .primary, .ui-dialog .block .tabs .primary {
+  border-bottom: 1px solid #eaedf1;
+}
+/* line 27, ../sass/layouts/_page_structure.scss */
+#main-content-wrapper .block .tabs .primary li.is-active, .ui-dialog .block .tabs .primary li.is-active {
+  border-top: 3px solid #ed6b75;
+  margin-top: 0;
+  position: relative;
+}
+/* line 31, ../sass/layouts/_page_structure.scss */
+#main-content-wrapper .block .tabs .primary li.is-active a, .ui-dialog .block .tabs .primary li.is-active a {
+  background-color: #fff;
+  border-left: 1px solid #eaedf1;
+  border-right: 1px solid #eaedf1;
+}
+/* line 39, ../sass/layouts/_page_structure.scss */
+#main-content-wrapper .block .tabs .secondary .is-active, .ui-dialog .block .tabs .secondary .is-active {
+  background-color: #6ad2eb;
+  color: #fff;
+}
+/* line 44, ../sass/layouts/_page_structure.scss */
+#main-content-wrapper .block .tabs a, .ui-dialog .block .tabs a {
+  padding: 15px;
+}
+/* line 49, ../sass/layouts/_page_structure.scss */
+#main-content-wrapper .block .views-element-container, #main-content-wrapper .block .comment-admin-overview, .ui-dialog .block .views-element-container, .ui-dialog .block .comment-admin-overview {
+  font-size: 13px;
+  padding: 0px 15px;
+  border: 1px solid #dbe1e8;
+}
+/* line 56, ../sass/layouts/_page_structure.scss */
+#main-content-wrapper .block .button-action, .ui-dialog .block .button-action {
+  background-color: #f7be64;
+  border: 1px solid #f39c12;
+  color: #fff;
+  padding: 0.5em 1em;
+}
+/* line 64, ../sass/layouts/_page_structure.scss */
+#main-content-wrapper .block .help-page ul, .ui-dialog .block .help-page ul {
+  margin: 5px 0px;
+}
+/* line 66, ../sass/layouts/_page_structure.scss */
+#main-content-wrapper .block .help-page ul li, .ui-dialog .block .help-page ul li {
+  font-size: 15px;
+  padding: 5px;
+}
+/* line 70, ../sass/layouts/_page_structure.scss */
+#main-content-wrapper .block .help-page ul li:before, .ui-dialog .block .help-page ul li:before {
+  font-family: FontAwesome;
+  content: "\f02d";
+  display: inline-block;
+  padding-right: 15px;
+  vertical-align: middle;
+}
+/* line 80, ../sass/layouts/_page_structure.scss */
+#main-content-wrapper .block h3, .ui-dialog .block h3 {
+  color: #394263;
+}
+/* line 83, ../sass/layouts/_page_structure.scss */
+#main-content-wrapper .block .project-update__version-title, .ui-dialog .block .project-update__version-title {
+  color: #394263;
+  font-size: 15px;
+  font-weight: 400;
+}
+/* line 88, ../sass/layouts/_page_structure.scss */
+#main-content-wrapper .block .project-update__title, .ui-dialog .block .project-update__title {
+  color: #777;
+  font-size: 100%;
+  font-weight: 600;
+}
+/* line 96, ../sass/layouts/_page_structure.scss */
+#main-content-wrapper .block-page-title-block, .ui-dialog .block-page-title-block {
+  border-bottom: 1px solid #eef1f5;
+  text-transform: uppercase;
+  font-size: 16px;
+  font-weight: 700;
+  color: #394263;
+}
+/* line 102, ../sass/layouts/_page_structure.scss */
+#main-content-wrapper .block-page-title-block h1:before, .ui-dialog .block-page-title-block h1:before {
+  font-family: FontAwesome;
+  content: "\f064";
+  display: inline-block;
+  padding-right: 15px;
+  vertical-align: middle;
+}
+/* line 111, ../sass/layouts/_page_structure.scss */
+#main-content-wrapper #block-hostinstantly-admin-help, .ui-dialog #block-hostinstantly-admin-help {
+  background-color: #5bc0de;
+  color: #fff;
+  line-height: 20px;
+}
+/* line 115, ../sass/layouts/_page_structure.scss */
+#main-content-wrapper #block-hostinstantly-admin-help ol, .ui-dialog #block-hostinstantly-admin-help ol {
+  list-style: inside none decimal;
+  margin: 10px;
+}
+/* line 119, ../sass/layouts/_page_structure.scss */
+#main-content-wrapper #block-hostinstantly-admin-help p, .ui-dialog #block-hostinstantly-admin-help p {
+  color: #fff;
+}
+/* line 122, ../sass/layouts/_page_structure.scss */
+#main-content-wrapper #block-hostinstantly-admin-help a, .ui-dialog #block-hostinstantly-admin-help a {
+  color: #fff;
+  font-weight: bolder;
+  text-decoration: underline;
+}
+/* line 129, ../sass/layouts/_page_structure.scss */
+#main-content-wrapper summary:before, .ui-dialog summary:before {
+  font-family: FontAwesome;
+  background: none;
+  content: "\f068";
+  display: inline-block;
+  margin-right: 7px;
+  vertical-align: middle;
+  font-size: 14px;
+  color: #325e1c;
+}
+/* line 139, ../sass/layouts/_page_structure.scss */
+#main-content-wrapper summary, .ui-dialog summary {
+  background-color: #f9fafc;
+  border-bottom: 1px solid #eaedf1;
+  padding: 10px;
+  color: #394263;
+  padding-right: 7px;
+}
+/* line 147, ../sass/layouts/_page_structure.scss */
+#main-content-wrapper .form-wrapper:not([open]) > summary:before, .ui-dialog .form-wrapper:not([open]) > summary:before {
+  color: #6ad2eb;
+  vertical-align: middle;
+  font-family: FontAwesome;
+  background: none;
+  content: "\f067";
+  margin-right: 7px;
+}
+/* line 157, ../sass/layouts/_page_structure.scss */
+#main-content-wrapper .cke_chrome, .ui-dialog .cke_chrome {
+  box-shadow: none;
+  border: 1px solid #dbe1e8;
+}
+/* line 162, ../sass/layouts/_page_structure.scss */
+#main-content-wrapper .cke_top, #main-content-wrapper .cke_bottom, .ui-dialog .cke_top, .ui-dialog .cke_bottom {
+  background: #f9fafc none repeat scroll 0 0;
+}
+/* line 165, ../sass/layouts/_page_structure.scss */
+#main-content-wrapper .a.cke_combo_button, .ui-dialog .a.cke_combo_button {
+  background-color: transparent;
+  background: none;
+}
+/* line 169, ../sass/layouts/_page_structure.scss */
+#main-content-wrapper a.cke_combo_button, .ui-dialog a.cke_combo_button {
+  background: none;
+}
+/* line 172, ../sass/layouts/_page_structure.scss */
+#main-content-wrapper .cke_toolgroup, .ui-dialog .cke_toolgroup {
+  background-color: transparent !important;
+  background: none !important;
+}
+/* line 178, ../sass/layouts/_page_structure.scss */
+#main-content-wrapper .ckeditor-buttons li .cke-icon-only, .ui-dialog .ckeditor-buttons li .cke-icon-only {
+  width: 30px;
+}
+
+/* Start Theme page*/
+/* line 187, ../sass/layouts/_page_structure.scss */
+.system-themes-list .system-themes-list__header {
+  margin-bottom: 5px;
+}
+/* line 190, ../sass/layouts/_page_structure.scss */
+.system-themes-list .theme-info__header {
+  color: #394263;
+  font-weight: normal;
+  padding: 10px 0;
+}
+
+/* line 198, ../sass/layouts/_page_structure.scss */
+.system-themes-list-installed .theme-selector {
+  padding: 20px;
+  border-top: 1px solid #dbe1e8;
+  border-left: 1px solid #dbe1e8;
+  border-right: 1px solid #dbe1e8;
+}
+/* line 205, ../sass/layouts/_page_structure.scss */
+.system-themes-list-installed div.theme-selector:nth-of-type(2n+1) {
+  background-color: #f9f9f9;
+  border-top: 1px solid #dbe1e8;
+  border-left: 1px solid #dbe1e8;
+  border-right: 1px solid #dbe1e8;
+}
+/* line 211, ../sass/layouts/_page_structure.scss */
+.system-themes-list-installed .theme-selector:last-child {
+  border-bottom: 1px solid #dbe1e8;
+}
+
+/* line 217, ../sass/layouts/_page_structure.scss */
+.system-themes-list-uninstalled .theme-selector {
+  padding: 20px !important;
+  border-top: 1px solid #dbe1e8;
+  border-bottom: 1px solid #dbe1e8;
+  border-right: 1px solid #dbe1e8;
+}
+/* line 224, ../sass/layouts/_page_structure.scss */
+.system-themes-list-uninstalled div.theme-selector:nth-of-type(2n+1) {
+  background-color: #f9f9f9;
+  border-top: 1px solid #dbe1e8;
+  border-bottom: 1px solid #dbe1e8;
+  border-left: 1px solid #dbe1e8;
+  padding: 20px;
+}
+
+/* line 233, ../sass/layouts/_page_structure.scss */
+.region-footer {
+  background-color: #f9f9f9;
+  border-top: 1px solid #dbe1e8;
+}
+
+/* Landscape phones and down */
+@media (max-width: 480px) {
+  /* line 242, ../sass/layouts/_page_structure.scss */
+  #main-content-wrapper table, .ui-dialog table {
+    position: relative;
+  }
+  /* line 247, ../sass/layouts/_page_structure.scss */
+  #main-content-wrapper table tbody td .tabledrag-handle .handle, .ui-dialog table tbody td .tabledrag-handle .handle {
+    height: 100%;
+    width: 100%;
+  }
+  /* line 252, ../sass/layouts/_page_structure.scss */
+  #main-content-wrapper table tbody td .dropbutton-multiple, .ui-dialog table tbody td .dropbutton-multiple {
+    padding-right: 0px;
+  }
+  /* line 258, ../sass/layouts/_page_structure.scss */
+  #main-content-wrapper .form-select, .ui-dialog .form-select {
+    padding: 5px 20px 5px 5px;
+    width: 100%;
+  }
+  /* line 263, ../sass/layouts/_page_structure.scss */
+  #main-content-wrapper .btn-primary, .ui-dialog .btn-primary {
+    margin-top: 5px;
+    margin-left: 0px;
+  }
+  /* line 267, ../sass/layouts/_page_structure.scss */
+  #main-content-wrapper a.button--danger, .ui-dialog a.button--danger {
+    margin-top: 5px;
+    float: right;
+    margin-right: 0px;
+  }
+}
+/* line 4, ../sass/layouts/_views_admin.scss */
+#main-content-wrapper .views-admin .btn, #main-content-wrapper .views-admin .button {
+  font-weight: lighter;
+}
+/* line 9, ../sass/layouts/_views_admin.scss */
+#main-content-wrapper .views-admin .dropbutton-wrapper #views-display-extra-actions a {
+  font-size: 13px;
+  padding: 10px;
+}
+/* line 15, ../sass/layouts/_views_admin.scss */
+#main-content-wrapper .views-admin .dropbutton-wrapper .dropbutton a {
+  padding: 0px 10px;
+}
+/* line 19, ../sass/layouts/_views_admin.scss */
+#main-content-wrapper .views-admin .dropbutton-wrapper .dropbutton .dropbutton-action .button {
+  font-size: 12px;
+  padding: 3px 10px;
+}
+/* line 27, ../sass/layouts/_views_admin.scss */
+#main-content-wrapper .views-admin .label {
+  color: #394263;
+  line-height: inherit;
+}
+/* line 33, ../sass/layouts/_views_admin.scss */
+#main-content-wrapper .views-admin .views-displays .tabs .action-list {
+  z-index: 100;
+}
+/* line 36, ../sass/layouts/_views_admin.scss */
+#main-content-wrapper .views-admin .views-displays .tabs .action-list li .add-display {
+  padding: 5px;
+  text-align: left;
+  width: 100%;
+}
+
+/* line 2, ../sass/layouts/_modal.scss */
+.ui-dialog {
+  font-family: "Open Sans", "Helvetica", "Arial", "sans-serif";
+  background-color: #fff;
+}
+/* line 5, ../sass/layouts/_modal.scss */
+.ui-dialog .ui-dialog-titlebar {
+  color: #394263;
+}
+/* line 8, ../sass/layouts/_modal.scss */
+.ui-dialog .ui-dialog-title {
+  font-size: 25px;
+  font-weight: normal;
+  margin: 5px 0px;
+  text-transform: none;
+}
+/* line 14, ../sass/layouts/_modal.scss */
+.ui-dialog .ui-dialog-title:before {
+  font-family: FontAwesome;
+  content: "\f064";
+  display: inline-block;
+  padding-right: 10px;
+  vertical-align: middle;
+}
+/* line 21, ../sass/layouts/_modal.scss */
+.ui-dialog .form-item label {
+  margin-bottom: 5px;
+}
+/* line 24, ../sass/layouts/_modal.scss */
+.ui-dialog .form-select {
+  display: table;
+}
+/* line 29, ../sass/layouts/_modal.scss */
+.ui-dialog table tbody td {
+  color: #394263;
+}
+
+/* line 2, ../sass/layouts/_elements.scss */
+body {
+  font-weight: lighter;
+  font-family: "Open Sans", "Helvetica", "Arial", "sans-serif";
+  background-color: #eaedf1;
+}
+/* line 6, ../sass/layouts/_elements.scss */
+body h1 {
+  font-size: 25px;
+  font-weight: normal;
+  margin: 5px 0px;
+  text-transform: none;
+}
+/* line 12, ../sass/layouts/_elements.scss */
+body h2 {
+  font-size: 22px;
+  font-weight: normal;
+  margin: 5px 0px;
+}
+/* line 17, ../sass/layouts/_elements.scss */
+body h3 {
+  font-size: 18px;
+  font-weight: normal;
+  margin: 5px 0px;
+}
+/* line 22, ../sass/layouts/_elements.scss */
+body h4 {
+  font-size: 15px;
+  font-weight: normal;
+  margin: 5px 0px;
+}
+/* line 28, ../sass/layouts/_elements.scss */
+body span.dropdown-select {
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+  font-family: "Open Sans", "Helvetica", "Arial", "sans-serif";
+}
+/* line 33, ../sass/layouts/_elements.scss */
+body span.dropdown-select:before, body span.dropdown-select:after {
+  content: "";
+  position: absolute;
+}
+/* line 37, ../sass/layouts/_elements.scss */
+body span.dropdown-select:after {
+  font-family: "Open Sans", "Helvetica", "Arial", "sans-serif";
+  color: #6ad2eb;
+  font-family: "Fontawesome";
+  font-size: 15px;
+  line-height: 10px;
+  content: "\f107";
+  padding: 0.5em;
+  pointer-events: none;
+  right: 0.3em;
+  top: 8%;
+  vertical-align: middle;
+}
+/* line 51, ../sass/layouts/_elements.scss */
+body #main-content-wrapper, body .ui-dialog {
+  /*Start Config Page*/
+}
+/* line 52, ../sass/layouts/_elements.scss */
+body #main-content-wrapper .btn, body #main-content-wrapper .button, body .ui-dialog .btn, body .ui-dialog .button {
+  background: #32c5d2 none repeat scroll 0 0;
+  border: 1px solid #32c5d2;
+  border-radius: 0;
+  box-shadow: none;
+  color: #fff;
+  padding: 10px 20px;
+  font: 700 12px/1 "Open Sans", "Helvetica", "Arial", "sans-serif";
+  font-weight: 400;
+  line-height: 14px;
+  margin-bottom: 0;
+  margin-top: 0px;
+}
+/* line 65, ../sass/layouts/_elements.scss */
+body #main-content-wrapper .button--danger, body #main-content-wrapper a.button--danger, body #main-content-wrapper .button.button--danger, body .ui-dialog .button--danger, body .ui-dialog a.button--danger, body .ui-dialog .button.button--danger {
+  background-color: #ed6b75;
+  border: medium none;
+  padding: 9px 20px;
+}
+/* line 71, ../sass/layouts/_elements.scss */
+body #main-content-wrapper .form--inline .form-item-separator, body .ui-dialog .form--inline .form-item-separator {
+  margin-top: 1.5em;
+}
+/* line 75, ../sass/layouts/_elements.scss */
+body #main-content-wrapper .form-select,
+body #main-content-wrapper input.form-time,
+body #main-content-wrapper input.form-date,
+body #main-content-wrapper input.form-autocomplete,
+body #main-content-wrapper input.form-text,
+body #main-content-wrapper input.form-tel,
+body #main-content-wrapper input.form-email,
+body #main-content-wrapper input.form-url,
+body #main-content-wrapper input.form-search,
+body #main-content-wrapper input.form-number,
+body #main-content-wrapper input.form-color,
+body #main-content-wrapper input.form-file,
+body #main-content-wrapper textarea.form-textarea, body .ui-dialog .form-select,
+body .ui-dialog input.form-time,
+body .ui-dialog input.form-date,
+body .ui-dialog input.form-autocomplete,
+body .ui-dialog input.form-text,
+body .ui-dialog input.form-tel,
+body .ui-dialog input.form-email,
+body .ui-dialog input.form-url,
+body .ui-dialog input.form-search,
+body .ui-dialog input.form-number,
+body .ui-dialog input.form-color,
+body .ui-dialog input.form-file,
+body .ui-dialog textarea.form-textarea {
+  border: 1px solid #dbe1e8;
+  border-radius: 4px;
+  color: #777;
+  font-size: 14px;
+  font-weight: normal;
+  min-height: 30px;
+  padding: 5px 10px;
+  max-width: 100%;
+}
+/* line 96, ../sass/layouts/_elements.scss */
+body #main-content-wrapper .form-select option,
+body #main-content-wrapper input.form-time option,
+body #main-content-wrapper input.form-date option,
+body #main-content-wrapper input.form-autocomplete option,
+body #main-content-wrapper input.form-text option,
+body #main-content-wrapper input.form-tel option,
+body #main-content-wrapper input.form-email option,
+body #main-content-wrapper input.form-url option,
+body #main-content-wrapper input.form-search option,
+body #main-content-wrapper input.form-number option,
+body #main-content-wrapper input.form-color option,
+body #main-content-wrapper input.form-file option,
+body #main-content-wrapper textarea.form-textarea option, body .ui-dialog .form-select option,
+body .ui-dialog input.form-time option,
+body .ui-dialog input.form-date option,
+body .ui-dialog input.form-autocomplete option,
+body .ui-dialog input.form-text option,
+body .ui-dialog input.form-tel option,
+body .ui-dialog input.form-email option,
+body .ui-dialog input.form-url option,
+body .ui-dialog input.form-search option,
+body .ui-dialog input.form-number option,
+body .ui-dialog input.form-color option,
+body .ui-dialog input.form-file option,
+body .ui-dialog textarea.form-textarea option {
+  padding: 5px;
+}
+/* line 100, ../sass/layouts/_elements.scss */
+body #main-content-wrapper .form-select, body .ui-dialog .form-select {
+  cursor: pointer;
+  font-family: "Open Sans", "Helvetica", "Arial", "sans-serif";
+  background: rgba(255, 255, 255, 0.3);
+  font-size: 12px;
+  padding: 0 25px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+/* line 111, ../sass/layouts/_elements.scss */
+body #main-content-wrapper button:focus, body #main-content-wrapper input:focus, body #main-content-wrapper select:focus, body #main-content-wrapper textarea:focus, body .ui-dialog button:focus, body .ui-dialog input:focus, body .ui-dialog select:focus, body .ui-dialog textarea:focus {
+  border-color: #1bbae1;
+}
+/* line 117, ../sass/layouts/_elements.scss */
+body #main-content-wrapper .form-item label, body .ui-dialog .form-item label {
+  color: #394263;
+  font-size: 14px;
+  font-weight: 600;
+  padding-right: 10px;
+}
+/* line 123, ../sass/layouts/_elements.scss */
+body #main-content-wrapper .form-item label.option, body .ui-dialog .form-item label.option {
+  font-weight: normal;
+  padding-left: 5px;
+}
+/* line 129, ../sass/layouts/_elements.scss */
+body #main-content-wrapper .form-type-textarea label, body .ui-dialog .form-type-textarea label {
+  padding-bottom: 5px;
+}
+/* line 136, ../sass/layouts/_elements.scss */
+body #main-content-wrapper .dropbutton a, body .ui-dialog .dropbutton a {
+  padding: 8px;
+  color: #fff;
+}
+/* line 140, ../sass/layouts/_elements.scss */
+body #main-content-wrapper .dropbutton button, body .ui-dialog .dropbutton button {
+  border: none;
+  border-radius: none;
+}
+/* line 144, ../sass/layouts/_elements.scss */
+body #main-content-wrapper .dropbutton .dropbutton-action, body .ui-dialog .dropbutton .dropbutton-action {
+  background: #32c5d2 none repeat scroll 0 0;
+}
+/* line 150, ../sass/layouts/_elements.scss */
+body #main-content-wrapper .panel, body .ui-dialog .panel {
+  border: 1px solid #dbe1e8;
+  border-radius: 0;
+  padding: 0px;
+}
+/* line 155, ../sass/layouts/_elements.scss */
+body #main-content-wrapper .panel h3:before, body .ui-dialog .panel h3:before {
+  font-family: FontAwesome;
+  content: "\f013";
+  display: inline-block;
+  padding-right: 10px;
+  vertical-align: middle;
+}
+/* line 162, ../sass/layouts/_elements.scss */
+body #main-content-wrapper .panel h3, body .ui-dialog .panel h3 {
+  font-size: 16px;
+  color: #394263;
+  background-color: #f9fafc;
+  border-bottom: 1px solid #eaedf1;
+  padding: 10px;
+  margin: 0px;
+}
+/* line 172, ../sass/layouts/_elements.scss */
+body #main-content-wrapper dl, body .ui-dialog dl {
+  padding: 10px;
+}
+/* line 174, ../sass/layouts/_elements.scss */
+body #main-content-wrapper dl dt, body .ui-dialog dl dt {
+  margin-top: 15px;
+  padding-bottom: 5px;
+}
+/* line 178, ../sass/layouts/_elements.scss */
+body #main-content-wrapper dl dd, body .ui-dialog dl dd {
+  padding-left: 10px;
+  color: #777;
+  font-weight: 100;
+  line-height: 20px;
+  font-size: 13px;
+}
+/* line 189, ../sass/layouts/_elements.scss */
+body #main-content-wrapper dl.node-type-list dt:before, body .ui-dialog dl.node-type-list dt:before {
+  font-family: FontAwesome;
+  content: "\f055";
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 14px;
+  padding-bottom: 2px;
+  padding-right: 8px;
+  color: #f39c12;
+}
+/* line 199, ../sass/layouts/_elements.scss */
+body #main-content-wrapper dl.node-type-list dd, body .ui-dialog dl.node-type-list dd {
+  padding-left: 20px;
+}
+/* line 204, ../sass/layouts/_elements.scss */
+body #main-content-wrapper .details-wrapper, body .ui-dialog .details-wrapper {
+  width: 100%;
+}
+/* line 208, ../sass/layouts/_elements.scss */
+body #main-content-wrapper .vertical-tabs__menu-item.is-selected, body .ui-dialog .vertical-tabs__menu-item.is-selected {
+  background-color: #fff;
+  border-top: 2px solid red;
+  font-size: 14px;
+  font-weight: 600;
+}
+/* line 213, ../sass/layouts/_elements.scss */
+body #main-content-wrapper .vertical-tabs__menu-item.is-selected .vertical-tabs__menu-item-title, body .ui-dialog .vertical-tabs__menu-item.is-selected .vertical-tabs__menu-item-title {
+  color: #394263;
+  font-size: 14px;
+  font-weight: 600;
+}
+/* line 218, ../sass/layouts/_elements.scss */
+body #main-content-wrapper .vertical-tabs__menu-item.is-selected .vertical-tabs__menu-item-summary, body .ui-dialog .vertical-tabs__menu-item.is-selected .vertical-tabs__menu-item-summary {
+  color: #777;
+  font-size: 13px;
+  font-weight: lighter;
+  line-height: normal;
+}
+/* line 225, ../sass/layouts/_elements.scss */
+body #main-content-wrapper .vertical-tabs__menu-item, body .ui-dialog .vertical-tabs__menu-item {
+  background-color: #f9fafc;
+}
+/* line 227, ../sass/layouts/_elements.scss */
+body #main-content-wrapper .vertical-tabs__menu-item .vertical-tabs__menu-item-title, body .ui-dialog .vertical-tabs__menu-item .vertical-tabs__menu-item-title {
+  color: #1bbae1;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+}
+/* line 233, ../sass/layouts/_elements.scss */
+body #main-content-wrapper .vertical-tabs__menu-item .vertical-tabs__menu-item-summary, body .ui-dialog .vertical-tabs__menu-item .vertical-tabs__menu-item-summary {
+  color: #777;
+  font-size: 13px;
+  font-weight: lighter;
+  line-height: normal;
+}
+/* line 242, ../sass/layouts/_elements.scss */
+body #main-content-wrapper .fieldset-legend, body .ui-dialog .fieldset-legend {
+  color: #394263;
+  font-size: 14px;
+}
+/* line 247, ../sass/layouts/_elements.scss */
+body #main-content-wrapper p, body #main-content-wrapper .theme-info__description, body #main-content-wrapper .description, body #main-content-wrapper .list-group__description, body #main-content-wrapper .details-description, body #main-content-wrapper .project-updates__details, body #main-content-wrapper .project-update__status, body .ui-dialog p, body .ui-dialog .theme-info__description, body .ui-dialog .description, body .ui-dialog .list-group__description, body .ui-dialog .details-description, body .ui-dialog .project-updates__details, body .ui-dialog .project-update__status {
+  color: #777;
+  font-weight: 100;
+  line-height: 20px;
+}
+
+/* line 4, ../sass/layouts/_table.scss */
+#main-content-wrapper table, .ui-dialog table {
+  width: 100%;
+  max-width: 100%;
+}
+/* line 7, ../sass/layouts/_table.scss */
+#main-content-wrapper table th, .ui-dialog table th {
+  background-color: #6ad2eb;
+  border-bottom: 1px solid #eaedf1;
+  color: #fff;
+  font-size: 18px;
+  padding: 20px 10px 20px 20px;
+}
+/* line 13, ../sass/layouts/_table.scss */
+#main-content-wrapper table th a, .ui-dialog table th a {
+  color: #fff;
+}
+/* line 18, ../sass/layouts/_table.scss */
+#main-content-wrapper table th.system-status-report__status-title, .ui-dialog table th.system-status-report__status-title {
+  padding: 10px 6px 10px 40px;
+  font-size: inherit;
+  color: inherit;
+  background-color: transparent;
+}
+/* line 24, ../sass/layouts/_table.scss */
+#main-content-wrapper table tbody, .ui-dialog table tbody {
+  font-size: 14px;
+}
+/* line 26, ../sass/layouts/_table.scss */
+#main-content-wrapper table tbody tr:nth-of-type(2n+1), .ui-dialog table tbody tr:nth-of-type(2n+1) {
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #dbe1e8;
+  border-top: 1px solid #dbe1e8;
+}
+/* line 33, ../sass/layouts/_table.scss */
+#main-content-wrapper table tbody tr.draggable.odd, .ui-dialog table tbody tr.draggable.odd {
+  background-color: transparent;
+}
+/* line 37, ../sass/layouts/_table.scss */
+#main-content-wrapper table tbody td.is-active, .ui-dialog table tbody td.is-active {
+  background-color: #f7be64;
+  color: #fff;
+}
+/* line 41, ../sass/layouts/_table.scss */
+#main-content-wrapper table tbody td, .ui-dialog table tbody td {
+  padding: 10px 10px 10px 20px;
+  vertical-align: middle;
+}
+/* line 45, ../sass/layouts/_table.scss */
+#main-content-wrapper table tbody td details, .ui-dialog table tbody td details {
+  min-height: 30px;
+}
+/* line 47, ../sass/layouts/_table.scss */
+#main-content-wrapper table tbody td details summary, .ui-dialog table tbody td details summary {
+  background-color: transparent;
+  border-bottom: none;
+  padding: 5px;
+  cursor: pointer;
+}
+/* line 55, ../sass/layouts/_table.scss */
+#main-content-wrapper table tbody td label, .ui-dialog table tbody td label {
+  font-size: 14px;
+}
+/* line 61, ../sass/layouts/_table.scss */
+#main-content-wrapper table tbody td .region-title__action .button:before, .ui-dialog table tbody td .region-title__action .button:before {
+  font-family: FontAwesome;
+  content: "\f047";
+  display: inline-block;
+  padding-right: 10px;
+  vertical-align: middle;
+}
+/* line 68, ../sass/layouts/_table.scss */
+#main-content-wrapper table tbody td .region-title__action .button, .ui-dialog table tbody td .region-title__action .button {
+  padding: 3px 5px;
+}
+/* line 73, ../sass/layouts/_table.scss */
+#main-content-wrapper table tbody td .tabledrag-handle, .ui-dialog table tbody td .tabledrag-handle {
+  overflow: visible;
+}
+/* line 75, ../sass/layouts/_table.scss */
+#main-content-wrapper table tbody td .tabledrag-handle .handle, .ui-dialog table tbody td .tabledrag-handle .handle {
+  height: 25px;
+  margin-top: -9px;
+  width: 30px;
+}
+/* line 82, ../sass/layouts/_table.scss */
+#main-content-wrapper table tbody td .views-ui-view-title, .ui-dialog table tbody td .views-ui-view-title {
+  color: #394263;
+  font-size: 14px;
+}
+/* line 86, ../sass/layouts/_table.scss */
+#main-content-wrapper table tbody td .views-ui-view-displays, #main-content-wrapper table tbody td .views-ui-view-machine-name, .ui-dialog table tbody td .views-ui-view-displays, .ui-dialog table tbody td .views-ui-view-machine-name {
+  color: #777;
+  font-weight: 100;
+  line-height: 20px;
+}
+/* line 97, ../sass/layouts/_table.scss */
+#main-content-wrapper #permissions th.checkbox, #main-content-wrapper #permissions td.checkbox, #main-content-wrapper #menu-overview th.checkbox, #main-content-wrapper #menu-overview td.checkbox, .ui-dialog #permissions th.checkbox, .ui-dialog #permissions td.checkbox, .ui-dialog #menu-overview th.checkbox, .ui-dialog #menu-overview td.checkbox {
+  display: table-cell;
+  vertical-align: top;
+}
+/* line 101, ../sass/layouts/_table.scss */
+#main-content-wrapper #permissions th, #main-content-wrapper #menu-overview th, .ui-dialog #permissions th, .ui-dialog #menu-overview th {
+  border-bottom: 1px solid #6ad2eb;
+}

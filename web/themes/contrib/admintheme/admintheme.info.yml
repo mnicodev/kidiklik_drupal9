@@ -1,0 +1,26 @@
+name: Drupal 8 HostInstantly Admin Theme
+type: theme
+base theme: classy
+description: 'Drupal 8 HostInstantly Admin Theme Version 1.0. You could buy more themes and plugins from us at <a href="http://www.hostinstantly.com">HostInstantly.com</a> and more tutoring at <a href="http://www.drupaltutoring.com">DrupalTutoring.com</a>.'
+# core: 8.x
+
+libraries:
+- hostinstantly_admin/bootstrap
+- hostinstantly_admin/css-styling
+
+regions:
+    top_header: 'Top Header'
+    breadcrumb: 'Breadcrumb'
+    highlighted: 'Highlighted'
+    content: 'Main Body Content'
+    footer: 'Footer'
+# version: '8.x-2.2'
+# core: '8.x'
+# project: 'hostinstantly_admin'
+# datestamp: 1468368000
+
+# Information added by Drupal.org packaging script on 2017-12-28
+version: '8.x-4.3'
+core: '8.x'
+project: 'admintheme'
+datestamp: 1514440987
