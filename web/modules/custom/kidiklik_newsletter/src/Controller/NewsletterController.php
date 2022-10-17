@@ -59,6 +59,7 @@ class NewsletterController extends ControllerBase
     $query->join("node__field_date_fin", "df", "df.entity_id=n.nid");
     $query->join("node__field_image", "img", "img.entity_id=n.nid");
     $query->join("node__field_format", "format", "format.entity_id=n.nid");
+    $query->join("node__field_url", "url", "url.entity_id=n.nid");
     $query->leftJoin("node__field_partage_departements", "par", "par.entity_id=n.nid");
 
     $query->fields("n", ["nid", "title", "status"]);
@@ -66,6 +67,7 @@ class NewsletterController extends ControllerBase
     $query->fields("df", ["field_date_fin_value"]);
     $query->fields("img", ["field_image_target_id"]);
     $query->fields("format", ["field_format_target_id"]);
+    $query->fields("url", ["field_url_uri"]);
 
     $query->condition("n.type", "publicite", "=");
     $query->condition("n.status", 1, "=");
@@ -84,6 +86,10 @@ class NewsletterController extends ControllerBase
     //kint($query->distinct()->__toString());
     $rs = current($query->execute()->fetchAll());
     $pub_img = \Drupal::entityTypeManager()->getStorage("file")->load($rs->field_image_target_id);
+    $pub_url = null;
+    if(!empty($rs->field_url_value)) {
+	    $pub_url = $rs->field_url_value;
+    }
     $file = null;
     if ((bool)$n->get("field_image_d_entete")->getValue() === true) {
       $entetes = $n->get("field_image_d_entete")->getValue();
@@ -132,6 +138,7 @@ class NewsletterController extends ControllerBase
       'image' => $json_entete['field_image'],
       "bandeau_rose" => $json_entete['field_bandeau_rose'],
       "pub" => $pub_img ? file_create_url($pub_img->getFileUri()) : null,
+      "pub_url" => $pub_url,
       "dep" => $dep,
       "url" => \Drupal::request()->getRequestUri()
     ];
