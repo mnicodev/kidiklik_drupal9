@@ -1291,7 +1291,14 @@ function getAjaxCoordonnees(array &$form, FormStateInterface $form_state)
         ],
         "#weight" => $poids_ville,
         '#validated' => TRUE
-      ];
+];
+      /*$form['lat'] = [
+	      'widget' => [
+		      '#type' => 'textfield',
+		      '#title' => 'lat',
+		      '#value' => 'test', //$rs->lat
+	      ]
+      ];*/
     }
 
 
@@ -1307,6 +1314,7 @@ function getAjaxCoordonnees(array &$form, FormStateInterface $form_state)
     $form["coordonnee"][] = $form["field_email"];
     $form["coordonnee"][] = $form["field_lien"];
     $form["coordonnee"][] = $form["field_lieu"];
+   // $form["coordonnee"][] = $form["lat"];
     if ($form["type"] == "agenda") {
       $form["coordonnee"][] = $form["field_activite"];
     }

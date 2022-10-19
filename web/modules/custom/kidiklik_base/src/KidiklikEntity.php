@@ -22,7 +22,10 @@ class KidiklikEntity
       ]);
       $node->__set("field_latitude", $ville["lat"]);
       $node->__set("field_longitude", $ville["lng"]);
-      $node->get('field_geolocation_demo_single')->delete();
+	      $geo = $node->get('field_geolocation_demo_single')->getIterator();
+	      foreach($geo as $key => $item) {
+		      $node->get('field_geolocation_demo_single')->removeitem($key);
+	      }
       $node->get('field_geolocation_demo_single')->appendItem([
         "lat" => $ville["lat"],
         "lng" => $ville["lng"]

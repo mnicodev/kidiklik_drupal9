@@ -232,7 +232,7 @@ $(function(){
 	Drupal.behaviors.activites_agenda = {
 		attach: function (context, settings) {
 
-			$("#edit-ville").change(function () {
+			$("#edit-field-ville select").change(function () {
 
 				$.ajax({
 					url: "/admin/villes/gps/"+$(this).val(),
