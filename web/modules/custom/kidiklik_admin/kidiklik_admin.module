@@ -1437,7 +1437,7 @@ $query->addTable('paragraph__field_date_de_fin', $rel, $join, 'paragraph__field_
     $query->addTable('node__field_departement', $rel, $join, 'field_dep');
     $query->addWhere('', 'field_dep.field_departement_target_id', get_term_departement(), '=');
   }
-  if ($view->id() == "content_adherent") {
+  if ($view->id() == "content_adherent" && $view->current_display !== 'adherent_publicites') {
     $date_deb = "";
     $date_fin = "";
     $date_deb = \Drupal::request()->get("date_deb");
@@ -1454,16 +1454,19 @@ $query->addTable('paragraph__field_date_de_fin', $rel, $join, 'paragraph__field_
         $query->where[1]["conditions"][1]["field"] = "DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') <= '" . $date_deb . "'
 				OR (DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') BETWEEN '" . $date_deb . "' and '" . $date_fin . "')";
 
-    } else unset($query->where[1]["conditions"][1]);
+    } else {
+	    unset($query->where[1]["conditions"][1]);
+    }
     if ($date_fin) {
       $query->where[1]["conditions"][2]["operator"] = "formula";
       if (!$date_deb) {
         $query->where[1]["conditions"][2]["field"] = "DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d') <= DATE_FORMAT('" . $date_fin . "', '%Y-%m-%d')
 				OR ('" . $date_fin . "' between DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') and DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d'))";
         unset($query->where[1]["conditions"][1]);
-      } else
+      } else {
         $query->where[1]["conditions"][2]["field"] = "DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d') >= DATE_FORMAT('" . $date_fin . "', '%Y-%m-%d')
 				OR (DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d') BETWEEN '" . $date_deb . "' and '" . $date_fin . "')";
+      }
 
     } else {
       unset($query->where[1]["conditions"][2]);
