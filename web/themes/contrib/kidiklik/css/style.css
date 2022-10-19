@@ -82,8 +82,10 @@ h1 {
   font-weight: 500; }
 
 #entete_national img {
-  width: 100%;
-  max-width: 400px; }
+  width: 100%; }
+  @media (max-width: 768px) {
+    #entete_national img {
+      max-width: 400px; } }
 
 #entete_national p {
   margin-bottom: 0; }
