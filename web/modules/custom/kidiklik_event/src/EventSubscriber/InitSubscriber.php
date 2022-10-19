@@ -73,7 +73,7 @@ class InitSubscriber implements EventSubscriberInterface
 
       $tab = explode(".", \Drupal::request()->getHost());
       array_shift($tab);
-      $url = "http://www." . implode(".", $tab) . "/";
+      $url = "http://www." . implode(".", $tab) . "/kidiklik-recrute.html";
 
       $redirect = new TrustedRedirectResponse($url, 302);
       $redirect->send();
