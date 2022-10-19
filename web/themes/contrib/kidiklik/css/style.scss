@@ -391,15 +391,7 @@ h1 {
 		position: relative;
 	}
 	.accueil {
-		position: absolute;
-		top: 0px;
-		left: 10px;
-		width: 80px;
-		z-index: 100;
-		background-position: 0px 8px;
-		padding-top: 10%;
-		max-width: 10%;
-		padding-left: 4px;
+		display: none;
 	}
 
 	.logo-national {
@@ -407,10 +399,7 @@ h1 {
 		max-width: 100%;
 		flex: 100%;
 	}
-	.logo-national img {
-		padding-left: 90px;
-		padding-right: 80px;
-	}
+	
 	.logo-national p {
 		margin-left: 0!important;
 		font-size: 30px!important;
