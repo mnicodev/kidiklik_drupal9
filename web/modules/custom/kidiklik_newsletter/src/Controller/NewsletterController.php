@@ -131,6 +131,7 @@ class NewsletterController extends ControllerBase
         }
       }
     }
+    
     //$blocs = array_merge($blocs,$blocs_nat);
     $entete = [
       "sujet" => htmlspecialchars_decode($json_entete['field_sujet'], ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401) ?? null, //$newsletter->get("field_sujet")->value,
@@ -188,9 +189,14 @@ class NewsletterController extends ControllerBase
       }
 
     }
+
     $globalSettings = \Drupal::service("settings");
+    $entete['www'] = 'www.';
+    if($globalSettings->get("environment") === 'dev') {
+      $entete['www'] = '';
+    }
     $entete['domaine'] = $globalSettings->get("domain_name");
-	$entete['url'] = 'https://'.$entete['dep']->getName().'.'.$globalSettings->get("domain_name").'/newsletter/'.$n->id().$n->url();
+	  $entete['url'] = 'https://'.$entete['dep']->getName().'.'.$globalSettings->get("domain_name").'/newsletter/'.$n->id().$n->url();
     $entete['nom_dep'] = current($entete['dep']->get('field_nom')->getValue())['value'];
     $build = [
       '#type' => "page",
