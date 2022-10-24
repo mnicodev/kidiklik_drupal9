@@ -82,7 +82,7 @@ function kidiklik_front_publicite_views_query_alter(Drupal\views\ViewExecutable 
 		$query->addTable("node_counter",$rel,$join,"nc");
 
 		/* pour récupérer la données du nb d'aff possible, on fait une jonction avec la table correspondante */
-		$config= [
+		/*$config= [
 			"type"=>"left",
 			"table" => "node__field_nombre_affichage_possible",
 			"field"=>"entity_id",
@@ -90,7 +90,7 @@ function kidiklik_front_publicite_views_query_alter(Drupal\views\ViewExecutable 
 			"left_field"=>"nid",
 			"operator"=>"="
 		];
-		$join=\Drupal\views\Views::pluginManager('join')->createInstance("standard",$config);
+		$join=\Drupal\views\Views::pluginManager('join')->createInstance("standard",$config);*/
 		//$rel=$query->addRelationship("nb_aff_poss",$join,"node_field_data");
 		//$query->addTable("node__field_nombre_affichage_possible",$rel,$join,"nb_aff_poss");
 

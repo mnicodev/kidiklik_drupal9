@@ -580,7 +580,7 @@ function kidiklik_admin_form_node_activite_form_alter(&$form, FormStateInterface
     $form["field_rubriques_activite"]["widget"]["#size"] = 1;
   }
 
-  unset($form["field_date"]["widget"]['add_more']);
+  //unset($form["field_date"]["widget"]['add_more']);
 
   $adherent_id = null;
   if (!empty(\Drupal::request()->query->get("adherent_id"))) {

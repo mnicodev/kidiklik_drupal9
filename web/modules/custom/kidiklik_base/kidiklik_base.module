@@ -40,6 +40,13 @@ function kidiklik_base_theme()
   ];
 }
 
+function get_date() {
+  $date = \Drupal::Request()->query->get('aladate');
+  if(empty($date)) {
+    return date('Y-m-d');
+  }
+  return $date;
+}
 
 function get_departement()
 {

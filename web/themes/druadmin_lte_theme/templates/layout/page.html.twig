@@ -79,6 +79,7 @@
     {% endif %}
     <!-- User Account: style can be found in dropdown.less -->
     <div class="navbar-custom-menu">
+      <form action="/" method="get" target="blank">
       <ul class="nav navbar-nav">
         {% if page.navbar_right_notifications %}
           {{ page.navbar_right_notifications }}
@@ -114,6 +115,13 @@
             </ul>
           </li>
           {% else %}
+            <li style="padding: 10px;">
+              <input type="date" class="form-date form-control" value="" name="aladate" />
+            </li>
+            <li style="border-left:1px solid lightgray;padding: 10px;">
+              
+              <button class="btn btn-info" href="/" class="btn btn-default btn-flat">Voir le site</button>
+            </li>
             <li>
               <a href="{{ base_path }}X255zTZB9ytq/{{ user.uid }}/edit">
               {% trans %}My account{% endtrans %}
@@ -126,6 +134,7 @@
         {% endif %}
         
       </ul>
+      </form>
     </div>
   </nav>
 </header>

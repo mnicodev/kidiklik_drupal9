@@ -419,10 +419,11 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
     $view->current_display == "bloc_mise_en_avant_nat" ||
     $view->current_display == "bloc_mise_en_avant_dep" ||
     $view->current_display == "articles_dep_accueil_3") {
-    $query->where[1]["conditions"][2]["value"] = date("Y-m-d");
+      
+    $query->where[1]["conditions"][2]["value"] = get_date();
     $query->where[1]["conditions"][2]["operator"] = "<=";
 
-    $query->where[1]["conditions"][3]["value"] = date("Y-m-d");
+    $query->where[1]["conditions"][3]["value"] = get_date();
     $query->where[1]["conditions"][3]["operator"] = ">=";
   }
   if($view->current_display == "bloc_mise_en_avant_nat") {
