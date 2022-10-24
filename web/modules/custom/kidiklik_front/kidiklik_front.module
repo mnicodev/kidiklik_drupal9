@@ -424,9 +424,25 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
 
     $query->where[1]["conditions"][3]["value"] = date("Y-m-d");
     $query->where[1]["conditions"][3]["operator"] = ">=";
-    //ksm($query->where);
   }
-
+  if($view->current_display == "bloc_mise_en_avant_nat") {
+    if($view->current_display == "bloc_mise_en_avant_nat") {
+      $configuration = array(
+        'type' => 'LEFT',
+        'table' => 'node__field_partage_departements',
+        'field' => 'entity_id',
+        'left_table' => 'node_field_data',
+        'left_field' => 'nid',
+        'operator' => '=',
+      );
+  
+      $join = \Drupal\views\Views::pluginManager('join')
+        ->createInstance('standard', $configuration);
+      $rel = $query->addRelationship('node__field_partage_departements', $join, 'node_field_data');
+      $query->addTable('node__field_partage_departements', $rel, $join, 'node__field_partage_departements');
+      $query->addWhere('', 'node__field_partage_departements.field_partage_departements_target_id', [get_term_departement()], '=');
+    }
+  }
 
   if ($view->current_display == "rubriques_activites_footer") {
     $query->where[1]["conditions"][2]["value"] = get_term_departement();
