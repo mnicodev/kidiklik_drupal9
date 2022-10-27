@@ -22,14 +22,14 @@ class InitSubscriber implements EventSubscriberInterface
 	  $request = $event->getRequest();
    //kint($request);
 	  $node = \Drupal::routeMatch()->getParameters()->get("node");
-    if($node === null) {
+    /*if($node === null) {
       $request_uri = $request->server->get('REQUEST_URI');
       preg_match('/\/(.*)\/([0-9]*)-(.*)/',$request_uri, $match);
      // kint($match);exit;
       if(count($match)) {
         $node = Node::Load($match[2]);
       }
-    }
+	  }*/
    
     if (!empty($node)) {
       if (in_array($node->getType(), ['client', 'adherent']) && strstr($request->getPathInfo(), 'edit') === false) {
@@ -37,7 +37,7 @@ class InitSubscriber implements EventSubscriberInterface
         $redirect->send();
       }
 
-      if($node->__isset('field_departement')) {
+      /*if($node->__isset('field_departement')) {
         $globalSettings = \Drupal::service("settings");
         $domain = $globalSettings->get("domain_name");
         $dep_node = (int)\Drupal::entityTypeManager()
@@ -61,10 +61,9 @@ class InitSubscriber implements EventSubscriberInterface
           
                 $redirect = new TrustedRedirectResponse($url_redirect, 302, $response_headers);
                 $redirect->addCacheableDependency($node);
-               // kint($url_redirect);
                $redirect->send();
         }
-      }
+      }*/
       
       
     } /*else {
