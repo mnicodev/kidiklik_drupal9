@@ -1250,15 +1250,18 @@ function getAjaxCoordonnees(array &$form, FormStateInterface $form_state)
     $form["field_lien"]["widget"][0]["value"]["#value"] = current($adherent->get("field_lien")->getValue());
     $form["field_ville_save"]["widget"][0]["value"]["#value"] = current($adherent->get("field_ville_save")->getValue());
 
-    /*$db = \Drupal\Core\Database\Database::getConnection();
-    $rs = $db->query('select * from villes where commune = "%'.current($adherent->get("field_ville_save")->getValue()).'%"')->fetchAll();*/
+    $db = \Drupal\Core\Database\Database::getConnection();
+    $rs = $db->query('select * from villes where commune = "'.$adherent->get("field_ville_save")->value.'"')->fetch();
     //$form["field_activite_save"]["widget"][0]["value"]["#value"]=$form_state->getValue("field_activite_save");
 
     if ($form["type"] == "agenda") {
+      $gps = [];
       $tab[] = "Veuillez choisir une activité";
       foreach ($activites as $activite) {
 
         $tab[$activite->id()] = $activite->getTitle();
+        $rs = $db->query('select * from villes where commune = "'.$activite->get("field_ville_save")->value.'"')->fetch();
+        $gps[$activite->id()] = $rs->lat.'_'.$rs->lng;
       }
       $form["field_activite"] = [
         "#type" => "select",
@@ -1266,7 +1269,8 @@ function getAjaxCoordonnees(array &$form, FormStateInterface $form_state)
         "#title" => "Activités",
         "#attributes" => [
           "id" => "activites",
-        ]
+         // "data-gps" => json_encode($gps),
+         ]
       ];
 
       $poids_ville = 16;
@@ -1325,6 +1329,7 @@ function getAjaxCoordonnees(array &$form, FormStateInterface $form_state)
     $renderedField = $renderer->render($form["coordonnee"]);
 
     $response->addCommand(new ReplaceCommand('#coordonnees-adherent', $renderedField));
+    $response->addCommand(new InvokeCommand(null, 'putGps', [$rs->lat."_".$rs->lng]));
   }
   return $response;
 }

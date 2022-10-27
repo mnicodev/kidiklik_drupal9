@@ -52,45 +52,17 @@ function kidiklik_event_node_presave(Drupal\node\NodeInterface $node)
 
   $type = current($node->get("type")->getValue())["target_id"];
   if ($type == "agenda") {
-    //kint($node);exit;
+
     $activite = \Drupal::entityTypeManager()
       ->getStorage("node")
       ->load($node->get("field_activite_save")->value);
     if(!empty($activite)) {
 	    $node->set("field_activite", $activite);
-	    if(!empty($activite->get('field_geolocation_demo_single'))) {
-		    $lat = $activite->get('field_geolocation_demo_single')->first()->get('lat')->getString();
-		    $lng = $activite->get('field_geolocation_demo_single')->first()->get('lng')->getString();
-		    if($lat === null || $lng ===null) {
-			    $ville = KidiklikEntity::getGPS($node->get('field_ville_save')->value);
-			    $lat = $ville['lat'];
-			    $lng = $ville['lng'];
-		    }
-	      $node->get("field_geolocalisation")->appendItem([
-		"lat" => $lat,
-		"lng" => $lng
-	      ]);
-	      $node->__set("field_latitude", $lat);
-	      $node->__set("field_longitude", $lng);
-	      $geo = $node->get('field_geolocation_demo_single')->getIterator();
-	      foreach($geo as $key => $item) {
-		      $node->get('field_geolocation_demo_single')->removeitem($key);
-	      }
-	      //$node->get('field_geolocation_demo_single')->delete();
-	      $node->get('field_geolocation_demo_single')->appendItem([
-		"lat" => $lat,
-		"lng" => $lng
-		]);
-	    } else {
-	    	$node = KidiklikEntity::setGPS($node);
-	    }
+	   
+	    } 
     }
 
-  }
-
-  if ($type == "activite") {
-    $node = KidiklikEntity::setGPS($node);
-  }
+  
 
   if($type === 'article') {
     if(get_departement() !== 0) {

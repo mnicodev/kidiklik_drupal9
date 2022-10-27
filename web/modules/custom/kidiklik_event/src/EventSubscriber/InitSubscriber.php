@@ -10,21 +10,63 @@ use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Drupal\node\Entity\Node;
+use Drupal\Core\Url;
 
 class InitSubscriber implements EventSubscriberInterface
 {
 
   public function checkRedirect(GetResponseEvent $event)
   {
+    global $_SERVER;
+   
 	  $request = $event->getRequest();
-
+   //kint($request);
 	  $node = \Drupal::routeMatch()->getParameters()->get("node");
+    if($node === null) {
+      $request_uri = $request->server->get('REQUEST_URI');
+      preg_match('/\/(.*)\/([0-9]*)-(.*)/',$request_uri, $match);
+     // kint($match);exit;
+      if(count($match)) {
+        $node = Node::Load($match[2]);
+      }
+    }
+   
     if (!empty($node)) {
       if (in_array($node->getType(), ['client', 'adherent']) && strstr($request->getPathInfo(), 'edit') === false) {
         $redirect = new RedirectResponse('/');
         $redirect->send();
       }
 
+      if($node->__isset('field_departement')) {
+        $globalSettings = \Drupal::service("settings");
+        $domain = $globalSettings->get("domain_name");
+        $dep_node = (int)\Drupal::entityTypeManager()
+        ->getStorage("taxonomy_term")
+        ->load((int)$node->get('field_departement')->first()->getString())->getName();
+       
+        if($dep_node !== (int)get_departement() && in_array($node->getType(), ['agenda', 'activite','article'])) {
+          if($dep_node === 0) {
+            
+            $dep_node = 'www';
+            $url_redirect = sprintf('https://%s.%s%s', $dep_node, $domain, $node->url());
+            if($globalSettings->get('environment') === 'dev') {
+              $dep_node = '';
+              $url_redirect = sprintf('https://%s%s%s', $dep_node, $domain, $node->url());
+            }
+
+          }
+          $response_headers = [
+            'Cache-Control' => 'no-cache, no-store, must-revalidate',
+          ];
+          
+                $redirect = new TrustedRedirectResponse($url_redirect, 302, $response_headers);
+                $redirect->addCacheableDependency($node);
+               // kint($url_redirect);
+               $redirect->send();
+        }
+      }
+      
+      
     } /*else {
 	    preg_match('/\/(.*)\/(\d*)(.*)/',$request->getPathInfo(), $match);
 	    if(!empty($match[2]) && !empty($match[3])) {

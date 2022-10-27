@@ -382,6 +382,7 @@ $(function(){
 			$("#activites").change(function() {
 				console.log($(this).val());
 				$("#edit-field-activite-save-wrapper").find("input").val($(this).val());
+				
 			});
 
 			$(".field--name-field-type").find("select").change(function() {
@@ -405,8 +406,18 @@ $(function(){
 		}
 	}
 
+	
+
 	$.fn.putSelect2 = function(argument) {
 		console.log(argument);
+	}
+
+	$.fn.putGps = function(argument) {
+		let gps = argument.split('_');
+		jQuery('#edit-field-geolocation-demo-single-0-lat').val(gps[0]);
+		jQuery('#edit-field-geolocation-demo-single-0-lng').val(gps[1]);
+
+
 	}
 
 	$.fn.getAjaxVille = function(argument) {
