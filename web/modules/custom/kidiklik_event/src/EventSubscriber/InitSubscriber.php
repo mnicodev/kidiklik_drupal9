@@ -22,6 +22,7 @@ class InitSubscriber implements EventSubscriberInterface
 	  $request = $event->getRequest();
     $user_roles = \Drupal::currentUser()->getAccount()->getRoles();
 	  $node = \Drupal::routeMatch()->getParameters()->get("node");
+    
     if($node === null) {
       $request_uri = $request->server->get('REQUEST_URI');
       preg_match('/\/(.*)\/([0-9]*)-(.*)/',$request_uri, $match);
@@ -36,14 +37,16 @@ class InitSubscriber implements EventSubscriberInterface
         $redirect = new RedirectResponse('/');
         $redirect->send();
       }
-      if($node->__isset('field_departement') && !empty($node->get('field_departement'))) {
+      
+      if($node->__isset('field_departement') && (bool)$node->get('field_departement')->getValue() !== false) {
         $dep_node = (int)\Drupal::entityTypeManager()
           ->getStorage("taxonomy_term")
           ->load((int)$node->get('field_departement')->first()->getString())->getName();
+        
       }
-
+     // kint($dep_node);exit;
       if(\Drupal::routeMatch()->getRouteName() === 'entity.node.canonical') {
-        if($node->__isset('field_departement') && !empty($node->get('field_departement'))) {
+        if(!empty($dep_node)) {
 
           $globalSettings = \Drupal::service("settings");
           $domain = $globalSettings->get("domain_name");
@@ -59,6 +62,8 @@ class InitSubscriber implements EventSubscriberInterface
                 
               }
   
+            } elseif($dep_node < 10) {
+              $dep_node = '0'.$dep_node;
             } 
             
             $url_redirect = sprintf('https://%s.%s%s', $dep_node, $domain, $node->url());
