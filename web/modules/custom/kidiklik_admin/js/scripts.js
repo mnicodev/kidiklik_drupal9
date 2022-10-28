@@ -382,6 +382,15 @@ $(function(){
 			$("#activites").change(function() {
 				console.log($(this).val());
 				$("#edit-field-activite-save-wrapper").find("input").val($(this).val());
+				let gps = JSON.parse(jQuery(this).attr('data-gps'));
+
+				for(item of gps) {
+
+					if(item.id === $(this).val()) {
+						jQuery('#edit-field-geolocation-demo-single-0-lat').val(item.gps.lat);
+						jQuery('#edit-field-geolocation-demo-single-0-lng').val(item.gps.lng);
+					}
+				}
 				
 			});
 
@@ -413,9 +422,10 @@ $(function(){
 	}
 
 	$.fn.putGps = function(argument) {
-		let gps = argument.split('_');
-		jQuery('#edit-field-geolocation-demo-single-0-lat').val(gps[0]);
-		jQuery('#edit-field-geolocation-demo-single-0-lng').val(gps[1]);
+		let gps = JSON.parse(argument);
+		
+		jQuery('#edit-field-geolocation-demo-single-0-lat').val(gps.lat);
+		jQuery('#edit-field-geolocation-demo-single-0-lng').val(gps.lng);
 
 
 	}

@@ -816,16 +816,31 @@ function kidiklik_admin_form_node_agenda_edit_form_alter(&$form, FormStateInterf
   }
   $node_agenda = \Drupal::request()->attributes->get('node');
   $activites_list = ["" => "Choisissez l'activité"];
-  $form["field_activite"] = [
-    "#type" => "select",
-    "#title" => "Activités",
-
-  ];
+  
   //kint($node_agenda);
+  $db = \Drupal\Core\Database\Database::getConnection();
+  $gps = [];
   $form["#group_children"]["field_activite"] = "group_coordonnees";
   foreach ($activites as $key => $activite) {
     $activites_list[$key] = $activite->getTitle();
+    
+    $rs = $db->query('select * from villes where commune = "'.$activite->get("field_ville_save")->value.'"')->fetch();
+    $gps[] = [
+      'id' => $activite->id(),
+      'gps' => [
+        'lat' => $rs->lat,
+        'lng' => $rs->lng
+      ]
+    ];
   }
+  $form["field_activite"] = [
+    "#type" => "select",
+    "#title" => "Activités",
+    "#attributes" => [
+      "id" => "activites",
+      "data-gps" => json_encode($gps),
+     ]
+  ];
   $form["field_activite"]["#options"] = $activites_list;
   if (!empty($form["field_activite_save"]["widget"][0]["value"]["#default_value"])) {
     $form["field_activite"]["#default_value"] = $form["field_activite_save"]["widget"][0]["value"]["#default_value"];
@@ -1261,7 +1276,13 @@ function getAjaxCoordonnees(array &$form, FormStateInterface $form_state)
 
         $tab[$activite->id()] = $activite->getTitle();
         $rs = $db->query('select * from villes where commune = "'.$activite->get("field_ville_save")->value.'"')->fetch();
-        $gps[$activite->id()] = $rs->lat.'_'.$rs->lng;
+        $gps[] = [
+          'id' => $activite->id(),
+          'gps' => [
+            'lat' => $rs->lat,
+            'lng' => $rs->lng
+          ]
+        ];
       }
       $form["field_activite"] = [
         "#type" => "select",
@@ -1269,7 +1290,7 @@ function getAjaxCoordonnees(array &$form, FormStateInterface $form_state)
         "#title" => "Activités",
         "#attributes" => [
           "id" => "activites",
-         // "data-gps" => json_encode($gps),
+          "data-gps" => json_encode($gps),
          ]
       ];
 
@@ -1329,7 +1350,7 @@ function getAjaxCoordonnees(array &$form, FormStateInterface $form_state)
     $renderedField = $renderer->render($form["coordonnee"]);
 
     $response->addCommand(new ReplaceCommand('#coordonnees-adherent', $renderedField));
-    $response->addCommand(new InvokeCommand(null, 'putGps', [$rs->lat."_".$rs->lng]));
+    $response->addCommand(new InvokeCommand(null, 'putGps', [json_encode(['lat' => $rs->lat,'lng' => $rs->lng])]));
   }
   return $response;
 }
