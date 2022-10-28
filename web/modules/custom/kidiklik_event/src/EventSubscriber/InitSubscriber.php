@@ -20,7 +20,7 @@ class InitSubscriber implements EventSubscriberInterface
     global $_SERVER;
    
 	  $request = $event->getRequest();
- 
+    $user_roles = \Drupal::currentUser()->getAccount()->getRoles();
 	  $node = \Drupal::routeMatch()->getParameters()->get("node");
     if($node === null) {
       $request_uri = $request->server->get('REQUEST_URI');
@@ -77,7 +77,7 @@ class InitSubscriber implements EventSubscriberInterface
 
       
       
-      if(\Drupal::routeMatch()->getRouteName() === 'entity.node.edit_form' && $dep_node !== (int)get_departement()) {
+      if(in_array('administrateur_de_departement', $user_roles) && \Drupal::routeMatch()->getRouteName() === 'entity.node.edit_form' && $dep_node !== (int)get_departement()) {
             drupal_set_message(t("Vous n'êtes pas autorisé à éditer cette page"), 'error');
             $redirect = new RedirectResponse('/admin');
             $redirect->send();
@@ -90,7 +90,7 @@ class InitSubscriber implements EventSubscriberInterface
     preg_match("/admin/", $request->getRequestUri(), $rs);
     if (count($rs) > 0 && !in_array('administrator', \Drupal::currentUser()->getAccount()->getRoles())) {
       $term_dep = (int)current(user_load(\Drupal::currentUser()->getAccount()->id())->get('field_departement')->getValue())['target_id'];
-      $user_roles = \Drupal::currentUser()->getAccount()->getRoles();
+      
       //kint(\Drupal::currentUser()->getAccount()->getRoles());exit;
       if ($term_dep !== (int)get_term_departement()) {
         drupal_set_message(t("Vous n'êtes pas autorisé à accéder à ce gestionnaire"), 'error');
