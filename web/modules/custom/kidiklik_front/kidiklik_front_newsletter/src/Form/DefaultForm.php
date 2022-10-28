@@ -38,7 +38,7 @@ class DefaultForm extends FormBase
       '#weight' => '0',
       '#group' => 'group',
       '#attributes' => [
-
+        'class' => 'form-control'
       ]
     ];
     $form['group']['prenom'] = [
@@ -46,8 +46,8 @@ class DefaultForm extends FormBase
       '#title' => $this->t('Prénom'),
       '#weight' => '1',
       '#size' => '40',
-      'attributes' => [
-
+      '#attributes' => [
+        'class' => 'form-control'
       ]
     ];
     $form['group']['email'] = [
@@ -58,7 +58,7 @@ class DefaultForm extends FormBase
         'placeholder' => 'xxxx@domain.aaa',
         'pattern' => '[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$',
         'type' => 'email',
-
+        'class' => 'form-control'
       ],
       '#default_value' => \Drupal::request()->get('email'),
       '#weight' => '1',

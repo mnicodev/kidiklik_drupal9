@@ -50,7 +50,7 @@ function kidiklik_preprocess_page(&$variables) {
 
 function kidiklik_preprocess_html(&$variables) {
 	$variables['url_statistiques']=\Drupal::request()->getBasePath() . '/' . drupal_get_path('module', 'statistics') . '/statistics.php';
-	$variables['url_mailjet']=\Drupal::request()->getBasePath() . '/' . drupal_get_path('module', 'kidiklik_front_newsletter') . '/email_to_newsletter.php';
+	$variables['url_mailjet']=\Drupal::request()->getBasePath() . '/kidiklik_front_newsletter/send';
 	$variables['base_url']=\Drupal::request()->getBasePath();
 	$variables['domain_name']=\Drupal::service("settings")->get('domain_name');
 	$variables['departement'] = get_departement();
