@@ -98,7 +98,12 @@ function kidiklik_preprocess_field(&$variables) {
 				}
 			}	
 		}	
-		
+	}
+	if($variables['field_name'] === 'field_telephone') {
+		foreach($variables['items'] as $key => $item) {
+			$variables['items'][$key]['content']['#context']['value'] = str_replace(['&#13;','&#13','&#10;','&#10'],['','','',''],$variables['items'][$key]['content']['#context']['value']);
+		}
+
 	}
 	if(\Drupal::request()->attributes->get('node') !== null) {
 		$node = \Drupal::request()->attributes->get('node');

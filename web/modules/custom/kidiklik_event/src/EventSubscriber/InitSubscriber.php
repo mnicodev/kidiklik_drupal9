@@ -20,63 +20,71 @@ class InitSubscriber implements EventSubscriberInterface
     global $_SERVER;
    
 	  $request = $event->getRequest();
-   //kint($request);
+ 
 	  $node = \Drupal::routeMatch()->getParameters()->get("node");
-    /*if($node === null) {
+    if($node === null) {
       $request_uri = $request->server->get('REQUEST_URI');
       preg_match('/\/(.*)\/([0-9]*)-(.*)/',$request_uri, $match);
-     // kint($match);exit;
+     
       if(count($match)) {
         $node = Node::Load($match[2]);
       }
-	  }*/
+	  }
    
     if (!empty($node)) {
       if (in_array($node->getType(), ['client', 'adherent']) && strstr($request->getPathInfo(), 'edit') === false) {
         $redirect = new RedirectResponse('/');
         $redirect->send();
       }
-
-      /*if($node->__isset('field_departement')) {
-        $globalSettings = \Drupal::service("settings");
-        $domain = $globalSettings->get("domain_name");
+      if($node->__isset('field_departement') && !empty($node->get('field_departement'))) {
         $dep_node = (int)\Drupal::entityTypeManager()
-        ->getStorage("taxonomy_term")
-        ->load((int)$node->get('field_departement')->first()->getString())->getName();
-       
-        if($dep_node !== (int)get_departement() && in_array($node->getType(), ['agenda', 'activite','article'])) {
-          if($dep_node === 0) {
-            
-            $dep_node = 'www';
-            $url_redirect = sprintf('https://%s.%s%s', $dep_node, $domain, $node->url());
-            if($globalSettings->get('environment') === 'dev') {
-              $dep_node = '';
-              $url_redirect = sprintf('https://%s%s%s', $dep_node, $domain, $node->url());
-            }
+          ->getStorage("taxonomy_term")
+          ->load((int)$node->get('field_departement')->first()->getString())->getName();
+      }
 
-          }
-          $response_headers = [
-            'Cache-Control' => 'no-cache, no-store, must-revalidate',
-          ];
+      if(\Drupal::routeMatch()->getRouteName() === 'entity.node.canonical') {
+        if($node->__isset('field_departement') && !empty($node->get('field_departement'))) {
+
+          $globalSettings = \Drupal::service("settings");
+          $domain = $globalSettings->get("domain_name");
           
-                $redirect = new TrustedRedirectResponse($url_redirect, 302, $response_headers);
-                $redirect->addCacheableDependency($node);
-               $redirect->send();
+          
+          if($dep_node !== (int)get_departement() && in_array($node->getType(), ['agenda', 'activite','article'])) {
+            if($dep_node === 0) {
+              
+              $dep_node = 'www';
+              
+              if($globalSettings->get('environment') === 'dev') {
+                $dep_node = '';
+                
+              }
+  
+            } 
+            
+            $url_redirect = sprintf('https://%s.%s%s', $dep_node, $domain, $node->url());
+            
+            $response_headers = [
+              'Cache-Control' => 'no-cache, no-store, must-revalidate',
+            ];
+            
+            $redirect = new TrustedRedirectResponse($url_redirect, 302, $response_headers);
+            $redirect->addCacheableDependency($node);
+            $redirect->send();
+            exit;
+          }
         }
-      }*/
-      
-      
-    } /*else {
-	    preg_match('/\/(.*)\/(\d*)(.*)/',$request->getPathInfo(), $match);
-	    if(!empty($match[2]) && !empty($match[3])) {
-		    $test_node = Node::Load($match[2]);
-		    if(!empty($test_node)) {
-			    $redirect = new RedirectResponse($test_node->url());
-			    $redirect->send();
-		    }
+      }
 
-	    }
-      }*/
+      
+      
+      if(\Drupal::routeMatch()->getRouteName() === 'entity.node.edit_form' && $dep_node !== (int)get_departement()) {
+            drupal_set_message(t("Vous n'êtes pas autorisé à éditer cette page"), 'error');
+            $redirect = new RedirectResponse('/admin');
+            $redirect->send();
+            exit;
+      }
+      
+    } 
 
 
     preg_match("/admin/", $request->getRequestUri(), $rs);
