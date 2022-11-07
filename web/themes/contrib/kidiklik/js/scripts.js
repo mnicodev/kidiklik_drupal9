@@ -142,13 +142,14 @@ jQuery('#menu').hide();
 
   node = jQuery("#newsletter-form").attr('data-drupal-selector');
 
-  if(window.email !== undefined) {
-    //jQuery("#newsletter-form").attr('method', 'get');
-    if(window.email !== null && window.email !== '') {
+	var url=new URL(window.location.href);
+	var email = url.searchParams.get('record_email');
+	console.log(email);
+  if(email !== undefined && email !== null && email !== '') {
       jQuery('.main-container .highlighted').html('<div class="alert alert-secondary">Envoi de la demande d\'inscription. Veuillez patienter ...</div>');
       jQuery.ajax({
         url: window.url_mailjet,
-        data: {email:window.email, dept: window.departement},
+        data: {email:email, dept: window.departement},
         success: function(response) {
           if(response === 'ok') {
             msg = '<div class="alert alert-success">Inscription réussie</div>';
@@ -159,8 +160,6 @@ jQuery('#menu').hide();
         }
 
       })
-    }
-
   }
 
 	jQuery('.bloc-publicite img').each(function() {
