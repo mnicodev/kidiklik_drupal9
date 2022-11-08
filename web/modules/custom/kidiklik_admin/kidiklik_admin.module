@@ -824,12 +824,12 @@ function kidiklik_admin_form_node_agenda_edit_form_alter(&$form, FormStateInterf
   foreach ($activites as $key => $activite) {
     $activites_list[$key] = $activite->getTitle();
     
-    $rs = $db->query('select * from villes where commune = "'.$activite->get("field_ville_save")->value.'"')->fetch();
+    //$rs = $db->query('select * from villes where commune = "'.$activite->get("field_ville_save")->value.'"')->fetch();
     $gps[] = [
       'id' => $activite->id(),
       'gps' => [
-        'lat' => $rs->lat,
-        'lng' => $rs->lng
+        'lat' => $activite->get('field_latitude')->value,
+        'lng' => $activite->get('field_longitude')->value
       ]
     ];
   }
@@ -1275,12 +1275,12 @@ function getAjaxCoordonnees(array &$form, FormStateInterface $form_state)
       foreach ($activites as $activite) {
 
         $tab[$activite->id()] = $activite->getTitle();
-        $rs = $db->query('select * from villes where commune = "'.$activite->get("field_ville_save")->value.'"')->fetch();
+        //$rs = $db->query('select * from villes where commune = "'.$activite->get("field_ville_save")->value.'"')->fetch();
         $gps[] = [
           'id' => $activite->id(),
           'gps' => [
-            'lat' => $rs->lat,
-            'lng' => $rs->lng
+            'lat' => $activite->get('field_latitude')->value,
+            'lng' => $activite->get('field_longitude')->value
           ]
         ];
       }
