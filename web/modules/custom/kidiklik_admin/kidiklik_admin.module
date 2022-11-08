@@ -537,6 +537,7 @@ function kidiklik_admin_form_node_reportage_edit_form_alter(&$form, FormStateInt
 
 function kidiklik_admin_form_node_activite_form_alter(&$form, FormStateInterface $form_state, $form_id)
 {
+  
   $term_dep = get_term_departement();
   $form["#attached"]["library"][] = "kidiklik_admin/kidiklik_admin.commands";
   $form["type"] = "activite";
@@ -828,8 +829,8 @@ function kidiklik_admin_form_node_agenda_edit_form_alter(&$form, FormStateInterf
     $gps[] = [
       'id' => $activite->id(),
       'gps' => [
-        'lat' => $activite->get('field_latitude')->value,
-        'lng' => $activite->get('field_longitude')->value
+        'lat' => $activite->get('field_geolocation_demo_single')->first()->get('lat')->getValue(),
+        'lng' => $activite->get('field_geolocation_demo_single')->first()->get('lng')->getValue()
       ]
     ];
   }
@@ -1279,8 +1280,8 @@ function getAjaxCoordonnees(array &$form, FormStateInterface $form_state)
         $gps[] = [
           'id' => $activite->id(),
           'gps' => [
-            'lat' => $activite->get('field_latitude')->value,
-            'lng' => $activite->get('field_longitude')->value
+            'lat' => $activite->get('field_geolocation_demo_single')->first()->get('lat')->getValue(),
+            'lng' => $activite->get('field_geolocation_demo_single')->first()->get('lng')->getValue()
           ]
         ];
       }
