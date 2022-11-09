@@ -642,6 +642,7 @@ function kidiklik_admin_form_node_activite_form_alter(&$form, FormStateInterface
 
 function kidiklik_admin_form_node_activite_edit_form_alter(&$form, FormStateInterface $form_state, $form_id)
 {
+ 
   kidiklik_admin_form_node_activite_form_alter($form, $form_state, $form_id);
   $cols = &$form['field_mise_en_avant']['widget']['entities']['#table_fields'];
   $cols['field_type'] = [

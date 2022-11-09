@@ -139,7 +139,6 @@ $(function(){
 
 
 	})
-	$(".node--type-activite").find("#edit-field-date-wrapper").find(".paragraphs-dropbutton-wrapper").remove();
 
 	if($("#edit-field-conditionne-nombre-aff-value").length) {
 	    $("#edit-field-conditionne-nombre-aff-value").on('change',function() {
