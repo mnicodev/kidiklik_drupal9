@@ -1,0 +1,11 @@
+name: Minifier HTML Source Output
+type: module
+description: Minify HTML, CSS, JS included in markup.
+core: 8.x
+core_version_requirement: ^8 || ^9
+package: Performance and scalability
+
+# Information added by Drupal.org packaging script on 2021-10-08
+version: '8.x-2.0-beta3'
+project: 'minifier_html'
+datestamp: 1633693210
