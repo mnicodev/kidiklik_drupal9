@@ -90,7 +90,10 @@ class PubEntity {
         $rs = $this->query();
         
         foreach ($rs as $item) {
-            $node = Node::load($item->nid);
+		$node = Node::load($item->nid);
+		$cpt = (int)$node->get('field_compteur_affichage')->value;
+		$node->__set('field_compteur_affichage', ++$cpt);
+		$node->save();
             //$node->get("field_image")->first()->getValue()
             $fid = current($node->get("field_image")->getValue())["target_id"];
             if (!empty($fid)) {
