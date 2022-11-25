@@ -41,14 +41,16 @@ class NodeInsertSubscriber implements EventSubscriberInterface
     }
 
     if ($type == "message_contact") {
-      $entity->__set("field_date_envoi", date("Y-m-d"));
-      $entity->save();
       $mailManager = \Drupal::service('plugin.manager.mail');
-      $module = ‘kidiklik_event’;
+      $module = 'kidiklik_event';
       $key = 'create_message';
-      $to = current($term->get("field_e_mail")->getValue())["value"];
+      $params = [];
+      $to = $term->get('field_e_mail')->value;
+      $params['from'] = 'noreply@kidiklik.fr';
+      $params['body'] = $entity->get("field_votre_question")->value;
+      $params['subject'] = sprintf('Message de %s %s',$entity->get('field_nom')->value,$entity->get('field_prenom')->value);
       $params['message'] = $entity->get("field_votre_question")->value;
-      $params['node_title'] = $entity->label();
+      $params['title'] = sprintf('Message de %s %s',$entity->get('field_nom')->value,$entity->get('field_prenom')->value);
       $langcode = "fr";
       $send = true;
       //kint($entity->get("field_votre_question")->value);exit;

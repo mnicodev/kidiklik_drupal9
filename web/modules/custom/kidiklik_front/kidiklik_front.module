@@ -284,9 +284,30 @@ function getCategories(array &$form, FormStateInterface $form_state)
   $response->addCommand(new ReplaceCommand('#sous-categories', $renderedField));
 }
 
+
+
 function kidiklik_front_validate_contact_form($form, FormStateInterface $form_state)
 {
-
+ /* $term_dep = current(\Drupal::entityTypeManager()
+    ->getStorage("taxonomy_term")
+    ->loadByProperties(['name' => get_departement()]));
+  if(!empty($term_dep)) {
+    $email = 'nico@3wou.net';//$term_dep->get('field_e_mail')->value;
+    if(!empty($email)) {
+      $langcode = \Drupal::currentUser()->getPreferredLangcode();
+      $mailManager = \Drupal::service('plugin.manager.mail');
+      $params['body'] = current($form_state->getValue('field_votre_question'))['value'];
+      $params['subject'] = sprintf('Message de %s %s',current($form_state->getValue('field_nom'))['value'],current($form_state->getValue('field_prenom'))['value']);
+      $result = $mailManager->mail('kidiklik_front', 'envoi_message', $email, $langcode, $params, NULL, $send);
+      if ($result['result'] !== true) {
+        drupal_set_message(t('Il y a eu un problème lors de l\'envoi de votre message et il n\'a pas été envoyé.'), 'error');
+      }
+      else {
+        drupal_set_message(t('Votre message a été envoyé-.'));
+      }
+     
+    }
+  }*/
 }
 
 function kidiklik_front_validate_jeu_concours($form, FormStateInterface $form_state)

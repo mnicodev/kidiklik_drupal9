@@ -71,13 +71,6 @@ kidiklik_front.recherche_activites:
     _title: 'Recherche activités'
   requirements:
     _permission: 'access content'
-kidiklik_front.recherche_form:
-  path: '/kidiklik_front/form/recherche'
-  defaults:
-    _form: '\Drupal\kidiklik_front\Form\RechercheForm'
-    _title: 'RechercheForm'
-  requirements:
-    _access: 'TRUE'
 
 kidiklik_front.categorie_controller_get:
   path: '/_form_search/categories/{tid}'

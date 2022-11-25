@@ -62,7 +62,9 @@ function kidiklik_event_node_presave(Drupal\node\NodeInterface $node)
 	    } 
     }
 
-  
+  if ($type == "message_contact") {
+    $node->set("field_date_envoi", date("Y-m-d"));
+  }
 
   if($type === 'article') {
     if(get_departement() !== 0) {
@@ -95,4 +97,18 @@ function kidiklik_event_node_update(Drupal\Core\Entity\EntityInterface $entity)
 {
   \Drupal::service('event_dispatcher')->dispatch(NodeUpdateEvent::NODE_UPDATE, new NodeUpdateEvent($entity));
 
+}
+
+
+function kidiklik_event_mail($key, &$message, $params) {
+  $options = array(
+    'langcode' => $message['langcode'],
+  );
+  switch ($key) {
+    case 'create_message':
+      $message['from'] = $params['from'];
+      $message['subject'] = $params['subject'];
+      $message['body'][] = $params['message'];
+      break;
+  }
 }
