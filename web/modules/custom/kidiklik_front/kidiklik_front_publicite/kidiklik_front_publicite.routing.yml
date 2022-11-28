@@ -1,0 +1,8 @@
+
+kidiklik_front_publicite.compteur_click_controller_addClick:
+  path: '/kidiklik_front_publicite/addClick/{nid}'
+  defaults:
+    _controller: '\Drupal\kidiklik_front_publicite\Controller\CompteurClickController::addClick'
+    _title: 'Compteur click'
+  requirements:
+    _permission: 'access content'

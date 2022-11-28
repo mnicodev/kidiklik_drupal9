@@ -18,11 +18,29 @@ Drupal.behaviors.kidiklik = {
 				jQuery('.menu-user').find('.login-popup-form').click()
 			});
 			jQuery('#block-carre1copie').html(jQuery('#block-carreblock').html());
-	jQuery('select[name="ville"]').select2({
-		placeholder: 'Choisissez une ville ...',
-		allowClear: true,
-		tags: true,
-	});
+			jQuery('select[name="ville"]').select2({
+				placeholder: 'Choisissez une ville ...',
+				allowClear: true,
+				tags: true,
+			});
+
+			if(jQuery('.bloc-publicite').length) {
+				jQuery('.bloc-publicite').find('img').on('click', function(event) {
+					event.preventDefault();
+					var url = jQuery(this).parent().attr('href');
+					var nid = jQuery(this).attr('data-nid');
+					jQuery.ajax({
+						url: '/kidiklik_front_publicite/addClick/' + nid,
+						cache: false,
+						contentType: false,
+						processData: false,
+						type: 'GET', // For jQuery < 1.9
+						success: function(data){
+							window.location = url;
+						}
+					})
+				})
+			}
 			if(jQuery("#groupe-actions").length) {
 				if(jQuery('#block-boutonfavorinonconnecte').length) {
 
