@@ -556,7 +556,7 @@ footer .menu li.last {
     padding-top: 5px;
     padding-bottom: 5px; }
   .bloc-fiche .bloc-information .informations, .bloc-fiche article.teaser .informations {
-    color: #3da1c3; }
+    color: gray; }
     .bloc-fiche .bloc-information .informations .field--label, .bloc-fiche article.teaser .informations .field--label {
       font-weight: 700; }
 .bloc-fiche .favori .reservation {
@@ -721,10 +721,6 @@ footer .menu li.last {
     padding-right: 10px; }
   .page-rubriques-activites .fa:before {
     padding-right: 5px; }
-  .page-rubriques-activites .resume {
-    margin-top: 5px;
-    line-height: 14px;
-    font-size: 1.1em; }
   .page-rubriques-activites .paragraph--type--date {
     display: inline-block; }
     .page-rubriques-activites .paragraph--type--date .field {

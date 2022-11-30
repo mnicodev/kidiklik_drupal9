@@ -85,7 +85,9 @@ function kidiklik_preprocess_menu(&$variables, $hook) {
 
 function kidiklik_preprocess_field(&$variables) {
 	$variables['dept'] = get_departement();
+
 	if($variables['field_name'] === 'field_date') {
+		$variables['voir_plus'] = true;
 		$node = \Drupal::request()->attributes->get('node');
 		if(!empty($node)) {
 			$tb_date = $node->get('field_date')->getValue();
@@ -96,7 +98,16 @@ function kidiklik_preprocess_field(&$variables) {
 				if((int)str_replace('-','',current($tab['field_date_de_fin'])['value']) < (int)$now) {
 					unset($variables['items'][$key]);
 				}
-			}	
+			}
+			if(count($variables['items']) === 1) {
+				$variables['voir_plus'] = false;
+			}
+			$date_fin = current(current($variables['items'])['content']['#paragraph']->get('field_date_de_fin')->getValue())['value'];
+			$date_deb = current(current($variables['items'])['content']['#paragraph']->get('field_date_de_debut')->getValue())['value'];
+			if($date_fin === $date_deb) {
+			//	kint($variables['items']);
+			}
+			
 		}	
 	}
 	if($variables['field_name'] === 'field_telephone') {

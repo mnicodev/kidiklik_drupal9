@@ -710,7 +710,7 @@ footer .menu li.last {
 			}
 			.informations {
 
-				color: #3da1c3;
+				color: gray;
 				.field--label {
 					font-weight: 700;
 				}
@@ -946,11 +946,7 @@ footer .menu li.last {
 	.fa:before {
 		padding-right: 5px;
 	}
-	.resume {
-		margin-top: 5px;
-		line-height: 14px;
-		font-size: 1.1em;
-	}
+	
 
 	.paragraph--type--date {
 		display: inline-block;
