@@ -642,6 +642,9 @@ footer .menu li.last {
         font-family: 'Font Awesome 5 Free'; }
     .activite-teaser .informations .fa-calendar-o {
       padding-top: 2px; }
+    .activite-teaser .informations .horaire {
+      height: 15px;
+      overflow: hidden; }
 
 #edit-center-coordinates, #edit-actions--2 {
   display: none; }
