@@ -99,11 +99,15 @@ function kidiklik_preprocess_field(&$variables) {
 					unset($variables['items'][$key]);
 				}
 			}
-			if(count($variables['items']) === 1) {
+			if(count($variables['items']) <= 1) {
 				$variables['voir_plus'] = false;
 			}
-			$date_fin = current(current($variables['items'])['content']['#paragraph']->get('field_date_de_fin')->getValue())['value'];
-			$date_deb = current(current($variables['items'])['content']['#paragraph']->get('field_date_de_debut')->getValue())['value'];
+
+/*			if((bool)current($variables['items']) !== false) {
+				$date_fin = current(current($variables['items'])['content']['#paragraph']->get('field_date_de_fin')->getValue())['value'];
+				$date_deb = current(current($variables['items'])['content']['#paragraph']->get('field_date_de_debut')->getValue())['value'];
+			}*/
+			
 			if($date_fin === $date_deb) {
 			//	kint($variables['items']);
 			}
