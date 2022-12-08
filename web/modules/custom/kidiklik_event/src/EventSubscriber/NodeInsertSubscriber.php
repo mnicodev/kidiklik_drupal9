@@ -47,9 +47,9 @@ class NodeInsertSubscriber implements EventSubscriberInterface
       $params = [];
       $to = $term->get('field_e_mail')->value;
       $params['from'] = 'noreply@kidiklik.fr';
-      $params['body'] = $entity->get("field_votre_question")->value;
+      $params['body'] = sprintf('Email : %s<br>Message :<br>%s', $entity->get('field_email')->value, $entity->get("field_votre_question")->value);
       $params['subject'] = sprintf('Message de %s %s',$entity->get('field_nom')->value,$entity->get('field_prenom')->value);
-      $params['message'] = $entity->get("field_votre_question")->value;
+      $params['message'] = sprintf('Email : %s<br>Message :<br>%s', $entity->get('field_email')->value, $entity->get("field_votre_question")->value);
       $params['title'] = sprintf('Message de %s %s',$entity->get('field_nom')->value,$entity->get('field_prenom')->value);
       $langcode = "fr";
       $send = true;
