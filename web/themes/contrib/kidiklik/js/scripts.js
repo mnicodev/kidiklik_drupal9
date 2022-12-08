@@ -98,6 +98,17 @@ Drupal.behaviors.kidiklik = {
 }
 
 jQuery(document).ready(function() {
+	jQuery('article a').click(function(e) {
+		if(!jQuery(this).hasClass('btn-voir-autres-dates') && 
+			!jQuery(this).hasClass('voir-actualites') &&
+			!jQuery(this).hasClass('reservation') &&
+			!jQuery(this).hasClass('ajout-non-connect')) {
+			e.preventDefault();
+			url = jQuery(this).attr('href');
+			window.open(url, 'blank','');
+		}
+	});
+
 	jQuery('.paragraph--type--paragraphe').each(function() {
 		let url = jQuery(this).find('.field--name-field-url a').attr('href');
 		if(url !== undefined) {
