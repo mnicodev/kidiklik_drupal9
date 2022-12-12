@@ -22,17 +22,65 @@ class InitSubscriber implements EventSubscriberInterface
 	  $request = $event->getRequest();
     $user_roles = \Drupal::currentUser()->getAccount()->getRoles();
 	  $node = \Drupal::routeMatch()->getParameters()->get("node");
-    
+
     if($node === null) {
       $request_uri = $request->server->get('REQUEST_URI');
       preg_match('/\/(.*)\/([0-9]*)-(.*)/',$request_uri, $match);
-     
       if(count($match)) {
         $node = Node::Load($match[2]);
       }
 	  }
-   
+    
     if (!empty($node)) {
+      /*
+       * test des pages dans le cas d'une erreur 404 
+      */
+     
+      if($node->getTitle() === 'erreur 404' && !in_array($node->getType(), ['article', 'activite', 'agenda'])) {
+        $request_uri = $request->server->get('REQUEST_URI');
+        preg_match('/\/(.*)\/([0-9]*)-(.*)/',$request_uri, $match);
+        
+        if(count($match)) {
+          $test_node = current(\Drupal::entityTypeManager()->getStorage("node")->loadByProperties([
+            'field_ref_activite' => $match[2],
+            'type' => 'activite',
+            'field_departement' => get_term_departement()
+          ]));
+          // test activite
+          if(!empty($test_node)) {
+            $redirect = new RedirectResponse($test_node->url());
+            $redirect->send();
+            exit;
+          } else {
+            // test agenda
+            $test_node = current(\Drupal::entityTypeManager()->getStorage("node")->loadByProperties([
+              'field_ref_agenda' => $match[2],
+              'type' => 'agenda',
+              'field_departement' => get_term_departement()
+            ]));
+            if(!empty($test_node)) {
+              $redirect = new RedirectResponse($test_node->url());
+              $redirect->send();
+              exit;
+            } else {
+              // test artcile
+              $test_node = current(\Drupal::entityTypeManager()->getStorage("node")->loadByProperties([
+                'field_ref_entite' => $match[2],
+                'type' => 'article',
+                'field_departement' => get_term_departement()
+              ]));
+              if(!empty($test_node)) {
+                $redirect = new RedirectResponse($test_node->url());
+                $redirect->send();
+                exit;
+              }
+            }
+          }
+          
+        }
+      }
+           
+      
       if (in_array($node->getType(), ['client', 'adherent']) && strstr($request->getPathInfo(), 'edit') === false) {
         $redirect = new RedirectResponse('/');
         $redirect->send();
@@ -46,6 +94,13 @@ class InitSubscriber implements EventSubscriberInterface
       }
      // kint($dep_node);exit;
       if(\Drupal::routeMatch()->getRouteName() === 'entity.node.canonical') {
+        /* on redirige vers la racine si on affiche un contenu de mise en avant */
+        if($node->getType() === 'bloc_de_mise_en_avant') {
+          $redirect = new RedirectResponse('/');
+          $redirect->send();
+          exit;
+        }
+
         if(!empty($dep_node)) {
 
           $globalSettings = \Drupal::service("settings");
