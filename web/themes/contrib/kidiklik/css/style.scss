@@ -363,10 +363,11 @@ h1 {
 
 		}
 	}
-	.logo-dep {
+	.mobi {
 		.titre {
 			padding-left: 0px;
-			font-size: 4.4vw;
+			font-size: 2.5vw;
+			text-align: center;
 		}
 	}
 	#block-kidiklikentete img {
@@ -376,19 +377,14 @@ h1 {
 		margin-left: 0 !important;
 		font-size: 30px!important;
 	}
-	#entete .accueil_dep {
-		/*position: absolute;
-		top:0;
-		left:0;*/
-		
-	}
 }
 
 @media (max-width: 768px) {
-	.logo-dep {
+	.mobi {
 		.titre {
 			padding-left: 0px;
-			font-size: 5vw;
+			font-size: 3.5vw;
+			text-align: center;
 		}
 	}
 	#entete_national {
