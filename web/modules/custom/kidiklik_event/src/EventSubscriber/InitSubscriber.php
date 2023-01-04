@@ -48,7 +48,7 @@ class InitSubscriber implements EventSubscriberInterface
           ]));
           // test activite
           if(!empty($test_node)) {
-            $redirect = new RedirectResponse($test_node->url());
+            $redirect = new RedirectResponse($test_node->url(), 302);
             $redirect->send();
             exit;
           } else {
@@ -59,7 +59,7 @@ class InitSubscriber implements EventSubscriberInterface
               'field_departement' => get_term_departement()
             ]));
             if(!empty($test_node)) {
-              $redirect = new RedirectResponse($test_node->url());
+              $redirect = new RedirectResponse($test_node->url(), 302);
               $redirect->send();
               exit;
             } else {
@@ -70,7 +70,7 @@ class InitSubscriber implements EventSubscriberInterface
                 'field_departement' => get_term_departement()
               ]));
               if(!empty($test_node)) {
-                $redirect = new RedirectResponse($test_node->url());
+                $redirect = new RedirectResponse($test_node->url(), 302);
                 $redirect->send();
                 exit;
               }
