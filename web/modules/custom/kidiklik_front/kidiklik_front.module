@@ -85,6 +85,11 @@ function kidiklik_front_theme()
         'email' => null,
         'tel' => null
       ]
+    ],
+    'sitemap_xml' => [
+      'variables' => [
+        'content' => NULL,
+      ]
     ]
   ];
 }
@@ -246,6 +251,17 @@ function kidiklik_front_form_alter(&$form, FormStateInterface $form_state, $form
       '#type' => 'hidden',
       '#default_value' => \Drupal::Request()->get('center')['coordinates']['lng'],
     ];
+   /* unset($form['thematiques']['#options']['All']);
+    $options = $form['thematiques']['#options'];
+    $output = [];
+        for($i=0;$i<2;$i++) {
+          $output[] = $options[$i];
+        }
+    $options = array_merge(['' => implode(',', $output)], $options);
+    $form['thematiques']['#options'] = $options;
+    $form['thematiques']['#default_value'] = 'Thématiques';
+    ksm($options);
+    ksm($form['thematiques']);*/
   }
 
 
@@ -344,6 +360,7 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
     $query->where[0]["type"] = "and";
 
   }
+
   if ($view->current_display == "diaporama" ||
     $view->current_display == "block_article_accueil" ||
     $view->current_display == "bloc_liste_mise_en_avant") {
@@ -372,6 +389,7 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
     $query->addWhere('0', 'field_dep_part.field_partage_departements_target_id', get_term_departement(), 'in');
 
     $query->where[0]["type"] = "OR";
+
   }
 
   if ($view->current_display === 'bloc_jeux_concours') {
@@ -447,6 +465,7 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
     $query->where[1]["conditions"][3]["value"] = get_date();
     $query->where[1]["conditions"][3]["operator"] = ">=";
   }
+
   if($view->current_display == "bloc_mise_en_avant_nat") {
     if($view->current_display == "bloc_mise_en_avant_nat") {
       $configuration = array(
@@ -462,7 +481,9 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
         ->createInstance('standard', $configuration);
       $rel = $query->addRelationship('node__field_partage_departements', $join, 'node_field_data');
       $query->addTable('node__field_partage_departements', $rel, $join, 'node__field_partage_departements');
-      $query->addWhere('', 'node__field_partage_departements.field_partage_departements_target_id', [get_term_departement()], '=');
+      $query->addWhere('', 'node__field_partage_departements.field_partage_departements_target_id', (int)get_term_departement(), '=');
+      unset($query->where[0]['conditions'][1]);
+      //ksm($query->where);
     }
   }
 
@@ -596,6 +617,8 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
   	$view->current_display == "recherche_test" ||
     $view->current_display == "recherche_activites") {
     $query->distinct = true;
+    $query->groupby[]='nid';
+    //$query->query()->execute();
 
     $ou = \Drupal::request()->get("lieu");
     //$ou = \Drupal::request()->get("ville");
@@ -791,7 +814,7 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
         $query->where[4]["conditions"][$nb_condition]["operator"] = "formula";
 	unset($query->where[4]['conditions'][1]);
       } else if (empty($date_deb) && empty($date_fin)) {
-        $query->where[4]["conditions"][$nb_condition]["field"] = "((DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d')>=CURDATE()) or (CURDATE() BETWEEN DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') and DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d')))";
+        $query->where[4]["conditions"][$nb_condition]["field"] = "((DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d')>=CURDATE()) or (CURDATE() BETWEEN DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') and (DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') + INTERVAL 30 day)))";
         $query->where[4]["conditions"][$nb_condition]["operator"] = "formula";
       }
     } else {
@@ -823,8 +846,9 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
       $rel = $query->addRelationship('paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin', $join, 'paragraphs_item_field_data_node__field_date');
       $query->addTable('paragraph__field_date_de_fin', $rel, $join, 'paragraph__field_date_de_fin');
 
-      $query->where[4]["conditions"][$nb_condition]["field"] = "((DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d')>=CURDATE()) or (CURDATE() BETWEEN DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') and DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d')))";
+      $query->where[4]["conditions"][$nb_condition]["field"] = "((DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d')>=CURDATE()) or (CURDATE() BETWEEN DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') and (DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') + INTERVAL 30 day)))";
       $query->where[4]["conditions"][$nb_condition]["operator"] = "formula";
+      //ksm($query->where);
 
     }
 
