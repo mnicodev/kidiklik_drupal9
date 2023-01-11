@@ -11,7 +11,7 @@ Drupal.behaviors.kidiklik = {
 	attach: function(context, settings) {
 
 		var charging_blocs = jQuery('[data-big-pipe-placeholder-id]').length;
-		console.log(charging_blocs)
+
 	      	if (charging_blocs ===1 || charging_blocs === 0){
 			jQuery('.ajout-non-connect').unbind('click');
 			jQuery('.ajout-non-connect').click(function() {
@@ -71,6 +71,11 @@ Drupal.behaviors.kidiklik = {
 					jQuery('#views-exposed-form-activites-recherche-activites').addClass('with-dates');
 
 			}
+			jQuery('.user-register-form').find('.form-item-name').hide();
+			jQuery('.user-register-form').find('.form-item-mail').find('input').on('change',function() {
+				console.log(jQuery(this).val())
+				jQuery('.user-register-form').find('.form-item-name input').val(jQuery(this).val())
+			})
 						
 		}
 		if(jQuery('select[name="ville"]').val() === 'geo') {
@@ -98,6 +103,9 @@ Drupal.behaviors.kidiklik = {
 }
 
 jQuery(document).ready(function() {
+	//
+	
+
 	jQuery('article a').click(function(e) {
 		if(!jQuery(this).hasClass('btn-voir-autres-dates') && 
 			!jQuery(this).hasClass('voir-actualites') &&
