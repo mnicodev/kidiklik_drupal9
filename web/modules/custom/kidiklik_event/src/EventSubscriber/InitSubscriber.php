@@ -22,6 +22,8 @@ class InitSubscriber implements EventSubscriberInterface
 	  $request = $event->getRequest();
     $user_roles = \Drupal::currentUser()->getAccount()->getRoles();
 	  $node = \Drupal::routeMatch()->getParameters()->get("node");
+    $route_name = \Drupal::routeMatch()->getRouteName();
+    //preg_match('/(system).(.*)/',$route_name, $match);
 
     if($node === null) {
       $request_uri = $request->server->get('REQUEST_URI');
@@ -48,7 +50,7 @@ class InitSubscriber implements EventSubscriberInterface
           ]));
           // test activite
           if(!empty($test_node)) {
-            $redirect = new RedirectResponse($test_node->url(), 302);
+            $redirect = new RedirectResponse($test_node->url(), 301);
             $redirect->send();
             exit;
           } else {
@@ -59,7 +61,7 @@ class InitSubscriber implements EventSubscriberInterface
               'field_departement' => get_term_departement()
             ]));
             if(!empty($test_node)) {
-              $redirect = new RedirectResponse($test_node->url(), 302);
+              $redirect = new RedirectResponse($test_node->url(), 301);
               $redirect->send();
               exit;
             } else {
@@ -70,7 +72,7 @@ class InitSubscriber implements EventSubscriberInterface
                 'field_departement' => get_term_departement()
               ]));
               if(!empty($test_node)) {
-                $redirect = new RedirectResponse($test_node->url(), 302);
+                $redirect = new RedirectResponse($test_node->url(), 301);
                 $redirect->send();
                 exit;
               }
@@ -92,6 +94,7 @@ class InitSubscriber implements EventSubscriberInterface
           ->load((int)$node->get('field_departement')->first()->getString())->getName();
         
       }
+     
      // kint($dep_node);exit;
       if(\Drupal::routeMatch()->getRouteName() === 'entity.node.canonical') {
         /* on redirige vers la racine si on affiche un contenu de mise en avant */
