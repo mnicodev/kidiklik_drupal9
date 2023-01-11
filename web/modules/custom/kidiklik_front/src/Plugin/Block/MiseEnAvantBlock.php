@@ -30,17 +30,22 @@ class MiseEnAvantBlock extends BlockBase {
 		$view_nat = Views::getView("articles_content");
 		$view_nat->setDisplay("bloc_mise_en_avant_nat");
 		$view_nat->execute();
+		
 		$render_nat = $view_nat->render();
 		$tab=[];
-
-		foreach(current($render_dep['#rows'])['#rows'] as $key => $row) {
-
+		
+		if(count($render_dep['#rows'])) {
+			foreach(current($render_dep['#rows'])['#rows'] as $key => $row) {
 				$tab[] = $row;
 				$tab[] = current($render_nat['#rows'])['#rows'][$key];
-
+			}
+			$render_dep['#rows'][0]['#rows'] = $tab;
+			$out = \Drupal::service('renderer')->render($render_dep);
+		} else {
+			$out = \Drupal::service('renderer')->render($render_nat);
 		}
-		$render_dep['#rows'][0]['#rows'] = $tab;
-		$out = \Drupal::service('renderer')->render($render_dep);
+		
+		
     $build = [];
     $build['#theme'] = 'mise_en_avant_block';
     $build['mise_en_avant_block']['#markup'] = $out;
