@@ -9,6 +9,7 @@ web/sites/default/settings.local.php
 
 # Ignore paths that may contain user-generated content
 web/sites/*/files
+web/sites/*/files_old
 web/sites/*/public
 web/sites/*/private
 web/sites/*/files-public
