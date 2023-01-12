@@ -519,7 +519,8 @@ if ($settings['hash_salt']) {
  * must exist and be writable by Drupal. This directory must be relative to
  * the Drupal installation directory and be accessible over the web.
  */
-// $settings['file_public_path'] = 'sites/default/files_old';
+ //$settings['file_public_path'] = 'sites/default/files';
+ $settings['file_public_path'] = 'sites/default/files_old';
 
 /**
  * Private file path:
@@ -866,6 +867,10 @@ $settings["available_form_for_dep"]=[
 ];
 
 $settings["add_dep_for_views"] = [
+	'sitemapxml_agenda',
+	'sitemapxml_article',
+	'sitemapxml_reportage',
+	'sitemapxml_activite',
 //"rest_export_1",
 //"carre",
 "page_tous_les_articles",

@@ -129,9 +129,8 @@ h1 {
 
     }
   }
-  
-
 }
+
 #views-exposed-form-activites-recherche-activites,
 #recherche-form {
 	.form-text {
@@ -163,7 +162,19 @@ h1 {
 	
 	padding-top: 0;
 	@media (max-width: 768px) {
-		padding-top: 20px;
+		margin-top: 10px;
+
+		.form-item {
+			label {
+				display: none;
+			}
+			select {
+				color: gray;
+			}
+			input {
+				padding: .375rem .75rem;
+			}
+		}
 	}
 	
 	
@@ -290,6 +301,11 @@ h1 {
 	}
 	
 }
+@media (max-width: 768px) {
+	#views-exposed-form-activites-recherche-activites {
+		box-shadow: 0px 3px 5px rgba(125, 125, 125, 0.5)!important;
+	}
+}
 
 #entete_national .logo-national {
 	background: url(/assets/img/piaf.jpg) no-repeat left center;
@@ -350,11 +366,15 @@ h1 {
 		position: relative;
 		z-index: 2;
 
+		.bloc-header {
+			flex-direction: row-reverse;
+		}
+
 		.row > div {
 			padding-left: 5px;
-			padding-right: 5px;
+			padding-right: 10px;
 			&:first-child {
-				padding-left: 15px;
+				padding-left: 10px;
 			}
 			&:last-child {
 				padding-right: 15px;
@@ -364,6 +384,7 @@ h1 {
 		}
 	}
 	.mobi {
+		margin-bottom: 10px;
 		.titre {
 			padding-left: 0px;
 			font-size: 2.5vw;
@@ -381,6 +402,7 @@ h1 {
 
 @media (max-width: 768px) {
 	.mobi {
+		margin-bottom: 10px;
 		.titre {
 			padding-left: 0px;
 			font-size: 3.5vw;
@@ -624,7 +646,7 @@ footer .menu li.last {
 	border-right: none;
 }
 .accueil_dep {
-	padding-top: 35px;
+	padding-top: 10%;
 	text-align: center;
 	a {
 		color: gray;
@@ -635,12 +657,15 @@ footer .menu li.last {
 		
 	}
 	img {
-		width: 57px;
+		width: 60px;
+		@media (max-width: 992px) {
+			width: 45px;
+		}
 		height: auto;
 	}
 
 	@media (max-width: 768px) {
-		padding-top: 5%;
+		padding-top: 10%;
 		span {
 			display: none;
 		}
@@ -887,11 +912,15 @@ footer .menu li.last {
 
 		}
 		.cacher {
-			display: none;
-			color: #0cacce;
-			font-size: 40px;
+			color: #fff;
+			font-size: 14px;
 			font-family: arial;
-			line-height: 40px;
+			background: #0cacce;
+			width: 90px;
+			margin: auto;
+			border-radius: 5px;
+			font-weight: 700;
+			display: none;
 		}
 	}
 	#filtres {
@@ -902,6 +931,9 @@ footer .menu li.last {
 		}
 		&:checked + label .cacher {
 			display: block;
+		}
+		&:checked + div.filtres .form-item-field-rubriques-activite-target-id:before {
+			content: 'Sorties en famille'
 		}
 	}
 	@media (min-width: 768px) {
@@ -1528,7 +1560,7 @@ article.full {
 }
 .icon-menu {
 	@media (max-width: 992px) {
-		margin-top: 40%;
+		margin-top: 70%;
 		border-color: transparent!important;
 
 		.icon {
@@ -1537,6 +1569,7 @@ article.full {
 			height: 40px;
 			display: block;
 			background-size: contain;
+			background-repeat: no-repeat;
 		}
 
 	}

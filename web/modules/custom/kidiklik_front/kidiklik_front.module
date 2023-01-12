@@ -251,17 +251,35 @@ function kidiklik_front_form_alter(&$form, FormStateInterface $form_state, $form
       '#type' => 'hidden',
       '#default_value' => \Drupal::Request()->get('center')['coordinates']['lng'],
     ];
-   /* unset($form['thematiques']['#options']['All']);
+    
+    unset($form['thematiques']['#options']['All']);
     $options = $form['thematiques']['#options'];
     $output = [];
-        for($i=0;$i<2;$i++) {
-          $output[] = $options[$i];
+        for($i=0;$i<3;$i++) {
+          $output[] = current($options);
+          next($options);
         }
-    $options = array_merge(['' => implode(',', $output)], $options);
+    $options = array_merge(['' => implode(', ', $output).'...'], $options);
     $form['thematiques']['#options'] = $options;
-    $form['thematiques']['#default_value'] = 'Thématiques';
-    ksm($options);
-    ksm($form['thematiques']);*/
+    $form['thematiques']['#default_value'] = $output;
+
+    unset($form['vacances']['#options']['All']);
+    $options = $form['vacances']['#options'];
+    $output = [];
+        for($i=0;$i<3;$i++) {
+          $output[] = current($options);
+          next($options);
+        }
+    $options = array_merge(['' => implode(', ', $output).'...'], $options);
+    $form['vacances']['#options'] = $options;
+    $form['vacances']['#default_value'] = $output;
+
+    unset($form['tranches_ages']['#options']['All']);
+    $options = $form['tranches_ages']['#options'];
+    
+    $options = array_merge(['' => "Tranches d'âges"], $options);
+    $form['tranches_ages']['#options'] = $options;
+    $form['tranches_ages']['#default_value'] = $output;
   }
 
 
@@ -393,7 +411,7 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
       ->createInstance('standard', $configuration);
     $rel = $query->addRelationship('field_dep_part', $join, 'node_field_data');
     $query->addTable('node__field_partage_departements', $rel, $join, 'field_dep_part');
-    $query->addWhere('0', 'field_dep_part.field_partage_departements_target_id', get_term_departement(), 'in');
+    $query->addWhere('0', 'field_dep_part.field_partage_departements_target_id', [get_term_departement()], '=');
 
     $query->where[0]["type"] = "OR";
 

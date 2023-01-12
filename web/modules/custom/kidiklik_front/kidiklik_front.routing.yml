@@ -83,3 +83,11 @@ kidiklik_front.categorie_controller_get:
 
 
 
+
+kidiklik_front.site_map_xml_controller_generate:
+  path: '/sitemap.xml'
+  defaults:
+    _controller: '\Drupal\kidiklik_front\Controller\SiteMapXmlController::generate'
+    _title: 'generate'
+  requirements:
+    _permission: 'access content'
