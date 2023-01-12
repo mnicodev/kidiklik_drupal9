@@ -131,7 +131,16 @@ h1 {
   @media (max-width: 768px) {
     #views-exposed-form-activites-recherche-activites,
     #recherche-form {
-      padding-top: 20px; } }
+      margin-top: 10px; }
+      #views-exposed-form-activites-recherche-activites .form-item label,
+      #recherche-form .form-item label {
+        display: none; }
+      #views-exposed-form-activites-recherche-activites .form-item select,
+      #recherche-form .form-item select {
+        color: gray; }
+      #views-exposed-form-activites-recherche-activites .form-item input,
+      #recherche-form .form-item input {
+        padding: .375rem .75rem; } }
   #views-exposed-form-activites-recherche-activites .form-item-rubriques, #views-exposed-form-activites-recherche-activites .form-item-field-rubriques-activite-target-id,
   #recherche-form .form-item-rubriques,
   #recherche-form .form-item-field-rubriques-activite-target-id {
@@ -230,6 +239,9 @@ h1 {
       box-shadow: 0px 3px 5px rgba(125, 125, 125, 0.5); }
       body:not(.path-frontpage) #block-formulaireexposeactivitesrecherche-activites:hover #views-exposed-form-activites-recherche-activites .voir-filtres {
         display: none; } }
+@media (max-width: 768px) {
+  #views-exposed-form-activites-recherche-activites {
+    box-shadow: 0px 3px 5px rgba(125, 125, 125, 0.5) !important; } }
 #entete_national .logo-national {
   background: url(/assets/img/piaf.jpg) no-repeat left center;
   padding-left: 230px; }
@@ -279,18 +291,22 @@ h1 {
   #entete {
     position: relative;
     z-index: 2; }
+    #entete .bloc-header {
+      flex-direction: row-reverse; }
     #entete .row > div {
       padding-left: 5px;
-      padding-right: 5px; }
+      padding-right: 10px; }
       #entete .row > div:first-child {
-        padding-left: 15px; }
+        padding-left: 10px; }
       #entete .row > div:last-child {
         padding-right: 15px; }
 
-  .mobi .titre {
-    padding-left: 0px;
-    font-size: 2.5vw;
-    text-align: center; }
+  .mobi {
+    margin-bottom: 10px; }
+    .mobi .titre {
+      padding-left: 0px;
+      font-size: 2.5vw;
+      text-align: center; }
 
   #block-kidiklikentete img {
     /*padding-left: 80px;*/ }
@@ -299,10 +315,12 @@ h1 {
     margin-left: 0 !important;
     font-size: 30px !important; } }
 @media (max-width: 768px) {
-  .mobi .titre {
-    padding-left: 0px;
-    font-size: 3.5vw;
-    text-align: center; }
+  .mobi {
+    margin-bottom: 10px; }
+    .mobi .titre {
+      padding-left: 0px;
+      font-size: 3.5vw;
+      text-align: center; }
 
   #entete_national {
     position: relative; }
@@ -492,7 +510,7 @@ footer .menu li.last {
   border-right: none; }
 
 .accueil_dep {
-  padding-top: 35px;
+  padding-top: 10%;
   text-align: center; }
   .accueil_dep a {
     color: gray; }
@@ -500,11 +518,14 @@ footer .menu li.last {
       font-size: 14px;
       display: block; }
   .accueil_dep img {
-    width: 57px;
+    width: 60px;
     height: auto; }
+    @media (max-width: 992px) {
+      .accueil_dep img {
+        width: 45px; } }
   @media (max-width: 768px) {
     .accueil_dep {
-      padding-top: 5%; }
+      padding-top: 10%; }
       .accueil_dep span {
         display: none; }
       .accueil_dep img {
@@ -681,17 +702,23 @@ footer .menu li.last {
     color: #ffffff;
     padding: 5px 10px; }
   #block-formulaireexposeactivitesrecherche-activites .label_filtres .cacher {
-    display: none;
-    color: #0cacce;
-    font-size: 40px;
+    color: #fff;
+    font-size: 14px;
     font-family: arial;
-    line-height: 40px; }
+    background: #0cacce;
+    width: 90px;
+    margin: auto;
+    border-radius: 5px;
+    font-weight: 700;
+    display: none; }
 #block-formulaireexposeactivitesrecherche-activites #filtres {
   display: none; }
   #block-formulaireexposeactivitesrecherche-activites #filtres:checked + label .voir {
     display: none; }
   #block-formulaireexposeactivitesrecherche-activites #filtres:checked + label .cacher {
     display: block; }
+  #block-formulaireexposeactivitesrecherche-activites #filtres:checked + div.filtres .form-item-field-rubriques-activite-target-id:before {
+    content: "Sorties en famille"; }
 @media (min-width: 768px) {
   #block-formulaireexposeactivitesrecherche-activites #filtres, #block-formulaireexposeactivitesrecherche-activites .label_filtres {
     display: none; }
@@ -1132,14 +1159,15 @@ article.full {
 
 @media (max-width: 992px) {
   .icon-menu {
-    margin-top: 40%;
+    margin-top: 70%;
     border-color: transparent !important; }
     .icon-menu .icon {
       background-image: url(/assets/img/menu.jpg) !important;
       width: 40px;
       height: 40px;
       display: block;
-      background-size: contain; } }
+      background-size: contain;
+      background-repeat: no-repeat; } }
 
 .list-bloc-content .img {
   overflow: hidden; }
