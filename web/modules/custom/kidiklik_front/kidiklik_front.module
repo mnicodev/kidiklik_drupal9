@@ -337,7 +337,14 @@ function kidiklik_front_validate_jeu_concours($form, FormStateInterface $form_st
  */
 function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Drupal\views\Plugin\views\query\QueryPluginBase $query)
 {
-  $term_dep = get_term_departement();
+	$term_dep = get_term_departement();
+	$search = [];
+	$search[] = "((CURDATE() BETWEEN DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') AND DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d')) AND (CURDATE()+INTERVAL 30 DAY BETWEEN DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') AND DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d')))";
+	$search[] = "(CURDATE()<=DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') AND ((CURDATE()+INTERVAL 30 DAY) BETWEEN DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') AND DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d')))";
+	$search[] = "((CURDATE() BETWEEN DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') AND DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d')) AND (CURDATE() + INTERVAL 30 DAY>=DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d')))";
+
+	$rule_search = "(" . implode(' OR ',$search).")"; 
+     // $query->where[4]["conditions"][$nb_condition]["field"] = "((DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d')>CURDATE()) or (CURDATE() BETWEEN DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') and DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d')))";
 
   if ($view->current_display === 'article_national_3' || $view->current_display === 'article_national_1' || $view->current_display === 'article_national_2') {
     $query->where[1]["conditions"][] = current($query->where[0]['conditions']);
@@ -492,6 +499,8 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
     $query->where[1]["conditions"][2]["operator"] = "=";
   }
 
+
+  // page Rubriques
   if ($view->current_display == "rubriques_activites") {
 
     $term_id = (int)\Drupal::request()->attributes->get('taxonomy_term')->id();
@@ -522,6 +531,10 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
     $query->addWhere('', 'paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value', [], '<>');
 
     $query->where[0]["conditions"][count($query->where[0]["conditions"]) - 1]["field"] = "((DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d')>CURDATE()) or (CURDATE() BETWEEN DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') and DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d')))";
+
+    if(isset($_GET['test'])) $query->where[0]["conditions"][count($query->where[0]["conditions"]) - 1]["field"] = $rule_search;
+
+    
     $query->where[0]["conditions"][count($query->where[0]["conditions"]) - 1]["operator"] = "formula";
     $configuration = array(
       'type' => 'LEFT',
@@ -535,6 +548,8 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
     $rel = $query->addRelationship('paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin', $join, 'paragraphs_item_field_data_node__field_date');
     $query->addTable('paragraph__field_date_de_fin', $rel, $join, 'paragraph__field_date_de_fin');
   }
+
+  // agenda adhérent
   if ($view->current_display == "page_agenda_adherent" || $view->current_display == "page_contenu_adherent") {
     $ref_act = \Drupal::request()->get("ref_act");
     if ($view->current_display == "page_agenda_adherent" && empty($ref_act)) {
@@ -584,6 +599,7 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
     $query->addWhere('', 'field_dep.field_departement_target_id', $term_dep, '=');
   }
 
+  // activités associées
   if ($view->current_display == "activites_associees") {
     //
     $node = Drupal::request()->get('node');
@@ -613,6 +629,7 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
 
   }
 
+  // Page recherche
   if ($view->current_display == "page_recherche_test" ||
   	$view->current_display == "recherche_test" ||
     $view->current_display == "recherche_activites") {
@@ -681,9 +698,9 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
         $join = \Drupal\views\Views::pluginManager('join')->createInstance('standard', $configuration);
         $rel = $query->addRelationship('field_ville', $join, 'node_field_data');
         $query->addTable('node__field_ville_save', $rel, $join, 'field_ville');
-	$query->addWhere('10', 'field_ville.field_ville_save_value', $ou.'%', 'like');
+	      $query->addWhere('10', 'field_ville.field_ville_save_value', $ou.'%', 'like');
 	
-	$configuration = array(
+	      $configuration = array(
           'type' => 'INNER',
           'table' => 'node__field_code_postal',
           'field' => 'entity_id',
@@ -696,8 +713,8 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
         $rel = $query->addRelationship('field_cp', $join, 'node_field_data');
         $query->addTable('node__field_code_postal', $rel, $join, 'field_cp');
 
-	$query->addWhere('10', 'field_cp.field_code_postal_value', $ou.'%', 'like');
-	$query->where[10]['type'] = 'OR';
+        $query->addWhere('10', 'field_cp.field_code_postal_value', $ou.'%', 'like');
+        $query->where[10]['type'] = 'OR';
     } else {
       $configuration = array(
         'type' => 'INNER',
@@ -815,6 +832,10 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
 	unset($query->where[4]['conditions'][1]);
       } else if (empty($date_deb) && empty($date_fin)) {
         $query->where[4]["conditions"][$nb_condition]["field"] = "((DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d')>CURDATE()) or (CURDATE() BETWEEN DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') and DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d')))";
+        
+        /* MODE TEST */
+	if(isset($_GET['test'])) $query->where[4]["conditions"][$nb_condition]["field"] = $rule_search;
+        
         $query->where[4]["conditions"][$nb_condition]["operator"] = "formula";
       }
     } else {
@@ -847,11 +868,13 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
       $query->addTable('paragraph__field_date_de_fin', $rel, $join, 'paragraph__field_date_de_fin');
 
       $query->where[4]["conditions"][$nb_condition]["field"] = "((DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d')>CURDATE()) or (CURDATE() BETWEEN DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') and DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d')))";
+      /* MODE TEST */
+      if(isset($_GET['test'])) $query->where[4]["conditions"][$nb_condition]["field"] = $rule_search;
+
       $query->where[4]["conditions"][$nb_condition]["operator"] = "formula";
 
     }
 
-//unset($query->where[4]);
     if (Drupal::Request()->get('field_ville') !== 'geo' && !empty(Drupal::Request()->get('field_ville'))) {
 
       /* $configuration = array(
