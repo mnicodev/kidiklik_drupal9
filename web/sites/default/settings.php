@@ -520,7 +520,7 @@ if ($settings['hash_salt']) {
  * the Drupal installation directory and be accessible over the web.
  */
  //$settings['file_public_path'] = 'sites/default/files';
- $settings['file_public_path'] = 'sites/default/files_old';
+// $settings['file_public_path'] = 'sites/default/files_old';
 
 /**
  * Private file path:
