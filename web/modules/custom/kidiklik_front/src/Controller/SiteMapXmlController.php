@@ -44,14 +44,14 @@ class SiteMapXmlController extends ControllerBase {
      * on liste les reportages en premier
      */
     
-    $view = Views::getView('sitemap_test');
+    $view = Views::getView('sitemap_xml');
     $view->setDisplay('sitemapxml_reportage');
     $reportages = json_decode($view->executeDisplay()['#markup']->__toString());
     if(!empty($reportages)) {
       foreach($reportages as $reportage) {
         $list[] = [
           'loc' => $reportage->view_node,
-          'lastmod' => date('Y-m-d'),
+          'lastmod' =>$reportage->changed,// date('Y-m-d'),
           'changefreq' => 'weekly',
           'priority' => 1,
         ];
@@ -59,14 +59,14 @@ class SiteMapXmlController extends ControllerBase {
     }
     
 
-    $view = Views::getView('sitemap_test');
+    $view = Views::getView('sitemap_xml');
     $view->setDisplay('sitemapxml_agenda');
     $agendas = json_decode($view->executeDisplay()['#markup']->__toString());
     if(!empty($agenda)) {
       foreach($agendas as $agenda) {
         $list[] = [
           'loc' => $agenda->view_node,
-          'lastmod' => date('Y-m-d'),
+          'lastmod' => $agenda->changed, //date('Y-m-d'),
           'changefreq' => 'weekly',
           'priority' => 1,
         ];
@@ -74,34 +74,34 @@ class SiteMapXmlController extends ControllerBase {
     }
     
 
-    $view = Views::getView('sitemap_test');
+    $view = Views::getView('sitemap_xml');
     $view->setDisplay('sitemapxml_article');
     $articles = json_decode($view->executeDisplay()['#markup']->__toString());
     if(!empty($articles)) {
       foreach($articles as $article) {
         $list[] = [
           'loc' => $article->view_node,
-          'lastmod' => date('Y-m-d'),
+          'lastmod' => $article->changed, //date('Y-m-d'),
           'changefreq' => 'weekly',
           'priority' => 1,
         ];
       }
     }
     
-    $view = Views::getView('sitemap_test');
+    $view = Views::getView('sitemap_xml');
     $view->setDisplay('sitemapxml_activite');
     $activites = json_decode($view->executeDisplay()['#markup']->__toString());
     if(!empty($activites)) {
       foreach($activites as $activite) {
         $list[] = [
           'loc' => $activite->view_node,
-          'lastmod' => date('Y-m-d'),
+          'lastmod' => $activite->changed, //date('Y-m-d'),
           'changefreq' => 'weekly',
           'priority' => 1,
         ];
       }
     }
-
+    
     
     $build = [
       '#theme' => 'sitemap_xml',
