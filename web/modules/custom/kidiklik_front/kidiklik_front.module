@@ -259,7 +259,7 @@ function kidiklik_front_form_alter(&$form, FormStateInterface $form_state, $form
           $output[] = current($options);
           next($options);
         }
-    $options = array_merge(['' => implode(', ', $output).'...'], $options);
+    $options = array_merge(['All' => implode(', ', $output).'...'], $options);
     $form['thematiques']['#options'] = $options;
     $form['thematiques']['#default_value'] = $output;
 
@@ -270,14 +270,14 @@ function kidiklik_front_form_alter(&$form, FormStateInterface $form_state, $form
           $output[] = current($options);
           next($options);
         }
-    $options = array_merge(['' => implode(', ', $output).'...'], $options);
+    $options = array_merge(['All' => implode(', ', $output).'...'], $options);
     $form['vacances']['#options'] = $options;
     $form['vacances']['#default_value'] = $output;
 
     unset($form['tranches_ages']['#options']['All']);
     $options = $form['tranches_ages']['#options'];
     
-    $options = array_merge(['' => "Tranches d'âges"], $options);
+    $options = array_merge(['All' => "Tranches d'âges"], $options);
     $form['tranches_ages']['#options'] = $options;
     $form['tranches_ages']['#default_value'] = $output;
   }
