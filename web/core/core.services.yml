@@ -7,7 +7,7 @@ parameters:
   twig.config:
     debug: false
     auto_reload: null
-    cache: false
+    cache: true
   renderer.config:
     required_cache_contexts: ['languages:language_interface', 'theme', 'user.permissions']
     auto_placeholder_conditions:
