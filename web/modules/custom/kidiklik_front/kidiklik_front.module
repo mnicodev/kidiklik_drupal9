@@ -208,8 +208,10 @@ function kidiklik_front_form_alter(&$form, FormStateInterface $form_state, $form
 		    'placeholder' => 'Ville ou Code Postal ?',
 	    ],
       "#title" => "Où ?",
-      "#weight" => -9
+      "#weight" => -7
     ];
+
+    $form['search']['#weight'] = -9;
 
     $options[''] = 'Filtrer par zone';
     $options['Géolocalisé'] = [
@@ -227,7 +229,7 @@ function kidiklik_front_form_alter(&$form, FormStateInterface $form_state, $form
     //$form['field_rubriques_activite_target_id']["#weight"] = -10;
     $form['date_debut']["#weight"] = -6;
     $form['date_fin']["#weight"] = -5;
-    $form['field_tranches_d_ages_value']["#weight"] = -8;
+    $form['field_tranches_d_ages_value']["#weight"] = -6;
 
     $form['quand'] = [
       "#type" => "select",
@@ -240,7 +242,7 @@ function kidiklik_front_form_alter(&$form, FormStateInterface $form_state, $form
         "semaine" => "Cette semaine",
         "date" => "Par date"
       ],
-      "#weight" => -7
+      "#weight" => -8
     ];
 
     $form["center[coordinates][lat]"] = [
@@ -262,6 +264,7 @@ function kidiklik_front_form_alter(&$form, FormStateInterface $form_state, $form
     $options = array_merge(['' => implode(', ', $output).'...'], $options);
     $form['thematiques']['#options'] = $options;
     $form['thematiques']['#default_value'] = $output;
+    
 
     unset($form['vacances']['#options']['All']);
     $options = $form['vacances']['#options'];
@@ -274,12 +277,17 @@ function kidiklik_front_form_alter(&$form, FormStateInterface $form_state, $form
     $form['vacances']['#options'] = $options;
     $form['vacances']['#default_value'] = $output;
 
+    //$form['thematiques']['#weight'] = -4;
+    //$form['vacances']['#weight'] = -5;
+    //$form['tranches_ages']['#weight'] = -6;
+
     unset($form['tranches_ages']['#options']['All']);
     $options = $form['tranches_ages']['#options'];
     
     $options = array_merge(['' => "Tranches d'âges"], $options);
     $form['tranches_ages']['#options'] = $options;
     $form['tranches_ages']['#default_value'] = $output;
+
   }
 
 
