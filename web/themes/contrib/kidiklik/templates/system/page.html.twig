@@ -97,6 +97,69 @@
 {% if dep != 0 %}
 
 <div id="mobimenu" class="menu">
+	<nav class="navbar navbar-expand-lg  bg-white sticky-top justify-content-between navbar-light navbar-haut">
+              <div class="" id="navbarCollapse" style="">
+                <ul class="navbar-nav menu-user">
+                  <li class="nav-item agenda">
+		  <i class="fa fa-calendar-o" style="color:#fff;margin-right: 2px"></i>
+                  <a href="/sorties-moment.html">Agenda</a>
+                  </li>
+
+                  <li class="nav-item user">
+
+
+                    {% if logged_in %}
+                      <a class="nav-link"  href="/X255zTZB9ytq/logout"><i></i>Deconnexion</a>
+                    {% else %}
+						 <a class="nav-link use-ajax login-popup-form"  href="/X255zTZB9ytq/login" data-dialog-type="modal"
+                       data-dialog-options='{"width":700,"dialogClass":"user-login"}'><i></i>Connexion</a><!--use-ajax fancy_login_show_popup-->
+                    {% endif %}
+                  </li>
+                  <li class="nav-item coeur">
+                    <a class="nav-link" href="/favoris"><i ></i>Favoris</a>
+                  </li>
+                  <li class="nav-item change_dep">
+                    <select id="mobi_change_dep">
+                      {% for key,dep in liste_dep %}
+                      <option value='{{key}}'>{{dep}}</option>
+                      {% endfor %}
+                    </select>
+                  </li>
+                  <li class="nav-item newsletter d-block d-lg-none">
+                    <a class="nav-link" href="/newsletter.html"><i ></i>Inscription à la newsletter</a>
+                  </li>
+                  <li class="nav-item d-none d-lg-block">
+                    <form class="form-inline mt-2 mt-md-0 form-newsletter" method="get" action="/newsletter.html">
+                      <label class="sr-only" for="input-newsletter">Votre adresse email</label>
+                      <input type="text" class="" id="input-newsletter" placeholder="Votre adresse email" name="email">
+                      <button type="submit" class="btn-newsletter">OK</button>
+                    </form>
+                  </li>
+
+                </ul>
+
+                <ul class="d-block d-lg-none reseaux-sociaux">
+                  {% for rs in reseaux_sociaux %}
+                    <li class="nav-item">
+                    <a href="{{ rs.link }}" target='blank'>
+                    {% if rs.social == 'facebook' %}
+                    <img src="/assets/img/facebook-mobi.jpg"/>
+                    {% elseif rs.social == 'twitter' %}
+                    <img src="/assets/img/Twt.png"/>
+                    {% elseif rs.social == 'instagram' %}
+                    <img src="/assets/img/instagram-mobi.jpg"/>
+                    {% elseif rs.social == 'pinterest' %}
+                    <img src="/assets/img/Pin.png"/>
+                    {% endif %}
+                    </a>
+                    </li>
+                  {% endfor %}
+                </ul>
+         
+
+              </div>
+<div class="icon-menu-open"></div>
+	</nav>
 </div>
  <div class=" " id="entete">
 	<div class="container">
@@ -150,7 +213,10 @@
 					  <nav class="navbar navbar-expand-lg  bg-white sticky-top justify-content-between navbar-light navbar-haut">
               <div class="" id="navbarCollapse" style="">
                 <ul class="navbar-nav menu-user">
+                 
+
                   <li class="nav-item user">
+
 
                     {% if logged_in %}
                       <a class="nav-link"  href="/X255zTZB9ytq/logout"><i></i>Deconnexion</a>
@@ -158,6 +224,10 @@
 						 <a class="nav-link use-ajax login-popup-form"  href="/X255zTZB9ytq/login" data-dialog-type="modal"
                        data-dialog-options='{"width":700,"dialogClass":"user-login"}'><i></i>Connexion</a><!--use-ajax fancy_login_show_popup-->
                     {% endif %}
+                  </li>
+                   <li class="nav-item agenda">
+		              
+                  <a href="/sorties-moment.html"><i class="fa fa-calendar-o"></i>Agenda</a>
                   </li>
                   <li class="nav-item coeur">
                     <a class="nav-link" href="/favoris"><i ></i>Favoris</a>
@@ -179,28 +249,11 @@
                       <button type="submit" class="btn-newsletter">OK</button>
                     </form>
                   </li>
-{#
-/**
-                  <li class="nav-item d-none d-lg-block">
-                    <form class="form-inline mt-2 mt-md-0 form-search" action="recherche.html">
-                      <input type="text" class="" id="input-search" placeholder="Que recherchez-vous ?" name="search">
-                    </form>
-                  </li>
-*/
-#}
+
                 </ul>
 
-                <div class="d-block d-lg-none menu-footer">
-                  {{ page.footer_menu_mobil }}
-                </div>
 
-                <ul class="d-block d-lg-none reseaux-sociaux">
-                  {% for rs in reseaux_sociaux %}
-                    <li class="nav-item">
-                      <a href="{{ rs.link }}">{{ rs.social }}</a>
-                    </li>
-                  {% endfor %}
-                </ul>
+         
 
               </div>
 					  </nav>
@@ -370,4 +423,3 @@
   {% endblock %}
 {% endif %}
 <div class="shadow"></div>
-<div class="icon-menu-open"></div>

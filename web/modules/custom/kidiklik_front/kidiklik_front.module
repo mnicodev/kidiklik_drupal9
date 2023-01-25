@@ -201,14 +201,15 @@ function kidiklik_front_form_alter(&$form, FormStateInterface $form_state, $form
     $form['field_rubriques_activite_target_id']['#options'] = $list_cat;
     $form['field_rubriques_activite_target_id']['#weight'] = -10;
     $form['field_rubriques_activite_target_id']['#title'] = 'Activité';
-    
+    $form['search']['#weight'] = -9;
+
     $form['lieu'] = [
 	    "#type" => "textfield",
 	    '#attributes' => [
 		    'placeholder' => 'Ville ou Code Postal ?',
 	    ],
       "#title" => "Où ?",
-      "#weight" => -9
+      "#weight" => -7
     ];
 
     $options[''] = 'Filtrer par zone';
@@ -240,7 +241,7 @@ function kidiklik_front_form_alter(&$form, FormStateInterface $form_state, $form
         "semaine" => "Cette semaine",
         "date" => "Par date"
       ],
-      "#weight" => -7
+      "#weight" => -8
     ];
 
     $form["center[coordinates][lat]"] = [
@@ -548,9 +549,9 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
     $query->addTable('paragraph__field_date_de_debut', $rel, $join, 'paragraph__field_date_de_debut');
     $query->addWhere('', 'paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value', [], '<>');
 
-    $query->where[0]["conditions"][count($query->where[0]["conditions"]) - 1]["field"] = "((DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d')>CURDATE()) or (CURDATE() BETWEEN DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') and DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d')))";
+    //$query->where[0]["conditions"][count($query->where[0]["conditions"]) - 1]["field"] = "((DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d')>CURDATE()) or (CURDATE() BETWEEN DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') and DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d')))";
 
-    if(isset($_GET['test'])) $query->where[0]["conditions"][count($query->where[0]["conditions"]) - 1]["field"] = $rule_search;
+    $query->where[0]["conditions"][count($query->where[0]["conditions"]) - 1]["field"] = $rule_search;
 
     
     $query->where[0]["conditions"][count($query->where[0]["conditions"]) - 1]["operator"] = "formula";
@@ -849,10 +850,9 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
         $query->where[4]["conditions"][$nb_condition]["operator"] = "formula";
 	unset($query->where[4]['conditions'][1]);
       } else if (empty($date_deb) && empty($date_fin)) {
-        $query->where[4]["conditions"][$nb_condition]["field"] = "((DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d')>CURDATE()) or (CURDATE() BETWEEN DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') and DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d')))";
+        //$query->where[4]["conditions"][$nb_condition]["field"] = "((DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d')>CURDATE()) or (CURDATE() BETWEEN DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') and DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d')))";
         
-        /* MODE TEST */
-	if(isset($_GET['test'])) $query->where[4]["conditions"][$nb_condition]["field"] = $rule_search;
+        $query->where[4]["conditions"][$nb_condition]["field"] = $rule_search;
         
         $query->where[4]["conditions"][$nb_condition]["operator"] = "formula";
       }
@@ -885,9 +885,8 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
       $rel = $query->addRelationship('paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin', $join, 'paragraphs_item_field_data_node__field_date');
       $query->addTable('paragraph__field_date_de_fin', $rel, $join, 'paragraph__field_date_de_fin');
 
-      $query->where[4]["conditions"][$nb_condition]["field"] = "((DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d')>CURDATE()) or (CURDATE() BETWEEN DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') and DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d')))";
-      /* MODE TEST */
-      if(isset($_GET['test'])) $query->where[4]["conditions"][$nb_condition]["field"] = $rule_search;
+      //$query->where[4]["conditions"][$nb_condition]["field"] = "((DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d')>CURDATE()) or (CURDATE() BETWEEN DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') and DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d')))";
+      $query->where[4]["conditions"][$nb_condition]["field"] = $rule_search;
 
       $query->where[4]["conditions"][$nb_condition]["operator"] = "formula";
 

@@ -135,8 +135,8 @@ h1 {
     #views-exposed-form-activites-recherche-activites,
     #recherche-form {
       margin-top: 10px; }
-      #views-exposed-form-activites-recherche-activites .form-item label,
-      #recherche-form .form-item label {
+      #views-exposed-form-activites-recherche-activites .form-item:not(.form-item-field-rubriques-activite-target-id) label,
+      #recherche-form .form-item:not(.form-item-field-rubriques-activite-target-id) label {
         display: none; }
       #views-exposed-form-activites-recherche-activites .form-item select,
       #recherche-form .form-item select {
@@ -180,7 +180,6 @@ h1 {
     #views-exposed-form-activites-recherche-activites .form-actions .form-submit,
     #recherche-form .form-actions .form-submit {
       background: #db2a24;
-      margin-top: 28px;
       width: 100%;
       color: #fff;
       border: none;
@@ -215,6 +214,9 @@ h1 {
     max-width: 400px;
     margin: auto; } }
 @media (min-width: 768px) {
+  #views-exposed-form-activites-recherche-activites .form-actions .form-submit {
+    margin-top: 28px; }
+
   body:not(.path-frontpage) #block-formulaireexposeactivitesrecherche-activites {
     height: 50px;
     transition: all 0.5s; }
@@ -1034,7 +1036,7 @@ article.full {
     background-image: url(/assets/img/icon_menu_open.png) !important;
     position: absolute;
     top: 15px;
-    right: 5px;
+    right: 15px;
     height: 35px;
     width: 35px;
     cursor: pointer;
@@ -1058,7 +1060,7 @@ article.full {
     #mobimenu .agenda a {
       padding-left: 23px; }
     #mobimenu .agenda i {
-      color: #000 !important; }
+      color: #333 !important; }
 
 #menu .select2-selection--single {
   border-radius: 0px;

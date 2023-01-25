@@ -19,21 +19,25 @@ class InitSubscriber implements EventSubscriberInterface
   {
     global $_SERVER;
    
+  
 	  $request = $event->getRequest();
     $user_roles = \Drupal::currentUser()->getAccount()->getRoles();
 	  $node = \Drupal::routeMatch()->getParameters()->get("node");
     $route_name = \Drupal::routeMatch()->getRouteName();
+
     //preg_match('/(system).(.*)/',$route_name, $match);
 
     if($node === null) {
       $request_uri = $request->server->get('REQUEST_URI');
       preg_match('/\/(.*)\/([0-9]*)-(.*)/',$request_uri, $match);
+      
       if(count($match)) {
         $node = Node::Load($match[2]);
       }
+      
 	  }
-    
-    if (!empty($node)) {
+   
+    if (!empty($node)) { 
       /*
        * test des pages dans le cas d'une erreur 404 
       */
@@ -151,6 +155,7 @@ class InitSubscriber implements EventSubscriberInterface
 
 
     preg_match("/admin/", $request->getRequestUri(), $rs);
+
     if (count($rs) > 0 && !in_array('administrator', \Drupal::currentUser()->getAccount()->getRoles())) {
       $term_dep = (int)current(user_load(\Drupal::currentUser()->getAccount()->id())->get('field_departement')->getValue())['target_id'];
       
