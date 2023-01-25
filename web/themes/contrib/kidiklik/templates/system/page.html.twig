@@ -213,7 +213,10 @@
 					  <nav class="navbar navbar-expand-lg  bg-white sticky-top justify-content-between navbar-light navbar-haut">
               <div class="" id="navbarCollapse" style="">
                 <ul class="navbar-nav menu-user">
-                 
+                  <li class="nav-item agenda">
+		              
+                  <a href="/sorties-moment.html"><i class="fa fa-calendar-o"></i>Agenda</a>
+                  </li>
 
                   <li class="nav-item user">
 
@@ -225,10 +228,7 @@
                        data-dialog-options='{"width":700,"dialogClass":"user-login"}'><i></i>Connexion</a><!--use-ajax fancy_login_show_popup-->
                     {% endif %}
                   </li>
-                   <li class="nav-item agenda">
-		              
-                  <a href="/sorties-moment.html"><i class="fa fa-calendar-o"></i>Agenda</a>
-                  </li>
+                  
                   <li class="nav-item coeur">
                     <a class="nav-link" href="/favoris"><i ></i>Favoris</a>
                   </li>
@@ -244,9 +244,11 @@
                   </li>
                   <li class="nav-item d-none d-lg-block">
                     <form class="form-inline mt-2 mt-md-0 form-newsletter" method="get" action="/newsletter.html">
-                      <label class="sr-only" for="input-newsletter">Votre adresse email</label>
-                      <input type="text" class="" id="input-newsletter" placeholder="Votre adresse email" name="email">
-                      <button type="submit" class="btn-newsletter">OK</button>
+                      <label class="" for="input-newsletter">Inscription à la newsletter</label>
+                      <div class="field">
+                        <input type="text" class="" id="input-newsletter" placeholder="Votre adresse email" name="email">
+                        <button type="submit" class="btn-newsletter">OK</button>
+                      </div>
                     </form>
                   </li>
 
