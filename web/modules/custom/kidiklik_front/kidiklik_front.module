@@ -357,23 +357,34 @@ function kidiklik_front_validate_jeu_concours($form, FormStateInterface $form_st
 function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Drupal\views\Plugin\views\query\QueryPluginBase $query)
 {
 	$term_dep = get_term_departement();
+	switch($view->current_display) {
+	case 'rubriques_activites':
+		$DELTA_PERIOD = 360;
+		break;
+	case 'recherche_activites':
+	case 'page_recherche_test':
+	case 'recherche_test':
+		$DELTA_PERIOD = 90;
+		break;
+	default:
+		$DELTA_PERIOD = 30;
+	}
 	$search = [];
-	$search[] = "((CURDATE() BETWEEN DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') AND DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d')) AND (CURDATE()+INTERVAL 30 DAY BETWEEN DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') AND DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d')))";
-	$search[] = "(CURDATE()<=DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') AND ((CURDATE()+INTERVAL 30 DAY) BETWEEN DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') AND DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d')))";
-	$search[] = "((CURDATE() BETWEEN DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') AND DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d')) AND (CURDATE() + INTERVAL 30 DAY>=DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d')))";
-  $search[] = "(
+	$search[] = "((CURDATE() BETWEEN DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') AND DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d')) AND (CURDATE()+INTERVAL ".$DELTA_PERIOD." DAY BETWEEN DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') AND DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d')))";
+	$search[] = "(CURDATE()<=DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') AND ((CURDATE()+INTERVAL ".$DELTA_PERIOD." DAY) BETWEEN DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') AND DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d')))";
+	$search[] = "((CURDATE() BETWEEN DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') AND DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d')) AND (CURDATE() + INTERVAL ".$DELTA_PERIOD." DAY>=DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d')))";
+  	$search[] = "(
     (
-      DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') BETWEEN CURDATE() AND (CURDATE() + INTERVAL 30 DAY)
+      DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') BETWEEN CURDATE() AND (CURDATE() + INTERVAL ".$DELTA_PERIOD." DAY)
     )
     AND 
     (
-      DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d')  BETWEEN CURDATE() AND (CURDATE() + INTERVAL 30 DAY)
+      DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d')  BETWEEN CURDATE() AND (CURDATE() + INTERVAL ".$DELTA_PERIOD." DAY)
     )
   )";
 
 	$rule_search = "(" . implode(' OR ',$search).")"; 
 
-     // $query->where[4]["conditions"][$nb_condition]["field"] = "((DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d')>CURDATE()) or (CURDATE() BETWEEN DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') and DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d')))";
 
   if ($view->current_display === 'article_national_3' || $view->current_display === 'article_national_1' || $view->current_display === 'article_national_2') {
     $query->where[1]["conditions"][] = current($query->where[0]['conditions']);
@@ -529,7 +540,9 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
   }
 
 
-  // page Rubriques
+  /**
+   * PAGE RUBRIQUES
+   */
   if ($view->current_display == "rubriques_activites") {
 
     $term_id = (int)\Drupal::request()->attributes->get('taxonomy_term')->id();
@@ -658,10 +671,10 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
 
   }
 
-  // Page recherche
-  if ($view->current_display == "page_recherche_test" ||
-  	$view->current_display == "recherche_test" ||
-    $view->current_display == "recherche_activites") {
+  /**
+   * PAGE CONSOLE DE RECHERCHE
+   */
+  if ($view->current_display == "page_recherche_test" || $view->current_display == "recherche_test" ||  $view->current_display == "recherche_activites") {
     $query->distinct = true;
     $query->groupby[]='nid';
     //$query->query()->execute();
