@@ -49,6 +49,12 @@ function kidiklik_preprocess_page(&$variables) {
 }
 
 function kidiklik_preprocess_html(&$variables) {
+	foreach($variables['page']['#attached']['html_head'] as $key=>$head)  {
+		if($head[1] === 'canonical_url') {
+			$variables['page']['#attached']['html_head'][$key][0]['#attributes']['href']=str_replace("https://0","https://wwww",$variables['page']['#attached']['html_head'][$key][0]['#attributes']['href']);
+		}
+	}
+	
 	$variables['url_statistiques']=\Drupal::request()->getBasePath() . '/' . drupal_get_path('module', 'statistics') . '/statistics.php';
 	$variables['url_mailjet']=\Drupal::request()->getBasePath() . '/kidiklik_front_newsletter/send';
 	$variables['base_url']=\Drupal::request()->getBasePath();
