@@ -634,7 +634,7 @@ function kidiklik_admin_form_node_activite_form_alter(&$form, FormStateInterface
   }
   //ksm($form);
   _get_ajax_code_postal($form);
-  _get_field_ville($form, 47, "group_coordonnees");
+  _get_field_ville($form, 47, "group_coordonnees", $adherent->get("field_ville_save")->value);
 
   add_record_and_stay_button($form);
 }
@@ -718,9 +718,10 @@ function kidiklik_admin_form_node_agenda_form_alter(&$form, FormStateInterface $
 
   if ($adherent_id !== null && $form_id == "node_agenda_form") {
     $adherent = Node::load($adherent_id);
-    //ksm($form["field_adresse"]);
+
     $form["field_adherent"]["widget"]["#default_value"] = $adherent_id;
     $form["field_adresse"]["widget"][0]["value"]['#default_value'] = $adherent->get("field_adresse")->value;
+    $form["field_ville_save"]["widget"][0]["value"]['#default_value'] = $adherent->get("field_ville_save")->value;
     $form["field_code_postal"]["widget"][0]["value"]['#default_value'] = $adherent->get("field_code_postal")->value;
     $form["field_code_postal"]['#weight'] = 5;
 
@@ -786,7 +787,7 @@ function kidiklik_admin_form_node_agenda_form_alter(&$form, FormStateInterface $
   ];
 
   _get_ajax_code_postal($form);
-  _get_field_ville($form, 16, "group_coordonnees");
+  _get_field_ville($form, 16, "group_coordonnees", $adherent->get("field_ville_save")->value);
 
 
   $form["#attached"]["library"][] = "kidiklik_admin/kidiklik_admin.commands";
@@ -1006,7 +1007,7 @@ function _get_ajax_code_postal(&$form)
   ];
 }
 
-function _get_field_ville(&$form, $poids, $group)
+function _get_field_ville(&$form, $poids, $group, $default = null)
 {
   $form["ville"] = [
     "#type" => "select",
@@ -1037,7 +1038,9 @@ function _get_field_ville(&$form, $poids, $group)
     $tab[$ville->commune] = $ville->commune;
   }
   $form["ville"]["#options"] = $tab;
-  if ($form["field_ville_save"]["widget"][0]["value"]["#default_value"]) {
+  if(!empty($default)) {
+    $form["ville"]["#default_value"] = $default;
+  } else if (!empty($form["field_ville_save"]["widget"][0]["value"]["#default_value"])) {
     $form["ville"]["#default_value"] = $form["field_ville_save"]["widget"][0]["value"]["#default_value"];
   }
 
@@ -1286,6 +1289,9 @@ function getAjaxCoordonnees(array &$form, FormStateInterface $form_state)
         ];
       }
       $form["field_activite"] = [
+  	"#ajax" => [
+    		"callback" => "getAjaxCoordonnees",
+	],
         "#type" => "select",
         "#options" => $tab,
         "#title" => "Activités",
