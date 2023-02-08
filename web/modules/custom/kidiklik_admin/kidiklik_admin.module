@@ -583,6 +583,7 @@ function kidiklik_admin_form_node_activite_form_alter(&$form, FormStateInterface
   //unset($form["field_date"]["widget"]['add_more']);
 
   $adherent_id = null;
+  $adherent = null;
   if (!empty(\Drupal::request()->query->get("adherent_id"))) {
     $adherent_id = \Drupal::request()->query->get("adherent_id");
   }
@@ -634,7 +635,7 @@ function kidiklik_admin_form_node_activite_form_alter(&$form, FormStateInterface
   }
   //ksm($form);
   _get_ajax_code_postal($form);
-  _get_field_ville($form, 47, "group_coordonnees", $adherent->get("field_ville_save")->value);
+  _get_field_ville($form, 47, "group_coordonnees", !empty($adherent) ? $adherent->get("field_ville_save")->value : null);
 
   add_record_and_stay_button($form);
 }
@@ -709,6 +710,7 @@ function kidiklik_admin_form_node_agenda_form_alter(&$form, FormStateInterface $
   $form["type"] = "agenda";
   /* on vient d'une fiche adhérent */
   $adherent_id = null;
+  $adherent = null;
   if (!empty(\Drupal::request()->query->get("adherent_id"))) {
     $adherent_id = \Drupal::request()->query->get("adherent_id");
   }
@@ -787,7 +789,7 @@ function kidiklik_admin_form_node_agenda_form_alter(&$form, FormStateInterface $
   ];
 
   _get_ajax_code_postal($form);
-  _get_field_ville($form, 16, "group_coordonnees", $adherent->get("field_ville_save")->value);
+  _get_field_ville($form, 16, "group_coordonnees", !empty($adherent) ? $adherent->get("field_ville_save")->value : null);
 
 
   $form["#attached"]["library"][] = "kidiklik_admin/kidiklik_admin.commands";
