@@ -4,6 +4,7 @@ namespace Drupal\kidiklik_front_newsletter\Controller;
 require "vendor/autoload.php";
 use Drupal\Core\Controller\ControllerBase;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use \Mailjet\Resources;
 
 /**
@@ -40,28 +41,28 @@ class DefaultController extends ControllerBase {
 				$le_dept = '01-bis';
 			}
 			foreach($liste as $item) {
-				if($item["Name"]=="LC_".$le_dept) {
+				if($item["Name"]=="LC_".$le_dept || $item["Name"]==$le_dept.'b') {
 					// on récupére l'id de la liste
 					$ID=$item["ID"];
 					break;
 				}
 			}
-
+			
 			// si l'ID est null, alors on crée la liste de contact
-			if(empty($ID)) {
+			/*if(empty($ID)) {
 				$filters=array("Name"=>$le_dept."b");
 				$response=$mj->post(Resources::$Contactslist,array('body'=>$filters));
 				if($response->success()) {
 					$liste=current($response->getData());
 					$ID=$liste["ID"];
 				}
-			}
+			}*/
 
 			// on crée le contact
 			$body=array("Email" => $email);
 
 			$response=$mj->post(Resources::$Contact,array('body'=>$body));
-   
+			//return new JsonResponse(['results' =>$response->getData()]);exit;
 			if($response->success()) {
 				$contact=current($response->getData());
 				$body=array('ContactsLists' => array(
@@ -72,6 +73,8 @@ class DefaultController extends ControllerBase {
 
 				if(!$response->success()) {
 					$res = new Response();
+					
+					//return new JsonResponse(['results' =>$response->getData()]);
 					return $res->setContent($response->getBody()['ErrorMessage']);
 					//return $response->getBody()['ErrorMessage'];
 				} else {
@@ -80,6 +83,7 @@ class DefaultController extends ControllerBase {
 				}
 			} else {
         		$res = new Response();
+				//return $res->setContent('apres send ressource');
 				return $res->setContent($response->getBody()['ErrorMessage']);
 			}
 
