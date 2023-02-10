@@ -734,7 +734,9 @@ function kidiklik_admin_form_node_agenda_form_alter(&$form, FormStateInterface $
 
     $activites = \Drupal::entityTypeManager()->getStorage("node")->loadByProperties(["type" => "activite", "field_adherent" => $adherent_id]);
     $activites_list = ["" => "Choisissez l'activité"];
-    foreach ($activites as $key => $activite) $activites_list[$key] = $activite->getTitle();
+    foreach ($activites as $key => $activite) {
+      $activites_list[$key] = $activite->getTitle();
+    }
 
     $form["field_activite"] = [
       "#type" => "select",
@@ -742,6 +744,18 @@ function kidiklik_admin_form_node_agenda_form_alter(&$form, FormStateInterface $
       "#options" => $activites_list,
       "#weight" => 1,
     ];
+    $form["field_activite"]["widget"]["#ajax"] = [
+      "callback" => "getAjaxCoordonnees",
+      "disable-refocus" => FALSE,
+      "event" => "change",
+      "wrapper" => "coordonnees-adherent",
+      "progress" => [
+        "type" => "throbber",
+        "message" => "Analyse",
+      ],
+  
+    ];
+
     $form["#group_children"]["field_activite"] = "group_coordonnees";
 
 

@@ -108,3 +108,11 @@ kidiklik_admin.client.select:
     _title: 'Select adhérent'
   requirements:
     _custom_access: '\Drupal\kidiklik_access\Controller\Access::adminAccess'
+
+kidiklik_admin.activite_controller_getAdresse:
+  path: '/admin/activite/{nid}/getadresse'
+  defaults:
+    _controller: '\Drupal\kidiklik_admin\Controller\ActiviteController::getAdresse'
+    _title: 'Activite controleur'
+  requirements:
+    _custom_access: '\Drupal\kidiklik_access\Controller\Access::adminAccess'
