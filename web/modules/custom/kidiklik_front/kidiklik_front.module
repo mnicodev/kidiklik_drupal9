@@ -358,14 +358,15 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
 {
 	$term_dep = get_term_departement();
 	switch($view->current_display) {
-	case 'rubriques_activites':
-		$DELTA_PERIOD = 360;
-		break;
+    case 'page_agenda_adherent':
+    case 'page_contenu_adherent':
+    case 'rubriques_activites':
+		  $DELTA_PERIOD = 365;
+		  break;
 	case 'recherche_activites':
 	case 'page_recherche_test':
 	case 'recherche_test':
-	case 'page_agenda_adherent':
-	case 'page_contenu_adherent':
+	
 		$DELTA_PERIOD = 90;
 		break;
 	default:
