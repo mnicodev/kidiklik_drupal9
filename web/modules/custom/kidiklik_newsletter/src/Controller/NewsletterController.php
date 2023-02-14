@@ -114,11 +114,14 @@ class NewsletterController extends ControllerBase
           $dept_target_id = (int)current($paragraph->get("field_departement")->getValue())['target_id'];
 	  if(!empty($paragraph->get("field_nid_bloc")->value)) {
 	  	$partage_nat = Node::Load($paragraph->get("field_nid_bloc")->value)->get('field_partage_departements')->getValue();
-		$dep_part = [];
-		foreach($partage_nat as $part) {
-			
-			$dep_part[] = Term::Load($part['target_id'])->getName();
-		}
+      $dep_part = [];
+      foreach($partage_nat as $part) {
+        $term_part = Term::Load($part['target_id']);
+        if(!empty($term_part)) {
+          $dep_part[] = $term_part->getName();
+        }
+        
+      }
 	 }
           $dept_bloc = (int)\Drupal::entityTypeManager()->getStorage("taxonomy_term")->load($dept_target_id)->getName();
           if ($dept_target_id !== (int)get_term_departement()) {
