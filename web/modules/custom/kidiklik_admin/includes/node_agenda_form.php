@@ -1,6 +1,19 @@
 <?php
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Ajax\ReplaceCommand;
+use Drupal\Core\Ajax\InvokeCommand;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\node\Entity\Node;
+use Drupal\user\Entity\User;
+use Drupal\views\Views;
+use Drupal\views\ViewExecutable;
+use Drupal\Core\Url;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Drupal\kidiklik_base\KidiklikUser;
+use Drupal\Core\Datetime\DrupalDateTime;
 
 function kidiklik_admin_form_node_agenda_form_alter(&$form, FormStateInterface $form_state, $form_id)
 {
@@ -79,7 +92,9 @@ function kidiklik_admin_form_node_agenda_form_alter(&$form, FormStateInterface $
 
     $activites = \Drupal::entityTypeManager()->getStorage("node")->loadByProperties(["type" => "activite", "field_adherent" => $adherent_id]);
     $activites_list = ["" => "Choisissez l'activité"];
-    foreach ($activites as $key => $activite) $activites_list[$key] = $activite->getTitle();
+    foreach ($activites as $key => $activite) {
+      $activites_list[$key] = $activite->getTitle();
+    }
 
     $form["field_activite"] = [
       "#type" => "select",
@@ -87,6 +102,18 @@ function kidiklik_admin_form_node_agenda_form_alter(&$form, FormStateInterface $
       "#options" => $activites_list,
       "#weight" => 1,
     ];
+    $form["field_activite"]["widget"]["#ajax"] = [
+      "callback" => "getAjaxCoordonnees",
+      "disable-refocus" => FALSE,
+      "event" => "change",
+      "wrapper" => "coordonnees-adherent",
+      "progress" => [
+        "type" => "throbber",
+        "message" => "Analyse",
+      ],
+  
+    ];
+
     $form["#group_children"]["field_activite"] = "group_coordonnees";
 
 
@@ -141,4 +168,61 @@ function kidiklik_admin_form_node_agenda_form_alter(&$form, FormStateInterface $
   if ($administrator === true) {
     $form["#attached"]["library"][] = "kidiklik_admin/kidiklik_admin.commands_admin";
   }
+}
+
+function kidiklik_admin_form_node_agenda_edit_form_alter(&$form, FormStateInterface $form_state, $form_id)
+{
+  kidiklik_admin_form_node_agenda_form_alter($form, $form_state, $form_id);
+  $cols = &$form['field_mise_en_avant']['widget']['entities']['#table_fields'];
+  $cols['field_type'] = [
+    'type' => 'field',
+    'label' => t('Type'),
+    'weight' => 1,
+  ];
+  $cols['field_date'] = [
+    'type' => 'field',
+    'label' => t('Date'),
+    'weight' => 1,
+  ];
+
+  $adherent_id = $form["field_adherent"]["widget"]["#default_value"];
+  $activites = NULL;
+  if (!empty($adherent_id)) {
+    $activites = \Drupal::entityTypeManager()->getStorage("node")->loadByProperties(["type" => "activite", "field_adherent" => $adherent_id]);
+  }
+  $node_agenda = \Drupal::request()->attributes->get('node');
+  $activites_list = ["" => "Choisissez l'activité"];
+  
+  //kint($node_agenda);
+  $db = \Drupal\Core\Database\Database::getConnection();
+  $gps = [];
+  $form["#group_children"]["field_activite"] = "group_coordonnees";
+  foreach ($activites as $key => $activite) {
+    $activites_list[$key] = $activite->getTitle();
+    
+    //$rs = $db->query('select * from villes where commune = "'.$activite->get("field_ville_save")->value.'"')->fetch();
+    $gps[] = [
+      'id' => $activite->id(),
+      'gps' => [
+        'lat' => (!empty($activite->get('field_geolocation_demo_single')->first()) ? $activite->get('field_geolocation_demo_single')->first()->get('lat')->getValue() : null),
+        'lng' => (!empty($activite->get('field_geolocation_demo_single')->first()) ? $activite->get('field_geolocation_demo_single')->first()->get('lng')->getValue() : null)
+      ]
+    ];
+  }
+  $form["field_activite"] = [
+    "#type" => "select",
+    "#title" => "Activités",
+    "#attributes" => [
+      "id" => "activites",
+      "data-gps" => json_encode($gps),
+     ]
+  ];
+  $form["field_activite"]["#options"] = $activites_list;
+  if (!empty($form["field_activite_save"]["widget"][0]["value"]["#default_value"])) {
+    $form["field_activite"]["#default_value"] = $form["field_activite_save"]["widget"][0]["value"]["#default_value"];
+  } else if (!empty(current($node_agenda->get('field_activite')->getValue())['target_id'])) {
+    $form["field_activite"]["#default_value"] = current($node_agenda->get('field_activite')->getValue())['target_id'];
+  }
+  $cp = $form["field_code_postal"]["widget"][0]["value"]["#default_value"];
+
 }

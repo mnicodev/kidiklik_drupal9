@@ -382,12 +382,17 @@ $(function(){
 				console.log($(this).val());
 				$("#edit-field-activite-save-wrapper").find("input").val($(this).val());
 				let gps = JSON.parse(jQuery(this).attr('data-gps'));
-
+console.log(gps)
 				for(item of gps) {
 
 					if(item.id === $(this).val()) {
 						jQuery('#edit-field-geolocation-demo-single-0-lat').val(item.gps.lat);
 						jQuery('#edit-field-geolocation-demo-single-0-lng').val(item.gps.lng);
+						jQuery('#coordonnees-adherent').find('.field--name-field-lieu input').val(item.coordonnees.lieu);
+						jQuery('#coordonnees-adherent').find('.field--name-field-adresse input').val(item.coordonnees.adresse);
+						jQuery('#coordonnees-adherent').find('.field--name-field-code-postal input').val(item.coordonnees.cp);
+						jQuery('#coordonnees-adherent').find('.field--name-field-telephone input').val(item.coordonnees.tel);
+						jQuery('#coordonnees-adherent').find('.field--name-field-email input').val(item.coordonnees.email);
 					}
 				}
 				
