@@ -83,6 +83,8 @@ if($form_id=="node_jeu_concours_form" || $form_id=="node_jeu_concours_edit_form"
 
 			}
 		}
+
+		if(!empty($node)) {
 			$form["actions"]["resultats"]=[
 			  "#type"=>"html_tag",
 			  "#tag"=>"a",
@@ -90,6 +92,8 @@ if($form_id=="node_jeu_concours_form" || $form_id=="node_jeu_concours_edit_form"
 			  "#attributes"=>["class"=>"btn button","target"=>"blank","onclick"=>"window.open('/node/".$node->id()."/webform/results/submissions')"],
               		   "#weight"=>200,
 			];
+		}
+			
 
 
 		  $adherents=\Drupal::entityTypeManager()->getStorage("node")->loadByProperties(["type"=>"adherent","field_departement"=>$term_dep]);
