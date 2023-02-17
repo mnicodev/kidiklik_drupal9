@@ -41,7 +41,7 @@ class DefaultController extends ControllerBase {
 				$le_dept = '01-bis';
 			}
 			foreach($liste as $item) {
-				if($item["Name"]=="LC_".$le_dept || $item["Name"]==$le_dept.'b') {
+				if($item["Name"]=="LC_".$le_dept) {
 					// on récupére l'id de la liste
 					$ID=$item["ID"];
 					break;
@@ -49,14 +49,14 @@ class DefaultController extends ControllerBase {
 			}
 			
 			// si l'ID est null, alors on crée la liste de contact
-			/*if(empty($ID)) {
-				$filters=array("Name"=>$le_dept."b");
+			if(empty($ID)) {
+				$filters=array("Name"=>"LC_".$le_dept);
 				$response=$mj->post(Resources::$Contactslist,array('body'=>$filters));
 				if($response->success()) {
 					$liste=current($response->getData());
 					$ID=$liste["ID"];
 				}
-			}*/
+			}
 
 			// on crée le contact
 			$body=array("Email" => $email);
