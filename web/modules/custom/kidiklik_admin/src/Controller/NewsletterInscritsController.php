@@ -3,6 +3,7 @@
 namespace Drupal\kidiklik_admin\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class NewsletterInscritsController.
@@ -45,6 +46,25 @@ class NewsletterInscritsController extends ControllerBase
       "#step" => $step,
       "#count_list" => $taille
     ];
+  }
+
+  public function export()
+  {
+    $database = \Drupal::database();
+    $sql = "select * from  inscrits_newsletters where dept='" . get_departement() . "' order by inscription desc";
+    $query = $database->query($sql);
+    $list = $query->fetchAll();
+    $csv = [];
+
+    foreach($list as $inscrit) {
+	    $csv[] = implode(';',(array)$inscrit);
+    }
+
+    $response = new Response();
+    $response->headers->set('Content-Type', 'text/csv');
+    $response->headers->set('Content-Disposition', 'attachment; filename="gagnants-' . date("Y-m-d") . '.csv"');
+    $response->setContent(implode(chr(10),$csv));
+    return $response;
   }
 
 }

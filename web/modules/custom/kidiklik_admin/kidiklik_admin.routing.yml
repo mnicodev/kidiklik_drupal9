@@ -15,6 +15,12 @@ kidiklik_admin.content_controller_action:
   requirements:
     _custom_access: '\Drupal\kidiklik_access\Controller\Access::adminAccess'
 
+kidiklik_admin.newsletter_inscrits_export:
+  path: '/admin/newsletters/export_inscrit'
+  defaults:
+    _controller: '\Drupal\kidiklik_admin\Controller\NewsletterInscritsController::export'
+  requirements:
+    _custom_access: '\Drupal\kidiklik_access\Controller\Access::adminAccess'
 
 kidiklik_admin.adherent.page_controller:
   path: '/admin/adherent/{adherent_id}'
@@ -85,13 +91,14 @@ kidiklik_admin.adherent.confirm_delete:
     _title: 'Êtes-vous sûr(e) de vouloir supprimer cet adhérent'
   requirements:
     _custom_access: '\Drupal\kidiklik_access\Controller\Access::adminAccess'
+
 kidiklik_admin.newsletter_inscrits_controller_list:
   path: '/admin/newsletters/inscrits'
   defaults:
     _controller: '\Drupal\kidiklik_admin\Controller\NewsletterInscritsController::list'
     _title: 'Liste des inscrits'
   requirements:
-    _permission: 'access content'
+    _custom_access: '\Drupal\kidiklik_access\Controller\Access::adminAccess'
 
 kidiklik_admin.adherent.select:
   path: '/admin/select/adherents'
