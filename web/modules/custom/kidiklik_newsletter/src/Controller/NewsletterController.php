@@ -146,6 +146,8 @@ class NewsletterController extends ControllerBase
       "dep" => $dep,
       "url" => \Drupal::request()->getRequestUri()
     ];
+
+    /** département */
     $liste = [];
     foreach ($blocs as $item) {
       $bloc = Paragraph::load($item['target_id']);
@@ -160,15 +162,25 @@ class NewsletterController extends ControllerBase
         $url_image = "";
       }
       if (!empty($bloc->get('field_titre')->value)) {
+	      preg_match('/(https:\/\/)(.*)/',$bloc->get("field_lien")->value, $rs);
+
+        $ext = 0;
+        if(count($rs) && $rs[1] === 'https://') {
+          $ext = 1;
+        }
         $liste[] = [
           "titre" => $bloc->get('field_titre')->value,
           "image" => $url_image,
           "texte" => $bloc->get("field_resume")->value,
           "lien" => $bloc->get("field_lien")->value,
+          'ext' => $ext
         ];
       }
 
     }
+
+
+    /**national */
     $liste_nat = [];
     foreach ($blocs_nat as $item) {
       $bloc = Paragraph::load($item['target_id']);
@@ -183,11 +195,19 @@ class NewsletterController extends ControllerBase
         $url_image = "";
       }
       if (!empty($bloc->get('field_titre')->value)) {
+	      
+	      preg_match('/(https:\/\/)(.*)/',$bloc->get("field_lien")->value, $rs);
+
+        $ext = 0;
+        if(count($rs) && $rs[1] === 'https://') {
+          $ext = 1;
+        }
         $liste_nat[] = [
           "titre" => $bloc->get('field_titre')->value,
           "image" => $url_image,
           "texte" => $bloc->get("field_resume")->value,
           "lien" => $bloc->get("field_lien")->value,
+          'ext' => $ext,
         ];
       }
 
