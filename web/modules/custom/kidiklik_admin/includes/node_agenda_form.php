@@ -92,8 +92,23 @@ function kidiklik_admin_form_node_agenda_form_alter(&$form, FormStateInterface $
 
     $activites = \Drupal::entityTypeManager()->getStorage("node")->loadByProperties(["type" => "activite", "field_adherent" => $adherent_id]);
     $activites_list = ["" => "Choisissez l'activité"];
+    $gps=[];
     foreach ($activites as $key => $activite) {
       $activites_list[$key] = $activite->getTitle();
+      $gps[] = [
+        'id' => $activite->id(),
+        'gps' => [
+          'lat' => $activite->get('field_geolocation_demo_single')->first()->get('lat')->getValue(),
+          'lng' => $activite->get('field_geolocation_demo_single')->first()->get('lng')->getValue()
+        ],
+        'coordonnees' => [
+          'lieu' => $activite->get('field_lieu')->value ?? null,
+          'adresse' => $activite->get('field_adresse')->value ?? null,
+          'cp' => $activite->get('field_code_postal')->value ?? null,
+          'tel' => $activite->get('field_telephone')->value ?? null,
+          'email' => $activite->get('field_email')->value ?? null,
+        ]
+      ];
     }
 
     $form["field_activite"] = [
@@ -101,8 +116,12 @@ function kidiklik_admin_form_node_agenda_form_alter(&$form, FormStateInterface $
       "#title" => "Activités",
       "#options" => $activites_list,
       "#weight" => 1,
+      "#attributes" => [
+        "id" => "activites",
+        "data-gps" => json_encode($gps),
+       ]
     ];
-    $form["field_activite"]["widget"]["#ajax"] = [
+   /* $form["field_activite"]["widget"]["#ajax"] = [
       "callback" => "getAjaxCoordonnees",
       "disable-refocus" => FALSE,
       "event" => "change",
@@ -112,7 +131,7 @@ function kidiklik_admin_form_node_agenda_form_alter(&$form, FormStateInterface $
         "message" => "Analyse",
       ],
   
-    ];
+    ];*/
 
     $form["#group_children"]["field_activite"] = "group_coordonnees";
 

@@ -17,7 +17,33 @@ function getGPS(ville) {
 	})
 }
 
+function changeAdresseAgendaFromActivite(obj) {
+	$("#edit-field-activite-save-wrapper").find("input").val($(obj).val());
+	let gps = JSON.parse(jQuery(obj).attr('data-gps'));
+	
+	for(item of gps) {
+
+		if(item.id === $(obj).val()) {
+			jQuery('#edit-field-geolocation-demo-single-0-lat').val(item.gps.lat);
+			jQuery('#edit-field-geolocation-demo-single-0-lng').val(item.gps.lng);
+		
+			jQuery('#coordonnees-adherent').find('.field--name-field-lieu input').val(item.coordonnees.lieu);
+			jQuery('#coordonnees-adherent').find('.field--name-field-adresse input').val(item.coordonnees.adresse);
+			jQuery('#coordonnees-adherent').find('.field--name-field-code-postal input').val(item.coordonnees.cp);
+			jQuery('#coordonnees-adherent').find('.field--name-field-telephone input').val(item.coordonnees.tel);
+			jQuery('#coordonnees-adherent').find('.field--name-field-email input').val(item.coordonnees.email);
+		}
+	}
+}
+
 $(function(){
+	if($("#activites").length) {
+		$("#activites").change(function() {
+			changeAdresseAgendaFromActivite(this);
+			
+		});
+	}
+	
 
 	if($('#all_select_dep').length) {
 		$('#all_select_dep').on('click', function() {
@@ -379,22 +405,7 @@ $(function(){
 			});
 
 			$("#activites").change(function() {
-				console.log($(this).val());
-				$("#edit-field-activite-save-wrapper").find("input").val($(this).val());
-				let gps = JSON.parse(jQuery(this).attr('data-gps'));
-console.log(gps)
-				for(item of gps) {
-
-					if(item.id === $(this).val()) {
-						jQuery('#edit-field-geolocation-demo-single-0-lat').val(item.gps.lat);
-						jQuery('#edit-field-geolocation-demo-single-0-lng').val(item.gps.lng);
-						jQuery('#coordonnees-adherent').find('.field--name-field-lieu input').val(item.coordonnees.lieu);
-						jQuery('#coordonnees-adherent').find('.field--name-field-adresse input').val(item.coordonnees.adresse);
-						jQuery('#coordonnees-adherent').find('.field--name-field-code-postal input').val(item.coordonnees.cp);
-						jQuery('#coordonnees-adherent').find('.field--name-field-telephone input').val(item.coordonnees.tel);
-						jQuery('#coordonnees-adherent').find('.field--name-field-email input').val(item.coordonnees.email);
-					}
-				}
+				changeAdresseAgendaFromActivite(this);
 				
 			});
 
