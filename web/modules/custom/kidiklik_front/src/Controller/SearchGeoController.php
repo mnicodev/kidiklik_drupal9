@@ -35,8 +35,10 @@ class SearchGeoController extends ControllerBase
     $villes = $query->fetchAll();
     $output = [];
     foreach ($villes as $ville) {
+      $dep = str_pad((int)($ville->code_postal / 1000), 2, '0', STR_PAD_LEFT);
+      
       $output[] = [
-        'id' => (int)($ville->code_postal / 1000),
+        'id' => $dep,
         'text' => $ville->commune,
       ];
     }
