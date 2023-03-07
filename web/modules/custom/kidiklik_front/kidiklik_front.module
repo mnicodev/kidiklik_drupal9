@@ -510,7 +510,7 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
       ->createInstance('standard', $configuration);
     $rel = $query->addRelationship('field_tous_les_sites', $join, 'node_field_data');
     $query->addTable('node__field_tous_les_sites', $rel, $join, 'field_tous_les_sites');
-    $query->addWhere('0', 'field_tous_les_sites.field_tous_les_sites_value', true, '=');
+    $query->addWhere('0', 'field_tous_les_sites.field_tous_les_sites_value', 1, '=');
 
     $query->where[0]["type"] = "OR";
     //ksm($query);
