@@ -513,7 +513,7 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
     $query->addWhere('0', 'field_tous_les_sites.field_tous_les_sites_value', 1, '=');
 
     $query->where[0]["type"] = "OR";
-    //ksm($query);
+    if(isset($_GET['dev']))ksm($query);
 
   }
 
