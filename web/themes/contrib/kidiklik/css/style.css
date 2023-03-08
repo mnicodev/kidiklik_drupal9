@@ -603,7 +603,7 @@ footer .menu li.last {
     .bloc-fiche .bloc-information .informations .field--label, .bloc-fiche article.teaser .informations .field--label {
       font-weight: 700; }
   .bloc-fiche .bloc-information .titre, .bloc-fiche article.teaser .titre {
-    color: #0cacce;
+    color: #0cacce !important;
     font-size: 1.2em;
     font-weight: bold !important;
     font-family: 'Roboto'; }
