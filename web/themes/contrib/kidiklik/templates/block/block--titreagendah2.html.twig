@@ -53,15 +53,7 @@
     'clearfix',
   ]
 %}
-<section{{ attributes.addClass(classes) }}>
-  {{ title_prefix }}
-  {% if label %}
-    <div{{ title_attributes.addClass('block-title') }}>{{ label }}</div>
-  {% endif %}
-  {{ title_suffix }}
 
-  {% block content %}
-    {{ content }}
-  {% endblock %}
-</section>
+
+{{ content }}
 

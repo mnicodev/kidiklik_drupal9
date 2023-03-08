@@ -49,6 +49,7 @@ function kidiklik_preprocess_page(&$variables) {
 }
 
 function kidiklik_preprocess_html(&$variables) {
+
 	foreach($variables['page']['#attached']['html_head'] as $key=>$head)  {
 		if($head[1] === 'canonical_url') {
 			$variables['page']['#attached']['html_head'][$key][0]['#attributes']['href']=str_replace("https://0","https://wwww",$variables['page']['#attached']['html_head'][$key][0]['#attributes']['href']);
@@ -85,6 +86,9 @@ function kidiklik_preprocess_page_title(&$variables, $hook) {
 
 }
 
+function kidiklik_page_attachments_alter(array &$variables) {
+	
+}
 
 function kidiklik_preprocess_menu(&$variables, $hook) {
 }

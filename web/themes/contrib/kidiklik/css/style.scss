@@ -131,6 +131,17 @@ h1 {
   }
 }
 
+.path-recherchehtml, .path-sorties-momenthtml {
+	h1 {
+
+	}
+	h2 {
+		color: #0cacce;
+		font-weight: bold !important;
+		font-size: 1.4rem;
+	}
+}
+
 #views-exposed-form-activites-recherche-activites,
 #recherche-form {
 	select {
@@ -716,11 +727,15 @@ footer .menu li.last {
 #rubriques_activites .form-group {
 	margin-bottom: 0;
 }
-#rubriques_activites h3 a {
-	font-size: 14px;
-	text-transform: uppercase;
-	color: #444;
-	font-weight: 700;
+#rubriques_activites .titre {
+	font-size: 1.75rem;
+	line-height: 1.2;
+	a {
+		font-size: 14px;
+		text-transform: uppercase;
+		color: #444;
+		font-weight: 700;
+	}
 }
 .view-taxonomy-term .views-field-field-image {
 	float: left;
@@ -1266,6 +1281,18 @@ article.full {
 	}
 
 }
+section{
+
+	.block {
+		.block-title {
+			color: #0cacce;
+			font-weight: bold !important;
+			font-size: 1.6rem;
+		}
+	}
+}
+
+
 
 .carre {
 	.views-row {
@@ -1705,6 +1732,8 @@ article.full {
 		overflow: hidden;
 	}
 	.card-title {
+		color: #0cacce;
+		font-weight: bold !important;
 		a {
 			font-family: 'roboto-bold';
 			font-size: 0.8em;
@@ -1788,6 +1817,13 @@ article.full {
 	padding-bottom: 110px;
 	max-width: 265px;
 	margin: auto;
+
+	.titre {
+		font-size: 1.4em;
+		margin-bottom: 0;
+		line-height: 1.2;
+		font-weight: bold;
+	}
 
 	input {
 		width: 100%;
