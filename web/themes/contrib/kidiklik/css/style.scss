@@ -491,7 +491,18 @@ h1 {
 				margin-bottom: 0!important;
 			}
 		}
-	}
+		.bloc-fiche {
+			.card-title {
+				a {
+					font-size: 1.2em;
+					color: #0cacce;
+					font-weight: bold;
+					font-family: 'Roboto';
+					line-height: 1.2;
+				}
+			}
+		}
+}
 #block-block-article-accueil a {
 	font-size: 16px;
 	font-weight: 700;
