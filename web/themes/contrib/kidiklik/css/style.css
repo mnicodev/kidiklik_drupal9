@@ -1280,7 +1280,7 @@ section .block .block-title {
     #block-bloc-jeux-concours .card-title a,
     #block-views-block-jeux-concours-bloc-jeux-concours .card-title a {
       font-family: 'roboto-bold';
-      font-size: 0.8em;
+      font-size: 0.9rem;
       font-weight: 700; }
   #block-bloc-jeux-concours .card,
   #block-views-block-jeux-concours-bloc-jeux-concours .card {
