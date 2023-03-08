@@ -360,6 +360,8 @@ h1 {
 
 #block-block-article-accueil {
   font-size: 14px; }
+  #block-block-article-accueil .card-title {
+    margin-bottom: 10px; }
 
 .view-articles-content {
   font-size: 14px; }
