@@ -602,6 +602,11 @@ footer .menu li.last {
     color: gray; }
     .bloc-fiche .bloc-information .informations .field--label, .bloc-fiche article.teaser .informations .field--label {
       font-weight: 700; }
+  .bloc-fiche .bloc-information .titre, .bloc-fiche article.teaser .titre {
+    color: #0cacce;
+    font-size: 1.2em;
+    font-weight: bold !important;
+    font-family: 'Roboto'; }
 .bloc-fiche .favori .reservation {
   display: none; }
 @media (max-width: 768px) {
