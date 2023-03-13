@@ -166,7 +166,6 @@ function kidiklik_front_form_alter(&$form, FormStateInterface $form_state, $form
       $form['elements']['which_content']['#value'] = $nid;
       $form['#submit'][]= 'kidiklik_front_submit_jeu_concours';
       $form['#validate'][] = 'kidiklik_front_validate_jeu_concours';
-      ksm($form);
     }
   }
 
