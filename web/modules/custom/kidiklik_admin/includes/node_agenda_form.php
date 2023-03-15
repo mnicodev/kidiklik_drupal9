@@ -98,8 +98,8 @@ function kidiklik_admin_form_node_agenda_form_alter(&$form, FormStateInterface $
       $gps[] = [
         'id' => $activite->id(),
         'gps' => [
-          'lat' => $activite->get('field_geolocation_demo_single')->first()->get('lat')->getValue(),
-          'lng' => $activite->get('field_geolocation_demo_single')->first()->get('lng')->getValue()
+          'lat' => !empty($activite->get('field_geolocation_demo_single')->first()) ? $activite->get('field_geolocation_demo_single')->first()->get('lat')->getValue() : null,
+          'lng' => !empty($activite->get('field_geolocation_demo_single')->first()) ? $activite->get('field_geolocation_demo_single')->first()->get('lng')->getValue() : null,
         ],
         'coordonnees' => [
           'lieu' => $activite->get('field_lieu')->value ?? null,
