@@ -11,6 +11,37 @@
 @font-face {
   font-family: 'DidactGothic';
   src: url(../fonts/DidactGothic.ttf); }
+/*
+ * Styles pour ckeditor
+*/
+.marker {
+  font-family: 'roboto';
+  font-size: 14px;
+  color: #0cacce; }
+
+.marker-h3 {
+  font-family: 'roboto';
+  font-size: 14px;
+  font-weight: 900;
+  color: gray; }
+
+.marker-h4 {
+  font-family: 'roboto';
+  font-size: 14px;
+  font-weight: 700;
+  color: #0cacce; }
+
+.color-bleu-kidiklik {
+  font-family: 'roboto';
+  font-size: 14px;
+  color: #0cacce; }
+
+.color-rouge-kidiklik {
+  font-family: 'roboto';
+  font-size: 14px;
+  color: #db2a24; }
+
+/** fin styles */
 body {
   overflow-x: hidden;
   font-family: 'Roboto';
@@ -1131,7 +1162,7 @@ section .block .block-title {
     left: 0px;
     z-index: 100;
     background: url(/assets/img/titre_kidi_dep.jpg) no-repeat;
-    background-color: rgba(0, 0, 0, 0);
+    background-color: transparent;
     background-position-x: 0%;
     background-position-y: 0%;
     background-size: auto;

@@ -14,7 +14,42 @@
   font-family: 'DidactGothic';
   src: url(../fonts/DidactGothic.ttf);
 }
- body {
+
+/*
+ * Styles pour ckeditor
+*/
+.marker {
+    font-family: 'roboto';
+    font-size: 14px;
+    color: #0cacce;
+}
+.marker-h3 {
+    font-family: 'roboto';
+    font-size: 14px;
+    font-weight: 900;
+    color: gray;
+}
+.marker-h4 {
+    font-family: 'roboto';
+    font-size: 14px;
+    font-weight: 700;
+    color: #0cacce;
+}
+.color-bleu-kidiklik {
+    font-family: 'roboto';
+    font-size: 14px;
+    color: #0cacce;
+}
+.color-rouge-kidiklik {
+    font-family: 'roboto';
+    font-size: 14px;
+    color: #db2a24;
+}
+
+/** fin styles */
+
+
+body {
   overflow-x: hidden;
    font-family: 'Roboto';
    font-size: 14px;
