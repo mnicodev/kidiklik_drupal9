@@ -817,6 +817,8 @@ case 95:
 		break;
 	case 23:
 	case 19:
+	case 24:	
+	case 'perigord-limousin':
 	case 'limousin':
 		$settings["dep"]=87;
 		break;
@@ -893,6 +895,7 @@ $settings["add_dep_for_views"] = [
 "page_messages",
 //"page_newsletters",
 "diaporama",
+"diaporama_rubriques",
 "page_activites",
 "page_agenda",
 "page_activites_tri",
