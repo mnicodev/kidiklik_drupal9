@@ -24,8 +24,13 @@ class InitSubscriber implements EventSubscriberInterface
     $user_roles = \Drupal::currentUser()->getAccount()->getRoles();
 	  $node = \Drupal::routeMatch()->getParameters()->get("node");
     $route_name = \Drupal::routeMatch()->getRouteName();
+    $kidi_service = \Drupal::service('kidiklik.service');
 
-    //preg_match('/(system).(.*)/',$route_name, $match);
+    if($kidi_service->hasRedirection()) {
+      $redirect = new TrustedRedirectResponse($kidi_service->getRedirection());
+      $redirect->send();
+    }
+    
 
     if($node === null) {
       $request_uri = $request->server->get('REQUEST_URI');

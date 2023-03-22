@@ -59,7 +59,7 @@ class NodeInsertSubscriber implements EventSubscriberInterface
       else  drupal_set_message("Votre message a bien été envoyé");
     }
 
-    if ($type == "publicite" || $type == "activite" || $type == "agenda" || $type == "article" || $type == "reportage") {
+    if (in_array($type, ["activite", "agenda", "article", "reportage"], "publicite", true)) {
 
       $adherent = \Drupal::entityTypeManager()
         ->getStorage("node")
@@ -69,16 +69,24 @@ class NodeInsertSubscriber implements EventSubscriberInterface
         $adherent->save();
       }
     }
-    if ($type == "activite" || $type == "agenda" || $type == "article" || $type == "reportage") {
-
+    
+    if (in_array($type, ["activite", "agenda", "article", "reportage"], true)) {
       $blocs = $entity->field_mise_en_avant->getValue();
       if (!empty($blocs)) {
         foreach ($blocs as $bloc) {
-          $bloc = Node::load($bloc['target_id']);
+          $node_bloc = Node::load($bloc['target_id']);
           if (empty($bloc->get('field_lien')->value)) {
-            $bloc->set('field_lien', \Drupal::service('path.alias_manager')->getAliasByPath('/node/' . $entity->id()));
-            $bloc->save();
+            $node_bloc->set('field_lien', \Drupal::service('path.alias_manager')->getAliasByPath('/node/' . $entity->id()));
           }
+          $rubriques = $entity->get('field_rubriques_activite')->getValue();
+          foreach($rubriques as $rubrique) {
+            $parent = current(\Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadParents($rubrique['target_id']));
+            break;
+          }
+  
+          $node_bloc->set('field_rubriques_activite', $parent->Id());
+  
+          $node_bloc->save();
         }
       }
       $image_target_id = current($entity->get('field_image')->getValue())['target_id'];

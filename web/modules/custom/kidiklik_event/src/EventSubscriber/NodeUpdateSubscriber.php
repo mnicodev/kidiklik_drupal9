@@ -50,7 +50,7 @@ class NodeUpdateSubscriber implements EventSubscriberInterface
 
     }
 
-    if ($type == "activite" || $type == "agenda" || $type == "article" || $type == "reportage") {
+    if (in_array($type, ["activite", "agenda", "article", "reportage"], true)) {
       $adherent = \Drupal::entityTypeManager()
         ->getStorage("node")
         ->load(current($entity->get("field_adherent")->getValue())["target_id"]);
@@ -65,36 +65,20 @@ class NodeUpdateSubscriber implements EventSubscriberInterface
       $dates = $entity->get('field_date')->getValue();
 
       foreach ($entity->get('field_mise_en_avant')->getValue() as $bloc) {
-        $n = Node::Load($bloc['target_id']);
-        if (!empty($image_target_id)) {
-          $n->__set('field_image', ['target_id' => $image_target_id]);
+        $node_bloc = Node::Load($bloc['target_id']);
+        $rubriques = $entity->get('field_rubriques_activite')->getValue();
+        foreach($rubriques as $rubrique) {
+          $parent = current(\Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadParents($rubrique['target_id']));
+          break;
         }
-        if (!empty($dates)) { // on retire ce process
-          /*$n->__unset("field_date");
-          $n->save();
-          foreach ($dates as $date) {
-            $d = Paragraph::Load($date['target_id']);
-            if ($type == "agenda") {
-              $dda = $d->get('field_date_de_debut')->value; //date('Y-m-d', strtotime($d->get('field_date_de_debut')->value . ' - 5 days'));
-              $dfa = $d->get('field_date_de_fin')->value; //date('Y-m-d', strtotime($d->get('field_date_de_fin')->value . ' - 7 days'));
-            } else {
-              $dda = $d->get('field_date_de_debut')->value;
-              $dfa = $d->get('field_date_de_fin')->value;
-            }
-            $nd = Paragraph::create([
-              'type' => 'date',
-              'field_date_de_debut' => [
-                'value' => $dda
-              ],
-              'field_date_de_fin' => [
-                'value' => $dfa
-              ],
-            ]);
 
-            $n->get("field_date")->appendItem($nd);
-          }*/
+        $node_bloc->set('field_rubriques_activite', $parent->id());
+        if (!empty($image_target_id)) {
+          $node_bloc->__set('field_image', ['target_id' => $image_target_id]);
         }
-        $n->save();
+        
+       
+        $node_bloc->save();
       }
     }
   }
