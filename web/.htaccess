@@ -67,6 +67,10 @@ AddEncoding gzip svgz
 #RewriteCond %{HTTP_HOST}	^(www\.)\.([0-9]+)\.kidiklik\.fr [NC]
 #RewriteRule ^/?(.*)	https://$2.kidiklik.fr/$1 [L,R=301]
 
+RewriteCond %{HTTP_HOST}	87.kidiklik\.fr [NC]
+RewriteRule ^/?(.*)	https://perigord-limousin.kidiklik.fr/$1 [L,R=301]
+RewriteCond %{HTTP_HOST}	24.kidiklik\.fr [NC]
+RewriteRule ^/?(.*)	https://perigord-limousin.kidiklik.fr/$1 [L,R=301]
 
 RewriteCond %{HTTP_HOST}	92.kidiklik\.fr [NC]
 RewriteRule ^/?(.*)	https://78.kidiklik.fr/$1 [L,R=301]
@@ -86,8 +90,6 @@ RewriteCond %{HTTP_HOST}	16.kidiklik\.fr [NC]
 RewriteRule ^/?(.*)	http://17.kidiklik.fr/$1 [L,R=301]
 RewriteCond %{HTTP_HOST}	75.kidiklik\.fr [NC]
 RewriteRule ^/?(.*)	https://paris.kidiklik.fr/$1 [L,R=301]
-RewriteCond %{HTTP_HOST}	87.kidiklik\.fr [NC]
-RewriteRule ^/?(.*)	https://limousin.kidiklik.fr/$1 [L,R=301]
 
 RewriteCond %{HTTP_HOST}	89.kidiklik\.fr [NC]
 RewriteRule ^/?(.*)	https://21.kidiklik.fr/$1 [L,R=301]
