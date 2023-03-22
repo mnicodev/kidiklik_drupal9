@@ -52,6 +52,9 @@ body {
 
 h1 {
   font-family: 'Roboto-bold'; }
+  @media (max-width: 768px) {
+    h1 {
+      font-size: 20px; } }
 
 h2, h3, h4, h5 {
   font-family: 'Roboto'; }
