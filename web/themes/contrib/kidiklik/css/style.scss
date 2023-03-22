@@ -61,7 +61,7 @@ h1 {
 	font-family: 'Roboto-bold';
 
 	@media(max-width: 768px) {
-		font-size: 20px;
+		font-size: 20px!important;
 	}
 }
 h2, h3, h4, h5 {
