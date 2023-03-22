@@ -636,7 +636,14 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
     if ($view->current_display == "page_agenda_adherent" && empty($ref_act)) {
       unset($query->where[0]);
     }
-    //$view->setTitle(\Drupal::config("system.site")->get('slogan'));
+    $title = $view->getTitle();
+    $departement =  \Drupal::entityTypeManager()->getStorage("taxonomy_term")->load(get_term_departement());
+
+    $title = sprintf('%s %s %s', $title, 
+      strtolower($departement->get('field_prefix')->value),
+      $departement->get('field_nom')->value);
+    $view->setTitle($title);
+    
     $configuration = array(
       'type' => 'LEFT',
       'table' => 'paragraph__field_date_de_debut',

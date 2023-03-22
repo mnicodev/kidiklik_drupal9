@@ -64,6 +64,12 @@ $(function(){
 			console.log(item)
 		}
 	}
+	$('#edit-submit').click(function(e) {
+		if(jQuery('#edit-field-image-0-alt').length) {
+			jQuery('#edit-field-image-0-alt').val(jQuery('#edit-title-0-value').val());
+		}
+	})
+
 	if($('.save-stay').length) {
 		$('.save-stay').on('click', function(e) {
 			e.preventDefault();
@@ -82,6 +88,10 @@ $(function(){
 				}
 				
 				href=$(this).attr('href') + search
+			}
+
+			if(jQuery('#edit-field-image-0-alt').length) {
+				jQuery('#edit-field-image-0-alt').val(jQuery('#edit-title-0-value').val());
 			}
 
 			

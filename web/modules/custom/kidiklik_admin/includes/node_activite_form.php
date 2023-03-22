@@ -16,8 +16,11 @@ use Drupal\Core\Datetime\DrupalDateTime;
 
 function kidiklik_admin_form_node_activite_form_alter(&$form, FormStateInterface $form_state, $form_id)
 {
+  $service = \Drupal::service('kidiklik.service');
+
+  $term_dep = $service->getTermDepartement();
+  $departement = $service->getDepartement();
   
-  $term_dep = get_term_departement();
   $form["#attached"]["library"][] = "kidiklik_admin/kidiklik_admin.commands";
   $form["type"] = "activite";
   /* le champ est configuré par défaut en multiple valeur, on bloque à une simple valeur */
@@ -39,7 +42,7 @@ function kidiklik_admin_form_node_activite_form_alter(&$form, FormStateInterface
     ],
 
   ];
-  if (get_departement() !== 0) {
+  if ($departement !== 0) {
     $rub = $form["field_rubriques_activite"]["widget"]["#options"];
     $tab = [];
     $n = "";

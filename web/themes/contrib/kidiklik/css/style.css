@@ -17,7 +17,8 @@
 .marker {
   font-family: 'roboto';
   font-size: 14px;
-  color: #0cacce; }
+  color: #0cacce;
+  font-weight: bold; }
 
 .marker-h3 {
   font-family: 'roboto';
@@ -60,6 +61,15 @@ h1, h2, h3, h4, h5 {
   font-weight: bold !important; }
   h1 a, h2 a, h3 a, h4 a, h5 a {
     color: #0cacce; }
+
+h1 {
+  font-size: 26px;
+  font-weight: 500; }
+
+h3 {
+  font-family: 'Roboto';
+  font-size: 14px;
+  color: #0cacce; }
 
 #map path.actif {
   fill: #388EB1;
@@ -111,9 +121,12 @@ h1, h2, h3, h4, h5 {
   padding: 10px 100px;
   margin: auto; }
 
-h1 {
-  font-size: 26px;
-  font-weight: 500; }
+#block-blocentetenational .field p {
+  font-size: 28px;
+  margin-left: 10px;
+  display: inline-block;
+  color: #000000;
+  font-weight: bold; }
 
 #entete_national img {
   width: 100%; }
@@ -385,6 +398,9 @@ h1 {
 #block-blocinformationrecherchegeo,
 #block-blocinformationrecherchegeo h2 {
   font-weight: bold; }
+  #block-blocinformationrecherchegeo h2,
+  #block-blocinformationrecherchegeo h2 h2 {
+    color: #e3001b; }
 
 #block-blocinformationrecherchegeo {
   padding-top: 100px; }
@@ -478,9 +494,9 @@ article {
   article h1 {
     font-size: 1.8rem; }
   article h2 {
-    font-weight: bold;
-    line-height: 18px;
-    font-size: 1.4rem; }
+    font-family: 'Roboto';
+    font-size: 14px;
+    color: #0cacce; }
   article .field--name-field-paragraphes .field--item {
     margin: 15px 0px; }
 
@@ -943,8 +959,6 @@ aside .region section {
 
 article.full {
   margin-bottom: 20px; }
-  article.full h2 {
-    font-size: 14px !important; }
   article.full .bloc-age {
     display: flex;
     flex-direction: row; }
@@ -1623,5 +1637,11 @@ div.user-login, div.user-register {
 
 .page-standard .statistics-counter {
   display: none; }
+
+#block-boutonvoirtouslesarticles a {
+  background: #e3001b;
+  color: #ffffff !important;
+  padding: 10px 100px;
+  margin: auto; }
 
 /*# sourceMappingURL=style.css.map */

@@ -17,8 +17,9 @@ use Drupal\Core\Datetime\DrupalDateTime;
 
 function kidiklik_admin_form_node_agenda_form_alter(&$form, FormStateInterface $form_state, $form_id)
 {
+  $service = \Drupal::service('kidiklik.service');
 
-  $term_dep = get_term_departement();
+  $term_dep = $service->getTermDepartement();
   $user = \Drupal::currentUser()->getAccount();
   $form['#validate'][] = 'kidiklik_admin_form_bloc_validate';
   $liste_adherents[''] = '';
@@ -42,7 +43,7 @@ function kidiklik_admin_form_node_agenda_form_alter(&$form, FormStateInterface $
   ]);
 
 
-  if (get_departement() !== 0) {
+  if ($service->getDepartement() !== 0) {
     $rub = $form["field_rubriques_activite"]["widget"]["#options"];
     $tab = [];
     $n = "";

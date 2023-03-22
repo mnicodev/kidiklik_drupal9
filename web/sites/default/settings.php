@@ -836,6 +836,11 @@ default:
 if((int)$host[0]) $settings["dep"]=$host[0];else $settings["dep"]=0;
 
 }
+
+$settings["redirections"] = [
+	'limousin' => 'perigord-limousin',
+];
+
 if((int)$settings["dep"] < 10) {
 //	$settings["dep"] = "0".$settings["dep"];
 }

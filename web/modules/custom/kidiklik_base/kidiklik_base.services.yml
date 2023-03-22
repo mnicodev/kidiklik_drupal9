@@ -1,0 +1,7 @@
+services:
+  logger.channel.kidiklik_base:
+    parent: logger.channel_base
+    arguments: ['kidiklik_base']
+  kidiklik.service:
+    class: Drupal\kidiklik_base\KidiklikService
+    arguments: []

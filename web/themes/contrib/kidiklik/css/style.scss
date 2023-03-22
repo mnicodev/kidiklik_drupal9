@@ -22,6 +22,7 @@
     font-family: 'roboto';
     font-size: 14px;
     color: #0cacce;
+	font-weight: bold;
 }
 .marker-h3 {
     font-family: 'roboto';
@@ -69,6 +70,15 @@ h1, h2, h3, h4, h5 {
     color: #0cacce;
   }
   font-weight: bold!important;
+}
+h1 {
+	font-size: 26px;
+	font-weight: 500;
+}
+h3 {
+	font-family: 'Roboto';
+	font-size: 14px;
+	color: #0cacce;
 }
 #map path.actif {
     fill: #388EB1;
@@ -131,11 +141,17 @@ h1, h2, h3, h4, h5 {
 	padding: 10px 100px;
 	margin: auto;
 }
-h1 {
-	font-size: 26px;
-	font-weight: 500;
-}
-#block-blocentetenational img {
+
+#block-blocentetenational {
+	.field {
+		p {
+				font-size:28px;
+				margin-left:10px;
+				display:inline-block;
+				color:#000000;
+				font-weight: bold;
+		}
+	}
 
 }
 #entete_national img {
@@ -497,6 +513,9 @@ h1 {
 #block-blocinformationrecherchegeo,
 #block-blocinformationrecherchegeo h2 {
 	font-weight: bold;
+	h2 {
+		color: #e3001b;
+	}
 
 }
 #block-blocinformationrecherchegeo {
@@ -621,9 +640,9 @@ article  {
     font-size: 1.8rem;
   }
   h2 {
-    font-weight: bold;
-    line-height: 18px;
-    font-size: 1.4rem;
+    font-family: 'Roboto';
+    font-size: 14px;
+	color: #0cacce;
   }
 	.field--name-field-paragraphes {
 		.field--item {
@@ -1277,9 +1296,7 @@ aside .region {
 }
 article.full {
 	margin-bottom: 20px;
-	h2 {
-		font-size: 14px!important;
-	}
+
 	.bloc-age {
 		display: flex;
 		flex-direction: row;
@@ -2227,5 +2244,13 @@ div.user-login, div.user-register {
 .page-standard {
 	.statistics-counter {
 		display: none;
+	}
+}
+#block-boutonvoirtouslesarticles {
+	a {
+		background: #e3001b;
+		color: #ffffff !important;
+		padding: 10px 100px;
+		margin: auto;
 	}
 }
