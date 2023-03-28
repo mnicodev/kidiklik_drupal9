@@ -74,7 +74,8 @@ class NodeInsertSubscriber implements EventSubscriberInterface
       $blocs = $entity->field_mise_en_avant->getValue();
       if (!empty($blocs)) {
         foreach ($blocs as $bloc) {
-          $node_bloc = Node::load($bloc['target_id']);
+		$node_bloc = Node::load($bloc['target_id']);
+		$parent = null;
           if (empty($bloc->get('field_lien')->value)) {
             $node_bloc->set('field_lien', \Drupal::service('path.alias_manager')->getAliasByPath('/node/' . $entity->id()));
           }
@@ -83,8 +84,10 @@ class NodeInsertSubscriber implements EventSubscriberInterface
             $parent = current(\Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadParents($rubrique['target_id']));
             break;
           }
-  
-          $node_bloc->set('field_rubriques_activite', $parent->Id());
+
+	  if(!empty($parent)) {
+		  $node_bloc->set('field_rubriques_activite', $parent->Id());
+	  }
   
           $node_bloc->save();
         }

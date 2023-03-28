@@ -66,13 +66,16 @@ class NodeUpdateSubscriber implements EventSubscriberInterface
 
       foreach ($entity->get('field_mise_en_avant')->getValue() as $bloc) {
         $node_bloc = Node::Load($bloc['target_id']);
-        $rubriques = $entity->get('field_rubriques_activite')->getValue();
+	$rubriques = $entity->get('field_rubriques_activite')->getValue();
+	$parent=null;
         foreach($rubriques as $rubrique) {
           $parent = current(\Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadParents($rubrique['target_id']));
           break;
-        }
+	}
 
-        $node_bloc->set('field_rubriques_activite', $parent->id());
+	if(!empty($parent)) {
+		$node_bloc->set('field_rubriques_activite', $parent->id());
+	}
         if (!empty($image_target_id)) {
           $node_bloc->__set('field_image', ['target_id' => $image_target_id]);
         }
