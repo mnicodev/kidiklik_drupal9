@@ -19,6 +19,11 @@ use Drupal\Core\Url;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Drupal\kidiklik_base\KidiklikUser;
 use Drupal\Core\Datetime\DrupalDateTime;
+use Drupal\editor\Entity\Editor;
+
+function kidiklik_admin_ckeditor_css_alter(array &$css, Editor $editor) {
+  $css[] = drupal_get_path('module', 'kidiklik_admin') . '/css/style_marqueur.css';
+}
 
 
 function add_record_and_stay_button(&$form)

@@ -20,6 +20,12 @@
   max-width: 100%;
 }
 
+.marker {
+    font-family: 'roboto';
+    font-size: 14px;
+    color: #0cacce;
+	font-weight: bold;
+}
 @media (max-width: 767px){
 
   body.skin-black #logo,
