@@ -397,21 +397,19 @@ h3 {
 
   .logo-national p {
     margin-left: 0 !important;
-    font-size: 21px !important;
+    font-size: 18px !important;
     width: 100%;
-    text-align: center; } }
-#block-blocinformationrecherchegeo,
-#block-blocinformationrecherchegeo h2 {
-  font-weight: bold; }
-  #block-blocinformationrecherchegeo h2,
-  #block-blocinformationrecherchegeo h2 h2 {
-    color: #e3001b; }
+    text-align: center;
+    font-weight: 400 !important; } }
+#block-blocinformationrecherchegeo h2,
+#block-blocinformationrecherchegeo h2 h2 {
+  color: #e3001b;
+  font-weight: 700;
+  font-family: 'roboto';
+  font-size: 23px; }
 
 #block-blocinformationrecherchegeo {
   padding-top: 100px; }
-
-#block-blocinformationrecherchegeo h2 {
-  font-size: 30px; }
 
 #block-block-article-accueil {
   font-size: 14px; }
@@ -1184,7 +1182,7 @@ section .block .block-title {
     left: 0px;
     z-index: 100;
     background: url(/assets/img/titre_kidi_dep.jpg) no-repeat;
-    background-color: transparent;
+    background-color: rgba(0, 0, 0, 0);
     background-position-x: 0%;
     background-position-y: 0%;
     background-size: auto;
