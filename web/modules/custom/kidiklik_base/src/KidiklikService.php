@@ -2,6 +2,9 @@
 
 namespace Drupal\kidiklik_base;
 
+use Drupal\kidiklik_base\KidiklikUser;
+use Drupal\user\Entity\User;
+
 /**
  * Class KidiklikService.
  */
@@ -25,6 +28,9 @@ class KidiklikService  {
     $this->redirections = $globalSettings->get('redirections');
     $this->domain_name = $globalSettings->get('domain_name');
     $this->request_uri = \Drupal::request()->server->get('REQUEST_URI') ?? \Drupal::request()->server->get('REDIRECT_URL') ?? \Drupal::request()->server->get('SCRIPT_URL');
+    if($this->request_uri === '/') {
+	    $this->request_uri = null;
+    }
   }
 
   /**
@@ -70,5 +76,13 @@ class KidiklikService  {
       return sprintf('https://%s.%s/%s', $this->redirections[$this->dep], $this->domain_name, $this->request_uri);
     }
     return false;    
+  }
+
+  public function getUser() {
+    return User::Load(KidiklikUser::getAccount()->Id());
+  }
+
+  public function getUserDepartement() {
+    return KidiklikUser::getDepartement();
   }
 }

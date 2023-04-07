@@ -28,3 +28,6 @@ kidiklik_admin.commands_admin:
   version: 1.x
   js:
     js/scripts_admin.js: {}
+  css:
+    theme:
+      css/style_marqueur.css: {}
