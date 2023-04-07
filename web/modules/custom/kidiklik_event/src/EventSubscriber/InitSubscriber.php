@@ -30,7 +30,7 @@ class InitSubscriber implements EventSubscriberInterface
       $redirect = new TrustedRedirectResponse($kidi_service->getRedirection());
       $redirect->send();
     }*/
-  
+
 
     if($node === null) {
       $request_uri = $request->server->get('REQUEST_URI');
@@ -162,11 +162,16 @@ class InitSubscriber implements EventSubscriberInterface
 
     preg_match("/admin/", $request->getRequestUri(), $rs);
 
-    if (count($rs) > 0 && !in_array('administrator', $kidi_service->getUser()->getRoles()) && in_array($kidi_service->getDepartement(), $kidi_service->getUserDepartement(), true) === false) {
+    if (count($rs) > 0 && !in_array('administrator', \Drupal::currentUser()->getAccount()->getRoles())) {
+      $term_dep = (int)current(user_load(\Drupal::currentUser()->getAccount()->id())->get('field_departement')->getValue())['target_id'];
+      
+      //kint(\Drupal::currentUser()->getAccount()->getRoles());exit;
+      if ($term_dep !== (int)$kidi_service->getTermDepartement()) {
         drupal_set_message(t("Vous n'êtes pas autorisé à accéder à ce gestionnaire"), 'error');
         $redirect = new RedirectResponse('/');
         $redirect->send();
         exit;
+      }
     }
     $url = str_replace('/', '', $request->getRequestUri());
     if ($url === 'admin') {
