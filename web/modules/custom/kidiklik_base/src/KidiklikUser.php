@@ -28,7 +28,7 @@ class KidiklikUser
       $term = Term::loadMultiple($ids);
       $output = [];
       foreach($term as $dep) {
-        $output[] = $dep->getName();
+        $output[] = (int)$dep->getName();
       }
     }
 

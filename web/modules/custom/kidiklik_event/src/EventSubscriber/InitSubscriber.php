@@ -148,7 +148,7 @@ class InitSubscriber implements EventSubscriberInterface
       }
 
 
-      if((in_array('administrateur_de_departement', $user_roles) && \Drupal::routeMatch()->getRouteName() === 'entity.node.edit_form' && $dep_node !== (int)get_departement())) {
+      if((in_array('administrateur_de_departement', $user_roles) && \Drupal::routeMatch()->getRouteName() === 'entity.node.edit_form' && $dep_node !== $kidi_service->getDepartement())) {
         if(!in_array('administrator', $user_roles)) {
             drupal_set_message(t("Vous n'êtes pas autorisé à éditer cette page"), 'error');
             $redirect = new RedirectResponse('/admin');
@@ -163,17 +163,21 @@ class InitSubscriber implements EventSubscriberInterface
     preg_match("/admin/", $request->getRequestUri(), $rs);
 
     if (count($rs) > 0 && !in_array('administrator', \Drupal::currentUser()->getAccount()->getRoles())) {
-      $term_dep = (int)current(user_load(\Drupal::currentUser()->getAccount()->id())->get('field_departement')->getValue())['target_id'];
-      
-      //kint(\Drupal::currentUser()->getAccount()->getRoles());exit;
-      if ($term_dep !== (int)$kidi_service->getTermDepartement()) {
-        drupal_set_message(t("Vous n'êtes pas autorisé à accéder à ce gestionnaire"), 'error');
-        $redirect = new RedirectResponse('/');
-        $redirect->send();
-        exit;
-      }
+        $term_dep = (int)current(user_load(\Drupal::currentUser()->getAccount()->id())->get('field_departement')->getValue())['target_id'];
+        //kint($kidi_service->getDepartement());        kint($kidi_service->getUserDepartement());exit;
+        //kint(\Drupal::currentUser()->getAccount()->getRoles());exit;
+        //if ($term_dep !== (int)$kidi_service->getTermDepartement()) {
+        if(!in_array((int)$kidi_service->getDepartement(), $kidi_service->getUserDepartement())) {
+          drupal_set_message(t("Vous n'êtes pas autorisé à accéder à ce gestionnaire"), 'error');
+          $redirect = new RedirectResponse('/');
+          $redirect->send();
+          exit;
+        }
     }
+
+     
     $url = str_replace('/', '', $request->getRequestUri());
+
     if ($url === 'admin') {
       if (in_array('administrateur_de_departement', $user_roles)) {
         $redirect = new RedirectResponse('/admin/dashboard');
