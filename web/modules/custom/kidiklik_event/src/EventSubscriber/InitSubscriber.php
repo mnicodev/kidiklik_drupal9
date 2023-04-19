@@ -148,7 +148,7 @@ class InitSubscriber implements EventSubscriberInterface
       }
 
 
-      if((in_array('administrateur_de_departement', $user_roles) && \Drupal::routeMatch()->getRouteName() === 'entity.node.edit_form' && $dep_node !== $kidi_service->getDepartement())) {
+      if((in_array('administrateur_de_departement', $user_roles) && \Drupal::routeMatch()->getRouteName() === 'entity.node.edit_form' && !in_array((int)$kidi_service->getDepartement(), $kidi_service->getUserDepartement()))) {
         if(!in_array('administrator', $user_roles)) {
             drupal_set_message(t("Vous n'êtes pas autorisé à éditer cette page"), 'error');
             $redirect = new RedirectResponse('/admin');
