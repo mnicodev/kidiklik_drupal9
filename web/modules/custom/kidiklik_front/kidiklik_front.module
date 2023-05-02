@@ -740,7 +740,8 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
     $ou = \Drupal::request()->get("lieu");
     //$ou = \Drupal::request()->get("ville");
     $quand = \Drupal::request()->get("quand");
-    $search = explode(' ', trim(\Drupal::request()->get("search")));
+//    $search = explode(' ', trim(\Drupal::request()->get("search")));
+    $keywords = trim(\Drupal::request()->get("search"));
     $ref_adherent = \Drupal::request()->get("ref_adh") ?? \Drupal::request()->get("ref_adherent") ?? null;
 
     if (!empty(\Drupal::request()->get("ref_adh"))) {
@@ -762,7 +763,7 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
       $query->addWhere('', 'node__field_adherent.field_adherent_target_id', $ref_adherent, '=');
     }
 
-    /*if (!empty($search)) {
+    if (!empty($keywords)) {
 	unset($query->where[1]["conditions"][count($query->where[1]["conditions"]) - 1]);
 
       $configuration = array(
@@ -776,15 +777,18 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
       $join = \Drupal\views\Views::pluginManager('join')->createInstance('standard', $configuration);
       $rel = $query->addRelationship('field_body', $join, 'node_field_data');
       $query->addTable('node__body', $rel, $join, 'field_body');
-      foreach($search as $item) {
+      $query->addWhere(3, 'field_body.body_value', '%' . $keywords . '%', 'like');
+      $query->addWhere(3, 'title', '%' . $keywords . '%', 'like');
+      /*foreach($keywords as $item) {
 	      if(!empty($item) && strlen($item) > 3) {
 		      $query->addWhere(3, 'field_body.body_value', '%' . $item . '%', 'like');
 		      $query->addWhere(3, 'title', '%' . $item . '%', 'like');
 
 	      }
-      }
+      }*/
       $query->where[3]['type'] = 'OR';
-    }*/
+    }
+
     if (!empty($ou)) {
         $configuration = array(
           'type' => 'INNER',
