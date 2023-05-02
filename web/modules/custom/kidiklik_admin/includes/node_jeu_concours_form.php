@@ -2,6 +2,7 @@
 use Drupal\user\Entity\User;
 
 if($form_id=="node_jeu_concours_form" || $form_id=="node_jeu_concours_edit_form") {
+			add_record_and_stay_button($form);
 		unset($form["field_date"]["widget"]["add_more"]);
 		$node=\Drupal::routeMatch()->getParameters()->get("node");
 		$user = User::Load(\Drupal::currentUser()->id());
@@ -24,6 +25,7 @@ if($form_id=="node_jeu_concours_form" || $form_id=="node_jeu_concours_edit_form"
 			  "#type"=>"html_tag",
 			  "#tag"=>"a",
 			  "#value"=>"Voir",
+			  "#weight" => 70,
 			  "#attributes"=>["class"=>"btn btn-primary","target"=>"blank","onclick"=>"window.open('".$node->url()."')"],
 			];
 			$date = null;
@@ -104,4 +106,5 @@ if($form_id=="node_jeu_concours_form" || $form_id=="node_jeu_concours_edit_form"
 			}
 			$form["field_adherent"]["widget"]["#multiple"]=FALSE;
 			$form["field_adherent"]["widget"]["#options"]=$tab;
+			
 	} /* fin jeu concours */
