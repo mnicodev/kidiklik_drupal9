@@ -87,6 +87,9 @@ class SearchGeoController extends ControllerBase
 
     }
 
+    usort($output, function ($a, $b) {
+      return strcmp($a['id'], $b['id']);
+    });
 
     return new JsonResponse(['results' => $output]);
   }
