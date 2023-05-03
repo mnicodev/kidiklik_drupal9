@@ -125,7 +125,11 @@ jQuery(document).ready(function() {
 	})
 	jQuery('.paragraph--type--paragraphe').find('img').click(function() {
 		let url = jQuery(this).closest('.paragraph').find('.field--name-field-url a').attr('href');
-		window.open(url,'_blank','');
+
+		if(url !== undefined) {
+			window.open(url,'_blank','');
+		}
+		
 	})
 			jQuery('.ajout-non-connect').click(function() {
 				jQuery('.menu-user').find('.login-popup-form').click()
