@@ -104,6 +104,13 @@ Drupal.behaviors.kidiklik = {
 
 jQuery(document).ready(function() {
 	//
+
+	if(jQuery('.field--type-geolocation').length) {
+		jQuery('.field--type-geolocation').each(function() {
+			jQuery(this).find('.leaflet-control-zoom-in').attr('href','');
+			jQuery(this).find('.leaflet-control-zoom-out').attr('href','');
+		})
+	}
 	
 
 	jQuery('article a').click(function(e) {
