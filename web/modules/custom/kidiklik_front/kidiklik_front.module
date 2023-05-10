@@ -302,7 +302,7 @@ function kidiklik_front_form_alter(&$form, FormStateInterface $form_state, $form
 
 
 function kidiklik_front_form_submit($form, FormStateInterface &$form_state) {
-  kint($form);exit;
+  //kint($form);exit;
 }
 
 function getCategories(array &$form, FormStateInterface $form_state)
@@ -764,20 +764,20 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
     }
 
     if (!empty($keywords)) {
-	unset($query->where[1]["conditions"][count($query->where[1]["conditions"]) - 1]);
+	    unset($query->where[1]["conditions"][count($query->where[1]["conditions"]) - 1]);
 
       $configuration = array(
         'type' => 'INNER',
-        'table' => 'node__body',
+        'table' => 'node__field_resume',
         'field' => 'entity_id',
         'left_table' => 'node_field_data',
         'left_field' => 'nid',
         'operator' => '=',
       );
       $join = \Drupal\views\Views::pluginManager('join')->createInstance('standard', $configuration);
-      $rel = $query->addRelationship('field_body', $join, 'node_field_data');
-      $query->addTable('node__body', $rel, $join, 'field_body');
-      $query->addWhere(30, 'field_body.body_value', '%' . $keywords . '%', 'like');
+      $rel = $query->addRelationship('node__field_resume', $join, 'node_field_data');
+      $query->addTable('node__field_resume', $rel, $join, 'node__field_resume');
+      $query->addWhere(30, 'node__field_resume.field_resume_value', '%' . $keywords . '%', 'like');
       $query->addWhere(30, 'title', '%' . $keywords . '%', 'like');
       /*foreach($keywords as $item) {
 	      if(!empty($item) && strlen($item) > 3) {
@@ -790,7 +790,22 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
 //	    ksm($query->where);
     }
 
+    /*
+    RECHERCHE GEO
+    */
     if (!empty($ou)) {
+      /*
+      on va tester la présence de contenus dans le cas d'une ville
+      */
+       /* $database = \Drupal::database();
+        $query = $database->select('node__field_ville_save', 'ville')
+        ->condition('ville.field_ville_save_value', '%' . $ou . '%', 'LIKE')
+        ->fields('ville', ['field_ville_save_value'])
+        ->range(0,10);
+        $result = $query->execute()->fetchAll();*/
+
+       // kint($query);exit;
+
         $configuration = array(
           'type' => 'INNER',
           'table' => 'node__field_ville_save',
@@ -820,6 +835,7 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
 
         $query->addWhere('10', 'field_cp.field_code_postal_value', $ou.'%', 'like');
         $query->where[10]['type'] = 'OR';
+        //kint($query);
     } else {
       $configuration = array(
         'type' => 'INNER',
