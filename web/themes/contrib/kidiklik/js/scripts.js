@@ -105,19 +105,13 @@ Drupal.behaviors.kidiklik = {
 jQuery(document).ready(function() {
 	//
 
-	if(jQuery('.field--type-geolocation').length) {
-		jQuery('.field--type-geolocation').each(function() {
-			jQuery(this).find('.leaflet-control-zoom-in').attr('href','');
-			jQuery(this).find('.leaflet-control-zoom-out').attr('href','');
-		})
-	}
-	
-
 	jQuery('article a').click(function(e) {
 		if(!jQuery(this).hasClass('btn-voir-autres-dates') && 
 			!jQuery(this).hasClass('voir-actualites') &&
 			!jQuery(this).hasClass('reservation') &&
-			!jQuery(this).hasClass('ajout-non-connect')) {
+			!jQuery(this).hasClass('ajout-non-connect') &&
+			!jQuery(this).hasClass('leaflet-control-zoom-in') &&
+			!jQuery(this).hasClass('leaflet-control-zoom-out')) {
 			e.preventDefault();
 			url = jQuery(this).attr('href');
 			window.open(url, 'blank','');
