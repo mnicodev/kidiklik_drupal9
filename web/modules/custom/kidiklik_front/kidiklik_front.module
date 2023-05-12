@@ -423,9 +423,15 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
 
   }
 
+	if($view->current_display == "diaporama_rubriques") {
+		$query->where[1]["conditions"][2]["operator"] = "<=";
+		$query->where[1]["conditions"][2]["value"] = get_date();
+		$query->where[1]["conditions"][3]["operator"] = ">=";
+		$query->where[1]["conditions"][3]["value"] = get_date();
+	}
+
   if ($view->current_display == "diaporama" ||
     $view->current_display == "block_article_accueil" ||
-    $view->current_display == "diaporama_rubriques" ||
     $view->current_display == "bloc_liste_mise_en_avant") {
     /* la date de début du bloc de mise en avant doit être inférieur ou égal à la date du jour */
     $query->where[1]["conditions"][2]["operator"] = "<=";
