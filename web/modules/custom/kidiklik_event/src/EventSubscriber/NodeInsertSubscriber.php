@@ -45,7 +45,7 @@ class NodeInsertSubscriber implements EventSubscriberInterface
       $module = 'kidiklik_event';
       $key = 'create_message';
       $params = [];
-      $to = $term->get('field_e_mail')->value;
+      $to = $term->get('field_e_mail')->value ?? \Drupal::config('system.site')->get('mail');
       $params['from'] = $entity->get('field_email')->value;
       $params['body'] = sprintf('Email : %s<br>Message :<br>%s', $entity->get('field_email')->value, $entity->get("field_votre_question")->value);
       $params['subject'] = sprintf('Message de %s %s',$entity->get('field_nom')->value,$entity->get('field_prenom')->value);
@@ -53,7 +53,7 @@ class NodeInsertSubscriber implements EventSubscriberInterface
       $params['title'] = sprintf('Message de %s %s',$entity->get('field_nom')->value,$entity->get('field_prenom')->value);
       $langcode = "fr";
       $send = true;
-      //kint($entity->get("field_votre_question")->value);exit;
+     // kint($to);exit;
       $result = $mailManager->mail($module, $key, $to, $langcode, $params, NULL, $send);
       if ($result['result'] !== true) drupal_set_message("Un probléme d'envoi est survenu.", "error");
       else  drupal_set_message("Votre message a bien été envoyé");
