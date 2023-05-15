@@ -26,7 +26,7 @@ class VillesController extends ControllerBase
   public function getGPS($ville)
   {
     $database = \Drupal::database();
-    $query = $database->query("select * from villes where commune='" . $ville . "'");
+    $query = $database->query("select * from villes where commune='" . addslashes($ville) . "'");
     $rs = current($query->fetchAll());
 
     return new JsonResponse($rs);
