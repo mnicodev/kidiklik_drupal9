@@ -576,6 +576,7 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
   if ($view->current_display == "rubriques_activites_footer") {
     $query->where[1]["conditions"][2]["value"] = get_term_departement();
     $query->where[1]["conditions"][2]["operator"] = "=";
+   // kint($query->query()->__toString());exit;
   }
 
 
@@ -771,9 +772,12 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
     }
 
     if (!empty($keywords)) {
-	    unset($query->where[1]["conditions"][count($query->where[1]["conditions"]) - 1]);
+	   // unset($query->where[1]["conditions"][count($query->where[1]["conditions"]) - 1]);
+	    	 //   unset($query->where[5]["conditions"][1]);
+	    $query->where[5]["conditions"][1]['value'] = '%' . $keywords . '%';
+	    $query->where[5]["conditions"][2]['value'] = '%' . $keywords . '%';
 
-      $configuration = array(
+      /*$configuration = array(
         'type' => 'INNER',
         'table' => 'node__field_resume',
         'field' => 'entity_id',
@@ -785,7 +789,7 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
       $rel = $query->addRelationship('node__field_resume', $join, 'node_field_data');
       $query->addTable('node__field_resume', $rel, $join, 'node__field_resume');
       $query->addWhere(30, 'node__field_resume.field_resume_value', '%' . $keywords . '%', 'like');
-      $query->addWhere(30, 'title', '%' . $keywords . '%', 'like');
+      /    $query->addWhere(30, 'title', '%' . $keywords . '%', 'like');*/
       /*foreach($keywords as $item) {
 	      if(!empty($item) && strlen($item) > 3) {
 		      $query->addWhere(3, 'field_body.body_value', '%' . $item . '%', 'like');
@@ -793,8 +797,11 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
 
 	      }
       }*/
-      $query->where[30]['type'] = 'OR';
-//	    ksm($query->where);
+      //$query->where[30]['type'] = 'OR';
+     // ksm($query->where);
+	//    kint($query->query()->__toString());
+    } else {
+	    unset($query->where[5]);
     }
 
     /*
