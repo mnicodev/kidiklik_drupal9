@@ -774,8 +774,8 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
     if (!empty($keywords)) {
 	   // unset($query->where[1]["conditions"][count($query->where[1]["conditions"]) - 1]);
 	    	 //   unset($query->where[5]["conditions"][1]);
-	    $query->where[5]["conditions"][1]['value'] = '%' . $keywords . '%';
-	    $query->where[5]["conditions"][2]['value'] = '%' . $keywords . '%';
+	    $query->where[5]["conditions"][1]['value'] = addslashes('%' . htmlentities($keywords) . '%');
+	    $query->where[5]["conditions"][2]['value'] = addslashes('%' . htmlentities($keywords) . '%');
 
       /*$configuration = array(
         'type' => 'INNER',
