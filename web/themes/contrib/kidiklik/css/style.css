@@ -573,6 +573,8 @@ footer .menu {
 
 footer .menu li {
   border-right: 1px solid #fff;
+  flex: 1;
+  text-align: center;
   padding-right: 12px; }
   @media (max-width: 992px) {
     footer .menu li {
@@ -1646,5 +1648,16 @@ div.user-login, div.user-register {
   color: #ffffff !important;
   padding: 10px 100px;
   margin: auto; }
+
+@media (min-width: 992px) {
+  article.page .paragraphes .field--name-field-titre {
+    width: 100%; }
+  article.page .paragraphes .field--name-field-resume {
+    width: 50%;
+    float: right;
+    padding: 10px; }
+  article.page .paragraphes .field--name-field-image {
+    width: 50%;
+    float: right; } }
 
 /*# sourceMappingURL=style.css.map */

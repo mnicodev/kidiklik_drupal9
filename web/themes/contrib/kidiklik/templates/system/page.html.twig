@@ -130,9 +130,11 @@
                   </li>
                   <li class="nav-item d-none d-lg-block">
                     <form class="form-inline mt-2 mt-md-0 form-newsletter" method="get" action="/newsletter.html">
-                      <label class="sr-only" for="input-newsletter">Votre adresse email</label>
-                      <input type="text" class="" id="input-newsletter" placeholder="Votre adresse email" name="email">
-                      <button type="submit" class="btn-newsletter">OK</button>
+                      <label class="" for="input-newsletter">Inscription à la newsletter</label>
+                      <div class="field">
+                        <input type="text" class="" id="input-newsletter" placeholder="Votre adresse email" name="email">
+                        <button type="submit" class="btn-newsletter">OK</button>
+                      </div>
                     </form>
                   </li>
 
@@ -397,9 +399,10 @@
   {% block footer %}
     <footer class="footer" role="contentinfo">
 		<div class="row no-gutters container" style="margin: auto">
-			<div class="col-md-10 d-sm-block d-md-block">
+			<div class="col-md-{% if reseaux_sociaux %}10{% else %}12{% endif %} d-sm-block d-md-block">
 				{{ page.footer }}
 			</div>
+      {% if reseaux_sociaux %}
 			<div class="col-md-2 d-sm-block  d-md-block">
 				<ul class="nav navbar reseaux-sociaux" >
 				{% for rs in reseaux_sociaux %}
@@ -419,6 +422,7 @@
 				{% endfor %}
 				</ul>
 			</div>
+      {% endif %}
 		</div>
 
     </footer>
