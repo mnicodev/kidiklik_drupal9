@@ -58,7 +58,7 @@ class JeuxConcoursController extends ControllerBase
 
     // kint($node->get("field_gagnants_selectionnes"));exit;
     $response = new Response();
-    $response->headers->set('Content-Type', 'text/csv');
+    $response->headers->set('Content-Type', 'text/csv; charset=utf-8');
     $response->headers->set('Content-Disposition', 'attachment; filename="gagnants-' . date("Y-m-d") . '.csv"');
     $response->setContent($csv);
     return $response;
