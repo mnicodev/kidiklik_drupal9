@@ -164,7 +164,7 @@ h3 {
 #entete_national img {
 	width: 100%;
 	@media (max-width: 768px) {
-		max-width: 400px;
+		max-width: 500px;
 	}
 	
 }
@@ -397,11 +397,20 @@ h3 {
 	padding-left: 230px;
 }
 .accueil {
-	padding: 52px 5px 5px 5px;;
+
+	padding: 52px 5px 5px 5px;
+	@media (max-width: 768px) {
+		padding: 20px 0px 0px 10px;
+	}
+
 	/*background: url(/assets/img/lien_accueil.jpg) no-repeat;
 	background-position: 0px 30px;
 	background-size: contain;*/
 	cursor: pointer;
+
+	img {
+		max-width: 50px;
+	}
 }
 #block-kidiklikentete span {
 	margin-left: 45px !important;
@@ -497,19 +506,17 @@ h3 {
 	#entete_national {
 		position: relative;
 	}
-	.accueil {
-		display: none;
-	}
+
 
 	.logo-national {
-		width: 100%;
+	/*	width: 100%;
 		max-width: 100%;
-		flex: 100%;
+		flex: 100%;*/
 	}
 	
 	.logo-national p {
 		margin-left: 0!important;
-		font-size: 18px!important;
+		font-size: 4.0vw!important;
 		width: 100%;
 		text-align: center;
 		font-weight: 400!important;
@@ -1272,6 +1279,9 @@ a.reservation {
 					content: "Public : ";
 				}
 			}
+		}
+		.field--name-field-horaires {
+			margin-top: 10px;
 		}
 		.field--name-field-date {
 			margin-top: 10px;
