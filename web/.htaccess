@@ -79,7 +79,7 @@ RewriteCond %{HTTP_HOST}	^limousin.kidiklik\.fr [NC]
 RewriteRule ^/?(.*)	https://perigord-limousin.kidiklik.fr/$1 [L,R=301]
 
 RewriteCond %{HTTP_HOST}	79.kidiklik\.fr [NC]
-RewriteRule ^/?(.*)	https://86.kidiklik.fr/$1 [L,R=301]
+RewriteRule ^/?(.*)	https://poitou.kidiklik.fr/$1 [L,R=301]
 RewriteCond %{HTTP_HOST}	92.kidiklik\.fr [NC]
 RewriteRule ^/?(.*)	https://78.kidiklik.fr/$1 [L,R=301]
 RewriteCond %{HTTP_HOST}	93.kidiklik\.fr [NC]
