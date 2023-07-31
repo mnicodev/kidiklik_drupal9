@@ -105,6 +105,13 @@ Drupal.behaviors.kidiklik = {
 jQuery(document).ready(function() {
 	//
 
+	// chargement asynchrone des images
+	jQuery('.lazy-img').each(function() {
+		var self = jQuery(this);
+		self.attr('src', self.attr('data-src'));
+		
+	});
+
 	jQuery('article a').click(function(e) {
 		if(!jQuery(this).hasClass('btn-voir-autres-dates') && 
 			!jQuery(this).hasClass('voir-actualites') &&
