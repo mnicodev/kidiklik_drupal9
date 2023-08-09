@@ -732,7 +732,8 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
    */
   if ($view->current_display == "page_recherche_test" || 
     $view->current_display == "recherche_test" ||  
-    $view->current_display == "recherche_activites") {
+    $view->current_display == "recherche_activites" ||
+    $view->current_display == "search_event") {
     $query->distinct = true;
     $query->groupby[]='nid';
     //$query->query()->execute();
@@ -751,12 +752,12 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
 //    $search = explode(' ', trim(\Drupal::request()->get("search")));
     $keywords = trim(\Drupal::request()->get("search"));
     $ref_adherent = \Drupal::request()->get("ref_adh") ?? \Drupal::request()->get("ref_adherent") ?? null;
-
+    
     if (!empty(\Drupal::request()->get("ref_adh"))) {
       $query->where[1]['conditions'][1]['value'] = ['agenda'];
     }
 
-    if (!empty($ref_adherent)) {
+    if (!empty($ref_adherent) && $view->current_display !== "search_event") {
       $configuration = array(
         'type' => 'INNER',
         'table' => 'node__field_adherent',
@@ -769,6 +770,7 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
       $rel = $query->addRelationship('node__field_adherent', $join, 'node__field_adherent');
       $query->addTable('node__field_adherent', $rel, $join, 'node__field_adherent');
       $query->addWhere('', 'node__field_adherent.field_adherent_target_id', $ref_adherent, '=');
+     // ksm($query->where);
     }
 
     if (!empty($keywords)) {
