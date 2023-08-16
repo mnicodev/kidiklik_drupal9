@@ -53,7 +53,10 @@ class SortiesBoutonBlock extends BlockBase
     $seach_event->setArguments([$ref_adherent]);
     $seach_event->execute();
     $events = \Drupal::service('renderer')->render($seach_event->render());
-    $count_event = json_decode($events->__toString());
+    $count_event = 0;
+    if(!empty($events)) {
+	    $count_event = json_decode($events->__toString());
+    }
     
     if (empty($build['#ref_act']) || empty($build['#ref_adh'])) {
      // return null;
