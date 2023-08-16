@@ -17,7 +17,7 @@
 			{{ content.script|raw }}
 			{% elseif content.img %}
 			<a href="{{ content.url }}">
-				<img class="l-lazy-img" data-src="{{ content.img }}" data-nid="{{ content.nid }}"/>
+				<img class="l-lazy-img" src="{{ content.img }}" data-nid="{{ content.nid }}"/>
 			</a>
 			{% endif %}
 	</div>
