@@ -945,7 +945,8 @@ a.reservation {
     .activite .bloc1 .field--name-field-a-partir-de .field--item:before, .agenda .bloc1 .field--name-field-a-partir-de .field--item:before {
       content: "Public : "; }
   .activite .bloc1 .field--name-field-horaires, .agenda .bloc1 .field--name-field-horaires {
-    margin-top: 10px; }
+    margin-top: 10px;
+    display: flex; }
   .activite .bloc1 .field--name-field-date, .agenda .bloc1 .field--name-field-date {
     margin-top: 10px;
     height: 20px;
