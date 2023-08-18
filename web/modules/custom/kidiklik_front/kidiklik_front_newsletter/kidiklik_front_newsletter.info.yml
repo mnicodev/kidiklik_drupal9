@@ -2,4 +2,5 @@ name: 'kidiklik_front_newsletter'
 type: module
 description: 'Kidiklik newsletter'
 core: 8.x
+core_version_requirement: ^8 || ^9
 package: 'Custom'

@@ -27,14 +27,24 @@ class NewsletterInscritsController extends ControllerBase
     if (empty($step)) {
       $step = 20;
     }
+    $email = \Drupal::request()->get('email') ?? null;
 
     $database = \Drupal::database();
-    $sql = "select * from  inscrits_newsletters where dept='" . get_departement() . "' order by inscription desc";
+    $sql = "select * from  inscrits_newsletters where dept='" . get_departement() . "'";
+    if(!empty($email)) {
+	    $sql.=" and email like '%".$email."%'"; 
+    }
+    $sql.=" order by inscription desc";
+
     $query = $database->query($sql);
     $list = $query->fetchAll();
-    $taille = count($list) - 20;
+    $taille = count($list);//>20 ? count($list) - 20 : 0;
 
-    $sql = "select * from  inscrits_newsletters where dept='" . get_departement() . "' order by inscription desc limit $start, $step";
+    $sql = "select * from  inscrits_newsletters where dept='" . get_departement() . "'";
+    if(!empty($email)) {
+	    $sql.=" and email like '%".$email."%'"; 
+    }
+    $sql.=" order by inscription desc limit $start, $step";
     $query = $database->query($sql);
     $list = $query->fetchAll();
 
@@ -44,7 +54,8 @@ class NewsletterInscritsController extends ControllerBase
       "#prec" => ($start > 0 ? $start - $step : 0),
       "#suiv" => $start + $step,
       "#step" => $step,
-      "#count_list" => $taille
+      "#count_list" => $taille,
+      "#email" => $email,
     ];
   }
 
