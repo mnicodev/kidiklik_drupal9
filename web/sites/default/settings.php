@@ -835,7 +835,9 @@ case 95:
 	case 'poitou':
 		$settings["dep"]=86;
 		break;
-	break;
+	case 'finistere-morbihan':
+		$settings["dep"]=29;
+		break;
 default:
 if((int)$host[0]) $settings["dep"]=$host[0];else $settings["dep"]=0;
 
