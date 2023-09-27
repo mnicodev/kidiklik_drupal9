@@ -66,6 +66,22 @@ class KidiklikService  {
     return null;
   }
 
+  public function getPageDepartement($dep = null) {
+    if ($dep === null) {
+      $dep = $this->getDepartement();
+    }
+  
+    $term_dep = "";
+  
+    $term_dep = current(\Drupal::entityTypeManager()
+      ->getStorage("taxonomy_term")
+      ->loadByProperties(['name' => $dep]));
+    if (!empty($term_dep)) {
+      return $term_dep;
+    }
+    return null;
+  }
+
   public function hasRedirection() 
   {
     return array_key_exists($this->dep, $this->redirections);
@@ -84,5 +100,19 @@ class KidiklikService  {
 
   public function getUserDepartement() {
     return KidiklikUser::getDepartement();
+  }
+
+  public function getInformationsVille($ville) {
+    $database = \Drupal::database();
+    $query = $database->query("SELECT * FROM villes where commune = '".$ville."'");
+    $result = $query->fetchAll();
+    return current($result);
+  }
+
+  public function getInformationsVillesByCP($cp) {
+    $database = \Drupal::database();
+    $query = $database->query("SELECT * FROM villes where code_postal like '".$cp."%'");
+    $result = $query->fetchAll();
+    return current($result);
   }
 }
