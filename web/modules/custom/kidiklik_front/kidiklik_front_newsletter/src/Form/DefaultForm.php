@@ -31,6 +31,15 @@ class DefaultForm extends FormBase
     $form['group'] = [
       '#type' => 'fieldset',
     ];
+    $form['group']['intro'] = [
+      '#type' => 'html_tag',
+      '#tag' => 'div',
+      '#value' => $this->t('<p><b>Découvrez chaque semaine les meilleurs bons plans de sorties et activités à faire en famille avec Kidiklik !</b><br>
+      Inscrivez-vous à notre newsletter pour recevoir directement dans votre boîte mail toutes les informations sur les événements et<br>
+      activités pour enfants près de chez vous. <span >Ne manquez plus aucune occasion de partager des moments magiques en famille !</span></p>'),
+      '#prefix' => '<div class="col-sm-12 col-md-12 intro">',
+      '#suffix' => '</div>'
+    ];
     $form['group']['nom'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Nom'),
@@ -41,7 +50,9 @@ class DefaultForm extends FormBase
         'class' => [
           'form-control'
         ]
-      ]
+      ],
+      '#prefix' => '<div class="col-sm-12 col-md-6">',
+      '#suffix' => '</div>'
     ];
     $form['group']['prenom'] = [
       '#type' => 'textfield',
@@ -52,14 +63,15 @@ class DefaultForm extends FormBase
         'class' => [
           'form-control'
         ]
-      ]
+      ],
+      '#prefix' => '<div class="col-sm-12 col-md-6">',
+      '#suffix' => '</div>'
     ];
     $form['group']['email'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('E-mail'),
+      '#title' => 'E-mail',
       '#required' => true,
       '#attributes' => [
-        'placeholder' => 'xxxx@domain.aaa',
         'pattern' => '[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$',
         'type' => 'email',
         'class' => [
@@ -69,11 +81,15 @@ class DefaultForm extends FormBase
       '#default_value' => \Drupal::request()->get('email'),
       '#weight' => '1',
       '#size' => '40',
+      '#prefix' => '<div class="col-sm-12 col-md-6">',
+      '#suffix' => '</div>'
     ];
-    $form['submit'] = [
+    $form['group']['submit'] = [
       '#type' => 'submit',
-      '#value' => $this->t('Envoyer'),
+      '#value' => $this->t("S'inscrire à la newsletter"),
       '#weight' => '3',
+      '#prefix' => '<div class="col-sm-12 col-md-6">',
+      '#suffix' => '</div>'
     ];
 
     return $form;

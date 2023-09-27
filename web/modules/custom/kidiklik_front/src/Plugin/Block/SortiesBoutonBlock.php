@@ -35,24 +35,45 @@ class SortiesBoutonBlock extends BlockBase
     $build['#theme'] = 'sortie_moment_bouton';
     $node = \Drupal::request()->get('node');
 
-    $seach_event = Views::getView("activites");
-    $seach_event->setDisplay("search_event");
     
     
 
     if (!empty($node)) {
       if ($node->getType() === 'activite') {
         $build['#ref_act'] = $node->id();
-        $ref_adherent = $node->id();
+        $seach_event = Views::getView("activites");
+        $seach_event->setDisplay("search_agendas_activite");
+        $seach_event->setArguments([$node->id()]);
+
+        $seach_event->getQuery()->addWhere(1,'nid',$node->id(),'<>');
+        $seach_event->execute();
+        $events = \Drupal::service('renderer')->render($seach_event->render());
+	
+	$count_event = json_decode($events->__toString());
+      
+	if(count($count_event) === 0) {
+		unset( $build['#ref_act']);
+            $build['#ref_adh'] = current($node->get('field_adherent')->getValue())['target_id'];
+            $seach_event = Views::getView("activites");
+            $seach_event->setDisplay("search_agendas_adherent");
+            $seach_event->setArguments([current($node->get('field_adherent')->getValue())['target_id']]);
+          }
+
+        $seach_event = Views::getView("activites");
+        $seach_event->setDisplay("search_agendas_adherent");
+        $seach_event->setArguments([current($node->get('field_adherent')->getValue())['target_id']]);
+
       } else {
         $build['#ref_adh'] = current($node->get('field_adherent')->getValue())['target_id'];
-        $ref_adherent = $build['#ref_adh'];
+        $seach_event = Views::getView("activites");
+        $seach_event->setDisplay("search_agendas_adherent");
+        $seach_event->setArguments([$build['#ref_adh']]);
       }
+      $seach_event->getQuery()->addWhere(1,'nid',$node->id(),'<>');
+      $seach_event->execute();
+      $events = \Drupal::service('renderer')->render($seach_event->render());
     }
-    
-    $seach_event->setArguments([$ref_adherent]);
-    $seach_event->execute();
-    $events = \Drupal::service('renderer')->render($seach_event->render());
+
     $count_event = [];
     if(!empty($events)) {
 	    $count_event = json_decode($events->__toString());
@@ -61,10 +82,10 @@ class SortiesBoutonBlock extends BlockBase
     if (empty($build['#ref_act']) || empty($build['#ref_adh'])) {
      // return null;
     }
-    return $build;
-/*    if(count($count_event) > 0) {
+    //return $build;
+    if(count($count_event) > 0) {
       return $build;
-    }*/
+    }
     
     
   }

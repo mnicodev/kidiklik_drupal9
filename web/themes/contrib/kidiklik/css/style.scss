@@ -1571,7 +1571,7 @@ section{
 	}
 }
 #menu, .menu {
-	.agenda {
+
 		a {
 			color: #808080;
 			i {
@@ -1581,7 +1581,12 @@ section{
 				color: #808080;
 			}
 		}
-	}
+		li.newsletter {
+			background: url(../images/newsletter.png) no-repeat top center;
+			background-size: 15px;
+			padding-top: 23px!important;
+		}
+
 	.reseaux-sociaux {
 		border-top: 1px solid rgba(0,0,0,.5);
 		padding-top: 20px;
@@ -1723,14 +1728,14 @@ section{
 					background: url(/assets/img/picto_coeur.jpg) no-repeat top center;
 
 					a {
-						margin-top: 15px;
+						margin-top: 6px;
 					}
 				}
 				&.user {
 					background: url(/assets/img/picto_user.jpg) no-repeat top center;
 					text-align: center;
 					a {
-						margin-top: 15px;
+						margin-top: 6px;
 					}
 				}
 
@@ -1989,6 +1994,17 @@ section{
 }
 
 #newsletter-form {
+	.intro {
+		font-size: 14px;
+		b {
+			font-weight: bold;
+			color: #808080;
+		}
+		span {
+			color: #0cacce;
+			font-weight: bold;
+		}
+	}
   margin-bottom: 20px;
   overflow: hidden;
   @media (min-width: 768px) {
@@ -1996,10 +2012,6 @@ section{
 
       display: flex;
       flex-wrap: wrap;
-      .form-item {
-        width: 50%;
-      }
-
     }
   }
 
@@ -2009,10 +2021,7 @@ section{
     margin-right: -10px;
     position: relative;
 
-    .form-item {
 
-      padding: 10px;
-    }
 
     #debug-out {
       margin-bottom: 0;
@@ -2036,18 +2045,18 @@ section{
     }
   }
   #edit-submit {
-    width: 100%;
-    @media (min-width: 768px) {
-      width: 30%;
-      float: right;
-    }
+    width: 75%;
+	@media(max-width: 768px) {
+		width: 100%;
+	}
     display: block;
     margin: auto;
-    background: #db2a24;
+    background: #0cacce;
     color: #fff;
     border: none;
     height: calc(1.5em + .75rem + 2px);
-
+	margin-top: 35px;
+	border-radius: 5px;
   }
 }
 .form-email {
@@ -2086,6 +2095,25 @@ section{
 #block-blocinscriptionnewsletter {
   h3 {
     color: #ffffff;
+  }
+  a {
+	color: #0cacce;
+	background: #fff;
+	padding: 5px;
+	border-radius: 20px;
+	width: 180px;
+
+	display: block;
+	margin: auto;
+	margin-top: auto;
+	margin-bottom: auto;
+	margin-top: 10px;
+	margin-bottom: 10px;
+
+	&:hover {
+		text-decoration: none;
+	}
+
   }
 }
 
@@ -2301,4 +2329,22 @@ article.page {
 			}
 		}
 	}
+}
+.message-contact {
+	.form-submit {
+		background: #db2a24;
+		width: 25%;
+		color: #fff;
+		border: none;
+		height: calc(1.5em + .75rem + 2px);
+		padding: 8px 20px;
+	}
+}
+
+.bleu {
+	color: #44aac7;
+}
+
+.titre_h1 {
+	font-size: 26px;
 }

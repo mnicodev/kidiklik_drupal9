@@ -25,12 +25,12 @@ class PageController extends ControllerBase
   /**
    * return render node
    */
-  public function getContent($page)
+  public function getContent($page, $dep)
   {
 
     if ($page) {
 
-      $term_dep = \Drupal::entityTypeManager()->getStorage("taxonomy_term")->load(get_term_departement());
+      $term_dep = \Drupal::entityTypeManager()->getStorage("taxonomy_term")->load($dep);
 
       $node = \Drupal::entityTypeManager()
         ->getStorage("node")
@@ -56,11 +56,11 @@ class PageController extends ControllerBase
    */
   public function kidiklik()
   {
-
+    $service = \Drupal::service('kidiklik.service');
 
     return [
       '#type' => 'markup',
-      '#markup' => $this->getContent("qui_est_kidiklik")
+      '#markup' => $this->getContent("qui_est_kidiklik", $service->getTermDepartement())
     ];
   }
 
@@ -72,9 +72,11 @@ class PageController extends ControllerBase
    */
   public function recrute()
   {
+    $service = \Drupal::service('kidiklik.service');
+
     return [
       '#type' => 'markup',
-      '#markup' => $this->getContent("kidiklik_recrute")
+      '#markup' => $this->getContent("kidiklik_recrute", $service->getTermDepartement(0))
     ];
   }
 
@@ -86,10 +88,10 @@ class PageController extends ControllerBase
    */
   public function annonceur()
   {
-
+    $service = \Drupal::service('kidiklik.service');
     return [
       '#type' => 'markup',
-      '#markup' => $this->getContent("devenir_annonceur")
+      '#markup' => $this->getContent("devenir_annonceur", $service->getTermDepartement())
     ];
   }
 
@@ -101,9 +103,10 @@ class PageController extends ControllerBase
    */
   public function fan()
   {
+    $service = \Drupal::service('kidiklik.service');
     return [
       '#type' => 'markup',
-      '#markup' => $this->getContent("fan_de_kidiklik")
+      '#markup' => $this->getContent("fan_de_kidiklik", $service->getTermDepartement())
     ];
   }
 
@@ -115,10 +118,11 @@ class PageController extends ControllerBase
    */
   public function partenaires()
   {
+    $service = \Drupal::service('kidiklik.service');
 
     return [
       '#type' => 'markup',
-      '#markup' => $this->getContent("partenaires")
+      '#markup' => $this->getContent("partenaires", $service->getTermDepartement())
     ];
   }
 
