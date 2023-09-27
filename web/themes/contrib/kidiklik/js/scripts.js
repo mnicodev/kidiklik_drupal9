@@ -99,6 +99,13 @@ Drupal.behaviors.kidiklik = {
 			jQuery('input[name="center[coordinates][lng]"]').val('');
 			jQuery('input[name="center[coordinates][lat]"]').val('');
 		});
+
+		// chargement asynchrone des images
+		jQuery('.lazy-img').each(function() {
+			var self = jQuery(this);
+			self.attr('src', self.attr('data-src'));
+			
+		});
 	}
 }
 

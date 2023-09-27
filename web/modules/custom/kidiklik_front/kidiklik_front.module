@@ -10,6 +10,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\geolocation\ProximityTrait;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\ReplaceCommand;
+use Drupal\views\Views;
 
 /**
  * Implements hook_help().
@@ -97,7 +98,36 @@ function kidiklik_front_theme()
 
 function kidiklik_front_form_alter(&$form, FormStateInterface $form_state, $form_id)
 {
-  
+
+  if($form_id === 'node_message_contact_form') {
+    $page_dep = \Drupal::service('kidiklik.service')->getPageDepartement();
+    if(!empty($page_dep)) {
+      $renderer = \Drupal::service("renderer");
+      $variables['coordonnee'] = [
+	      '#markup' => sprintf('<p><b class="bleu titre_h1">Coordonnées</b></p><b>Nom :</b> %s<br><b>Téléphone :</b> <a href="tel:%s">%s</a><br><b>E-mail :</b> <a href="mailto:%s">%s</a>',
+	      $page_dep->get('field_societe')->value,
+	      $page_dep->get('field_telephone')->value,
+	      $page_dep->get('field_telephone')->value,
+	      $page_dep->get('field_e_mail')->value,
+	      $page_dep->get('field_e_mail')->value
+        ),
+      ];
+
+
+      $form["coordonnees"] = [
+        "#type" => "html_tag",
+        "#tag" => "div",
+        "#value" => $renderer->render($variables['coordonnee'])->__toString(),
+        "#attributes" => [
+          "class" => [
+            "jumbotron", "mt-4 pt-3 pb-3"
+          ]
+        ],
+        "#weight" => 0,
+      ];
+    }
+
+  }
   if ($form_id == "user_login_form") {
     $form['name']['#attributes']['class'][] = 'form-control';
     $form['pass']['#attributes']['class'][] = 'form-control';
@@ -732,8 +762,7 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
    */
   if ($view->current_display == "page_recherche_test" || 
     $view->current_display == "recherche_test" ||  
-    $view->current_display == "recherche_activites" ||
-    $view->current_display == "search_event") {
+    $view->current_display == "recherche_activites") {
     $query->distinct = true;
     $query->groupby[]='nid';
     //$query->query()->execute();
@@ -810,17 +839,66 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
     RECHERCHE GEO
     */
     if (!empty($ou)) {
+	$limit_distance = 10;
+   	$limit_nb_content = 10;
       /*
       on va tester la présence de contenus dans le cas d'une ville
       */
-       /* $database = \Drupal::database();
-        $query = $database->select('node__field_ville_save', 'ville')
-        ->condition('ville.field_ville_save_value', '%' . $ou . '%', 'LIKE')
-        ->fields('ville', ['field_ville_save_value'])
-        ->range(0,10);
-        $result = $query->execute()->fetchAll();*/
+       
+        $session = \Drupal::request()->getSession();
 
-       // kint($query);exit;
+        if($session->get('search_ville') !== $ou) {
+          $session->remove('villes');
+          $kidiklik_service = \Drupal::service('kidiklik.service');
+        
+          $seach_event = Views::getView("activites");
+          $seach_event->setDisplay("search_by_city");
+          $seach_event->setArguments([$kidiklik_service->getTermDepartement(),$ou]);
+          $seach_event->execute();
+          $count_event = $seach_event->total_rows;
+	  
+	  if($count_event <= $limit_nb_content) {
+            $seach_event = Views::getView("activites");
+            $seach_event->setDisplay("search_by_cp");
+            $seach_event->setArguments([$kidiklik_service->getTermDepartement(),$ou]);
+            $seach_event->execute();
+            $count_event = $seach_event->total_rows;
+          }
+
+          $villes = [];
+
+          if($count_event <= $limit_nb_content) {
+            $info_ville = $kidiklik_service->getInformationsVille($ou); 
+            
+            if($info_ville === false) {
+             
+              $info_ville = $kidiklik_service->getInformationsVillesByCP($ou); 
+              
+            }
+           
+            if($info_ville !== false) {
+
+              $sql = 'select distinct commune,(acos( SIN('.$info_ville->lat.' * PI() / 180) * SIN(lat * PI() / 180) + COS('.$info_ville->lat.' * PI() / 180) * COS(lat * PI() / 180) * COS( ('.$info_ville->lng.'- lng) * PI() / 180 ) ) * 6371) as distance from villes v where code_postal like "'.substr($info_ville->code_postal,0,2).'%" having distance < '.$limit_distance.' order by distance';
+              $database = \Drupal::database();
+              $query_calc = $database->query($sql);
+              $results = $query_calc->fetchAll();
+              foreach($results as $ville) {
+                $villes[] = $ville->commune;
+              }
+              
+              $session->set('villes', $villes);
+              $session->set('search_ville', $ou);
+  
+            }
+
+    
+          }
+        } else {
+          $villes = $session->get('villes');
+	      }
+        /*
+        fin recherche si pas trouvé dans où
+        */
 
         $configuration = array(
           'type' => 'INNER',
@@ -834,7 +912,13 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
         $join = \Drupal\views\Views::pluginManager('join')->createInstance('standard', $configuration);
         $rel = $query->addRelationship('field_ville', $join, 'node_field_data');
         $query->addTable('node__field_ville_save', $rel, $join, 'field_ville');
-	      $query->addWhere('10', 'field_ville.field_ville_save_value', $ou.'%', 'like');
+        if(count($villes) > 0) {
+          $query->addWhere('10', 'field_ville.field_ville_save_value', $villes, 'in');
+        } else {
+          $query->addWhere('10', 'field_ville.field_ville_save_value', $ou.'%', 'like');
+	}
+	/*$query->addOrderBy('node__field_ville_save','field_ville_save_value','asc','find_in_set(field_ville_save_value, "'.implode(',',$villes).'")');
+	kint($query);exit;*/	
 	
 	      $configuration = array(
           'type' => 'INNER',
@@ -1035,7 +1119,8 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
     }
   }
   /** fin query recherche */
-
+  if($view->current_display === 'search_agendas_activite') {
+  }
 
 }
 
