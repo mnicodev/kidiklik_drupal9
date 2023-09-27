@@ -28,15 +28,49 @@ body {
 	color: gray;
 	font-family: 'Roboto';
 }
+.ombre {
+  box-shadow: 0px 3px 5px rgba(125,125,125,0.5);
+}
+.footer-kidiklik {
+  display: flex;
+}
+  .footer-kidiklik .left td{
+    padding: 0;
+    padding-left: 60px;
+  }
+  .footer-kidiklik .right td p {
+    text-align: left;
+    
+  }
+@media(max-width: 620px) {
+  .footer-kidiklik  {
+     flex-direction: column-reverse;
+  }
+  .footer-kidiklik .left {
+    max-width: 100%;
+    margin-top: 20px;
+  }
+  .footer-kidiklik .left td{
+    padding: 0;
+    padding-left: 0px;
+     text-align: center;
+  }
+  .footer-kidiklik .right td,
+  .footer-kidiklik .right td p {
+    text-align: center;
+    
+  }
+}
 </style>
 <body>
 <center class="wrapper"
         style="width: 100%; table-layout: fixed; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;">
-  <div class="webkit" style="max-width: 600px;">
-                      <p style="Margin: 0; font-size: 11px; Margin-bottom: 10px; text-align: center; color: #000000;">
+  <div class="webkit" style="max-width: 700px;">
+                      <p style="Margin: 0; font-size: 12px; Margin-bottom: 10px; text-align: center; color: #808080;">
+                      Pour consulter la version en ligne, 
                          <a
                           href="{{ entete.url }}"
-                          style="color: #000000; text-decoration: underline; font-size: 11px;">Consulter la version en ligne.</a>
+                          style="color: #808080; text-decoration: underline; font-size: 12px;">cliquez-ici.</a>
                       </p>
     <!--[if (gte mso 9)|(IE)]>
     <table width="600" align="center">
@@ -44,7 +78,7 @@ body {
         <td>
     <![endif]-->
     <table class="outer" align="center"
-           style="border-spacing: 0; font-family: Roboto,  sans-serif; color: #8c8c8c; Margin: 0 auto; width: 100%; max-width: 600px;">
+           style="border-spacing: 0; font-family: Roboto,  sans-serif; color: #8c8c8c; Margin: 0 auto; width: 100%; max-width:700px;">
       <tr>
         <td class="one-column">
           <table style="border-spacing: 0; font-family: Roboto,  sans-serif; color: #8c8c8c;" width="100%">
@@ -69,8 +103,8 @@ body {
 		{% if entete.texte != null %}
             <tr>
               <td class="inner contents entete"
-                  style="padding: 15px 10px 15px 10px; width: 100%; padding-top: 15px; text-align: center; color: #000;">
-                <p style="Margin: 0; font-size: 14px; Margin-bottom: 10px;">
+                  style="padding: 15px 10px 15px 10px; width: 100%; padding-top: 15px; text-align: center; font-size: 15px; color:#808080;">
+                <p style="Margin: 0; font-size: 15px; color:#808080;Margin-bottom: 10px;">
                   {{ entete.texte|raw }}
                 </p>
               </td>
@@ -85,7 +119,7 @@ body {
         <tr>
 
 
-          <td class="left-sidebar item immanquable" style="{% if entete.bandeau_rose == 1 and key == 0 %}background: #db2a24;color:white;{% endif %}padding: 10px 0;{% if key != 0 %}border-top: 1px dotted #db2a24{% endif %}">
+          <td class="left-sidebar item immanquable ombre" style="{% if entete.bandeau_rose == 1 and key == 0 %}background: #db2a24;color:white;{% endif %}padding: 10px 0;">
 
 
                     <table class="column left"
@@ -94,7 +128,7 @@ body {
                       <tr>
                         <td class="inner full-width-image" style="padding: 0;">
                           <a href="{% if bloc.ext == 1 %}{{ bloc.lien }}{% else %}https://{{ entete.dep.getName() }}.{{ entete.domaine }}{{ bloc.lien }}{% endif %}" style="text-decoration: none; color: #000000;">
-                            <img src="{{ bloc.image }}" alt="Dossier spécial Vacances de Toussaint dans le Loiret"
+                            <img src="{{ bloc.image }}" alt=""
                                  style="border: 0; width: 100%; height: auto;" width="265">
                           </a>
                         </td>
@@ -153,7 +187,7 @@ body {
         <tr>
 
 
-          <td class="left-sidebar item immanquable" style="padding: 10px 0;{% if key != 0 %}border-top: 1px dotted #db2a24{% endif %}">
+          <td class="left-sidebar item immanquable ombre" style="padding: 10px 0;{% if key != 0 %}border-top: 1px dotted #db2a24{% endif %}">
 
 
                     <table class="column left"
@@ -199,91 +233,76 @@ body {
       {% endfor %}
 
       <tr>
-        <td>
-          <table class="column cont-footer"
-                 style="border-spacing: 0; font-family: Roboto,  sans-serif; color: #8c8c8c; margin: 0 auto; padding-top: 20px; border-top: 1px solid #ccc;"
-                 align="center">
+        <td style="padding-top: 20px">
+          <table style="background-color: #0cacce;border-spacing: 0; font-family: Roboto,  sans-serif; color: #8c8c8c;padding: 15px 25px" width="100%">
             <tbody>
             <tr>
-              <td class="left-sidebar footer" style="padding: 0; text-align: center; font-size: 0;">
+              <td style="color: #ffffff;font-weight: bold; font-size: 16px;padding-right: 20px">
+              Envie de découvrir d'autres sorties et activités près de chez vous
+              </td>
+              <td style="text-align: center;">
+                <a href="https://{{ entete.dep.getName() }}.{{ entete.domaine }}/sorties-moment.html" style="text-decoration: none;white-space: nowrap;background-color: #ffffff; color:#0cacce; font-weight: bold;font-size: 14px; border-radius: 10px; padding: 10px 20px;">Explorez l'agenda</a>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      <tr>
 
-                <table width="100%">
-                  <tr>
-                    <td width="100">
 
-                      <table class="column left"
-                             style="border-spacing: 0; font-family: Roboto,  sans-serif; color: #8c8c8c; width: 100%; display: inline-block; vertical-align: middle; max-width: 100px;">
-                        <tbody>
-                        <tr>
-                          <td class="inner full-width-image" style="padding: 15px 10px 15px 10px;">
-                            <a href="https://{{ entete.dep.getName() }}.kidiklik.fr" style="text-decoration: none; color: #8c8c8c;">
-                              <img src="https://{% if entete.dep.getName() == 0 %}www{% else %}{{ entete.dep.getName() }}{% endif %}.kidiklik.fr/assets/img/piaf.jpg"
-                                   alt="accéder à Kidiklik {{ entete.dep.getName() }}" style="border: 0; width: 100%; height: auto;"
-                                   width="100">
-                            </a>
-                          </td>
-                        </tr>
-                        </tbody>
-                      </table>
 
-                    </td>
-                    <td width="100">
+ <td class="left-sidebar item footer-kidiklik " style="padding: 10px 0;{% if key != 0 %}border-top: 1px dotted #db2a24{% endif %}">
 
-                      <table class="column right"
-                             style="border-spacing: 0; font-family: Roboto,  sans-serif; color: #8c8c8c; width: 100%; display: inline-block; vertical-align: middle; max-width: 100px;">
-                        <tbody>
-                        <tr>
-                          <td class="inner contents"
-                              style="padding: 15px 10px 15px 10px; width: 100%; text-align: left; font-size: 14px;">
-                            <p style="Margin: 0; font-size: 14px; Margin-bottom: 10px; margin-bottom: 0;">
-                              <a href="https://{{ entete.dep.getName() }}.kidiklik.fr"
-                                 style="text-decoration: none; color: #f00; text-transform: uppercase; font-size: 13px; font-weight: bold;">
-                                Accéder à Kidiklik {{ entete.nom_dep }}
+
+                    <table class="column left"
+                           style="float:left;border-spacing: 0; font-family: Roboto,  sans-serif; color: #000000; width: 100%;  vertical-align: middle; ">
+                      <tbody>
+                      <tr>
+                        <td class="inner full-width-image" style="">
+                          <img src="/sites/default/files/inline-images/titre_kidi_natio.jpg" style="width: 250px">
+                  <p style="color:#000000;font-weight: bold;font-size:12px">Le meilleur des sorties pour enfants</p>
+                        </td>
+                      </tr>
+                      </tbody>
+                    </table>
+
+                    <table class="column right"
+                           style="float: right;border-spacing: 0; font-family: Roboto,  sans-serif; color: #000000; width: 100%; vertical-align: middle; ">
+                      <tbody>
+                      <tr>
+                         <td style="color: #808080; font-size: 14px; padding-top: 10px; line-height: 22px" valign="top">
+                  Suivez-nous pour découvrir tous nos bons plans pour les familles :
+                  <p class="cont-rs"
+                            style="Margin: 0; font-size: 14px; Margin-top: 10px; color: #000; margin-bottom: 0;">
+                            {% for rs in entete.dep.get("field_reseaux_sociaux2").getIterator() %}
+
+                              <a href="{{ rs.get('link').value }}" style="color: #ee6a56; text-decoration: none;">
+                                <img src="https://preprod.kidiklik.fr/assets/newsletters/rs/{{ rs.get('social').value }}.png"
+                                    alt="{{ rs.get('social').value }} Kidiklik {{ entete.dep.getName() }}" style="border: 0;">
                               </a>
-                            </p>
-                          </td>
-                        </tr>
-                        </tbody>
-                      </table>
+                            {% endfor %}
+                            <a href="https://fr.linkedin.com/company/kidiklik" style="color: #ee6a56; text-decoration: none;">
+                                <img src="https://preprod.kidiklik.fr/assets/newsletters/rs/linkedin2.png"
+                                    alt="linkedin" style="border: 0;">
+                              </a>
 
-                    </td>
-                  </tr>
-                </table>
 
-              </td>
-            </tr>
-            </tbody>
-          </table>
+                          </p>
+                  </td>
+
+
+
+
+
+
+
+         
+          </tr>
+        </table>
         </td>
       </tr>
-      <tr>
-        <td>
-          <table style="border-spacing: 0; font-family: Roboto,  sans-serif; color: #8c8c8c;" width="100%">
-            <tbody>
-            <tr>
-              <td class="inner contents rs"
-                  style="padding: 15px 10px 15px 10px; width: 100%; padding-bottom: 0; text-align: left;">
-                <p style="Margin: 0; font-size: 14px; Margin-bottom: 10px; text-align: center; color: #000;">
-                  Suivez-nous pour découvrir toutes nos bonnes idées
-                </p>
-                <p class="cont-rs"
-                   style="Margin: 0; font-size: 14px; Margin-bottom: 10px; text-align: center; color: #000; margin-bottom: 0;">
-                  {% for rs in entete.dep.get("field_reseaux_sociaux2").getIterator() %}
-
-                    <a href="{{ rs.get('link').value }}" style="color: #ee6a56; text-decoration: none;">
-                      <img src="https://www.kidiklik.fr/assets/newsletters/rs/{{ rs.get('social').value }}.png"
-                           alt="{{ rs.get('social').value }} Kidiklik {{ entete.dep.getName() }}" style="border: 0;">
-                    </a>
-                  {% endfor %}
-
-
-                </p>
-              </td>
-            </tr>
-            </tbody>
-          </table>
-        </td>
-      </tr>
+   
 
       <tr>
         <td>
@@ -291,7 +310,7 @@ body {
         </td>
       </tr>
       <tr>
-        <td>
+        <td style="padding-top: 20px">
           <table width="100%">
             <tbody>
             <tr>
@@ -307,11 +326,7 @@ body {
                         SUJET : {{ entete.sujet|striptags }}
                       </p>
 
-                      <p style="Margin: 0; font-size: 11px; Margin-bottom: 10px; text-align: center; color: #000000;">
-                        Si vous ne parvenez pas à afficher cet e-mail, veuillez consulter la version en <a
-                          href="{{ entete.url }}"
-                          style="color: #000000; text-decoration: underline; font-size: 11px;">ligne.</a>
-                      </p>
+  
                       <p style="Margin: 0; font-size: 11px; Margin-bottom: 10px; text-align: center; color: #000000;">
                         Si vous ne souhaitez plus recevoir de newsletter de la part de Kidiklik, ce serait bien dommage
                         mais cliquez sur <a href="[[UNSUB_LINK_FR]]" style="color: #000000; text-decoration: underline; font-size: 11px;">desinscription</a>
