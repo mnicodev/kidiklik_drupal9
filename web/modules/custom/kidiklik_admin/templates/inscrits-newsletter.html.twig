@@ -1,5 +1,16 @@
 Nombre d'inscrits : {{ count_list }}
 <a href="/admin/newsletters/export_inscrit">Exporter</a>
+<form method="post">
+<div class="form-item form-type-textfield">
+<div class="row">
+<div class="col-xs-6">
+<input type="text" class="form-control" name="email" id="email" placeholder="Recherche email"  value="{{ email }}" />
+</div>
+<div class="col-xs-6">
+<input type="submit" value="Rechercher" />
+</div>
+</form>
+
 <table class="views-table views-view-table cols-7 sticky-enabled table table-bordered table-striped responsive">
   <thead>
   <tr>
@@ -26,6 +37,7 @@ Nombre d'inscrits : {{ count_list }}
     {%  endfor %}
 
   </tbody>
+  {% if count_list > 20 %}
   <tfoot>
     <tr>
       <td align="left" colspan="2">
@@ -42,4 +54,5 @@ Nombre d'inscrits : {{ count_list }}
       </td>
     </tr>
   </tfoot>
+  {% endif %}
 </table>

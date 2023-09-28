@@ -166,6 +166,7 @@ $(function(){
 				if(result) {
 					$(".geolocation-input-latitude").val(result.lat);
 					$(".geolocation-input-longitude").val(result.lng);
+					
 
 				}
 

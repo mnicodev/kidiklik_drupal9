@@ -133,7 +133,8 @@ function kidiklik_admin_theme()
         'prec' => null,
         'suiv' => null,
         'step' => null,
-        'count_list' => null,
+	'count_list' => null,
+	'email' => null,
       ]
     ]
   ];
