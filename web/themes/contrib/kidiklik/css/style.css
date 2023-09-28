@@ -887,8 +887,8 @@ a.reservation {
   display: inline-block;
   text-align: center;
   background: url(../images/ticket.png) no-repeat #db2a24 !important;
-  background-position: 0 50% !important;
-  padding-left: 30px; }
+  background-position: 5px 50% !important;
+  padding-left: 35px; }
   a.reservation:before {
     content: ""; }
 
