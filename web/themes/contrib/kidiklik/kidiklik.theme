@@ -3,17 +3,19 @@
 use Drupal\views\Views;
 use Drupal\node\Entity\Node;
 use Drupal\image\Entity\ImageStyle;
+use Drupal\file\Entity\File;
+
 /**
  * @file
  * Bootstrap sub-theme.
  *
  * Place your custom PHP code in this file.
  */
+function kidiklik_preprocess_node(&$variables) {
 
+}
 
 function kidiklik_preprocess_page(&$variables) {
-
-
 	$variables["dep"] = get_departement();
 	$term_dep=\Drupal::entityTypeManager()->getStorage("taxonomy_term")->load(get_term_departement());
 	$variables["name_dep"] =$term_dep->get('field_nom')->value;
