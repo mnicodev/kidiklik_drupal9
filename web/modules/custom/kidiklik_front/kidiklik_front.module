@@ -839,25 +839,37 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
     RECHERCHE GEO
     */
     if (!empty($ou)) {
-	$limit_distance = 10;
-   	$limit_nb_content = 10;
+      $limit_distance = 10;
+      $limit_nb_content = 10;
+      $ou2 = null;
       /*
       on va tester la présence de contenus dans le cas d'une ville
       */
-       
-        $session = \Drupal::request()->getSession();
+  
+       $session = \Drupal::request()->getSession();
+       $database = \Drupal::database();
 
         if($session->get('search_ville') !== $ou) {
           $session->remove('villes');
           $kidiklik_service = \Drupal::service('kidiklik.service');
-        
+
+          /*
+          * recherche du bon nom d'une ville
+          */
+          $sql = sprintf('select * from villes where commune like "%s" or commune like "%s"', $ou, str_replace(' ','-',$ou));
+          $search_ville = $database->query($sql);
+          $results = $search_ville->fetch();
+          if($results !== false) {
+            $ou = $results->commune;
+          }
+
           $seach_event = Views::getView("activites");
           $seach_event->setDisplay("search_by_city");
           $seach_event->setArguments([$kidiklik_service->getTermDepartement(),$ou]);
           $seach_event->execute();
           $count_event = $seach_event->total_rows;
-	  
-	  if($count_event <= $limit_nb_content) {
+                  
+	        if($count_event <= $limit_nb_content) {
             $seach_event = Views::getView("activites");
             $seach_event->setDisplay("search_by_cp");
             $seach_event->setArguments([$kidiklik_service->getTermDepartement(),$ou]);
@@ -868,8 +880,8 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
           $villes = [];
 
           if($count_event <= $limit_nb_content) {
-            $info_ville = $kidiklik_service->getInformationsVille($ou); 
-            
+            $info_ville = $kidiklik_service->getInformationsVille($ou ?? $ou2); 
+
             if($info_ville === false) {
              
               $info_ville = $kidiklik_service->getInformationsVillesByCP($ou); 
@@ -879,7 +891,7 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
             if($info_ville !== false) {
 
               $sql = 'select distinct commune,(acos( SIN('.$info_ville->lat.' * PI() / 180) * SIN(lat * PI() / 180) + COS('.$info_ville->lat.' * PI() / 180) * COS(lat * PI() / 180) * COS( ('.$info_ville->lng.'- lng) * PI() / 180 ) ) * 6371) as distance from villes v where code_postal like "'.substr($info_ville->code_postal,0,2).'%" having distance < '.$limit_distance.' order by distance';
-              $database = \Drupal::database();
+              
               $query_calc = $database->query($sql);
               $results = $query_calc->fetchAll();
               foreach($results as $ville) {
