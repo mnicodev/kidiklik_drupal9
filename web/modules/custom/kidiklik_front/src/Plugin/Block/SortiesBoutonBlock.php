@@ -24,19 +24,17 @@ class SortiesBoutonBlock extends BlockBase
    */
   public function build()
   {
+    $node = \Drupal::request()->get('node');
+
     $build = [
       "#cache" => [
         "max-age" => 0,
-        "contexts" => [],
-        "tags" => [],
+        "contexts" => ['route'],
+        "tags" => $node->getCacheTags(),
       ],
     ];
 
     $build['#theme'] = 'sortie_moment_bouton';
-    $node = \Drupal::request()->get('node');
-
-    
-    
 
     if (!empty($node)) {
       if ($node->getType() === 'activite') {
@@ -49,7 +47,7 @@ class SortiesBoutonBlock extends BlockBase
         $seach_event->execute();
         $events = \Drupal::service('renderer')->render($seach_event->render());
 	
-	$count_event = json_decode($events->__toString());
+	      $count_event = json_decode($events->__toString());
       
 	if(count($count_event) === 0) {
 		unset( $build['#ref_act']);
