@@ -29,8 +29,8 @@ class SortiesBoutonBlock extends BlockBase
     $build = [
       "#cache" => [
         "max-age" => 0,
-        "contexts" => ['route'],
-        "tags" => $node->getCacheTags(),
+    //    "contexts" => ['route'],
+    //    "tags" => $node->getCacheTags(),
       ],
     ];
 
