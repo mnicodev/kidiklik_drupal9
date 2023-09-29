@@ -85,11 +85,10 @@ class SortiesBoutonBlock extends BlockBase
 	      $build['#ref_adh'] = current($node->get('field_adherent')->getValue())['target_id'];
       }
     }
-
-    //return $build;
-    if(count($count_event) > 0) {
+    return $build;
+    /*if(count($count_event) > 0) {
       return $build;
-    }
+    }*/
     
     
   }
