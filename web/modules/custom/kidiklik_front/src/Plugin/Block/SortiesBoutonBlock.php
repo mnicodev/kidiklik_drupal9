@@ -27,14 +27,12 @@ class SortiesBoutonBlock extends BlockBase
     $node = \Drupal::request()->get('node');
 
     $build = [
+	"#theme" => 'sortie_moment_bouton',
       "#cache" => [
         "max-age" => 0,
-    //    "contexts" => ['route'],
-    //    "tags" => $node->getCacheTags(),
       ],
     ];
 
-    $build['#theme'] = 'sortie_moment_bouton';
 
     if (!empty($node)) {
       if ($node->getType() === 'activite') {
