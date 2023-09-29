@@ -30,11 +30,13 @@ class SortiesBoutonBlock extends BlockBase
 	"#theme" => 'sortie_moment_bouton',
       "#cache" => [
         "max-age" => 0,
+        "contexts" => [],
+        "tags" => [],
       ],
     ];
 
 
-    if (!empty($node)) {
+    /*if (!empty($node)) {
       if ($node->getType() === 'activite') {
         $build['#ref_act'] = $node->id();
         $seach_event = Views::getView("activites");
@@ -73,11 +75,17 @@ class SortiesBoutonBlock extends BlockBase
     $count_event = [];
     if(!empty($events)) {
 	    $count_event = json_decode($events->__toString());
+    }*/
+    /* patch avant de voir ce qui pose probleme */
+    if (!empty($node)) {
+
+      if ($node->getType() === 'activite') {
+        $build['#ref_act'] = $node->id();
+      } else {
+	      $build['#ref_adh'] = current($node->get('field_adherent')->getValue())['target_id'];
+      }
     }
-    
-    if (empty($build['#ref_act']) || empty($build['#ref_adh'])) {
-     // return null;
-    }
+
     //return $build;
     if(count($count_event) > 0) {
       return $build;
