@@ -922,4 +922,5 @@ $settings["add_dep_for_views"] = [
 "rubriques_activites",
 "page_agenda_adherent",
 "page_contenu_adherent",
-"bloc_mise_en_avant_dep"];
+"bloc_mise_en_avant_dep",
+"recherche_activites"];

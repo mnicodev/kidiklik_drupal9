@@ -774,9 +774,7 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
       $departement->get('field_nom')->value);*/
     //$view->setTitle(\Drupal::config("system.site")->get('slogan'));
     
-//kint(\Drupal::config("system.site")->get('slogan'));
     $ou = \Drupal::request()->get("lieu");
-    //$ou = \Drupal::request()->get("ville");
     $quand = \Drupal::request()->get("quand");
 //    $search = explode(' ', trim(\Drupal::request()->get("search")));
     $keywords = trim(\Drupal::request()->get("search"));
@@ -907,7 +905,7 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
           }
         } else {
           $villes = $session->get('villes');
-	      }
+	}
         /*
         fin recherche si pas trouvé dans où
         */
@@ -947,9 +945,8 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
 
         $query->addWhere('10', 'field_cp.field_code_postal_value', $ou.'%', 'like');
         $query->where[10]['type'] = 'OR';
-        //kint($query);
     } else {
-      $configuration = array(
+    /*  $configuration = array(
         'type' => 'INNER',
         'table' => 'node__field_departement',
         'field' => 'entity_id',
@@ -961,7 +958,7 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
       $join = \Drupal\views\Views::pluginManager('join')->createInstance('standard', $configuration);
       $rel = $query->addRelationship('field_dep', $join, 'node_field_data');
       $query->addTable('node__field_departement', $rel, $join, 'field_dep');
-      $query->addWhere('3', 'field_dep.field_departement_target_id', get_term_departement(), '=');
+      $query->addWhere('3', 'field_dep.field_departement_target_id', get_term_departement(), '=');*/
 
     } /*else {
       $query->where[1]['conditions'][1]['value'] = [
