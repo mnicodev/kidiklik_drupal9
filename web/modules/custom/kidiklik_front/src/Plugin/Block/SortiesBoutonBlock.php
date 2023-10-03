@@ -35,47 +35,7 @@ class SortiesBoutonBlock extends BlockBase
       ],
     ];
 
-
-    /*if (!empty($node)) {
-      if ($node->getType() === 'activite') {
-        $build['#ref_act'] = $node->id();
-        $seach_event = Views::getView("activites");
-        $seach_event->setDisplay("search_agendas_activite");
-        $seach_event->setArguments([$node->id()]);
-
-        $seach_event->getQuery()->addWhere(1,'nid',$node->id(),'<>');
-        $seach_event->execute();
-        $events = \Drupal::service('renderer')->render($seach_event->render());
-	
-	      $count_event = json_decode($events->__toString());
-      
-	if(count($count_event) === 0) {
-		unset( $build['#ref_act']);
-            $build['#ref_adh'] = current($node->get('field_adherent')->getValue())['target_id'];
-            $seach_event = Views::getView("activites");
-            $seach_event->setDisplay("search_agendas_adherent");
-            $seach_event->setArguments([current($node->get('field_adherent')->getValue())['target_id']]);
-          }
-
-        $seach_event = Views::getView("activites");
-        $seach_event->setDisplay("search_agendas_adherent");
-        $seach_event->setArguments([current($node->get('field_adherent')->getValue())['target_id']]);
-
-      } else {
-        $build['#ref_adh'] = current($node->get('field_adherent')->getValue())['target_id'];
-        $seach_event = Views::getView("activites");
-        $seach_event->setDisplay("search_agendas_adherent");
-        $seach_event->setArguments([$build['#ref_adh']]);
-      }
-      $seach_event->getQuery()->addWhere(1,'nid',$node->id(),'<>');
-      $seach_event->execute();
-      $events = \Drupal::service('renderer')->render($seach_event->render());
-    }
-
-    $count_event = [];
-    if(!empty($events)) {
-	    $count_event = json_decode($events->__toString());
-    }*/
+   
     /* patch avant de voir ce qui pose probleme */
     if (!empty($node)) {
 	    $database = \Drupal::database();
@@ -92,25 +52,25 @@ class SortiesBoutonBlock extends BlockBase
 		LEFT JOIN {node__field_adherent} node__field_adherent ON node_field_data.nid = node__field_adherent.entity_id AND node__field_adherent.deleted = '0' AND (node__field_adherent.langcode = node_field_data.langcode OR node__field_adherent.bundle = 'agenda')
 		WHERE ((node__field_adherent.field_adherent_target_id = :target_id)) AND ((node_field_data.status = '1') AND (node_field_data.type IN ('agenda')) AND ((DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d') >= DATE_FORMAT(:date, '%Y-%m-%d'))))";
 
-	$results = [];
-      if ($node->getType() === 'activite') {
-        $build['#ref_act'] = $node->id();
-	$results = $database->query($sql_activites, [
-		':date' => date('y-m-d'),
-		':target_id' => $node->id()
-	])->fetchAll();
-      }
+      $results = [];
+          if ($node->getType() === 'activite') {
+            $build['#ref_act'] = $node->id();
+            $results = $database->query($sql_activites, [
+              ':date' => date('y-m-d'),
+              ':target_id' => $node->id()
+            ])->fetchAll();
+          }
 
-	if(count($results) === 0 || $node->getType() === 'agenda') {
-		unset($build['#ref_act']);
-		$results = $database->query($sql_agendas, [
-			':date' => date('y-m-d'),
-			':target_id' => current($node->get('field_adherent')->getValue())['target_id']
-		])->fetchAll();
-		if(count($results) > 0) {
-			$build['#ref_adh'] = current($node->get('field_adherent')->getValue())['target_id'];
-		}
-	}
+      if(count($results) === 0 || $node->getType() === 'agenda') {
+        unset($build['#ref_act']);
+        $results = $database->query($sql_agendas, [
+          ':date' => date('y-m-d'),
+          ':target_id' => current($node->get('field_adherent')->getValue())['target_id']
+        ])->fetchAll();
+        if(count($results) > 0) {
+          $build['#ref_adh'] = current($node->get('field_adherent')->getValue())['target_id'];
+        }
+      }
     }
     return $build;
   }

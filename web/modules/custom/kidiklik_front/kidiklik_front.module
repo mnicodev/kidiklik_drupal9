@@ -855,6 +855,7 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
           * recherche du bon nom d'une ville
           */
           $sql = sprintf('select * from villes where commune like "%s" or commune like "%s"', $ou, str_replace(' ','-',$ou));
+          
           $search_ville = $database->query($sql);
           $results = $search_ville->fetch();
           if($results !== false) {
@@ -888,12 +889,12 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
            
             if($info_ville !== false) {
 
-              $sql = 'select distinct commune,(acos( SIN('.$info_ville->lat.' * PI() / 180) * SIN(lat * PI() / 180) + COS('.$info_ville->lat.' * PI() / 180) * COS(lat * PI() / 180) * COS( ('.$info_ville->lng.'- lng) * PI() / 180 ) ) * 6371) as distance from villes v where code_postal like "'.substr($info_ville->code_postal,0,2).'%" having distance < '.$limit_distance.' order by distance';
-              
+              $sql = 'select distinct code_postal,(acos( SIN('.$info_ville->lat.' * PI() / 180) * SIN(lat * PI() / 180) + COS('.$info_ville->lat.' * PI() / 180) * COS(lat * PI() / 180) * COS( ('.$info_ville->lng.'- lng) * PI() / 180 ) ) * 6371) as distance from villes v where code_postal like "'.substr($info_ville->code_postal,0,2).'%" having distance < '.$limit_distance.' order by distance';
+  
               $query_calc = $database->query($sql);
               $results = $query_calc->fetchAll();
               foreach($results as $ville) {
-                $villes[] = $ville->commune;
+                $villes[] = $ville->code_postal;
               }
               
               $session->set('villes', $villes);
@@ -905,48 +906,67 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
           }
         } else {
           $villes = $session->get('villes');
-	}
+	      }
         /*
         fin recherche si pas trouvé dans où
         */
 
-        $configuration = array(
-          'type' => 'INNER',
-          'table' => 'node__field_ville_save',
-          'field' => 'entity_id',
-          'left_table' => 'node_field_data',
-          'left_field' => 'nid',
-          'operator' => '=',
-        );
-
-        $join = \Drupal\views\Views::pluginManager('join')->createInstance('standard', $configuration);
-        $rel = $query->addRelationship('field_ville', $join, 'node_field_data');
-        $query->addTable('node__field_ville_save', $rel, $join, 'field_ville');
-        if(count($villes) > 0) {
-          $query->addWhere('10', 'field_ville.field_ville_save_value', $villes, 'in');
-        } else {
+       // SI on ne trouve pas de villes 
+        if(count($villes) === 0) {
+         /* $query->addWhere('10', 'field_ville.field_ville_save_value', $villes, 'in');
+        } else {*/
+          $configuration = array(
+            'type' => 'INNER',
+            'table' => 'node__field_ville_save',
+            'field' => 'entity_id',
+            'left_table' => 'node_field_data',
+            'left_field' => 'nid',
+            'operator' => '=',
+          );
+  
+          $join = \Drupal\views\Views::pluginManager('join')->createInstance('standard', $configuration);
+          $rel = $query->addRelationship('field_ville', $join, 'node_field_data');
+          $query->addTable('node__field_ville_save', $rel, $join, 'field_ville');
           $query->addWhere('10', 'field_ville.field_ville_save_value', $ou.'%', 'like');
-	}
-	/*$query->addOrderBy('node__field_ville_save','field_ville_save_value','asc','find_in_set(field_ville_save_value, "'.implode(',',$villes).'")');
-	kint($query);exit;*/	
+
+          $configuration = array(
+            'type' => 'INNER',
+            'table' => 'node__field_code_postal',
+            'field' => 'entity_id',
+            'left_table' => 'node_field_data',
+            'left_field' => 'nid',
+            'operator' => '=',
+          );
+  
+          $join = \Drupal\views\Views::pluginManager('join')->createInstance('standard', $configuration);
+          $rel = $query->addRelationship('field_cp', $join, 'node_field_data');
+          $query->addTable('node__field_code_postal', $rel, $join, 'field_cp');
+  
+          $query->addWhere('10', 'field_cp.field_code_postal_value', $ou.'%', 'like');
+          $query->where[10]['type'] = 'OR';
+	      } else {
+          $configuration = array(
+            'type' => 'INNER',
+            'table' => 'node__field_code_postal',
+            'field' => 'entity_id',
+            'left_table' => 'node_field_data',
+            'left_field' => 'nid',
+            'operator' => '=',
+          );
+  
+          $join = \Drupal\views\Views::pluginManager('join')->createInstance('standard', $configuration);
+          $rel = $query->addRelationship('field_cp', $join, 'node_field_data');
+          $query->addTable('node__field_code_postal', $rel, $join, 'field_cp');
+  
+          $query->addWhere('10', 'field_cp.field_code_postal_value', $villes, 'in');
+
+        }
+
 	
-	      $configuration = array(
-          'type' => 'INNER',
-          'table' => 'node__field_code_postal',
-          'field' => 'entity_id',
-          'left_table' => 'node_field_data',
-          'left_field' => 'nid',
-          'operator' => '=',
-        );
-
-        $join = \Drupal\views\Views::pluginManager('join')->createInstance('standard', $configuration);
-        $rel = $query->addRelationship('field_cp', $join, 'node_field_data');
-        $query->addTable('node__field_code_postal', $rel, $join, 'field_cp');
-
-        $query->addWhere('10', 'field_cp.field_code_postal_value', $ou.'%', 'like');
-        $query->where[10]['type'] = 'OR';
-    } else {
-    /*  $configuration = array(
+	      
+        
+    } else { //  PAS CRITERE OU
+      $configuration = array(
         'type' => 'INNER',
         'table' => 'node__field_departement',
         'field' => 'entity_id',
@@ -958,7 +978,7 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
       $join = \Drupal\views\Views::pluginManager('join')->createInstance('standard', $configuration);
       $rel = $query->addRelationship('field_dep', $join, 'node_field_data');
       $query->addTable('node__field_departement', $rel, $join, 'field_dep');
-      $query->addWhere('3', 'field_dep.field_departement_target_id', get_term_departement(), '=');*/
+      $query->addWhere('3', 'field_dep.field_departement_target_id', get_term_departement(), '=');
 
     } /*else {
       $query->where[1]['conditions'][1]['value'] = [
