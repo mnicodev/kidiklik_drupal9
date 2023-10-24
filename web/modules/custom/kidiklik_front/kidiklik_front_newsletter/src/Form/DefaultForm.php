@@ -115,8 +115,20 @@ class DefaultForm extends FormBase
     // Display result.
     $database = \Drupal::database();
 
-    $sql = "insert into inscrits_newsletters (email, nom, prenom, dept) values ('" . $form_state->getValue('email') . "','" . $form_state->getValue('nom') . "','" . $form_state->getValue('prenom') . "','" . get_departement() . "')";
-    $query = $database->query($sql);
+    $sql = 'select * from inscrits_newsletters where email like :email';
+    $query = $database->query($sql, [
+      ':email' =>  $form_state->getValue('email'),
+    ]);
+    
+    if($query->fetch() === false) {
+      $sql = "insert into inscrits_newsletters (email, nom, prenom, dept) values (:email,:nom,:prenom,:dept)";
+      $query = $database->query($sql, [
+        ':email' =>  $form_state->getValue('email'),
+        ':nom' => $form_state->getValue('nom'),
+        ':prenom' => $form_state->getValue('prenom'),
+        ':dept' => get_departement()
+      ]);
+    }   
 
     $response = new RedirectResponse('newsletter.html?record_email=' . $form_state->getValue('email'));
 
