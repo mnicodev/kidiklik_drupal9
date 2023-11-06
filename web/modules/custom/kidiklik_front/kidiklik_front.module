@@ -865,7 +865,7 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
        $session = \Drupal::request()->getSession();
        $database = \Drupal::database();
 
-        //if($session->get('search_ville') !== $ou) {
+        if($session->get('search_ville') !== $ou) {
           $session->remove('villes');
           
 
@@ -873,8 +873,7 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
           * recherche du bon nom d'une ville
           */
          
-          $info_ville = $kidiklik_service->searchAsVille($ou);
-
+       	$info_ville = $kidiklik_service->searchAsVille($ou);
           if($info_ville !== false) {
             $ou = $info_ville->commune;
           
@@ -919,9 +918,10 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
           }
     
           
-       /* } else {
+        } else {
           $villes = $session->get('villes');
-	      }*/
+	
+	}
         /*
         fin recherche si pas trouvé dans où
         */
