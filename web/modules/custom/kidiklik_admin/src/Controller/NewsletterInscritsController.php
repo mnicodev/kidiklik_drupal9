@@ -58,7 +58,7 @@ class NewsletterInscritsController extends ControllerBase
       "#email" => $email,
     ];
   }
-
+ 
   public function export()
   {
     $database = \Drupal::database();

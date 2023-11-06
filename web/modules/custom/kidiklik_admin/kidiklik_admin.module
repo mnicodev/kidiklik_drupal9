@@ -134,6 +134,7 @@ function kidiklik_admin_theme()
         'suiv' => null,
         'step' => null,
         'count_list' => null,
+        'email' => null
       ]
     ]
   ];
