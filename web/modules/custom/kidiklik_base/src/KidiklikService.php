@@ -104,15 +104,44 @@ class KidiklikService  {
 
   public function getInformationsVille($ville) {
     $database = \Drupal::database();
-    $query = $database->query("SELECT * FROM villes where commune = '".$ville."'");
+    $query = $database->query('SELECT * FROM villes where commune = :ville', [
+      ':ville' => $ville
+    ]);
     $result = $query->fetchAll();
     return current($result);
   }
 
   public function getInformationsVillesByCP($cp) {
     $database = \Drupal::database();
-    $query = $database->query("SELECT * FROM villes where code_postal like '".$cp."%'");
+    $query = $database->query('SELECT * FROM villes where code_postal like :cp', [
+      ':cp' => $cp.'%'
+    ]);
     $result = $query->fetchAll();
     return current($result);
+  }
+
+  public function searchAsDepartement($val) {
+    $database = \Drupal::database();
+    $query = $database->query('select * from taxonomy_term__field_nom where field_nom_value like :term', [
+      ':term' => $val
+    ]);
+    return $query->fetch();
+  }
+
+  public function searchAsRegion($val) {
+    $database = \Drupal::database();
+    $query = $database->query('select * from taxonomy_term__field_region where field_region_value like :term', [
+      ':term' => $val
+    ]);
+    return $query->fetch();
+  }
+
+  public function searchAsVille($val) {
+    $database = \Drupal::database();
+    $query = $database->query('select * from villes where commune like :ou1 or commune like :ou2', [
+      ':ou1' => $val,
+      ':ou2' => str_replace(' ','-',$val)
+    ]);
+    return $query->fetch();
   }
 }
