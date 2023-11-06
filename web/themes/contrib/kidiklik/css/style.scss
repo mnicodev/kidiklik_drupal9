@@ -637,9 +637,22 @@ article  {
 			}
 		}
 		#groupe-actions {
+			
 			@media(max-width: 1200px) {
 				display: flex;
 				flex-direction: row-reverse;
+			}
+			@media(max-width: 500px) {
+				display: flex;
+				flex-direction: column;
+
+				a {
+					text-align: left;
+				}
+				a.reservation {
+					background-position: 12px 50% !important;
+  					padding-left: 40px;
+				}
 			}
 		}
 		
@@ -1941,8 +1954,6 @@ section{
 		border: none;
 	}
 	form {
-		background: #fff;
-
 		margin-top: 10px;
 	}
 	.fa-envelope {
@@ -2099,15 +2110,12 @@ section{
   a {
 	color: #0cacce;
 	background: #fff;
-	padding: 5px;
+	padding: 2px;
 	border-radius: 20px;
-	width: 180px;
+	width: 150px;
 
 	display: block;
 	margin: auto;
-	margin-top: auto;
-	margin-bottom: auto;
-	margin-top: 10px;
 	margin-bottom: 10px;
 
 	&:hover {

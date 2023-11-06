@@ -489,6 +489,15 @@ article {
       article .zone-image #groupe-actions {
         display: flex;
         flex-direction: row-reverse; } }
+    @media (max-width: 500px) {
+      article .zone-image #groupe-actions {
+        display: flex;
+        flex-direction: column; }
+        article .zone-image #groupe-actions a {
+          text-align: left; }
+        article .zone-image #groupe-actions a.reservation {
+          background-position: 12px 50% !important;
+          padding-left: 40px; } }
   article img {
     max-width: 100%;
     width: 100%;
@@ -1425,7 +1434,6 @@ section .block .block-title {
     background: #fff;
     border: none; }
   .bloc-send-email form {
-    background: #fff;
     margin-top: 10px; }
   .bloc-send-email .fa-envelope {
     color: #000;
@@ -1533,14 +1541,11 @@ section .block .block-title {
 #block-blocinscriptionnewsletter a {
   color: #0cacce;
   background: #fff;
-  padding: 5px;
+  padding: 2px;
   border-radius: 20px;
-  width: 180px;
+  width: 150px;
   display: block;
   margin: auto;
-  margin-top: auto;
-  margin-bottom: auto;
-  margin-top: 10px;
   margin-bottom: 10px; }
   #block-blocinscriptionnewsletter a:hover {
     text-decoration: none; }
