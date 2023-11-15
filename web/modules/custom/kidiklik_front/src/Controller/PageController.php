@@ -27,21 +27,25 @@ class PageController extends ControllerBase
    */
   public function getContent($page, $dep)
   {
-
+    $output = "";
     if ($page) {
 
       $term_dep = \Drupal::entityTypeManager()->getStorage("taxonomy_term")->load($dep);
 
-      $node = \Drupal::entityTypeManager()
+      if($term_dep !== null) {
+        $node = \Drupal::entityTypeManager()
         ->getStorage("node")
         ->load(current($term_dep->get("field_" . $page)->getValue())["target_id"]);
 
-      if (is_object($node)) {
-        $view = node_view($node, 'default');
-        $output = drupal_render($view);
-      } else $output = "La page est pour le moment incompléte";
-
-    } else $output = "";
+        if (is_object($node)) {
+          $view = node_view($node, 'default');
+          $output = drupal_render($view);
+        } else {
+          $output = "La page est pour le moment incompléte";
+        }
+      }
+      
+    }
     //exit;
     return $output;
 
