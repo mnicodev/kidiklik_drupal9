@@ -838,7 +838,7 @@ case 95:
 	case 'finistere-morbihan':
 		$settings["dep"]=29;
 		break;
-	case 'renne':
+	case 'rennes':
 	case 22:
 		$settings['dep']=35;
 		break;

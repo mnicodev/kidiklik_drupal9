@@ -104,9 +104,9 @@ RewriteRule ^/?(.*)	http://17.kidiklik.fr/$1 [L,R=301]
 RewriteCond %{HTTP_HOST}	75.kidiklik\.fr [NC]
 RewriteRule ^/?(.*)	https://paris.kidiklik.fr/$1 [L,R=301]
 RewriteCond %{HTTP_HOST}	22.kidiklik\.fr [NC]
-RewriteRule ^/?(.*)	https://renne.kidiklik.fr/$1 [L,R=301]
+RewriteRule ^/?(.*)	https://rennes.kidiklik.fr/$1 [L,R=301]
 RewriteCond %{HTTP_HOST}	35.kidiklik\.fr [NC]
-RewriteRule ^/?(.*)	https://renne.kidiklik.fr/$1 [L,R=301]
+RewriteRule ^/?(.*)	https://rennes.kidiklik.fr/$1 [L,R=301]
 
 
 RewriteCond %{HTTP_HOST}	56.kidiklik\.fr [NC]
