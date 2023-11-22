@@ -34,26 +34,26 @@ class KidiklikService  {
   }
 
   /**
-   * 
+   *
    */
   public function getDepartement() {
     $globalSettings = \Drupal::service("settings");
     $dep = $globalSettings->get("dep");
-  
+
     return $dep;
   }
 
   /**
-   * 
+   *
    */
   public function getTermDepartement($dep = null, $option = null)
   {
     if ($dep === null) {
       $dep = $this->getDepartement();
     }
-  
+
     $term_dep = "";
-  
+
     $term_dep = current(\Drupal::entityTypeManager()
       ->getStorage("taxonomy_term")
       ->loadByProperties(['name' => $dep]));
@@ -70,9 +70,9 @@ class KidiklikService  {
     if ($dep === null) {
       $dep = $this->getDepartement();
     }
-  
+
     $term_dep = "";
-  
+
     $term_dep = current(\Drupal::entityTypeManager()
       ->getStorage("taxonomy_term")
       ->loadByProperties(['name' => $dep]));
@@ -82,7 +82,7 @@ class KidiklikService  {
     return null;
   }
 
-  public function hasRedirection() 
+  public function hasRedirection()
   {
     return array_key_exists($this->dep, $this->redirections);
   }
@@ -91,7 +91,7 @@ class KidiklikService  {
     if(array_key_exists($this->dep, $this->redirections)) {
       return sprintf('https://%s.%s/%s', $this->redirections[$this->dep], $this->domain_name, $this->request_uri);
     }
-    return false;    
+    return false;
   }
 
   public function getUser() {
@@ -138,9 +138,10 @@ class KidiklikService  {
 
   public function searchAsVille($val) {
     $database = \Drupal::database();
-    $query = $database->query('select * from villes where commune like :ou1 or commune like :ou2', [
+    $query = $database->query('select * from villes where commune like :ou1 or commune like :ou2 or code_postal = :ou3', [
       ':ou1' => $val,
-      ':ou2' => str_replace(' ','-',$val)
+      ':ou2' => str_replace(' ','-',$val),
+      ':ou3' => $val,
     ]);
     return $query->fetch();
   }

@@ -284,7 +284,7 @@ function kidiklik_front_form_alter(&$form, FormStateInterface $form_state, $form
       '#type' => 'hidden',
       '#default_value' => \Drupal::Request()->get('center')['coordinates']['lng'],
     ];
-    
+
     unset($form['thematiques']['#options']['All']);
     $options = $form['thematiques']['#options'];
     $output = [];
@@ -309,7 +309,7 @@ function kidiklik_front_form_alter(&$form, FormStateInterface $form_state, $form
 
     unset($form['tranches_ages']['#options']['All']);
     $options = $form['tranches_ages']['#options'];
-    
+
     $options = array_merge(['All' => "Tranches d'âges"], $options);
     $form['tranches_ages']['#options'] = $options;
     $form['tranches_ages']['#default_value'] = $output;
@@ -377,19 +377,19 @@ function kidiklik_front_validate_contact_form($form, FormStateInterface $form_st
       else {
         drupal_set_message(t('Votre message a été envoyé-.'));
       }
-     
+
     }
   }*/
 }
 function kidiklik_front_submit_jeu_concours($form, FormStateInterface $form_state)
 {
 
-  
+
 }
 function kidiklik_front_validate_jeu_concours($form, FormStateInterface $form_state)
 {
 
-  
+
 }
 
 
@@ -408,7 +408,7 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
 	case 'recherche_activites':
 	case 'page_recherche_test':
 	case 'recherche_test':
-	
+
 		$DELTA_PERIOD = 90;
 		break;
 	default:
@@ -422,13 +422,13 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
     (
       DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') BETWEEN CURDATE() AND (CURDATE() + INTERVAL ".$DELTA_PERIOD." DAY)
     )
-    AND 
+    AND
     (
       DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d')  BETWEEN CURDATE() AND (CURDATE() + INTERVAL ".$DELTA_PERIOD." DAY)
     )
   )";
 
-	$rule_search = "(" . implode(' OR ',$search).")"; 
+	$rule_search = "(" . implode(' OR ',$search).")";
 
 
   if ($view->current_display === 'article_national_3' || $view->current_display === 'article_national_1' || $view->current_display === 'article_national_2') {
@@ -574,7 +574,7 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
     $view->current_display == "bloc_mise_en_avant_nat" ||
     $view->current_display == "bloc_mise_en_avant_dep" ||
     $view->current_display == "articles_dep_accueil_3") {
-      
+
     $query->where[1]["conditions"][2]["value"] = get_date();
     $query->where[1]["conditions"][2]["operator"] = "<=";
 
@@ -592,7 +592,7 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
         'left_field' => 'nid',
         'operator' => '=',
       );
-  
+
       $join = \Drupal\views\Views::pluginManager('join')
         ->createInstance('standard', $configuration);
       $rel = $query->addRelationship('node__field_partage_departements', $join, 'node_field_data');
@@ -617,7 +617,7 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
     $title = $view->getTitle();
     $departement =  \Drupal::entityTypeManager()->getStorage("taxonomy_term")->load(get_term_departement());
 
-    $title = sprintf('%s %s %s', $title, 
+    $title = sprintf('%s %s %s', $title,
       strtolower($departement->get('field_prefix')->value),
       $departement->get('field_nom')->value);
     $view->setTitle($title);
@@ -653,7 +653,7 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
 
     $query->where[0]["conditions"][count($query->where[0]["conditions"]) - 1]["field"] = $rule_search;
 
-    
+
     $query->where[0]["conditions"][count($query->where[0]["conditions"]) - 1]["operator"] = "formula";
     $configuration = array(
       'type' => 'LEFT',
@@ -677,11 +677,11 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
     $title = $view->getTitle();
     $departement =  \Drupal::entityTypeManager()->getStorage("taxonomy_term")->load(get_term_departement());
 
-    $title = sprintf('%s %s %s', $title, 
+    $title = sprintf('%s %s %s', $title,
       strtolower($departement->get('field_prefix')->value),
       $departement->get('field_nom')->value);
     $view->setTitle($title);
-    
+
     $configuration = array(
       'type' => 'LEFT',
       'table' => 'paragraph__field_date_de_debut',
@@ -760,8 +760,8 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
   /**
    * PAGE CONSOLE DE RECHERCHE
    */
-  if ($view->current_display == "page_recherche_test" || 
-    $view->current_display == "recherche_test" ||  
+  if ($view->current_display == "page_recherche_test" ||
+    $view->current_display == "recherche_test" ||
     $view->current_display == "recherche_activites") {
     $query->distinct = true;
     $query->groupby[]='nid';
@@ -769,17 +769,17 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
     /*$title = $view->getTitle();
     $departement =  \Drupal::entityTypeManager()->getStorage("taxonomy_term")->load(get_term_departement());
 
-    $title = sprintf('%s %s %s', $title, 
+    $title = sprintf('%s %s %s', $title,
       strtolower($departement->get('field_prefix')->value),
       $departement->get('field_nom')->value);*/
     //$view->setTitle(\Drupal::config("system.site")->get('slogan'));
-    
+
     $ou = \Drupal::request()->get("lieu");
     $quand = \Drupal::request()->get("quand");
 //    $search = explode(' ', trim(\Drupal::request()->get("search")));
     $keywords = trim(\Drupal::request()->get("search"));
     $ref_adherent = \Drupal::request()->get("ref_adh") ?? \Drupal::request()->get("ref_adherent") ?? null;
-    
+
     if (!empty(\Drupal::request()->get("ref_adh"))) {
       $query->where[1]['conditions'][1]['value'] = ['agenda'];
     }
@@ -802,9 +802,8 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
     if (!empty($keywords)) {
 	   // unset($query->where[1]["conditions"][count($query->where[1]["conditions"]) - 1]);
 	    	 //   unset($query->where[5]["conditions"][1]);
-	    $query->where[5]["conditions"][1]['value'] = addslashes('%' . htmlentities($keywords) . '%');
+	    $query->where[5]["conditions"][1]['value'] = addslashes('%' . $keywords . '%');
 	    $query->where[5]["conditions"][2]['value'] = addslashes('%' . htmlentities($keywords) . '%');
-
       /*$configuration = array(
         'type' => 'INNER',
         'table' => 'node__field_resume',
@@ -839,11 +838,11 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
       $kidiklik_service = \Drupal::service('kidiklik.service');
       $limit_distance = 10;
       $limit_nb_content = 10;
-      
+
       // un utilisateur s'amuse à mettre une chaine multi-recherche
       /*$search_lieu = preg_split('/[;,]+/', $ou);
       foreach($search_lieu as $lieu) {
-        
+
         $search = $kidiklik_service->searchAsRegion($lieu);
         if(!empty($search)) {
           break;
@@ -861,22 +860,21 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
       /*
       on va tester la présence de contenus dans le cas d'une ville
       */
-  
+
        $session = \Drupal::request()->getSession();
        $database = \Drupal::database();
 
         if($session->get('search_ville') !== $ou) {
           $session->remove('villes');
-          
 
           /*
           * recherche du bon nom d'une ville
           */
-         
-       	$info_ville = $kidiklik_service->searchAsVille($ou);
+
+       $info_ville = $kidiklik_service->searchAsVille($ou);
           if($info_ville !== false) {
             $ou = $info_ville->commune;
-          
+
             $seach_event = Views::getView("activites");
             $seach_event->setDisplay("search_by_city");
             $seach_event->setArguments([$kidiklik_service->getTermDepartement(),$ou]);
@@ -890,17 +888,17 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
               $seach_event->setArguments([$kidiklik_service->getTermDepartement(),$ou]);
               $seach_event->execute();
               $count_event = $seach_event->total_rows;
-              
+
             }
 
             $villes = [];
-          
+
             if($count_event <= $limit_nb_content) {
-                $sql = 'select distinct code_postal,(acos( SIN(:lat * PI() / 180) * SIN(lat * PI() / 180) + COS(:lat * PI() / 180) * COS(lat * PI() / 180) * COS( (:lng - lng) * PI() / 180 ) ) * 6371) as distance 
-                from villes v  
-                having distance < :limit_distance 
+                $sql = 'select distinct code_postal,(acos( SIN(:lat * PI() / 180) * SIN(lat * PI() / 180) + COS(:lat * PI() / 180) * COS(lat * PI() / 180) * COS( (:lng - lng) * PI() / 180 ) ) * 6371) as distance
+                from villes v
+                having distance < :limit_distance
                 order by distance';
-    
+
                 $query_calc = $database->query($sql, [
                   ':lat' => $info_ville->lat,
                   ':lng' => $info_ville->lng,
@@ -913,20 +911,20 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
 
                 $session->set('villes', $villes);
                 $session->set('search_ville', $ou);
-                
+
             }
           }
-    
-          
+
+
         } else {
           $villes = $session->get('villes');
-	
-	}
+
+          }
         /*
         fin recherche si pas trouvé dans où
         */
 
-       // SI on ne trouve pas de villes 
+       // SI on ne trouve pas de villes
         if(count($villes) === 0) {
          /* $query->addWhere('10', 'field_ville.field_ville_save_value', $villes, 'in');
         } else {*/
@@ -938,7 +936,7 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
             'left_field' => 'nid',
             'operator' => '=',
           );
-  
+
           $join = \Drupal\views\Views::pluginManager('join')->createInstance('standard', $configuration);
           $rel = $query->addRelationship('field_ville', $join, 'node_field_data');
           $query->addTable('node__field_ville_save', $rel, $join, 'field_ville');
@@ -952,11 +950,11 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
             'left_field' => 'nid',
             'operator' => '=',
           );
-  
+
           $join = \Drupal\views\Views::pluginManager('join')->createInstance('standard', $configuration);
           $rel = $query->addRelationship('field_cp', $join, 'node_field_data');
           $query->addTable('node__field_code_postal', $rel, $join, 'field_cp');
-  
+
           $query->addWhere('10', 'field_cp.field_code_postal_value', $ou.'%', 'like');
           $query->where[10]['type'] = 'OR';
 	      } else {
@@ -968,18 +966,18 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
             'left_field' => 'nid',
             'operator' => '=',
           );
-  
+
           $join = \Drupal\views\Views::pluginManager('join')->createInstance('standard', $configuration);
           $rel = $query->addRelationship('field_cp', $join, 'node_field_data');
           $query->addTable('node__field_code_postal', $rel, $join, 'field_cp');
-  
+
           $query->addWhere('10', 'field_cp.field_code_postal_value', $villes, 'in');
 
         }
 
-	
-	      
-        
+
+
+
     } else { //  PAS CRITERE OU
       $configuration = array(
         'type' => 'INNER',
@@ -1097,9 +1095,9 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
 	unset($query->where[4]['conditions'][1]);
       } else if (empty($date_deb) && empty($date_fin)) {
         //$query->where[4]["conditions"][$nb_condition]["field"] = "((DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d')>CURDATE()) or (CURDATE() BETWEEN DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') and DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d')))";
-        
+
         $query->where[4]["conditions"][$nb_condition]["field"] = $rule_search;
-        
+
         $query->where[4]["conditions"][$nb_condition]["operator"] = "formula";
       }
     } else {
