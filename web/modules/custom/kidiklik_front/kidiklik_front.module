@@ -888,7 +888,7 @@ function kidiklik_front_views_query_alter(Drupal\views\ViewExecutable $view, Dru
               $seach_event->setArguments([$kidiklik_service->getTermDepartement(),$ou]);
               $seach_event->execute();
               $count_event = $seach_event->total_rows;
-
+              $limit_distance = 15;
             }
 
             $villes = [];
