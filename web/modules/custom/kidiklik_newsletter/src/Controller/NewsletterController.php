@@ -24,6 +24,7 @@ class NewsletterController extends ControllerBase
    */
   public function newsletterForMailjet($nid, $titre)
   {
+    // node courant
     $n = Node::Load($nid);
     $dep_id = get_term_departement();
     $entetes = $n->get('field_bloc_entete')->getValue() ?? null;
@@ -38,20 +39,23 @@ class NewsletterController extends ControllerBase
       }
     }
     if (!empty($paragraph_entete)) {
-	    $img_url = null;
-	    if((bool)$paragraph_entete->get('field_image')->getValue() === true) {
-		    $img = \Drupal::entityTypeManager()->getStorage("file")->load(current($paragraph_entete->get('field_image')->getValue())['target_id']);
-		    $url_img=$img->url();
-	    }
+      $img_url = null;
+      if ((bool)$paragraph_entete->get('field_image')->getValue() === true) {
+        $img = \Drupal::entityTypeManager()->getStorage("file")->load(current($paragraph_entete->get('field_image')->getValue())['target_id']);
+        $url_img = $img->url();
+      }
       $json_entete = [
         'field_bandeau_rose' => $paragraph_entete->get('field_bandeau_rose')->value,
         'id' => $paragraph_entete->id(),
         'field_description' => $paragraph_entete->get('field_description')->value,
         'field_image' => $url_img,
         'field_sujet' => $paragraph_entete->get('field_sujet')->value
-	];
+      ];
     }
 
+    /*
+     * region publicites
+     */
     $database = \Drupal::database();
     $query = $database->select("node_field_data", "n");
     $query->join("node__field_departement", "dep", "dep.entity_id=n.nid");
@@ -79,7 +83,7 @@ class NewsletterController extends ControllerBase
     $query->condition($orGroup);
     //$date=explode('-',$n->get('field_date_envoi')->value);
     $date_envoi = $n->get('field_date_envoi')->value; //date('Y-m-d',mktime(0,0,0,$date_envoi[1],$date_envoi[2],$date_envoi[0]));
-    $query->condition("dd.field_date_debut_value",$date_envoi, "<=");
+    $query->condition("dd.field_date_debut_value", $date_envoi, "<=");
     $query->condition("df.field_date_fin_value", $date_envoi, ">=");
     $query->orderRandom();
     $query->range(0, 1);
@@ -87,8 +91,8 @@ class NewsletterController extends ControllerBase
     $rs = current($query->execute()->fetchAll());
     $pub_img = \Drupal::entityTypeManager()->getStorage("file")->load($rs->field_image_target_id);
     $pub_url = null;
-    if(!empty($rs->field_url_uri)) {
-	    $pub_url = $rs->field_url_uri;
+    if (!empty($rs->field_url_uri)) {
+      $pub_url = $rs->field_url_uri;
     }
     $file = null;
     if ((bool)$n->get("field_image_d_entete")->getValue() === true) {
@@ -103,41 +107,51 @@ class NewsletterController extends ControllerBase
 
       }
     }
+    // Fin region pub
 
     $dep = \Drupal::entityTypeManager()->getStorage("taxonomy_term")->load($dep_id);
     $blocs = $n->get('field_blocs_de_donnees')->getValue(); //\Drupal::entityTypeManager()->getStorage("node")->loadByProperties(["type"=>"bloc_de_mise_en_avant","field_newsletter"=>$nid,"status"=>1]);
     $blocs_nat = [];
+
     foreach ($blocs as $key => $item) {//kint(get_term_departement(null,'name'));
       if (!empty($item["target_id"])) {
         $paragraph = \Drupal\paragraphs\Entity\Paragraph::load($item["target_id"]);
-        if ((bool)($paragraph->get("field_departement")->getValue()) === true) {
-          $dept_target_id = (int)current($paragraph->get("field_departement")->getValue())['target_id'];
-	  if(!empty($paragraph->get("field_nid_bloc")->value)) {
-      $node_for_partage = Node::Load($paragraph->get("field_nid_bloc")->value);
-      if(!empty($node_for_partage)) {
-        $partage_nat = $node_for_partage->get('field_partage_departements')->getValue();
-        $dep_part = [];
-        foreach($partage_nat as $part) {
-          $term_part = Term::Load($part['target_id']);
-          if(!empty($term_part)) {
-            $dep_part[] = $term_part->getName();
-          }
-          
-        }
-      }
-	 }
-          $dept_bloc = (int)\Drupal::entityTypeManager()->getStorage("taxonomy_term")->load($dept_target_id)->getName();
-          if ($dept_target_id !== (int)get_term_departement()) {
 
+        if ($paragraph !== null && (bool)($paragraph->get("field_departement")->getValue()) === true) {
+          $dept_target_id = (int)current($paragraph->get("field_departement")->getValue())['target_id'];
+
+          if (!empty($paragraph->get("field_nid_bloc")->value)) {
+            $node_for_partage = Node::Load($paragraph->get("field_nid_bloc")->value);
+
+            if (!empty($node_for_partage)) {
+              $partage_nat = $node_for_partage->get('field_partage_departements')->getValue();
+              $dep_part = [];
+              foreach ($partage_nat as $part) {
+                $term_part = Term::Load($part['target_id']);
+                if (!empty($term_part)) {
+                  $dep_part[] = $term_part->getName();
+                }
+
+              }
+            }
+          }
+          // on recupére le département du bloc de donnée
+          $dept_bloc = (int)\Drupal::entityTypeManager()->getStorage("taxonomy_term")->load($dept_target_id)->getName();
+
+          // on vérifie si le dep du bloc n'est pas le dep courant, car c'est un partage donc on teste pour les autres départements
+          // on se partage pas soit même
+          if ($dept_target_id !== (int)get_term_departement()) {
+            // il n'y a que le national qui peut partager, donc dept_bloc = 0
+            // et on vérifie si le dep courant est dans la liste des dep autorisés
             if (($dept_bloc === 0 && in_array(get_departement(), $dep_part)) || ($dept_bloc === 0 && !count($dep_part))) {
-              		$blocs_nat[] = $item;
-	   }
+              $blocs_nat[] = $item;
+            }
             unset($blocs[$key]);
           }
         }
       }
     }
-    
+
     //$blocs = array_merge($blocs,$blocs_nat);
     $entete = [
       "sujet" => htmlspecialchars_decode($json_entete['field_sujet'], ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401) ?? null, //$newsletter->get("field_sujet")->value,
@@ -155,33 +169,34 @@ class NewsletterController extends ControllerBase
     foreach ($blocs as $item) {
       $bloc = Paragraph::load($item['target_id']);
 
-      if (is_object($bloc->get("field_image")->first())) {
-        //kint($bloc->get("field_image")->first()->get("target_id")->getValue());
-        $file = \Drupal::entityTypeManager()->getStorage("file")->load($bloc->get("field_image")->first()->get("target_id")->getValue());
+      if ($bloc !== null) {
+        if (is_object($bloc->get("field_image")->first())) {
+          //kint($bloc->get("field_image")->first()->get("target_id")->getValue());
+          $file = \Drupal::entityTypeManager()->getStorage("file")->load($bloc->get("field_image")->first()->get("target_id")->getValue());
 
-        $url_image = file_create_url($file->getFileUri());
+          $url_image = file_create_url($file->getFileUri());
 
-      } else {
-        $url_image = "";
-      }
-      if (!empty($bloc->get('field_titre')->value)) {
-	      preg_match('/(https:\/\/)(.*)/',$bloc->get("field_lien")->value, $rs);
-
-        $ext = 0;
-        if(count($rs) && $rs[1] === 'https://') {
-          $ext = 1;
+        } else {
+          $url_image = "";
         }
-        $liste[] = [
-          "titre" => $bloc->get('field_titre')->value,
-          "image" => $url_image,
-          "texte" => $bloc->get("field_resume")->value,
-          "lien" => $bloc->get("field_lien")->value,
-          'ext' => $ext
-        ];
+        if (!empty($bloc->get('field_titre')->value)) {
+          preg_match('/(https:\/\/)(.*)/', $bloc->get("field_lien")->value, $rs);
+
+          $ext = 0;
+          if (count($rs) && $rs[1] === 'https://') {
+            $ext = 1;
+          }
+          $liste[] = [
+            "titre" => $bloc->get('field_titre')->value,
+            "image" => $url_image,
+            "texte" => $bloc->get("field_resume")->value,
+            "lien" => $bloc->get("field_lien")->value,
+            'ext' => $ext
+          ];
+        }
       }
 
     }
-
 
     /**national */
     $liste_nat = [];
@@ -198,11 +213,11 @@ class NewsletterController extends ControllerBase
         $url_image = "";
       }
       if (!empty($bloc->get('field_titre')->value)) {
-	      
-	      preg_match('/(https:\/\/)(.*)/',$bloc->get("field_lien")->value, $rs);
+
+        preg_match('/(https:\/\/)(.*)/', $bloc->get("field_lien")->value, $rs);
 
         $ext = 0;
-        if(count($rs) && $rs[1] === 'https://') {
+        if (count($rs) && $rs[1] === 'https://') {
           $ext = 1;
         }
         $liste_nat[] = [
@@ -218,11 +233,11 @@ class NewsletterController extends ControllerBase
 
     $globalSettings = \Drupal::service("settings");
     $entete['www'] = 'www.';
-    if($globalSettings->get("environment") === 'dev') {
+    if ($globalSettings->get("environment") === 'dev') {
       $entete['www'] = '';
     }
     $entete['domaine'] = $globalSettings->get("domain_name");
-	  $entete['url'] = 'https://'.$entete['dep']->getName().'.'.$globalSettings->get("domain_name").'/newsletter/'.$n->id().$n->url();
+    $entete['url'] = 'https://' . $entete['dep']->getName() . '.' . $globalSettings->get("domain_name") . '/newsletter/' . $n->id() . $n->url();
     $entete['nom_dep'] = current($entete['dep']->get('field_nom')->getValue())['value'];
     $build = [
       '#type' => "page",
