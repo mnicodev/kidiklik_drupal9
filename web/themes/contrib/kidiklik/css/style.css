@@ -942,9 +942,10 @@ a.reservation {
   margin-bottom: 20px; }
   .activite .bloc1 .field--label, .agenda .bloc1 .field--label {
     font-weight: 500;
-    display: inline-block; }
+    display: inline-block;
+    margin-right: 5px; }
     .activite .bloc1 .field--label:after, .agenda .bloc1 .field--label:after {
-      content: " : "; }
+      content: " :"; }
   .activite .bloc1 .field--item, .agenda .bloc1 .field--item {
     font-weight: 500;
     display: inline-block; }
@@ -1709,5 +1710,49 @@ div.user-login, div.user-register {
 
 #block-pieddepage a {
   color: #ffffff; }
+
+#bloc-type-sorties {
+  background: #3f9cae;
+  color: #ffffff;
+  font-size: 1.5rem;
+  display: flex;
+  padding: 10px;
+  border-radius: 10px;
+  margin: 10px 0px; }
+  @media (max-width: 1200px) {
+    #bloc-type-sorties {
+      font-size: 1.3rem; } }
+  @media (max-width: 992px) {
+    #bloc-type-sorties {
+      font-size: 1.2rem; } }
+  @media (max-width: 700px) {
+    #bloc-type-sorties {
+      font-size: 1.4rem;
+      flex-direction: column; }
+      #bloc-type-sorties .label {
+        text-align: center;
+        white-space: initial; }
+      #bloc-type-sorties .list {
+        padding: 0;
+        max-width: 50%;
+        margin: auto;
+        display: block; } }
+  @media (min-width: 992px) {
+    #bloc-type-sorties .label {
+      white-space: nowrap; }
+    #bloc-type-sorties .list {
+      padding: 0px 30px; } }
+  #bloc-type-sorties .label {
+    flex: 2; }
+  #bloc-type-sorties .list {
+    flex: 1; }
+    #bloc-type-sorties .list select {
+      border-radius: 12px;
+      text-align: center;
+      color: gray; }
+      #bloc-type-sorties .list select option:first-child {
+        display: none; }
+      #bloc-type-sorties .list select option {
+        text-align: left; }
 
 /*# sourceMappingURL=style.css.map */
