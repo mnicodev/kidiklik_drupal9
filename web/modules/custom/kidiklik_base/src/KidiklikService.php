@@ -136,11 +136,19 @@ class KidiklikService  {
     return $query->fetch();
   }
 
-  public function searchAsVille($val) {
+  public function searchFromVille($val) {
     $database = \Drupal::database();
-    $query = $database->query('select * from villes where commune like :ou1 or commune like :ou2 or code_postal = :ou3', [
+    $query = $database->query('select * from villes where (commune like :ou1 or commune like :ou2) and substr(code_postal, 1, 2) = :ou3', [
       ':ou1' => $val,
       ':ou2' => str_replace(' ','-',$val),
+      ':ou3' => $this->getDepartement(),
+    ]);
+    return $query->fetch();
+  }
+
+  public function searchFromCp($val) {
+    $database = \Drupal::database();
+    $query = $database->query('select * from villes where code_postal = :ou3', [
       ':ou3' => $val,
     ]);
     return $query->fetch();
