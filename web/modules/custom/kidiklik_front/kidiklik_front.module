@@ -229,11 +229,11 @@ function kidiklik_front_form_alter(&$form, FormStateInterface $form_state, $form
       ]);
 
       $list_cat[$cat->Id()] = $cat->getName();
-      /*if (!empty($sous_categories)) {
+      if (!empty($sous_categories)) {
         foreach ($sous_categories as $sc) {
           $list_cat[$sc->Id()] = "- " . $sc->getName();
         }
-      }*/
+      }
     }
 
     $form['field_rubriques_activite_target_id']['#options'] = $list_cat;
