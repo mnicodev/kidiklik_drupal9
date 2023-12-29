@@ -1,0 +1,23 @@
+{#
+/**
+* @file
+* Default theme implementation to display a block.
+*
+* @see template_preprocess_block()
+*
+* @ingroup themeable
+*/
+#}
+{% set classes = [
+    'clear-both',
+] %}
+<div id="bloc-type-sorties" {{ attributes.addClass(classes) }}>
+<div class="label">{{ 'Trouvez la sortie qui correspond à toute la famille'|t }}</div>
+<div class="list">
+<select class="form-control" onchange="window.location=this.value">
+    {% for value in content %}
+        <option value="{{ value.url }}">{{ value.name }}</option>
+    {% endfor %}
+</select>
+</div>
+</div>
