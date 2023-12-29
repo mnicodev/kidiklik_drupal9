@@ -104,7 +104,6 @@ function kidiklik_front_theme()
 
 function kidiklik_front_form_alter(&$form, FormStateInterface $form_state, $form_id)
 {
-
   if ($form_id === 'node_message_contact_form') {
     $page_dep = \Drupal::service('kidiklik.service')->getPageDepartement();
     if (!empty($page_dep)) {
@@ -204,123 +203,6 @@ function kidiklik_front_form_alter(&$form, FormStateInterface $form_state, $form
       $form['#validate'][] = 'kidiklik_front_validate_jeu_concours';
     }
   }
-
-  /** formulaire de recherche */
-  if ($form['#id'] == "views-exposed-form-activites-recherche-activites") {
-    $database = \Drupal::database();
-    $query = $database->query("select * from villes where code_postal like '" . get_departement() . "%' order by commune");
-    $villes = $query->fetchAll();
-
-    $categories = \Drupal::entityTypeManager()->getStorage("taxonomy_term")->loadByProperties([
-      "vid" => "rubriques_activite",
-      "parent" => 0,
-      "status" => 1
-    ]);
-
-    $output = null;
-    $list_cat = [];
-    $list_cat['All'] = 'Choisissez ...';
-    foreach ($categories as $cat) {
-      $sous_categories = \Drupal::entityTypeManager()->getStorage("taxonomy_term")->loadByProperties([
-        "vid" => "rubriques_activite",
-        "parent" => $cat->Id(),
-        "status" => 1,
-        "field_departement" => get_term_departement()
-      ]);
-
-      $list_cat[$cat->Id()] = $cat->getName();
-      if (!empty($sous_categories)) {
-        foreach ($sous_categories as $sc) {
-          $list_cat[$sc->Id()] = "- " . $sc->getName();
-        }
-      }
-    }
-
-    $form['field_rubriques_activite_target_id']['#options'] = $list_cat;
-    $form['field_rubriques_activite_target_id']['#weight'] = -10;
-    $form['field_rubriques_activite_target_id']['#title'] = 'Activité';
-    $form['search']['#weight'] = -9;
-
-    $form['lieu'] = [
-      "#type" => "textfield",
-      '#attributes' => [
-        'placeholder' => 'Ville ou Code Postal ?',
-      ],
-      "#title" => "Où ?",
-      "#weight" => -7
-    ];
-
-    $options[''] = 'Filtrer par zone';
-    $options['Géolocalisé'] = [
-      'geo' => 'Autour de moi',
-    ];
-    foreach ($villes as $ville) {
-      $options['Par ville'][$ville->commune] = $ville->commune;
-    }
-    /*$form['ville'] = [
-      "#type" => "select",
-      "#title" => "Où ?",
-      "#options" => $options,
-      "#weight" => -9
-    ];*/
-    //$form['field_rubriques_activite_target_id']["#weight"] = -10;
-    $form['date_debut']["#weight"] = -6;
-    $form['date_fin']["#weight"] = -5;
-    $form['field_tranches_d_ages_value']["#weight"] = -8;
-
-    $form['quand'] = [
-      "#type" => "select",
-      "#title" => "Quand ?",
-      "#options" => [
-        "" => "N'importe quand",
-        "now" => "Aujourd'hui",
-        "mercredi" => "Ce mercredi",
-        "wd" => "Ce week-end",
-        "semaine" => "Cette semaine",
-        "date" => "Par date"
-      ],
-      "#weight" => -8
-    ];
-
-    $form["center[coordinates][lat]"] = [
-      '#type' => 'hidden',
-      '#default_value' => \Drupal::Request()->get('center')['coordinates']['lat'],
-    ];
-    $form["center[coordinates][lng]"] = [
-      '#type' => 'hidden',
-      '#default_value' => \Drupal::Request()->get('center')['coordinates']['lng'],
-    ];
-
-    unset($form['thematiques']['#options']['All']);
-    $options = $form['thematiques']['#options'];
-    $output = [];
-    for ($i = 0; $i < 3; $i++) {
-      $output[] = current($options);
-      next($options);
-    }
-    $options = array_merge(['All' => implode(', ', $output) . '...'], $options);
-    $form['thematiques']['#options'] = $options;
-    $form['thematiques']['#default_value'] = $output;
-
-    unset($form['vacances']['#options']['All']);
-    $options = $form['vacances']['#options'];
-    $output = [];
-    for ($i = 0; $i < 3; $i++) {
-      $output[] = current($options);
-      next($options);
-    }
-    $options = array_merge(['All' => implode(', ', $output) . '...'], $options);
-    $form['vacances']['#options'] = $options;
-    $form['vacances']['#default_value'] = $output;
-
-    unset($form['tranches_ages']['#options']['All']);
-    $options = $form['tranches_ages']['#options'];
-
-    $options = array_merge(['All' => "Tranches d'âges"], $options);
-    $form['tranches_ages']['#options'] = $options;
-    $form['tranches_ages']['#default_value'] = $output;
-  }
-
 
   if ($form_id == "contact_message_pour_joindre_kidiklik_form") {
 
