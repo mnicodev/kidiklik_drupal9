@@ -1,0 +1,5 @@
+name: 'kidiklik_front_contact'
+type: module
+description: 'Contact message'
+core: 8.x
+package: 'Custom'
