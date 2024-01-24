@@ -266,14 +266,16 @@ class KidiklikService
   }
 
   public function whois($ip = null) {
+
     try {
       if($ip === null) {
-        $ip=\Drupal::request()->server->get('HTTP_X_REAL_IP');
+        $ip=\Drupal::request()->server->get('HTTP_X_REAL_IP') ?? \Drupal::request()->server->get('HTTP_X_FORWARDED_FOR');
       }
       
       $api_whois = sprintf('https://ipwhois.app/json/%s', $ip);
       $whois_info = json_decode(file_get_contents($api_whois));
-      
+      $database = \Drupal::database();
+      $database->query('insert into logip (ip, code_pays) values ("'.$whois_info->ip.'","'.$whois_info->country_code.'")');
       return $whois_info;
       
     } catch (Exception $exception) {
@@ -296,9 +298,11 @@ class KidiklikService
       'GB',
       'IT'
     ];
+    
+    
     if(!in_array($code_pays, $liste_ok)) {
       $database = \Drupal::database();
-      $database->query('insert into banip (ip) values ("'.$whois->ip.'")');
+      $database->query('insert into banip (ip, code_pays) values ("'.$whois->ip.'","'.$code_pays.'")');
       (new RedirectResponse('/404' ))->send();
       exit();
     }
