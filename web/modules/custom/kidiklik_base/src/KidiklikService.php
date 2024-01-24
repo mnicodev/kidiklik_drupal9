@@ -269,7 +269,7 @@ class KidiklikService
 
     try {
       if($ip === null) {
-        $ip=\Drupal::request()->server->get('HTTP_X_REAL_IP') ?? \Drupal::request()->server->get('HTTP_X_FORWARDED_FOR');
+        $ip = \Drupal::request()->server->get('REMOTE_ADDR') ?? \Drupal::request()->server->get('HTTP_X_REAL_IP') ?? \Drupal::request()->server->get('HTTP_X_FORWARDED_FOR');
       }
       
       $api_whois = sprintf('https://ipwhois.app/json/%s', $ip);
