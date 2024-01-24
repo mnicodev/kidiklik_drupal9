@@ -19,14 +19,18 @@ class InitSubscriber implements EventSubscriberInterface
   {
     global $_SERVER;
    
-    \Drupal::service('kidiklik.service')->banip();
-    
+    //
+
 	  $request = $event->getRequest();
+    
     $user_roles = \Drupal::currentUser()->getAccount()->getRoles();
 	  $node = \Drupal::routeMatch()->getParameters()->get("node");
     $route_name = \Drupal::routeMatch()->getRouteName();
     $kidi_service = \Drupal::service('kidiklik.service');
 
+    if($route_name === 'node.add' && $user_roles === 'anonymous') {
+      \Drupal::service('kidiklik.service')->banip();
+    }
     /*if($kidi_service->hasRedirection()) {
       $redirect = new TrustedRedirectResponse($kidi_service->getRedirection());
       $redirect->send();
