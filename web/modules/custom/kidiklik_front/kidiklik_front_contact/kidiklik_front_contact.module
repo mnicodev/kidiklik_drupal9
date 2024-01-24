@@ -39,8 +39,8 @@ function kidiklik_front_contact_form_alter(&$form, FormStateInterface $form_stat
       $whois_info = json_decode(file_get_contents($api_whois));
       
       if(strtolower($whois_info->country) !== 'france') {
-        (new RedirectResponse('/404' ))->send();
-        exit();
+        /*(new RedirectResponse('/404' ))->send();
+        exit();*/
       }
     } catch (Exception $exception) {
 
@@ -65,8 +65,8 @@ function kidiklik_front_contact_validate_contact_form($form, FormStateInterface 
       $whois_info = json_decode(file_get_contents($api_whois));
       
       if(strtolower($whois_info->country) !== 'france') {
-        (new RedirectResponse('/404' ))->send();
-        exit();
+        /*(new RedirectResponse('/404' ))->send();
+        exit();*/
       }
     } catch (Exception $exception) {
 
