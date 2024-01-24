@@ -32,15 +32,20 @@ function kidiklik_front_contact_form_alter(&$form, FormStateInterface $form_stat
 
   if ($form_id == "node_message_contact_form") {
     $form["#validate"][] = "kidiklik_front_contact_validate_contact_form";
-    $database = \Drupal::database();
-    $ip=\Drupal::request()->server->get('HTTP_X_REAL_IP');
-    $api_whois = sprintf('https://ipwhois.app/json/%s', $ip);
-    $whois_info = json_decode(file_get_contents($api_whois));
     
-    if(strtolower($whois_info->country) !== 'france') {
-      (new RedirectResponse('/404' ))->send();
-      exit();
+    try {
+      $ip=\Drupal::request()->server->get('HTTP_X_REAL_IP');
+      $api_whois = sprintf('https://ipwhois.app/json/%s', $ip);
+      $whois_info = json_decode(file_get_contents($api_whois));
+      
+      if(strtolower($whois_info->country) !== 'france') {
+        (new RedirectResponse('/404' ))->send();
+        exit();
+      }
+    } catch (Exception $exception) {
+
     }
+    
     /*
     $database->query('insert into banip (ip) values ("'.$ip.'")');
     $query = $database->query('select * from franceip');
@@ -54,15 +59,19 @@ function kidiklik_front_contact_form_alter(&$form, FormStateInterface $form_stat
 
 function kidiklik_front_contact_validate_contact_form($form, FormStateInterface $form_state)
 {
-    $ip=\Drupal::request()->server->get('HTTP_X_REAL_IP');
-    $api_whois = sprintf('https://ipwhois.app/json/%s', $ip);
-    $whois_info = json_decode(file_get_contents($api_whois));
-    
-    if(strtolower($whois_info->country) !== 'france') {
-      (new RedirectResponse('/404' ))->send();
-      exit();
+    try {
+      $ip=\Drupal::request()->server->get('HTTP_X_REAL_IP');
+      $api_whois = sprintf('https://ipwhois.app/json/%s', $ip);
+      $whois_info = json_decode(file_get_contents($api_whois));
+      
+      if(strtolower($whois_info->country) !== 'france') {
+        (new RedirectResponse('/404' ))->send();
+        exit();
+      }
+    } catch (Exception $exception) {
+
     }
-    
+
     $test = current($form_state->getValue('field_age'))['value'] ?? null;
     if(!empty($test)) {
         $form_state->setErrorByName('kidiklik_contact', 'Une erreur est survenue !');
