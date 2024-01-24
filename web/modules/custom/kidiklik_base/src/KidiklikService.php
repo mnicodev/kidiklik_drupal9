@@ -284,7 +284,9 @@ class KidiklikService
 
   public function banip($ip=null)
   {
-    $code_pays = $this->whois($ip)->country_code;
+    $whois = $this->whois($ip);
+    $code_pays = $whois->country_code;
+
     $liste_ok = [
       'FR',
       'DE',
@@ -295,6 +297,8 @@ class KidiklikService
       'IT'
     ];
     if(!in_array($code_pays, $liste_ok)) {
+      $database = \Drupal::database();
+      $database->query('insert into banip (ip) values ("'.$whois->ip.'")');
       (new RedirectResponse('/404' ))->send();
       exit();
     }
