@@ -18,8 +18,6 @@ class InitSubscriber implements EventSubscriberInterface
   public function checkRedirect(GetResponseEvent $event)
   {
     global $_SERVER;
-   
-    //
 
 	  $request = $event->getRequest();
     
@@ -27,8 +25,8 @@ class InitSubscriber implements EventSubscriberInterface
 	  $node = \Drupal::routeMatch()->getParameters()->get("node");
     $route_name = \Drupal::routeMatch()->getRouteName();
     $kidi_service = \Drupal::service('kidiklik.service');
-
-    if($route_name === 'node.add' && $user_roles === 'anonymous') {
+    
+    if($route_name === 'node.add' && current($user_roles) === 'anonymous') {
       \Drupal::service('kidiklik.service')->banip();
     }
     /*if($kidi_service->hasRedirection()) {

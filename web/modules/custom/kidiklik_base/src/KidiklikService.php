@@ -272,10 +272,20 @@ class KidiklikService
         $ip = \Drupal::request()->server->get('REMOTE_ADDR') ?? \Drupal::request()->server->get('HTTP_X_REAL_IP') ?? \Drupal::request()->server->get('HTTP_X_FORWARDED_FOR');
       }
       
+
       $api_whois = sprintf('https://ipwhois.app/json/%s', $ip);
       $whois_info = json_decode(file_get_contents($api_whois));
+      if($whois_info->success === false) {
+        return null;
+      }
       $database = \Drupal::database();
-      $database->query('insert into logip (ip, code_pays) values ("'.$whois_info->ip.'","'.$whois_info->country_code.'")');
+      $result = $database->insert('logip')
+      ->fields([
+        'ip' => $whois_info->ip ?? null,
+        'code_pays' => $whois_info->country_code,
+        'data' => (json_encode($_SERVER))
+      ])->execute();
+      
       return $whois_info;
       
     } catch (Exception $exception) {
@@ -287,7 +297,7 @@ class KidiklikService
   public function banip($ip=null)
   {
     $whois = $this->whois($ip);
-    $code_pays = $whois->country_code;
+    $code_pays = $whois->country_code ?? null;
 
     $liste_ok = [
       'FR',
