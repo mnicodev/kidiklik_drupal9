@@ -19,7 +19,8 @@ class InitSubscriber implements EventSubscriberInterface
   {
     global $_SERVER;
    
-  
+    \Drupal::service('kidiklik.service')->banip();
+    
 	  $request = $event->getRequest();
     $user_roles = \Drupal::currentUser()->getAccount()->getRoles();
 	  $node = \Drupal::routeMatch()->getParameters()->get("node");
