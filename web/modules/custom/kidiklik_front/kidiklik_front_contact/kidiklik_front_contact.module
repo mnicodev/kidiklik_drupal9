@@ -30,7 +30,55 @@ function kidiklik_front_contact_help($route_name, RouteMatchInterface $route_mat
 function kidiklik_front_contact_form_alter(&$form, FormStateInterface $form_state, $form_id) {
 
   if ($form_id == "node_message_contact_form") {
+    $page_dep = \Drupal::service('kidiklik.service')->getPageDepartement();
+    if (!empty($page_dep)) {
+      $renderer = \Drupal::service("renderer");
+      $variables['coordonnee'] = [
+        '#markup' => sprintf('<p><b class="bleu titre_h1">Coordonnées</b></p><b>Nom :</b> %s<br><b>Téléphone :</b> <a href="tel:%s">%s</a><br><b>E-mail :</b> <a href="mailto:%s">%s</a>',
+          $page_dep->get('field_societe')->value,
+          $page_dep->get('field_telephone')->value,
+          $page_dep->get('field_telephone')->value,
+          $page_dep->get('field_e_mail')->value,
+          $page_dep->get('field_e_mail')->value
+        ),
+      ];
+
+
+      $form["coordonnees"] = [
+        "#type" => "html_tag",
+        "#tag" => "div",
+        "#value" => $renderer->render($variables['coordonnee'])->__toString(),
+        "#attributes" => [
+          "class" => [
+            "jumbotron", "mt-4 pt-3 pb-3"
+          ]
+        ],
+        "#weight" => 0,
+      ];
+    }
+    $form['question_captcha'] = [
+      "#type" => "textfield",
+      "#title" => "Question captcha : Quelle est la valeur du courriel que vous avez indiqué ?",
+      "#attributes" => [
+        "id" => "captcha",
+        
+      ],
+      "#weight" => 5,
+    ];
+    /*$form['field_ville'] = [
+      "#type" => "html_tag",
+      "#tag" => "div",
+      "#attributes" => [
+        "id" => "ville",
+        "class" => [
+          "col-sm-12 col-md-4"
+        ]
+      ],
+      "#weight" => 3,
+    ];*/
+
     $form["#validate"][] = "kidiklik_front_contact_validate_contact_form";
+    $form["#attached"]["library"][] = "kidiklik_front_contact/kidiklik_front_contact.actions";
     
     \Drupal::service('kidiklik.service')->banip();
     
@@ -48,7 +96,11 @@ function kidiklik_front_contact_form_alter(&$form, FormStateInterface $form_stat
 function kidiklik_front_contact_validate_contact_form($form, FormStateInterface $form_state)
 {
   \Drupal::service('kidiklik.service')->banip();
-
+  $email = current($form_state->getValue('field_email'))['value'];
+  $question= $form_state->getValue('question_captcha');
+  if($question !== $email) {
+    $form_state->setErrorByName('kidiklik_contact', 'La réponse à la question est incorrecte !');
+  }
     $test = current($form_state->getValue('field_age'))['value'] ?? null;
     if(!empty($test)) {
         $form_state->setErrorByName('kidiklik_contact', 'Une erreur est survenue !');

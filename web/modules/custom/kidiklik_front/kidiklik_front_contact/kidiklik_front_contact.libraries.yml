@@ -1,0 +1,6 @@
+kidiklik_front_contact.actions:
+  version: 1.x
+  js:
+    js/script.js: {}
+  dependencies:
+    - core/drupal.ajax
