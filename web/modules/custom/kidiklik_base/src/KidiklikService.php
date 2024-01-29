@@ -269,7 +269,7 @@ class KidiklikService
 
     try {
       if($ip === null) {
-        $ip = \Drupal::request()->server->get('REMOTE_ADDR') ?? \Drupal::request()->server->get('HTTP_X_REAL_IP') ?? \Drupal::request()->server->get('HTTP_X_FORWARDED_FOR');
+        $ip =  \Drupal::request()->server->get('HTTP_X_REAL_IP')  ?? \Drupal::request()->server->get('REMOTE_ADDR') ?? \Drupal::request()->server->get('HTTP_X_REAL_IP') ?? \Drupal::request()->server->get('HTTP_X_FORWARDED_FOR');
       }
       
 
@@ -313,8 +313,8 @@ class KidiklikService
     if(!in_array($code_pays, $liste_ok)) {
       $database = \Drupal::database();
       $database->query('insert into banip (ip, code_pays) values ("'.$whois->ip.'","'.$code_pays.'")');
-      (new RedirectResponse('/404' ))->send();
-      exit();
+      //(new RedirectResponse('/404' ))->send();
+      //exit();
     }
   }
 }
