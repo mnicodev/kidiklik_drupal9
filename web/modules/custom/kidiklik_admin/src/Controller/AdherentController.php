@@ -55,13 +55,14 @@ class AdherentController extends ControllerBase
     /*$date_deb=\Drupal::request()->get("date_deb");
     $date_fin=\Drupal::request()->get("date_fin");
    ksm($date_deb);*/
-
-
     return [
       "#theme" => "adherent_content",
       "#adherent" => $adherent->getTitle(),
       "#date_deb" => \Drupal::request()->get("date_deb"),
       "#date_fin" => \Drupal::request()->get("date_fin"),
+      "#uri" => \Drupal::request()->getRequestUri(),
+      "#adherent_id" => \Drupal::request()->query->get('adherent_id'),
+      "#destination" => \Drupal::request()->query->get('destination'),
     ];
   }
 

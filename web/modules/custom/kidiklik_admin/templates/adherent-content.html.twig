@@ -1,5 +1,5 @@
 <h1>Contenus de l'adhérent {{ adherent }}</h1>
-<form method="post" class="filtre-content-adherent">
+<form method="get" class="filtre-content-adherent" action="{{ uri }}">
 <div class="row">
 	
 		<div class="col-md-4">
@@ -10,6 +10,8 @@
 			<label>Date de fin</label>
 			<input type="date" name="date_fin" class="form-control" value="{{ date_fin }}"  />
 		</div>
+		<input type="hidden" value="{{ adherent_id }}" name="adherent_id" />
+		<input type="hidden" value="{{ destination }}" name="destination" />
 		<div class="col-md-4" style="margin-top: 25px">
 			<input type="submit" class="btn btn-primary" value="Filtrer"  />
 		</div>

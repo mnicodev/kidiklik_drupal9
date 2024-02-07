@@ -21,7 +21,8 @@ use Drupal\kidiklik_base\KidiklikUser;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\editor\Entity\Editor;
 
-function kidiklik_admin_ckeditor_css_alter(array &$css, Editor $editor) {
+function kidiklik_admin_ckeditor_css_alter(array &$css, Editor $editor)
+{
   $css[] = drupal_get_path('module', 'kidiklik_admin') . '/css/style_marqueur.css';
 }
 
@@ -116,7 +117,14 @@ function kidiklik_admin_theme()
       'render element' => 'children',
     ],
     "adherent_content" => [
-      'variables' => ["adherent" => null, "date_deb" => null, "date_fin" => null]
+      'variables' => [
+        "adherent" => null,
+        "date_deb" => null,
+        "date_fin" => null,
+        "uri" => null,
+        "adherent_id" => null,
+        "destination" => null,
+      ]
     ],
     "compteur_pub" => [
       "variables" => ["pub" => null, "error" => NULL, "analytics" => NULL, "dep" => NULL, "mois" => NULL, "delta" => NULL, "periode" => NULL]
@@ -226,19 +234,23 @@ function kidiklik_admin_inline_entity_form_entity_form_alter(&$entity_form, &$fo
   }
 
   if ($entity_form["#bundle"] == "bloc_de_mise_en_avant") {
-	  $node = \Drupal::request()->attributes->get('node');
+    $node = \Drupal::request()->attributes->get('node');
     if (!empty($node)) {
       $entity_form['field_lien']['widget'][0]['value']['#default_value'] = \Drupal::service('path.alias_manager')->getAliasByPath('/node/' . $node->id());
 
-    	if($entity_form['title']['widget'][0]['value']['#default_value'] === null) {
-	    $entity_form['title']['widget'][0]['value']['#default_value'] = $node->getTitle();
-	}
-      if($entity_form['#op'] === 'add') {
-	      if($node->__isset('field_resume')) {
-		      $entity_form['field_resume']['widget'][0]['value']['#default_value'] = preg_replace_callback("/(&#[0-9]+;)/", function($m) { return mb_convert_encoding($m[1], "UTF-8", "HTML-ENTITIES"); },html_entity_decode(strip_tags(current($node->get('field_resume')->getValue())['value']), ENT_COMPAT, 'UTF-8'));
-	      } else if($node->__isset('body')) {
-		      $entity_form['field_resume']['widget'][0]['value']['#default_value'] = preg_replace_callback("/(&#[0-9]+;)/", function($m) { return mb_convert_encoding($m[1], "UTF-8", "HTML-ENTITIES"); },html_entity_decode(strip_tags(current($node->get('body')->getValue())['value']), ENT_COMPAT, 'UTF-8'));
-	      }
+      if ($entity_form['title']['widget'][0]['value']['#default_value'] === null) {
+        $entity_form['title']['widget'][0]['value']['#default_value'] = $node->getTitle();
+      }
+      if ($entity_form['#op'] === 'add') {
+        if ($node->__isset('field_resume')) {
+          $entity_form['field_resume']['widget'][0]['value']['#default_value'] = preg_replace_callback("/(&#[0-9]+;)/", function ($m) {
+            return mb_convert_encoding($m[1], "UTF-8", "HTML-ENTITIES");
+          }, html_entity_decode(strip_tags(current($node->get('field_resume')->getValue())['value']), ENT_COMPAT, 'UTF-8'));
+        } else if ($node->__isset('body')) {
+          $entity_form['field_resume']['widget'][0]['value']['#default_value'] = preg_replace_callback("/(&#[0-9]+;)/", function ($m) {
+            return mb_convert_encoding($m[1], "UTF-8", "HTML-ENTITIES");
+          }, html_entity_decode(strip_tags(current($node->get('body')->getValue())['value']), ENT_COMPAT, 'UTF-8'));
+        }
       }
     }
     $values = $form_state->getValues();
@@ -579,6 +591,12 @@ function kidiklik_admin_form_node_publicite_edit_form_alter(&$form, FormStateInt
   kidiklik_admin_form_node_publicite_form_alter($form, $form_state, $form_id);
 }
 
+
+function kidiklik_admin_form_views_exposed_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id)
+{
+}
+
+
 /**
  * modification de formulaire
  */
@@ -731,7 +749,7 @@ function _get_field_ville(&$form, $poids, $group, $default = null)
     $tab[$ville->commune] = $ville->commune;
   }
   $form["ville"]["#options"] = $tab;
-  if(!empty($default)) {
+  if (!empty($default)) {
     $form["ville"]["#default_value"] = $default;
   } else if (!empty($form["field_ville_save"]["widget"][0]["value"]["#default_value"])) {
     $form["ville"]["#default_value"] = $form["field_ville_save"]["widget"][0]["value"]["#default_value"];
@@ -963,7 +981,7 @@ function getAjaxCoordonnees(array &$form, FormStateInterface $form_state)
     $form["field_ville_save"]["widget"][0]["value"]["#value"] = current($adherent->get("field_ville_save")->getValue());
 
     $db = \Drupal\Core\Database\Database::getConnection();
-    $rs = $db->query('select * from villes where commune = "'.$adherent->get("field_ville_save")->value.'"')->fetch();
+    $rs = $db->query('select * from villes where commune = "' . $adherent->get("field_ville_save")->value . '"')->fetch();
     //$form["field_activite_save"]["widget"][0]["value"]["#value"]=$form_state->getValue("field_activite_save");
 
     if ($form["type"] == "agenda") {
@@ -989,16 +1007,16 @@ function getAjaxCoordonnees(array &$form, FormStateInterface $form_state)
         ];
       }
       $form["field_activite"] = [
-  	"#ajax" => [
-    		"callback" => "getAjaxCoordonnees",
-	],
+        "#ajax" => [
+          "callback" => "getAjaxCoordonnees",
+        ],
         "#type" => "select",
         "#options" => $tab,
         "#title" => "Activités",
         "#attributes" => [
           "id" => "activites",
           "data-gps" => json_encode($gps),
-         ]
+        ]
       ];
 
       $poids_ville = 16;
@@ -1023,7 +1041,7 @@ function getAjaxCoordonnees(array &$form, FormStateInterface $form_state)
         ],
         "#weight" => $poids_ville,
         '#validated' => TRUE
-];
+      ];
       /*$form['lat'] = [
 	      'widget' => [
 		      '#type' => 'textfield',
@@ -1046,18 +1064,17 @@ function getAjaxCoordonnees(array &$form, FormStateInterface $form_state)
     $form["coordonnee"][] = $form["field_email"];
     $form["coordonnee"][] = $form["field_lien"];
     $form["coordonnee"][] = $form["field_lieu"];
-   // $form["coordonnee"][] = $form["lat"];
+    // $form["coordonnee"][] = $form["lat"];
     if ($form["type"] == "agenda") {
       $form["coordonnee"][] = $form["field_activite"];
     }
     $form["coordonnee"][] = $form["field_ville_save"];
-    //$form["coordonnee"][]=$form["field_activite_save"];
 
     $renderer = \Drupal::service("renderer");
     $renderedField = $renderer->render($form["coordonnee"]);
 
     $response->addCommand(new ReplaceCommand('#coordonnees-adherent', $renderedField));
-    $response->addCommand(new InvokeCommand(null, 'putGps', [json_encode(['lat' => $rs->lat,'lng' => $rs->lng])]));
+    $response->addCommand(new InvokeCommand(null, 'putGps', [json_encode(['lat' => $rs->lat, 'lng' => $rs->lng])]));
   }
   return $response;
 }
@@ -1066,12 +1083,11 @@ function getAjaxCoordonnees(array &$form, FormStateInterface $form_state)
 function kidiklik_admin_views_query_alter(Drupal\views\ViewExecutable $view, Drupal\views\Plugin\views\query\QueryPluginBase $query)
 {
   if ($view->id() === 'content') {
-    //unset($query->where[1]['conditions'][2]);
+
     $date_deb = \Drupal::request()->request->get('field_date_de_debut_value');
     $date_fin = \Drupal::request()->request->get('field_date_de_fin_value');
-    //	ksm($query->where);
-    if (!empty($date_deb)) {
 
+    if (!empty($date_deb)) {
       $query->where[1]["conditions"][2]["operator"] = "formula";
       if (empty($date_fin)) {
         $configuration = array(
@@ -1095,6 +1111,7 @@ function kidiklik_admin_views_query_alter(Drupal\views\ViewExecutable $view, Dru
 					  OR (DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') BETWEEN '" . $date_deb . "' and '" . $date_fin . "')";
       }
     }
+
     if (!empty($date_fin)) {
 
       if (empty($date_deb)) {
@@ -1115,46 +1132,13 @@ function kidiklik_admin_views_query_alter(Drupal\views\ViewExecutable $view, Dru
 					OR ('" . $date_fin . "' between DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d')
 					and DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d'))";
         $query->where[0]["conditions"][1]["operator"] = "formula";
-        //kint($query->where[1]["conditions"]);
-        //ksm($query->where[0]["conditions"][1]);
       } else {
         $query->where[1]["conditions"][3]["field"] = "DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d') >= DATE_FORMAT('" . $date_fin . "', '%Y-%m-%d')
 					OR (DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d') BETWEEN '" . $date_deb . "' and '" . $date_fin . "')";
       }
     }
-    /*if (empty($date_deb) && empty($date_fin)) {
-$configuration = array(
-  'type' => 'LEFT',
-  'table' => 'paragraph__field_date_de_debut',
-  'field' => 'entity_id',
-  'left_table' => 'paragraphs_item_field_data_node__field_date',
-  'left_field' => 'id',
-  'operator' => '=',
-);
-$join = \Drupal\views\Views::pluginManager('join')->createInstance('standard', $configuration);
-$rel = $query->addRelationship('paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut', $join, 'paragraphs_item_field_data_node__field_date');
-$query->addTable('paragraph__field_date_de_debut', $rel, $join, 'paragraph__field_date_de_debut');
-$query->addWhere('', 'paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value', [], '<>');
-
-//	ksm($query->where);
-$query->where[0]["conditions"][count($query->where[0]["conditions"]) - 1]["field"] = "((DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d')>=CURDATE()) or (CURDATE() BETWEEN DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') and DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d')))";
-$query->where[0]["conditions"][count($query->where[0]["conditions"]) - 1]["operator"] = "formula";
-
-$configuration = array(
-  'type' => 'LEFT',
-  'table' => 'paragraph__field_date_de_fin',
-  'field' => 'entity_id',
-  'left_table' => 'paragraphs_item_field_data_node__field_date',
-  'left_field' => 'id',
-  'operator' => '=',
-);
-$join = \Drupal\views\Views::pluginManager('join')->createInstance('standard', $configuration);
-$rel = $query->addRelationship('paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin', $join, 'paragraphs_item_field_data_node__field_date');
-$query->addTable('paragraph__field_date_de_fin', $rel, $join, 'paragraph__field_date_de_fin');
-
-//	ksm($query->where);
-    }*/
   }
+
   if ($view->id() === 'entite_reference') {
     $configuration = array(
       'type' => 'INNER',
@@ -1170,12 +1154,12 @@ $query->addTable('paragraph__field_date_de_fin', $rel, $join, 'paragraph__field_
     $query->addTable('node__field_departement', $rel, $join, 'field_dep');
     $query->addWhere('', 'field_dep.field_departement_target_id', get_term_departement(), '=');
   }
+
   if ($view->id() == "content_adherent" && $view->current_display !== 'adherent_publicites') {
     $date_deb = "";
     $date_fin = "";
     $date_deb = \Drupal::request()->get("date_deb");
     $date_fin = \Drupal::request()->get("date_fin");
-
 
     if ($date_deb) {
       $query->where[1]["conditions"][1]["operator"] = "formula";
@@ -1188,8 +1172,9 @@ $query->addTable('paragraph__field_date_de_fin', $rel, $join, 'paragraph__field_
 				OR (DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_debut.field_date_de_debut_value, '%Y-%m-%d') BETWEEN '" . $date_deb . "' and '" . $date_fin . "')";
 
     } else {
-	    unset($query->where[1]["conditions"][1]);
+      unset($query->where[1]["conditions"][1]);
     }
+
     if ($date_fin) {
       $query->where[1]["conditions"][2]["operator"] = "formula";
       if (!$date_deb) {
@@ -1200,10 +1185,8 @@ $query->addTable('paragraph__field_date_de_fin', $rel, $join, 'paragraph__field_
         $query->where[1]["conditions"][2]["field"] = "DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d') >= DATE_FORMAT('" . $date_fin . "', '%Y-%m-%d')
 				OR (DATE_FORMAT(paragraphs_item_field_data_node__field_date__paragraph__field_date_de_fin.field_date_de_fin_value, '%Y-%m-%d') BETWEEN '" . $date_deb . "' and '" . $date_fin . "')";
       }
-
     } else {
       unset($query->where[1]["conditions"][2]);
     }
   }
-
 }
