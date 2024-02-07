@@ -2,5 +2,6 @@ name: 'kidiklik_base'
 type: module
 description: 'Fonctionnalités de base de Kidiklik'
 core: 8.x
+core_version_requirement: ^8 || ^9
 package: 'Custom'
 version: '9.0'
