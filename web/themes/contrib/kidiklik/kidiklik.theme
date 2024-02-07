@@ -51,6 +51,7 @@ function kidiklik_preprocess_page(&$variables) {
 }
 
 function kidiklik_preprocess_html(&$variables) {
+    $object_dep = \Drupal::service('kidiklik.service')->getObjectDepartement();
 	foreach($variables['page']['#attached']['html_head'] as $key=>$head)  {
 		if($head[1] === 'canonical_url') {
 			$variables['page']['#attached']['html_head'][$key][0]['#attributes']['href']=str_replace("https://0","https://wwww",$variables['page']['#attached']['html_head'][$key][0]['#attributes']['href']);
@@ -62,6 +63,10 @@ function kidiklik_preprocess_html(&$variables) {
 	$variables['base_url']=\Drupal::request()->getBasePath();
 	$variables['domain_name']=\Drupal::service("settings")->get('domain_name');
 	$variables['departement'] = get_departement();
+    $variables['nom_departement'] = $object_dep->get('field_nom')->value ?? null;
+    $title_page = $variables['head_title']['title'];
+    $variables['head_title']['title'] = str_replace('{dep_name}', $variables['nom_departement'], $title_page);
+
 	if(\Drupal::request()->get('record_email')) {
 	  $variables['email'] = \Drupal::request()->get('record_email');
 	}
@@ -76,7 +81,7 @@ function kidiklik_preprocess_html(&$variables) {
 
 }
 
-function kidiklik_preprocess_page_title(&$variables, $hook) {
+function kidiklik_preprocess_page_title(&$variables) {
 
   if(isset(\Drupal::request()->attributes->all()['node_type'])) {
 	  $node_type = \Drupal::request()->attributes->all()['node_type'];
@@ -85,6 +90,12 @@ function kidiklik_preprocess_page_title(&$variables, $hook) {
 	  }
 	}
 
+}
+
+function kidiklik_views_post_render(&$view) {
+    if($view->id() === 'activites') {
+        
+    }
 }
 
 function kidiklik_page_attachments_alter(array &$variables) {
