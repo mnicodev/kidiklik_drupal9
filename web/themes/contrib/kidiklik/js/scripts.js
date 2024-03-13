@@ -76,7 +76,7 @@ Drupal.behaviors.kidiklik = {
 				console.log(jQuery(this).val())
 				jQuery('.user-register-form').find('.form-item-name input').val(jQuery(this).val())
 			})
-						
+
 		}
 		if(jQuery('select[name="ville"]').val() === 'geo') {
 				getCurrentPosition();
@@ -104,23 +104,35 @@ Drupal.behaviors.kidiklik = {
 		jQuery('.lazy-img').each(function() {
 			var self = jQuery(this);
 			self.attr('src', self.attr('data-src'));
-			
+
 		});
-	}
+
+		
+	} /* fin attach */
 }
 
 jQuery(document).ready(function() {
-	//
+
+	if(jQuery('.console-recherche').length) {
+		form = jQuery('.console-recherche');
+		jQuery(form).find('.onoff').on('click', function() {
+			if(jQuery(form).hasClass('view')) {
+				jQuery(form).removeClass('view');
+			} else {
+				jQuery(form).addClass('view');
+			}
+		})
+	}
 
 	// chargement asynchrone des images
 	jQuery('.lazy-img').each(function() {
 		var self = jQuery(this);
 		self.attr('src', self.attr('data-src'));
-		
+
 	});
 
 	jQuery('article a').click(function(e) {
-		if(!jQuery(this).hasClass('btn-voir-autres-dates') && 
+		if(!jQuery(this).hasClass('btn-voir-autres-dates') &&
 			!jQuery(this).hasClass('voir-actualites') &&
 			!jQuery(this).hasClass('reservation') &&
 			!jQuery(this).hasClass('ajout-non-connect') &&
@@ -144,7 +156,7 @@ jQuery(document).ready(function() {
 		if(url !== undefined) {
 			window.open(url,'_blank','');
 		}
-		
+
 	})
 			jQuery('.ajout-non-connect').click(function() {
 				jQuery('.menu-user').find('.login-popup-form').click()
@@ -193,19 +205,19 @@ jQuery(document).ready(function() {
 	 	jQuery('#menu').hide();
 		jQuery('#mobimenu').show();
 	/* jQuery('#mobimenu').append(jQuery('#menu').html());
-	
-    
-	
+
+
+
 	 setTimeout(function() {
 		jQuery('#mobimenu .navbar-haut').addClass('slide-menu');
-		
+
 	 }, 100)*/
-    
+
 
     jQuery('.icon-menu-open').on('click', function () {
-      
+
 	  jQuery('#entete').css('z-index','2');
-	  
+
       jQuery('#mobimenu .navbar-haut').removeClass('slide-menu');
 	  setTimeout(function() {
 	//	jQuery('body').append(jQuery('#mobimenu .icon-menu-open'));
@@ -213,8 +225,8 @@ jQuery(document).ready(function() {
 		jQuery('.shadow').hide();
 		jQuery('#menu').show();
 	},100)
-	   
-	  
+
+
     })
   })
 

@@ -1,0 +1,7 @@
+kidiklik_front_recherche.actions:
+  version: 1.x
+  js:
+    js/script.js: {}
+  dependencies:
+    - core/drupal.ajax
+

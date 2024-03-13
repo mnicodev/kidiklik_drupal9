@@ -51,6 +51,7 @@
     'block-' ~ configuration.provider|clean_class,
     'block-' ~ plugin_id|clean_class,
     'clearfix',
+    'console-recherche',
   ]
 %}
 <section{{ attributes.addClass(classes) }}>
@@ -60,16 +61,18 @@
   {% endif %}
   {{ title_suffix }}
  <input type="checkbox" id="filtres">
-<label for="filtres">
+ 
+
  <span class="label_filtres">
-    <span class="voir">{{ 'Voir les filtres'|t }}</span>
-    <span class="cacher">FERMER x</span>
+    <span class="voir onoff">{{ 'Voir les filtres'|t }}</span>
+    <span class="cacher onoff">FERMER x</span>
  </span>
- <div class="filtres">
+ 
+ 
+  <div class="filtres">
   {% block content %}
     {{ content }}
   {% endblock %}
-    </div>
-</label>
-</section>
+  </div>
 
+</section>

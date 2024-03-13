@@ -39,6 +39,13 @@ kidiklik_front.partenaires_controller_getContent:
   requirements:
     _permission: 'access content'
 
+kidiklik_front.search_geo_controller_geoloc:
+  path: '/kidiklik_front/search_geoloc'
+  defaults:
+    _controller: '\Drupal\kidiklik_front\Controller\SearchGeoController::searchGeoLoc'
+    _title: 'Rechercher un lieu'
+  requirements:
+    _permission: 'access content'
 
 kidiklik_front.search_geo_controller_city:
   path: '/kidiklik_front/search_city'

@@ -7,3 +7,10 @@ kidiklik_front.actions:
     js/scripts.js: {}
   dependencies:
     - core/drupal.ajax
+
+
+kidiklik_front.type_sortie:
+  version: 1.x
+  css:
+    theme:
+      css/type_sortie.css: {}

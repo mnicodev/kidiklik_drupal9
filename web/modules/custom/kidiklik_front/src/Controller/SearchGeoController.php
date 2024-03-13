@@ -12,6 +12,54 @@ class SearchGeoController extends ControllerBase
 {
 
   /**
+   * searchGeoLoc.
+   *
+   * @return string
+   *   Return Hello string.
+   */
+  public function searchGeoLoc(){
+    $search = \Drupal::request()->query->get('search');
+    $database = \Drupal::database();
+    $departement = \Drupal::service('kidiklik.service')->getDepartement();
+
+    $search2 = str_replace(' ','-', $search);
+    if ($search === null || $search === '') {
+      $sql = 'select * from villes where commune<>""  group by commune order by commune limit 0, 100';
+    } else {
+      $sql = "select * from villes where code_postal like :cp or commune like :commune or commune like :commune2 group by commune order by commune";
+    }
+
+    $query = $database->query($sql, [
+      ':cp' =>  $search.'%',
+      ':commune' => $search . '%',
+      ':commune2' => $search2 . '%',
+      //':dep' => $departement,
+    ]);
+
+    $villes = $query->fetchAll();
+    $output = [];
+    if(is_numeric($search)) {
+      $output[] = [
+        'id' => sprintf('d_%s',$search),
+        'text' => $search
+      ];
+    }
+    foreach ($villes as $ville) {
+      $dep = str_pad((int)($ville->code_postal / 1000), 2, '0', STR_PAD_LEFT);
+
+      $output[] = [
+        'key' => $dep,
+        'id' => sprintf('id_%s',$ville->id_ville),
+        'text' => sprintf('%s (%s)',$ville->commune,$dep),
+      ];
+    }
+
+
+    return new JsonResponse(['results' => $output]);
+  }
+
+
+  /**
    * searchCity.
    *
    * @return string
@@ -36,7 +84,7 @@ class SearchGeoController extends ControllerBase
     $output = [];
     foreach ($villes as $ville) {
       $dep = str_pad((int)($ville->code_postal / 1000), 2, '0', STR_PAD_LEFT);
-      
+
       $output[] = [
         'id' => $dep,
         'text' => $ville->commune,

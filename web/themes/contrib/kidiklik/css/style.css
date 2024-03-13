@@ -11,6 +11,17 @@
 @font-face {
   font-family: 'DidactGothic';
   src: url(../fonts/DidactGothic.ttf); }
+.select2-dropdown {
+  border-radius: 5px !important;
+  border: 1px solid lightgray !important; }
+
+.path-x255ztzb9ytq .region-content {
+  width: 75%;
+  position: relative;
+  display: block;
+  margin: auto;
+  padding: 50px; }
+
 /*
  * Styles pour ckeditor
 */
@@ -271,18 +282,14 @@ h3 {
     max-width: 400px;
     margin: auto; } }
 @media (min-width: 768px) {
-  #views-exposed-form-activites-recherche-activites .form-actions .form-submit {
-    margin-top: 28px; }
-
   body:not(.path-frontpage) #block-formulaireexposeactivitesrecherche-activites {
-    height: 50px;
-    transition: all 0.5s; }
+    /*height: 50px;
+    transition: all 0.5s;*/ }
     body:not(.path-frontpage) #block-formulaireexposeactivitesrecherche-activites #views-exposed-form-activites-recherche-activites {
       z-index: 1;
       position: relative;
       overflow: hidden;
       transition: all 0.5s;
-      top: -235px;
       padding-bottom: 5px;
       background: #ffffff; }
       body:not(.path-frontpage) #block-formulaireexposeactivitesrecherche-activites #views-exposed-form-activites-recherche-activites .voir-filtres {
@@ -293,14 +300,12 @@ h3 {
         text-align: center;
         width: 250px; }
       body:not(.path-frontpage) #block-formulaireexposeactivitesrecherche-activites #views-exposed-form-activites-recherche-activites.with-dates {
-        top: -315px; }
-  body:not(.path-frontpage) #block-formulaireexposeactivitesrecherche-activites:hover {
-    height: 280px; }
-    body:not(.path-frontpage) #block-formulaireexposeactivitesrecherche-activites:hover #views-exposed-form-activites-recherche-activites {
-      top: 0;
-      box-shadow: 0px 3px 5px rgba(125, 125, 125, 0.5); }
-      body:not(.path-frontpage) #block-formulaireexposeactivitesrecherche-activites:hover #views-exposed-form-activites-recherche-activites .voir-filtres {
-        display: none; } }
+        /*top: -184px;*/ }
+  body:not(.path-frontpage) #block-formulaireexposeactivitesrecherche-activites #views-exposed-form-activites-recherche-activites {
+    top: 0;
+    box-shadow: 0px 3px 5px rgba(125, 125, 125, 0.5); }
+    body:not(.path-frontpage) #block-formulaireexposeactivitesrecherche-activites #views-exposed-form-activites-recherche-activites .voir-filtres {
+      display: none; } }
 @media (max-width: 768px) {
   #views-exposed-form-activites-recherche-activites {
     box-shadow: 0px 3px 5px rgba(125, 125, 125, 0.5) !important; } }
@@ -559,7 +564,7 @@ input[type=text] {
   line-height: 35px; }
 
 footer {
-  background: #2f9cbd;
+  background: #349abf;
   padding: 20px; }
   @media (max-width: 500px) {
     footer .container {
@@ -771,57 +776,78 @@ footer .menu li.last {
   max-width: 265px;
   margin: auto; }
 
+/*
 #filtres:checked + label > .cacher {
-  display: block; }
-
+	display: block;
+}
 #filtres:checked + label > .voir {
-  display: none; }
-
+	display: none;
+}
 #filtres:checked + label > .filtres {
-  display: block; }
-
+	display: block;
+}
+*/
 @media (max-width: 768px) {
   .filtres {
-    display: none; } }
+    display: none;
+    overflow: hidden;
+    transform: translateY(-350px);
+    transition: transform 0.1s;
+    background: #ffffff;
+    height: 0px; } }
 @media (min-width: 768px) {
   .filtres {
-    display: none; } }
-#block-formulaireexposeactivitesrecherche-activites select, #block-formulaireexposeactivitesrecherche-activites input {
-  font-size: 14px; }
-#block-formulaireexposeactivitesrecherche-activites label {
-  width: 100%; }
-#block-formulaireexposeactivitesrecherche-activites .label_filtres {
-  display: block;
-  text-align: center;
-  margin-top: 10px;
-  cursor: pointer; }
-  #block-formulaireexposeactivitesrecherche-activites .label_filtres .voir {
-    background: #0cacce;
-    color: #ffffff;
-    padding: 5px 10px; }
-  #block-formulaireexposeactivitesrecherche-activites .label_filtres .cacher {
-    color: #fff;
-    font-size: 14px;
-    font-family: arial;
-    background: #0cacce;
-    width: 90px;
-    margin: auto;
-    border-radius: 5px;
-    font-weight: 700;
-    display: none; }
-#block-formulaireexposeactivitesrecherche-activites #filtres {
-  display: none; }
-  #block-formulaireexposeactivitesrecherche-activites #filtres:checked + label .voir {
-    display: none; }
-  #block-formulaireexposeactivitesrecherche-activites #filtres:checked + label .cacher {
-    display: block; }
-  #block-formulaireexposeactivitesrecherche-activites #filtres:checked + div.filtres .form-item-field-rubriques-activite-target-id:before {
-    content: "Sorties en famille"; }
-@media (min-width: 768px) {
-  #block-formulaireexposeactivitesrecherche-activites #filtres, #block-formulaireexposeactivitesrecherche-activites .label_filtres {
-    display: none; }
-  #block-formulaireexposeactivitesrecherche-activites .filtres {
     display: block; } }
+#block-formulaireexposeactivitesrecherche-activites {
+  margin-bottom: 20px; }
+  #block-formulaireexposeactivitesrecherche-activites.view .voir {
+    display: none; }
+  #block-formulaireexposeactivitesrecherche-activites.view .cacher {
+    display: block !important; }
+  #block-formulaireexposeactivitesrecherche-activites.view .filtres {
+    display: block;
+    height: auto;
+    transform: translateY(0px);
+    transition: transform 0.1s; }
+  #block-formulaireexposeactivitesrecherche-activites select, #block-formulaireexposeactivitesrecherche-activites input {
+    font-size: 14px; }
+  #block-formulaireexposeactivitesrecherche-activites label {
+    width: 100%; }
+  #block-formulaireexposeactivitesrecherche-activites .label_filtres {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+    cursor: pointer; }
+    #block-formulaireexposeactivitesrecherche-activites .label_filtres .voir {
+      background: #0cacce;
+      color: #ffffff;
+      padding: 5px 10px; }
+    #block-formulaireexposeactivitesrecherche-activites .label_filtres .cacher {
+      color: #fff;
+      font-size: 14px;
+      font-family: arial;
+      background: #0cacce;
+      width: 90px;
+      margin: auto;
+      display: none; }
+  #block-formulaireexposeactivitesrecherche-activites #filtres {
+    display: none;
+    /*&:checked + label .voir {
+    	display: none;
+    }
+    &:checked + label .cacher {
+    	display: block;
+    }
+    &:checked + div.filtres .form-item-field-rubriques-activite-target-id:before {
+    	content: 'Sorties en famille'
+    }*/ }
+  @media (min-width: 768px) {
+    #block-formulaireexposeactivitesrecherche-activites {
+      margin-bottom: 0; }
+      #block-formulaireexposeactivitesrecherche-activites #filtres, #block-formulaireexposeactivitesrecherche-activites .label_filtres {
+        display: none; }
+      #block-formulaireexposeactivitesrecherche-activites .filtres {
+        display: block; } }
 
 .view-taxonomy-term .image {
   float: left;
@@ -1416,7 +1442,7 @@ section .block .block-title {
   overflow: hidden; }
 
 .bloc-send-email {
-  background: #3f9cae url(/assets/img/fond_bloc_newsletter.jpg) no-repeat bottom center;
+  background: #349abf url(/assets/img/fond_bloc_newsletter.jpg) no-repeat bottom center;
   text-align: center;
   color: #fff;
   padding: 10px;
@@ -1710,49 +1736,5 @@ div.user-login, div.user-register {
 
 #block-pieddepage a {
   color: #ffffff; }
-
-#bloc-type-sorties {
-  background: #3f9cae;
-  color: #ffffff;
-  font-size: 1.5rem;
-  display: flex;
-  padding: 10px;
-  border-radius: 10px;
-  margin: 10px 0px; }
-  @media (max-width: 1200px) {
-    #bloc-type-sorties {
-      font-size: 1.3rem; } }
-  @media (max-width: 992px) {
-    #bloc-type-sorties {
-      font-size: 1.2rem; } }
-  @media (max-width: 700px) {
-    #bloc-type-sorties {
-      font-size: 1.4rem;
-      flex-direction: column; }
-      #bloc-type-sorties .label {
-        text-align: center;
-        white-space: initial; }
-      #bloc-type-sorties .list {
-        padding: 0;
-        max-width: 50%;
-        margin: auto;
-        display: block; } }
-  @media (min-width: 992px) {
-    #bloc-type-sorties .label {
-      white-space: nowrap; }
-    #bloc-type-sorties .list {
-      padding: 0px 30px; } }
-  #bloc-type-sorties .label {
-    flex: 2; }
-  #bloc-type-sorties .list {
-    flex: 1; }
-    #bloc-type-sorties .list select {
-      border-radius: 12px;
-      text-align: center;
-      color: gray; }
-      #bloc-type-sorties .list select option:first-child {
-        display: none; }
-      #bloc-type-sorties .list select option {
-        text-align: left; }
 
 /*# sourceMappingURL=style.css.map */

@@ -47,13 +47,20 @@ class KidiklikService
         'lieu',
         'quand',
       ],
+      'authenticated' => [
+        'search',
+        'tranches_ages',
+        'lieu',
+        'quand',
+      ],
       'administrateur_de_departement' => [
         'search',
         'tranches_ages',
         'lieu',
         'quand',
         'vacances',
-        'thematiques'
+        'thematiques',
+        'field_rubriques_activite_target_id'
       ],
     ];
 
@@ -216,6 +223,14 @@ class KidiklikService
       ':ou1' => $val,
       ':ou2' => str_replace(' ', '-', $val),
       ':ou3' => $this->getDepartement(),
+    ]);
+    return $query->fetch();
+  }
+
+  function searchVilleById($id) {
+    $database = \Drupal::database();
+    $query = $database->query('select * from villes where id_ville = :id', [
+      ':id' => $id,
     ]);
     return $query->fetch();
   }
