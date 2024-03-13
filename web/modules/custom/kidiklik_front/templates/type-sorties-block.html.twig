@@ -1,0 +1,29 @@
+{#
+/**
+* @file
+* Default theme implementation to display a block.
+*
+* @see template_preprocess_block()
+*
+* @ingroup themeable
+*/
+#}
+{% set classes = [
+    'clear-both',
+] %}
+<div id="bloc-type-sorties" {{ attributes.addClass(classes) }}>
+<div class="label">
+  {% if origin == "/" %}
+  {{ 'Message type sortie home'|t }}
+  {% else %}
+  {{ 'Message type sortie rubrique'|t }}
+  {% endif %}
+</div>
+<div class="list">
+<select class="form-control" onchange="window.location=this.value">
+    {% for value in content %}
+        <option value="{{ value.url }}">{{ value.name }}</option>
+    {% endfor %}
+</select>
+</div>
+</div>

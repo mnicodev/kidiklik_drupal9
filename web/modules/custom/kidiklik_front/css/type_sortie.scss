@@ -1,0 +1,71 @@
+$bleuclair_kidiklik:#349abf;
+
+#bloc-type-sorties {
+		background: $bleuclair_kidiklik;
+		color: #ffffff;
+		font-size: 20px;
+    line-height: 35px;
+		display: flex;
+		padding: 10px;
+  margin: 10px 0px;
+  font-weight: bold;
+
+
+  @media(max-width: 1200px) {
+    .label {
+      flex: 2;
+    }
+    .list {
+      flex: 1;
+    }
+  }
+  @media(max-width: 992px) {
+    .label {
+      flex: 2;
+    }
+    .list {
+      max-width: 180px;
+      flex: 1;
+    }
+  }
+  @media(max-width: 700px) {
+    flex-direction: column;
+    .label {
+      text-align: center;
+      white-space: initial;
+    }
+    .list {
+      padding: 0;
+      max-width: 50%;
+      margin: auto;
+      display: block;
+    }
+  }
+
+  @media(min-width: 992px) {
+    .label {
+      flex: 2;
+      white-space: nowrap;
+    }
+    .list {
+      flex: 1;
+      padding: 0px 20px;
+    }
+  }
+
+  .list {
+
+    select {
+      font-size: 14px;
+      text-align: center;
+      color: gray;
+      option:first-child {
+        display: none;
+      }
+      option {
+        text-align: left;
+      }
+    }
+  }
+
+}
