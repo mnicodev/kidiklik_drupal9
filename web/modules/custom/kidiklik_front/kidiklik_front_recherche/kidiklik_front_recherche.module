@@ -41,7 +41,7 @@ function kidiklik_front_recherche_theme()
 
 function kidiklik_front_recherche_form_views_exposed_form_alter(&$form, FormStateInterface $form_state, $form_id)
 {
-  
+
   /** formulaire de recherche */
   if ($form['#id'] == "views-exposed-form-activites-recherche-activites") {
     $form["#attached"]["library"][] = "kidiklik_front_recherche/kidiklik_front_recherche.actions";
@@ -69,13 +69,18 @@ function kidiklik_front_recherche_form_views_exposed_form_alter(&$form, FormStat
       ]);
 
       $list_cat[$cat->Id()] = $cat->getName();
+      if (!empty($sous_categories)) {
+        foreach ($sous_categories as $sc) {
+          $list_cat[$sc->Id()] = "- " . $sc->getName();
+        }
+      }
     }
     $form['field_rubriques_activite_target_id']['#options'] = $list_cat;
-    
-    //$form['field_rubriques_activite_target_id']['#title'] = 'Activité';
-    
 
-    $geoloc = \Drupal::request()->get(geoloc);
+    //$form['field_rubriques_activite_target_id']['#title'] = 'Activité';
+
+
+    $geoloc = \Drupal::request()->get('geoloc');
     preg_match('/(.*)_(.*)/', $geoloc, $results);
 
     if($results[1] === 'id') {
@@ -85,7 +90,7 @@ function kidiklik_front_recherche_form_views_exposed_form_alter(&$form, FormStat
       $id = sprintf('id_%s', $info_ville->id_ville);
     }else if($results[1] === 'd') {
       $text = sprintf('%s', $results[2]);
-      $id = sprintf('d_%s', $results[2]);      
+      $id = sprintf('d_%s', $results[2]);
     }
 
     $form['geoloc'] = [
@@ -115,7 +120,7 @@ function kidiklik_front_recherche_form_views_exposed_form_alter(&$form, FormStat
       '#value' => \Drupal::request()->get('lieu'),
       '#attributes' => [
         'id' => 'lieu'
-      ] 
+      ]
     ];*/
 
     $options[''] = 'Filtrer par zone';
@@ -132,7 +137,7 @@ function kidiklik_front_recherche_form_views_exposed_form_alter(&$form, FormStat
       "#weight" => -9
     ];*/
     //$form['field_rubriques_activite_target_id']["#weight"] = -10;
-    
+
     $form['quand'] = [
       "#type" => "select",
       //"#title" => "Quand ?",
@@ -189,7 +194,7 @@ function kidiklik_front_recherche_form_views_exposed_form_alter(&$form, FormStat
     if(in_array('administrateur_de_departement', $user_role) || in_array('administrator', $user_role)) {
       $form['date_debut']["#weight"] = -16;
       $form['date_fin']["#weight"] = -15;
-      
+
       $form['geoloc']["#weight"] = -17;
       $form['quand']["#weight"] = -18;
       $form['search']['#weight'] = -19;
@@ -234,7 +239,7 @@ function kidiklik_front_recherche_views_query_alter(Drupal\views\ViewExecutable 
    */
   if ($view->current_display == "recherche_activites") {
     try {
-    
+
       $query->distinct = true;
       $query->groupby[] = 'nid';
 
