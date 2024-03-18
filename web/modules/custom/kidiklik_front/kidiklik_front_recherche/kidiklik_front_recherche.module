@@ -211,13 +211,15 @@ function kidiklik_front_recherche_form_views_exposed_form_alter(&$form, FormStat
       $form['search']['#weight'] = -5;
       /*unset($form['vacances']);
       unset($form['thematiques']);*/
-      unset($form['field_rubriques_activite_target_id']);
+      //unset($form['field_rubriques_activite_target_id']);
     }
     if(\Drupal::currentUser()->getAccount()->isAnonymous() === true) {
       $form['thematiques']['#prefix'] = '<div class="hidden">';
       $form['thematiques']['#suffix'] = '</div>';
       $form['vacances']['#prefix'] = '<div class="hidden">';
       $form['vacances']['#suffix'] = '</div>';
+      $form['field_rubriques_activite']['#prefix'] = '<div class="hidden">';
+      $form['field_rubriques_activite']['#suffix'] = '</div>';
 
       //$form["#attached"]["library"][] = "kidiklik_front_recherche/kidiklik_front_recherche.styles";
     }
@@ -269,7 +271,7 @@ function kidiklik_front_recherche_views_query_alter(Drupal\views\ViewExecutable 
       if(!empty($rubrique = \Drupal::request()->get('field_rubriques_activite_target_id')) &&
       \Drupal::currentUser()->getAccount()->isAnonymous() === true) {
 
-        $configuration = array(
+        /*$configuration = array(
           'type' => 'INNER',
           'table' => 'node__field_rubriques_activite',
           'field' => 'entity_id',
@@ -280,7 +282,7 @@ function kidiklik_front_recherche_views_query_alter(Drupal\views\ViewExecutable 
         $join = \Drupal\views\Views::pluginManager('join')->createInstance('standard', $configuration);
         $rel = $query->addRelationship('rubriques_activite', $join, 'node_field_data');
         $query->addTable('node__field_rubriques_activite', $rel, $join, 'rubriques_activite');
-        $query->addWhere('10', 'rubriques_activite.field_rubriques_activite_target_id', $rubrique, '=');
+        $query->addWhere('10', 'rubriques_activite.field_rubriques_activite_target_id', $rubrique, '=');*/
       }
 
       $quand = \Drupal::request()->get("quand");
