@@ -218,8 +218,8 @@ function kidiklik_front_recherche_form_views_exposed_form_alter(&$form, FormStat
       $form['thematiques']['#suffix'] = '</div>';
       $form['vacances']['#prefix'] = '<div class="hidden">';
       $form['vacances']['#suffix'] = '</div>';
-      $form['field_rubriques_activite']['#prefix'] = '<div class="hidden">';
-      $form['field_rubriques_activite']['#suffix'] = '</div>';
+      $form['field_rubriques_activite_target_id']['#prefix'] = '<div class="hidden">';
+      $form['field_rubriques_activite_target_id']['#suffix'] = '</div>';
 
       //$form["#attached"]["library"][] = "kidiklik_front_recherche/kidiklik_front_recherche.styles";
     }
