@@ -5,3 +5,9 @@ kidiklik_front_recherche.actions:
   dependencies:
     - core/drupal.ajax
 
+
+kidiklik_front_recherche.styles:
+  version: 1.x
+  css:
+    theme:
+      css/styles.css: {}

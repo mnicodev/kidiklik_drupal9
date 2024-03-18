@@ -21,6 +21,8 @@ class KidiklikService
   private $fields_permission;
 
   private $fields_search;
+  private $fields_exclus;
+
 
   /**
    * Constructs a new KidiklikService object.
@@ -73,6 +75,16 @@ class KidiklikService
       'thematiques',
       'field_rubriques_activite_target_id'
     ];
+
+    $this->fields_exclus = [
+        'vacances',
+        'thematiques',
+        'field_rubriques_activite_target_id'
+    ];
+  }
+
+  public function getFieldsExclus() {
+    return $this->fields_exclus;
   }
 
   public function fieldIsForSearch($field)
@@ -286,7 +298,7 @@ class KidiklikService
       if($ip === null) {
         $ip =  \Drupal::request()->server->get('HTTP_X_REAL_IP')  ?? \Drupal::request()->server->get('REMOTE_ADDR') ?? \Drupal::request()->server->get('HTTP_X_REAL_IP') ?? \Drupal::request()->server->get('HTTP_X_FORWARDED_FOR');
       }
-      
+
 
       $api_whois = sprintf('https://ipwhois.app/json/%s', $ip);
       $whois_info = json_decode(file_get_contents($api_whois));
@@ -300,9 +312,9 @@ class KidiklikService
         'code_pays' => $whois_info->country_code,
         'data' => (json_encode($_SERVER))
       ])->execute();
-      
+
       return $whois_info;
-      
+
     } catch (Exception $exception) {
       return null;
     }
@@ -323,8 +335,8 @@ class KidiklikService
       'GB',
       'IT'
     ];
-    
-    
+
+
     if(!in_array($code_pays, $liste_ok)) {
       $database = \Drupal::database();
       $database->query('insert into banip (ip, code_pays) values ("'.$whois->ip.'","'.$code_pays.'")');

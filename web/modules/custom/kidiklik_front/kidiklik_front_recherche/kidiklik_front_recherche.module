@@ -209,9 +209,17 @@ function kidiklik_front_recherche_form_views_exposed_form_alter(&$form, FormStat
       $form['geoloc']["#weight"] = -9;
       $form['quand']["#weight"] = -10;
       $form['search']['#weight'] = -5;
-      unset($form['vacances']);
-      unset($form['thematiques']);
+      /*unset($form['vacances']);
+      unset($form['thematiques']);*/
       unset($form['field_rubriques_activite_target_id']);
+    }
+    if(\Drupal::currentUser()->getAccount()->isAnonymous() === true) {
+      $form['thematiques']['#prefix'] = '<div class="hidden">';
+      $form['thematiques']['#suffix'] = '</div>';
+      $form['vacances']['#prefix'] = '<div class="hidden">';
+      $form['vacances']['#suffix'] = '</div>';
+
+      //$form["#attached"]["library"][] = "kidiklik_front_recherche/kidiklik_front_recherche.styles";
     }
 
   }
@@ -232,6 +240,7 @@ function getCommunes(array &$form, FormStateInterface $form_state)
 
 function kidiklik_front_recherche_views_query_alter(Drupal\views\ViewExecutable $view, Drupal\views\Plugin\views\query\QueryPluginBase $query)
 {
+  $kserv = \Drupal::service('kidiklik.service');
   $rule_search = \Drupal::service('kidiklik.service')->getSqlRuleSearch($view->current_display);
 
   /**
@@ -256,6 +265,7 @@ function kidiklik_front_recherche_views_query_alter(Drupal\views\ViewExecutable 
           $dep = $results[2] ?? null;
         }
       }
+
       if(!empty($rubrique = \Drupal::request()->get('field_rubriques_activite_target_id')) &&
       \Drupal::currentUser()->getAccount()->isAnonymous() === true) {
 
@@ -271,8 +281,8 @@ function kidiklik_front_recherche_views_query_alter(Drupal\views\ViewExecutable 
         $rel = $query->addRelationship('rubriques_activite', $join, 'node_field_data');
         $query->addTable('node__field_rubriques_activite', $rel, $join, 'rubriques_activite');
         $query->addWhere('10', 'rubriques_activite.field_rubriques_activite_target_id', $rubrique, '=');
-        
       }
+
       $quand = \Drupal::request()->get("quand");
   //    $search = explode(' ', trim(\Drupal::request()->get("search")));
       $keywords = trim(\Drupal::request()->get("search"));
