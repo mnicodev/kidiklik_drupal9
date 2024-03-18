@@ -256,7 +256,23 @@ function kidiklik_front_recherche_views_query_alter(Drupal\views\ViewExecutable 
           $dep = $results[2] ?? null;
         }
       }
+      if(!empty($rubrique = \Drupal::request()->get('field_rubriques_activite_target_id')) &&
+      \Drupal::currentUser()->getAccount()->isAnonymous() === true) {
 
+        $configuration = array(
+          'type' => 'INNER',
+          'table' => 'node__field_rubriques_activite',
+          'field' => 'entity_id',
+          'left_table' => 'node_field_data',
+          'left_field' => 'nid',
+          'operator' => '=',
+        );
+        $join = \Drupal\views\Views::pluginManager('join')->createInstance('standard', $configuration);
+        $rel = $query->addRelationship('rubriques_activite', $join, 'node_field_data');
+        $query->addTable('node__field_rubriques_activite', $rel, $join, 'rubriques_activite');
+        $query->addWhere('10', 'rubriques_activite.field_rubriques_activite_target_id', $rubrique, '=');
+        
+      }
       $quand = \Drupal::request()->get("quand");
   //    $search = explode(' ', trim(\Drupal::request()->get("search")));
       $keywords = trim(\Drupal::request()->get("search"));
