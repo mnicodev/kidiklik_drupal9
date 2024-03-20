@@ -346,7 +346,7 @@ function kidiklik_front_recherche_views_query_alter(Drupal\views\ViewExecutable 
       */
       if (!empty($ou)) {
         $kidiklik_service = \Drupal::service('kidiklik.service');
-        $limit_distance = 10;
+        $limit_distance = 20;
         $limit_nb_content = 10;
 
         /*
@@ -383,7 +383,7 @@ function kidiklik_front_recherche_views_query_alter(Drupal\views\ViewExecutable 
               $seach_event->setArguments([$kidiklik_service->getTermDepartement(), $ou]);
               $seach_event->execute();
               $count_event = $seach_event->total_rows;
-              $limit_distance = 15;
+              //$limit_distance = 15;
             }
 
             $villes = [];
