@@ -98,6 +98,15 @@ function kidiklik_views_post_render(&$view) {
     }
 }
 
+function kidiklik_preprocess_pager(array &$variables) {
+	$geoloc = \Drupal::request()->get('geoloc');
+	
+	$variables['pager']['#parameters']['geoloc'] = $geoloc;
+	foreach($variables['items']['pages'] as &$page) {
+		$page['href'] = str_replace('geoloc','geoloc='.$geoloc,$page['href']);
+	}
+}
+
 function kidiklik_page_attachments_alter(array &$variables) {
 	
 }
