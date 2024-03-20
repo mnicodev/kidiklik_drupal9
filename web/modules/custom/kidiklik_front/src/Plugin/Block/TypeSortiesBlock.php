@@ -51,10 +51,19 @@ class TypeSortiesBlock extends BlockBase {
     $list = [];
 
     foreach($rubriques as $rubrique) {
-      $list[] = [
-        'url' => \Drupal::service('path_alias.manager')->getAliasByPath('/taxonomy/term/'.$rubrique->id()),
-        'name' => $rubrique->getName()
-      ];
+      $sous_rub = \Drupal::entityTypeManager()->getStorage("taxonomy_term")->loadByProperties([
+        "vid" => "rubriques_activite",
+        "parent" => $rubrique->Id(),
+        "field_departement" => $kidiklik_service->getTermDepartement(),
+      ]);
+
+      if(!empty($sous_rub)) {
+        $list[] = [
+          'url' => \Drupal::service('path_alias.manager')->getAliasByPath('/taxonomy/term/'.$rubrique->id()),
+          'name' => $rubrique->getName()
+        ];
+      }
+      
     }
     usort($list, function ($a, $b)
     {
