@@ -23,6 +23,15 @@ kidiklik_front.page_controller_content_annonceur:
   requirements:
     _permission: 'access content'
 
+kidiklik_front.page_controller_content_contact:
+  path: '/contact.html'
+  defaults:
+    _controller: '\Drupal\kidiklik_front\Controller\PageController::contact'
+    _title: 'Contact'
+  requirements:
+    _permission: 'access content'
+
+
 kidiklik_front.page_controller_content_fan:
   path: '/fan-de-kidiklik.html'
   defaults:
