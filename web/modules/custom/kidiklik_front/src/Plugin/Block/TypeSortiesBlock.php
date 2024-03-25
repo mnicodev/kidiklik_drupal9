@@ -27,8 +27,7 @@ class TypeSortiesBlock extends BlockBase {
     $kidiklik_service = \Drupal::service('kidiklik.service');
     $rub = $request->get('taxonomy_term');
     $url =$request->server->get('SCRIPT_URL');
-
-    if(!empty($rub = $request->get('taxonomy_term'))) {
+    if(!empty($rub)) {
 
       $term_url = \Drupal::service('path_alias.manager')->getAliasByPath('/taxonomy/term/'.$rub->id());
 
@@ -45,17 +44,21 @@ class TypeSortiesBlock extends BlockBase {
           'field_departement' => $kidiklik_service->getTermDepartement(),
         ]);
       }
-      
-    }
 
+    }
     $list = [];
 
     foreach($rubriques as $rubrique) {
+      if($request->getPathInfo()==='/') {
+
       $sous_rub = \Drupal::entityTypeManager()->getStorage("taxonomy_term")->loadByProperties([
         "vid" => "rubriques_activite",
         "parent" => $rubrique->Id(),
         "field_departement" => $kidiklik_service->getTermDepartement(),
       ]);
+      } else {
+        $sous_rub = true;
+      }
 
       if(!empty($sous_rub)) {
         $list[] = [
@@ -63,7 +66,7 @@ class TypeSortiesBlock extends BlockBase {
           'name' => $rubrique->getName()
         ];
       }
-      
+
     }
     usort($list, function ($a, $b)
     {
