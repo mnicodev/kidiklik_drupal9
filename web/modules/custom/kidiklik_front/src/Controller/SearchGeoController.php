@@ -24,9 +24,9 @@ class SearchGeoController extends ControllerBase
 
     $search2 = str_replace(' ','-', $search);
     if ($search === null || $search === '') {
-      $sql = 'select * from villes where commune<>""  group by commune order by commune limit 0, 100';
+      $sql = 'select * from villes where commune<>"" order by commune limit 0, 100';
     } else {
-      $sql = "select * from villes where code_postal like :cp or commune like :commune or commune like :commune2 group by commune order by commune";
+      $sql = "select * from villes where code_postal like :cp or commune like :commune or commune like :commune2  order by commune";
     }
 
     $query = $database->query($sql, [
