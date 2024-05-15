@@ -20,13 +20,13 @@ function getGPS(ville) {
 function changeAdresseAgendaFromActivite(obj) {
 	$("#edit-field-activite-save-wrapper").find("input").val($(obj).val());
 	let gps = JSON.parse(jQuery(obj).attr('data-gps'));
-	
+
 	for(item of gps) {
 
 		if(item.id === $(obj).val()) {
 			jQuery('#edit-field-geolocation-demo-single-0-lat').val(item.gps.lat);
 			jQuery('#edit-field-geolocation-demo-single-0-lng').val(item.gps.lng);
-		
+
 			jQuery('#coordonnees-adherent').find('.field--name-field-lieu input').val(item.coordonnees.lieu);
 			jQuery('#coordonnees-adherent').find('.field--name-field-adresse input').val(item.coordonnees.adresse);
 			jQuery('#coordonnees-adherent').find('.field--name-field-code-postal input').val(item.coordonnees.cp);
@@ -40,10 +40,27 @@ $(function(){
 	if($("#activites").length) {
 		$("#activites").change(function() {
 			changeAdresseAgendaFromActivite(this);
-			
+
 		});
 	}
-	
+
+  if($('#edit-field-type-de-reservation').length) {
+    if($('#edit-field-type-de-reservation').val() === '_none') {
+      $('#edit-field-coordonnees-wrapper').hide();
+    } else {
+      $('#edit-field-coordonnees-wrapper').show();
+    }
+    $('#edit-field-type-de-reservation').on('change', () => {
+      if($('#edit-field-type-de-reservation').val() === '_none') {
+        $('#edit-field-coordonnees-wrapper').hide();
+        $('#edit-field-coordonnees-wrapper input').removeAttr('required');
+      } else {
+        $('#edit-field-coordonnees-wrapper').show();
+        $('#edit-field-coordonnees-wrapper input').attr('required','required');
+      }
+    })
+  }
+
 
 	if($('#all_select_dep').length) {
 		$('#all_select_dep').on('click', function() {
@@ -52,12 +69,12 @@ $(function(){
 			} else {
 				$('#edit-field-partage-departements .form-checkbox').prop('checked', true);
 			}
-			
-			
+
+
 			$(this).attr('data-checked',$(this).attr('data-checked') *(-1));
 		});
 	}
-	
+
 	if($('.adherent-contents').length) {
 		var kvp = document.location.search.substr(1).split('&');
 		for(item in kvp) {
@@ -86,7 +103,7 @@ $(function(){
 				} else {
 					search="?" + x[0] + "destination=" + $(this).attr('href') ;
 				}
-				
+
 				href=$(this).attr('href') + search
 			}
 
@@ -94,11 +111,11 @@ $(function(){
 				jQuery('#edit-field-image-0-alt').val(jQuery('#edit-title-0-value').val());
 			}
 
-			
+
 			//window.location.replace(href);
 			$('.node-form').attr('action', href  + "?destination=/admin/" + $(this).attr('data-type'));
 			history.pushState(null, null, href);
-			//document.location.search= href;			
+			//document.location.search= href;
 			//document.location.href=$(this).attr('href');
 			$('#edit-submit').click();
 		})
@@ -221,9 +238,9 @@ $(function(){
 		$('.tab-content .view-content-adherent').find('a.button').on('click',function(e) {
 			//e.preventDefault();
 			id = $('.save-stay').attr('data-ref-id');
-			
+
 			$(this).attr('href', $(this).attr('href') + '&ref_id=' +id);
-			
+
 		})
 
 
@@ -360,7 +377,7 @@ $(function(){
 							/* on ajoute l'action jQuery */
 							$("#adherent-client").find("#edit-field-ville").find("select").change(function() {
 								$("#adherent-client").find(".field--name-field-ville-save").find("input").val($(this).val());
-								
+
 							});
 
 						},
@@ -416,7 +433,7 @@ $(function(){
 
 			$("#activites").change(function() {
 				changeAdresseAgendaFromActivite(this);
-				
+
 			});
 
 			$(".field--name-field-type").find("select").change(function() {
@@ -440,7 +457,7 @@ $(function(){
 		}
 	}
 
-	
+
 
 	$.fn.putSelect2 = function(argument) {
 		console.log(argument);
@@ -448,7 +465,7 @@ $(function(){
 
 	$.fn.putGps = function(argument) {
 		let gps = JSON.parse(argument);
-		
+
 		jQuery('#edit-field-geolocation-demo-single-0-lat').val(gps.lat);
 		jQuery('#edit-field-geolocation-demo-single-0-lng').val(gps.lng);
 
