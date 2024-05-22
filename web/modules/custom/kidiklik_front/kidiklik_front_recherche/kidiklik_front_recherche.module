@@ -152,14 +152,6 @@ function kidiklik_front_recherche_form_views_exposed_form_alter(&$form, FormStat
       "#weight" => -8
     ];
 
-    $form["center[coordinates][lat]"] = [
-      '#type' => 'hidden',
-      '#default_value' => \Drupal::Request()->get('center')['coordinates']['lat'],
-    ];
-    $form["center[coordinates][lng]"] = [
-      '#type' => 'hidden',
-      '#default_value' => \Drupal::Request()->get('center')['coordinates']['lng'],
-    ];
 
     unset($form['thematiques']['#options']['All']);
     $options = $form['thematiques']['#options'];
@@ -306,7 +298,6 @@ function kidiklik_front_recherche_views_query_alter(Drupal\views\ViewExecutable 
         $rel = $query->addRelationship('node__field_adherent', $join, 'node__field_adherent');
         $query->addTable('node__field_adherent', $rel, $join, 'node__field_adherent');
         $query->addWhere('', 'node__field_adherent.field_adherent_target_id', $ref_adherent, '=');
-        // ksm($query->where);
       }
 
       if (!empty($keywords)) {
@@ -632,23 +623,6 @@ function kidiklik_front_recherche_views_query_alter(Drupal\views\ViewExecutable 
 
       }
 
-      if (Drupal::Request()->get('field_ville') !== 'geo' && !empty(Drupal::Request()->get('field_ville'))) {
-
-        /* $configuration = array(
-          'type' => 'LEFT',
-          'table' => 'node__field_ville_save',
-          'field' => 'entity_id',
-          'left_table' => 'node_field_data',
-          'left_field' => 'nid',
-          'operator' => '=',
-        );
-        $join = \Drupal\views\Views::pluginManager('join')
-          ->createInstance('standard', $configuration);
-        $rel = $query->addRelationship('node__field_ville_save', $join, 'node_field_data');
-        $query->addTable('node__field_ville_save', $rel, $join, 'node__field_ville_save');
-        $query->addWhere('', 'node__field_ville_save.field_ville_save_value', \Drupal::Request()->get('field_ville'), '=');*/
-
-      }
 
       foreach ($query->where as $key => $where) {
         if (!count($where['conditions'])) {

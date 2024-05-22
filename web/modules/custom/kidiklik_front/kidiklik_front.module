@@ -256,6 +256,11 @@ function kidiklik_front_validate_jeu_concours($form, FormStateInterface $form_st
 }
 
 
+function kidiklik_front_field_widget_paragraphs_form_alter(&$element, FormStateInterface &$form_state, $context) {
+  
+}
+
+
 /*
  * Modification de la requête sql d'une vue
  */

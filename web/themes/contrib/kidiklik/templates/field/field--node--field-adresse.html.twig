@@ -68,13 +68,13 @@
   {% endif %}
 {% else %}
   <div{{ attributes.addClass(classes) }}>
-    <i class="fa fa-map-marker"></i>
+    
     <div{{ title_attributes.addClass(title_classes) }}>{{ label }}</div>
     {% if multiple %}
       <div class="field--items">
     {% endif %}
     {% for item in items %}
-      <div{{ item.attributes.addClass('field--item') }}>{{ item.content }}</div>
+      <div{{ item.attributes.addClass('field--item') }}><i class="fa fa-map-marker"></i><span>{{ item.content }}</span></div>
     {% endfor %}
     {% if multiple %}
       </div>

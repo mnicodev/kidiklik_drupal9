@@ -22,7 +22,7 @@ class DefaultController extends ControllerBase {
     $email = filter_input(INPUT_GET, 'email');
     $code_dept = filter_input(INPUT_GET, 'dept');
     $apiKey= 'cbe190b2ccf97ebe0d109fb5fad89e37';
-	  $secretKey= 'dee8bb0254e9ed326dcd3f36a698cc69';
+	$secretKey= 'dee8bb0254e9ed326dcd3f36a698cc69';
     
      try {
 			$mj=new \Mailjet\Client($apiKey,$secretKey);

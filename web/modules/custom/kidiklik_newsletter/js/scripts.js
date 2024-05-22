@@ -4,8 +4,9 @@ var bloc_mea=[];
 function blocAction(o) {
 	$(o).find(".btn-danger").click(function () {
 		//alert("ok")
-		$(this).parent().parent().remove();
-
+		$(this).closest('.row').find('input[name="del[]"').val(1);
+    $(this).closest('.row').addClass('hide');
+    $(this).closest('.row').remove();
 	})
 
 }
@@ -20,10 +21,15 @@ console.log(obj.nid);
 	bloc_bouton=document.createElement("div");
 	titre=document.createElement("input");
 	nid=document.createElement("input");
+
 	fid=document.createElement("input");
 	resume=document.createElement("textarea");
 	bouton=document.createElement("button");
   lien=document.createElement("input");
+  var del=document.createElement("input");
+  $(del).attr('type', 'hidden');
+  $(del).attr('name', 'del[]');
+  $(del).val(0);
 
 	$(fid).attr("type","hidden");
 	$(fid).attr("name","fid[]");
@@ -68,6 +74,7 @@ console.log(obj.nid);
 	$(bloc).append(bloc_data);
 	$(bloc).append(fid);
 	$(bloc).append(nid);
+  $(bloc).append(del);
 	$(bloc).append(lien);
 	if(obj.pid) {
 		pid=document.createElement("input");

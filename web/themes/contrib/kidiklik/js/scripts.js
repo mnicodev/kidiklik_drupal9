@@ -52,10 +52,16 @@ Drupal.behaviors.kidiklik = {
 				jQuery('#groupe-actions').append(jQuery('#block-reserverblock').html());
 				jQuery('#groupe-actions').append(jQuery('#block-sortiesboutonblock').html());
 				if(!jQuery('.zone-image').find('#groupe-actions').length) {
-					jQuery('.zone-image').append('<div id="groupe-actions">'+jQuery("#groupe-actions").html()+'</div>');
+					jQuery('.zone-image').append('<div class="groupe-actions">'+jQuery("#groupe-actions").html()+'</div>');
 				}
 				jQuery('#block-sortiesboutonblock').remove();
 				jQuery('#block-reserverblock').remove();
+
+				if(jQuery('.date-changed').length) {
+					let date = jQuery('.date-changed').html();
+					jQuery('.zone-image').append('<div class="fs-2 text-left font-italic">'+date+'</div>');
+					jQuery('.date-changed').remove()
+				}
 			}
 			jQuery('.form-item-quand').find('select').on('change',function() {
 				if(jQuery(this).val() === 'date') {
@@ -78,41 +84,27 @@ Drupal.behaviors.kidiklik = {
 			})
 
 		}
-		if(jQuery('select[name="ville"]').val() === 'geo') {
-				getCurrentPosition();
-			//maPosition();
-		} else {
-			jQuery('input[name="center[coordinates][lng]"]').val('');
-			jQuery('input[name="center[coordinates][lat]"]').val('');
-		}
-		jQuery('select[name="ville"]').on('select2:select', function(e) {
-			var data = e.params.data;
-			if(data.id === "geo") {
-				getCurrentPosition();
-				//maPosition();
-			} else {
-				jQuery('input[name="center[coordinates][lng]"]').val('');
-				jQuery('input[name="center[coordinates][lat]"]').val('');
-			}
-		});
-		jQuery('select[name="ville"]').on('select2:clearing', function(e) {
-			jQuery('input[name="center[coordinates][lng]"]').val('');
-			jQuery('input[name="center[coordinates][lat]"]').val('');
-		});
+		
 
 		// chargement asynchrone des images
 		jQuery('.lazy-img').each(function() {
 			var self = jQuery(this);
-			self.attr('src', self.attr('data-src'));
+      var parent = self.closest('.views-field-nothing');
+      jQuery(parent).on('click', function() {
+        window.location = jQuery(parent).find('a').attr('href');
+      })
+      //parent.css('background-image', 'url('+self.attr('data-src')+')');
+      //self.hide();
 
 		});
 
-		
+
 	} /* fin attach */
 }
 
 jQuery(document).ready(function() {
 
+	
 	if(jQuery('.console-recherche').length) {
 		form = jQuery('.console-recherche');
 		jQuery(form).find('.onoff').on('click', function() {
@@ -127,7 +119,12 @@ jQuery(document).ready(function() {
 	// chargement asynchrone des images
 	jQuery('.lazy-img').each(function() {
 		var self = jQuery(this);
-		self.attr('src', self.attr('data-src'));
+      var parent = self.closest('div.views-field-nothing');
+      jQuery(parent).on('click', function() {
+        window.location = jQuery(parent).find('a').attr('href');
+      })
+      //parent.css('background-image', 'url('+self.attr('data-src')+')');
+      //self.hide();
 
 	});
 
@@ -286,35 +283,7 @@ jQuery(document).ready(function() {
 		allowClear: true,
 		tags: true,
 	});
-	if(jQuery('select[name="ville"]').val() === 'geo') {
-			getCurrentPosition();
-		//maPosition();
-	} else {
-		jQuery('input[name="center[coordinates][lng]"]').val('');
-		jQuery('input[name="center[coordinates][lat]"]').val('');
-	}
-	jQuery('select[name="ville"]').on('select2:select', function(e) {
-		var data = e.params.data;
-		console.log('ok')
-		if(data.id === "geo") {
-			getCurrentPosition();
-			//maPosition();
-		} else {
-			jQuery('input[name="center[coordinates][lng]"]').val('');
-			jQuery('input[name="center[coordinates][lat]"]').val('');
-		}
-	});
-	jQuery('select[name="ville"]').on('select2:clearing', function(e) {
-		jQuery('input[name="center[coordinates][lng]"]').val('');
-		jQuery('input[name="center[coordinates][lat]"]').val('');
-	});
-	jQuery('select[name="ville"]').on('select2:open', function(e) {
-
-	})
-
-	//jQuery("#views-exposed-form-activites-recherche-activites").attr('action', '/recherche');
-
-
+	
 	if(jQuery('select[name="quand"]').val() === 'date') {
 			jQuery('#views-exposed-form-activites-recherche-activites .form-type-date').show();
 	} else {

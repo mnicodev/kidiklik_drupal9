@@ -490,19 +490,6 @@ article {
     margin-bottom: 10px; }
     article .zone-image .field--name-field-image .field--item {
       display: block; }
-    @media (max-width: 1200px) {
-      article .zone-image #groupe-actions {
-        display: flex;
-        flex-direction: row-reverse; } }
-    @media (max-width: 500px) {
-      article .zone-image #groupe-actions {
-        display: flex;
-        flex-direction: column; }
-        article .zone-image #groupe-actions a {
-          text-align: left; }
-        article .zone-image #groupe-actions a.reservation {
-          background-position: 12px 50% !important;
-          padding-left: 40px; } }
   article img {
     max-width: 100%;
     width: 100%;
@@ -658,36 +645,26 @@ footer .menu li.last {
 @media (max-width: 559px) {
   .view-taxonomy-term .views-field-field-image {
     padding-right: 0px; } }
-.bloc-fiche .bloc-information, .bloc-fiche article.teaser {
-  margin-bottom: 20px;
-  border: 1px solid #ccc;
-  display: block;
-  overflow: hidden;
-  box-shadow: 0px 3px 5px rgba(125, 125, 125, 0.5); }
-  .bloc-fiche .bloc-information h5, .bloc-fiche article.teaser h5 {
-    margin-top: 5px;
-    font-size: 1.2em;
-    margin-bottom: 0 !important; }
-  .bloc-fiche .bloc-information .content, .bloc-fiche article.teaser .content {
-    padding-top: 5px;
-    padding-bottom: 5px; }
-  .bloc-fiche .bloc-information .informations, .bloc-fiche article.teaser .informations {
-    color: gray; }
-    .bloc-fiche .bloc-information .informations .field--label, .bloc-fiche article.teaser .informations .field--label {
-      font-weight: 700; }
-  .bloc-fiche .bloc-information .titre a, .bloc-fiche article.teaser .titre a {
+.view-flag-bookmark .views-row {
+  padding: 10px;
+  float: left; }
+.view-flag-bookmark .reservation {
+  display: none; }
+.view-flag-bookmark .item-favori {
+  margin-bottom: 10px;
+  font-size: 0.95em; }
+  .view-flag-bookmark .item-favori img {
+    max-width: 100%; }
+  .view-flag-bookmark .item-favori a {
     color: #349abf !important;
     font-size: 1.2em;
     font-weight: bold !important;
     font-family: 'Roboto'; }
-.bloc-fiche .favori .reservation {
-  display: none; }
-@media (max-width: 768px) {
-  .bloc-fiche {
-    margin-bottom: 20px; } }
-
-.view-flag-bookmark .reservation {
-  display: none; }
+  .view-flag-bookmark .item-favori .zone-flag {
+    text-align: center; }
+    .view-flag-bookmark .item-favori .zone-flag a {
+      padding: 5px;
+      color: #ffffff !important; }
 
 #block-views-block-activites-activites-associees {
   border: 1px solid #ddd;
@@ -708,65 +685,90 @@ footer .menu li.last {
     #block-views-block-activites-activites-associees .activites-associees a {
       color: #3da1c3; }
 
-.activite-teaser {
+.bloc-fiche {
   font-size: 0.95em;
   /*@media (min-width: 768px) {
   	height: 175px;
   }*/ }
-  .activite-teaser img {
+  .bloc-fiche .changed {
+    font-size: 12px;
+    font-style: italic; }
+  .bloc-fiche .bloc-information, .bloc-fiche article.teaser {
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    display: block;
+    overflow: hidden;
+    box-shadow: 0px 3px 5px rgba(125, 125, 125, 0.5); }
+    .bloc-fiche .bloc-information h5, .bloc-fiche article.teaser h5 {
+      margin-top: 5px;
+      font-size: 1.2em;
+      margin-bottom: 0 !important; }
+    .bloc-fiche .bloc-information .content, .bloc-fiche article.teaser .content {
+      padding-top: 5px;
+      padding-bottom: 5px; }
+    .bloc-fiche .bloc-information .informations, .bloc-fiche article.teaser .informations {
+      color: gray; }
+      .bloc-fiche .bloc-information .informations .field--label, .bloc-fiche article.teaser .informations .field--label {
+        font-weight: 700; }
+    .bloc-fiche .bloc-information .titre a, .bloc-fiche article.teaser .titre a {
+      color: #349abf !important;
+      font-size: 1.2em;
+      font-weight: bold !important;
+      font-family: 'Roboto';
+      padding-bottom: 5px;
+      display: block; }
+  .bloc-fiche .favori .reservation {
+    display: none; }
+  @media (max-width: 768px) {
+    .bloc-fiche {
+      margin-bottom: 20px; } }
+  .bloc-fiche img {
     max-width: 100%;
     width: 100%;
     height: auto; }
-  .activite-teaser .image {
+  .bloc-fiche .image {
     float: left;
     margin-right: 20px;
     width: 33%; }
-  .activite-teaser .views-row {
+  .bloc-fiche .views-row {
     margin-bottom: 20px;
     overflow: hidden; }
-  .activite-teaser .actions {
-    display: inline-flex;
-    float: right; }
-    .activite-teaser .actions .favori, .activite-teaser .actions .reserver {
-      float: right;
-      background: #db2a24; }
-      .activite-teaser .actions .favori a, .activite-teaser .actions .reserver a {
-        font-size: 0.95em;
-        color: #fff;
-        padding: 7px 15px;
-        display: block; }
-    .activite-teaser .actions .reserver {
-      background: url(../images/ticket.png) no-repeat #db2a24 !important;
-      background-position: 0 50% !important;
-      padding-left: 15px;
-      padding-top: 1px; }
-  .activite-teaser .paragraph--view-mode--liste {
+  .bloc-fiche .actions .favori, .bloc-fiche .actions .reserver {
+    float: right;
+    background: #db2a24; }
+    .bloc-fiche .actions .favori a, .bloc-fiche .actions .reserver a {
+      font-size: 0.95em;
+      color: #fff;
+      padding: 7px 15px;
+      display: block; }
+  .bloc-fiche .paragraph--view-mode--liste {
     display: flex; }
-    .activite-teaser .paragraph--view-mode--liste .field--name-field-date-de-fin {
+    .bloc-fiche .paragraph--view-mode--liste .field--name-field-date-de-fin {
       display: flex; }
-      .activite-teaser .paragraph--view-mode--liste .field--name-field-date-de-fin:before {
+      .bloc-fiche .paragraph--view-mode--liste .field--name-field-date-de-fin:before {
         content: ' au ';
         padding: 0px 5px; }
-  .activite-teaser .date {
+  .bloc-fiche .date {
     display: flex; }
-  .activite-teaser .informations {
+  .bloc-fiche .informations {
     padding: 2px 20px;
     font-size: 1em;
     color: #349abf;
     overflow: hidden; }
-    .activite-teaser .informations span {
+    .bloc-fiche .informations span {
       color: gray; }
-    .activite-teaser .informations .fa {
+    .bloc-fiche .informations .fa {
       font-family: 'Roboto'; }
-      .activite-teaser .informations .fa:before {
+      .bloc-fiche .informations .fa:before {
         padding-right: 5px;
         font-family: 'Font Awesome 5 Free'; }
-    .activite-teaser .informations .fa-calendar-o {
+    .bloc-fiche .informations .fa-calendar-o {
       padding-top: 2px; }
-    .activite-teaser .informations .horaire {
-      height: 15px;
+    .bloc-fiche .informations .horaire {
+      height: 17px;
       overflow: hidden; }
 
+/* fin bloc fiche */
 #edit-center-coordinates {
   display: none; }
 
@@ -895,15 +897,6 @@ footer .menu li.last {
     content: "\f004";
     margin-right: 10px; }
 
-.action-flag a.use-ajax, .action-flag a.login-popup-form, .actions a.use-ajax, .actions a.login-popup-form {
-  padding: 7px 15px;
-  display: block; }
-  .action-flag a.use-ajax:before, .action-flag a.login-popup-form:before, .actions a.use-ajax:before, .actions a.login-popup-form:before {
-    font-family: "Font Awesome 5 Free";
-    font-weight: 400;
-    content: "\f004";
-    margin-right: 10px; }
-
 p.js-flag-message {
   position: fixed;
   background: lightcoral;
@@ -915,39 +908,66 @@ p.js-flag-message {
   color: white;
   z-index: 10000; }
 
-a.reservation {
-  white-space: nowrap;
-  padding: 7px 15px;
-  color: #fff;
-  display: inline-block;
-  text-align: center;
-  background: url(../images/ticket.png) no-repeat #db2a24 !important;
-  background-position: 5px 50% !important;
-  padding-left: 35px; }
-  a.reservation:before {
-    content: ""; }
+.bloc-fiche .groupe-actions, article .groupe-actions {
+  float: right; }
 
 #groupe-actions {
-  display: inline-block;
+  float: left; }
+
+.groupe-actions {
   overflow: hidden;
-  background: #db2a24; }
-  #groupe-actions .zone-flag, #groupe-actions .reservation, #groupe-actions .field {
-    float: right !important; }
-  #groupe-actions .ajout a, #groupe-actions .reservation a {
-    padding: 7px 15px !important; }
-  #groupe-actions .voir-actualites {
+  background: #db2a24;
+  float: left; }
+  .groupe-actions .zone-flag a, .groupe-actions .zone-flag, .groupe-actions .reservation, .groupe-actions .field {
     float: right; }
+  .groupe-actions a {
+    padding: 7px 10px;
+    color: #ffffff;
+    text-align: left; }
+  .groupe-actions a.login-popup-form:before, .groupe-actions a.use-ajax:before {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 400;
+    content: "\f004";
+    margin-right: 5px; }
+  .groupe-actions .reservation:before {
+    content: " ";
+    background: url(../images/ticket-16.svg) no-repeat #db2a24 !important;
+    padding-left: 20px; }
+  .groupe-actions .voir-actualites {
+    float: right;
+    white-space: nowrap;
+    color: #fff;
+    background: #db2a24; }
+    .groupe-actions .voir-actualites i {
+      margin-right: 5px !important;
+      font-size: 18px; }
+    .groupe-actions .voir-actualites:hover {
+      text-decoration: underline;
+      color: #fff; }
+  @media (max-width: 500px) {
+    .groupe-actions {
+      display: flex;
+      flex-direction: column;
+      width: 100%; }
+      .groupe-actions .zone-flag a, .groupe-actions .zone-flag, .groupe-actions .reservation, .groupe-actions .field {
+        float: left; }
+      .groupe-actions a {
+        text-align: left; }
+      .groupe-actions a.reservation {
+        margin-top: 0px; } }
 
 .flag-bookmark i {
   color: #fff;
-  padding-right: 5px; }
+  padding-right: 5px !important; }
 .flag-bookmark a {
   background: #db2a24;
   color: #fff;
   width: 100%;
-  display: block;
-  text-align: center; }
+  display: block; }
 
+.activite .field i, .agenda .field i {
+  width: 25px;
+  text-align: center; }
 .activite .field--name-field-telephone a,
 .activite .field--name-field-lien a,
 .activite .field--name-field-email a, .agenda .field--name-field-telephone a,
@@ -959,10 +979,22 @@ a.reservation {
   padding-left: 5px !important; }
 .activite .field--name-field-adresse, .agenda .field--name-field-adresse {
   margin-bottom: 5px !important; }
+  .activite .field--name-field-adresse span, .agenda .field--name-field-adresse span {
+    padding-left: 8px; }
 .activite .field--name-field-lieu, .agenda .field--name-field-lieu {
   margin-top: 10px; }
 .activite .field--name-field-resume, .agenda .field--name-field-resume {
   margin-bottom: 10px; }
+.activite .field--name-field-duree span, .agenda .field--name-field-duree span {
+  padding-left: 10px; }
+.activite .field--name-field-telephone a, .agenda .field--name-field-telephone a {
+  padding-left: 10px; }
+.activite .field--name-field-email a, .agenda .field--name-field-email a {
+  padding-left: 10px; }
+.activite .field--name-field-lien a, .agenda .field--name-field-lien a {
+  padding-left: 5px; }
+.activite #cp, .agenda #cp {
+  padding-left: 32px; }
 .activite .bloc1, .agenda .bloc1 {
   font-size: 14px;
   margin-bottom: 20px; }
@@ -978,8 +1010,6 @@ a.reservation {
   .activite .bloc1 .field--name-field-a-partir-de, .agenda .bloc1 .field--name-field-a-partir-de {
     display: block;
     margin-top: 0px; }
-    .activite .bloc1 .field--name-field-a-partir-de .field--item:before, .agenda .bloc1 .field--name-field-a-partir-de .field--item:before {
-      content: "Public : "; }
   .activite .bloc1 .field--name-field-horaires, .agenda .bloc1 .field--name-field-horaires {
     margin-top: 10px;
     display: flex; }
@@ -1005,6 +1035,11 @@ aside .region section {
 
 article.full {
   margin-bottom: 20px; }
+  @media (max-width: 500px) {
+    article.full .groupe-actions .reservation {
+      margin-top: 0px; }
+    article.full .groupe-actions .zone-flag a {
+      padding: 7px 13px; } }
   article.full .bloc-age {
     display: flex;
     flex-direction: row; }
@@ -1041,8 +1076,7 @@ article.full {
         article.full .informations .field .field--label:after {
           content: " : "; }
       article.full .informations .field .field--item {
-        font-weight: 500;
-        padding-left: 20px; }
+        font-weight: 500; }
     article.full .informations .field--name-field-lien .field--label:after {
       content: ""; }
 
@@ -1059,9 +1093,18 @@ section .block .block-title {
   width: 100%;
   overflow: hidden;
   margin-bottom: 20px; }
+  .diaporama .views-field-nothing {
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 25vw;
+    background-size: cover;
+    cursor: pointer; }
+    @media (min-width: 1200px) {
+      .diaporama .views-field-nothing {
+        height: 300px; } }
   @media (max-width: 992px) {
     .diaporama {
-      max-height: 375px; } }
+      /*max-height: 375px;*/ } }
   @media (min-width: 992px) {
     .diaporama {
       max-height: 305px; } }
@@ -1071,11 +1114,26 @@ section .block .block-title {
     .diaporama .views_slideshow_cycle_teaser_section .views-row,
     .diaporama .views_slideshow_cycle_slide .views-row {
       position: relative;
-      display: flex; }
+      display: flex;
+      			/*@media(max-width: 500px) {
+      				flex-direction: column;
+      			  .views-field-nothing {
+                flex: none;
+                height: 180px;
+      			  }
+      
+            }*/ }
+      .diaporama .views_slideshow_cycle_teaser_section .views-row .views-field-nothing,
+      .diaporama .views_slideshow_cycle_slide .views-row .views-field-nothing {
+        flex: 3; }
       @media (max-width: 992px) {
         .diaporama .views_slideshow_cycle_teaser_section .views-row,
         .diaporama .views_slideshow_cycle_slide .views-row {
-          flex-direction: column; } }
+          flex-direction: column; }
+          .diaporama .views_slideshow_cycle_teaser_section .views-row .views-field-nothing,
+          .diaporama .views_slideshow_cycle_slide .views-row .views-field-nothing {
+            flex: none;
+            height: 38vw; } }
       .diaporama .views_slideshow_cycle_teaser_section .views-row .views-field-title,
       .diaporama .views_slideshow_cycle_slide .views-row .views-field-title {
         flex: 1;
@@ -1104,9 +1162,6 @@ section .block .block-title {
           .diaporama .views_slideshow_cycle_slide .views-row .views-field-title a h2 {
             color: #ffffff;
             text-transform: uppercase; }
-      .diaporama .views_slideshow_cycle_teaser_section .views-row .views-field-nothing,
-      .diaporama .views_slideshow_cycle_slide .views-row .views-field-nothing {
-        flex: 3; }
   .diaporama img {
     width: 100% !important; }
   .diaporama .views_slideshow_controls_text {
@@ -1151,13 +1206,17 @@ section .block .block-title {
   #mobimenu .change_dep {
     border-radius: 0px;
     border: none;
-    background: url(/assets/img/picto_france.jpg) no-repeat center left; }
+    background: url(/assets/img/23463.png) no-repeat center left;
+    padding-bottom: 0 !important;
+    padding-left: 20px;
+    margin-bottom: 10px;
+    background-size: 20px; }
     #mobimenu .change_dep .select2-selection {
       border-radius: 0px;
       border: none; }
       #mobimenu .change_dep .select2-selection .select2-selection__rendered {
         color: #000;
-        padding-left: 10px; }
+        padding-left: 0px; }
   #mobimenu .icon-menu-open {
     background-image: url(/assets/img/icon_menu_open.png) !important;
     position: absolute;
@@ -1181,10 +1240,7 @@ section .block .block-title {
   #mobimenu .agenda {
     display: block;
     text-align: left !important;
-    margin-left: 2px;
-    padding-bottom: 5px; }
-    #mobimenu .agenda a {
-      padding-left: 23px; }
+    margin-left: 2px; }
     #mobimenu .agenda i {
       color: #333 !important; }
 
@@ -1192,21 +1248,16 @@ section .block .block-title {
   border-radius: 0px;
   border: none;
   background: url(/assets/img/picto_france.jpg) no-repeat top center;
-  padding-top: 20px; }
+  padding-top: 18px; }
   #menu .select2-selection--single .select2-selection__arrow {
     top: 20px; }
 
-#menu a, .menu a {
+#menu ul.menu-desktop li i, .menu ul.menu-desktop li i {
+  text-align: center;
+  display: block;
   color: #808080; }
-  #menu a i, .menu a i {
-    text-align: center;
-    display: block;
-    margin-bottom: 10px;
-    color: #808080; }
-#menu li.newsletter, .menu li.newsletter {
-  background: url(../images/newsletter.png) no-repeat top center;
-  background-size: 15px;
-  padding-top: 23px !important; }
+#menu ul.menu-desktop li a, .menu ul.menu-desktop li a {
+  color: #808080; }
 #menu .reseaux-sociaux, .menu .reseaux-sociaux {
   border-top: 1px solid rgba(0, 0, 0, 0.5);
   padding-top: 20px;
@@ -1300,19 +1351,13 @@ section .block .block-title {
   width: 100%; }
   #menu #navbarCollapse ul li, .menu #navbarCollapse ul li {
     flex: auto;
-    padding: 0 5px;
-    text-align: center; }
+    padding-bottom: 10px; }
+    #menu #navbarCollapse ul li i:before, .menu #navbarCollapse ul li i:before {
+      font-size: 14px;
+      color: #000;
+      font-weight: 500; }
     #menu #navbarCollapse ul li a, .menu #navbarCollapse ul li a {
       color: #333; }
-    #menu #navbarCollapse ul li.coeur, .menu #navbarCollapse ul li.coeur {
-      background: url(/assets/img/picto_coeur.jpg) no-repeat top center; }
-      #menu #navbarCollapse ul li.coeur a, .menu #navbarCollapse ul li.coeur a {
-        margin-top: 6px; }
-    #menu #navbarCollapse ul li.user, .menu #navbarCollapse ul li.user {
-      background: url(/assets/img/picto_user.jpg) no-repeat top center;
-      text-align: center; }
-      #menu #navbarCollapse ul li.user a, .menu #navbarCollapse ul li.user a {
-        margin-top: 6px; }
     #menu #navbarCollapse ul li input, .menu #navbarCollapse ul li input {
       margin-top: 20px;
       margin-left: auto;
@@ -1320,23 +1365,7 @@ section .block .block-title {
       width: 100%; }
     @media (max-width: 992px) {
       #menu #navbarCollapse ul li.user, .menu #navbarCollapse ul li.user {
-        text-align: left;
-        background: url(/assets/img/picto_user.jpg) no-repeat center left; }
-        #menu #navbarCollapse ul li.user a, .menu #navbarCollapse ul li.user a {
-          padding-left: 40px;
-          margin-top: 0px; }
-      #menu #navbarCollapse ul li.coeur, .menu #navbarCollapse ul li.coeur {
-        text-align: left;
-        background: url(/assets/img/picto_coeur.jpg) no-repeat center left; }
-        #menu #navbarCollapse ul li.coeur a, .menu #navbarCollapse ul li.coeur a {
-          padding-left: 40px;
-          margin-top: 0px; }
-      #menu #navbarCollapse ul li.newsletter, .menu #navbarCollapse ul li.newsletter {
-        text-align: left;
-        background: url(/assets/img/newsletter.jpg) no-repeat center left; }
-        #menu #navbarCollapse ul li.newsletter a, .menu #navbarCollapse ul li.newsletter a {
-          padding-left: 40px;
-          margin-top: 0px; } }
+        text-align: left; } }
 
 .select2-container--open .select2-dropdown--below {
   border-radius: 0;
@@ -1680,15 +1709,6 @@ div.user-login, div.user-register {
     .poignee {
       display: none; } }
 
-.voir-actualites {
-  white-space: nowrap;
-  padding: 7px 20px;
-  color: #fff;
-  background: #db2a24; }
-  .voir-actualites:hover {
-    text-decoration: underline;
-    color: #fff; }
-
 @media (max-width: 700px) {
   .ui-widget-content {
     width: 100% !important;
@@ -1736,5 +1756,17 @@ div.user-login, div.user-register {
 
 #block-pieddepage a {
   color: #ffffff; }
+
+.fs-1 {
+  font-size: 10px; }
+
+.fs-2 {
+  font-size: 12px; }
+
+.fs-3 {
+  font-size: 14px; }
+
+.fs-4 {
+  font-size: 16px; }
 
 /*# sourceMappingURL=style.css.map */

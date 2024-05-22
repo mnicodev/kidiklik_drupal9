@@ -68,13 +68,13 @@
   {% endif %}
 {% else %}
   <div{{ attributes.addClass(classes) }}>
-    <i class="fa fa-mobile"></i>
+    
     <div{{ title_attributes.addClass(title_classes) }}>{{ label }}</div>
     {% if multiple %}
       <div class="field--items">
     {% endif %}
     {% for item in items %}
-      <div{{ item.attributes.addClass('field--item') }}><a href="tel:{{ item.content }}">{{ item.content }}</a></div>
+      <div{{ item.attributes.addClass('field--item') }}><i class="fa fa-mobile"></i><a href="tel:{{ item.content }}">{{ item.content }}</a></div>
     {% endfor %}
     {% if multiple %}
       </div>

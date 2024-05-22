@@ -12,7 +12,8 @@ use Drupal\file\Entity\File;
  * Place your custom PHP code in this file.
  */
 function kidiklik_preprocess_node(&$variables) {
-
+	
+	$variables['date']= format_date($variables['node']->get('changed')->value ,'date_courte');
 }
 
 function kidiklik_preprocess_page(&$variables) {
@@ -112,6 +113,19 @@ function kidiklik_page_attachments_alter(array &$variables) {
 }
 
 function kidiklik_preprocess_menu(&$variables, $hook) {
+}
+
+function kidiklik_preprocess_paragraph(&$variables) {
+    $paragraphe = $variables['paragraph'];
+	
+    if ($paragraphe->bundle() == 'paragraphe') {
+        // Votre logique ici pour masquer un champ spécifique.
+		$cacher = $paragraphe->get('field_masquer')->value;
+        if($cacher === '1') {
+			//ksm($variables['content']);
+			unset($variables['content']);
+		}
+    }
 }
 
 function kidiklik_preprocess_field(&$variables) {

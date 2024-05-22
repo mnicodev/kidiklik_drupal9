@@ -68,9 +68,9 @@
   {% endif %}
 {% else %}
   <div{{ attributes.addClass(classes) }}>
-    <i class="fa fa-desktop"></i>
-    <div class="field--label">Website</div>
+    
     <div class="field--item">
+    <i class="fa fa-desktop"></i>
     <a href="{% for item in items %}{{ item.content }}{% endfor %}" target="blank">Voir le site</a>
     </div>
 
