@@ -341,7 +341,7 @@ function kidiklik_front_recherche_views_query_alter(Drupal\views\ViewExecutable 
         if(!is_numeric($limit_distance)) {
           $limit_distance = 20;
         }
-        $limit_nb_content = 10;
+        $limit_nb_content = 0;
 
         /*
         on va tester la présence de contenus dans le cas d'une ville
