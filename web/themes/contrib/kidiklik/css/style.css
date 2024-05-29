@@ -487,7 +487,8 @@ article {
   line-height: 20px; }
   article .zone-image {
     text-align: right;
-    margin-bottom: 10px; }
+    margin-bottom: 10px;
+    overflow: hidden; }
     article .zone-image .field--name-field-image .field--item {
       display: block; }
   article img {

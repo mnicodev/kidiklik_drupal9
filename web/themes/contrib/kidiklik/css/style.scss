@@ -638,29 +638,11 @@ h3 {
 article  {
 	.zone-image {
 		text-align: right;
-		margin-bottom: 10px;;
+		margin-bottom: 10px;
+		overflow: hidden;
 		.field--name-field-image {
 			.field--item {
 				display: block;
-			}
-		}
-		#groupe-actions {
-
-			@media(max-width: 1200px) {
-				display: flex;
-				flex-direction: row-reverse;
-			}
-			@media(max-width: 500px) {
-				display: flex;
-				flex-direction: column;
-
-				a {
-					text-align: left;
-				}
-				a.reservation {
-					background-position: 12px 50% !important;
-  					padding-left: 40px;
-				}
 			}
 		}
 
@@ -862,50 +844,38 @@ footer .menu li.last {
 	}
 
 }
-.bloc-fiche {
-		.bloc-information, article.teaser {
-			margin-bottom: 20px;
-			border: 1px solid #ccc;
-			display: block;
-			overflow: hidden;
-			box-shadow: 0px 3px 5px rgba(125, 125, 125, 0.5);
 
-			h5 {
-				margin-top: 5px;
-        		font-size: 1.2em;
-				margin-bottom: 0!important;
-			}
-			.content {
-				padding-top: 5px;
-				padding-bottom: 5px;
-			}
-			.informations {
-
-				color: gray;
-				.field--label {
-					font-weight: 700;
-				}
-
-			}
-			.titre  a{
-				color: $bleuclair_kidiklik !important;
-				font-size: 1.2em;
-				font-weight: bold !important;
-				font-family: 'Roboto';
-			}
-		}
-	.favori {
-		.reservation {
-			display: none;
-		}
-	}
-	@media(max-width: 768px) {
-		margin-bottom: 20px;
-	}
-}
 .view-flag-bookmark {
+	.view-content {
+
+	}
+	.views-row {
+		padding: 10px;
+		float: left;
+	}
 	.reservation {
 		display: none;
+	}
+
+	.item-favori {
+		margin-bottom: 10px;
+		font-size: 0.95em;
+		img {
+			max-width: 100%;
+		}
+		a {
+			color: #349abf !important;
+			font-size: 1.2em;
+			font-weight: bold !important;
+			font-family: 'Roboto';
+		}
+		.zone-flag {
+			a {
+				padding: 5px;
+				color: #ffffff!important;
+			}
+			text-align: center;
+		}
 	}
 }
 #block-views-block-activites-activites-associees {
@@ -932,9 +902,53 @@ footer .menu li.last {
 
 	}
 }
+.bloc-fiche {
+	.changed {
+		font-size: 12px;
+		font-style: italic;
+	}
+	.bloc-information, article.teaser {
+		margin-bottom: 20px;
+		border: 1px solid #ccc;
+		display: block;
+		overflow: hidden;
+		box-shadow: 0px 3px 5px rgba(125, 125, 125, 0.5);
 
+		h5 {
+			margin-top: 5px;
+			font-size: 1.2em;
+			margin-bottom: 0!important;
+		}
+		.content {
+			padding-top: 5px;
+			padding-bottom: 5px;
+		}
+		.informations {
 
-.activite-teaser {
+			color: gray;
+			.field--label {
+				font-weight: 700;
+			}
+
+		}
+		.titre  a{
+			color: $bleuclair_kidiklik !important;
+			font-size: 1.2em;
+			font-weight: bold !important;
+			font-family: 'Roboto';
+			padding-bottom: 5px;
+  			display: block;
+		}
+	}
+	.favori {
+		.reservation {
+			display: none;
+		}
+	}
+	@media(max-width: 768px) {
+		margin-bottom: 20px;
+	}
+
 
 	font-size: 0.95em;
 	/*@media (min-width: 768px) {
@@ -957,8 +971,6 @@ footer .menu li.last {
 		overflow: hidden;
 	}
 	.actions {
-		display: inline-flex;
-		float: right;
 		.favori, .reserver {
 			float: right;
 			background: #db2a24;
@@ -970,14 +982,6 @@ footer .menu li.last {
 				display: block;
 			}
 		}
-		.reserver {
-			background: url(../images/ticket.png) no-repeat #db2a24!important;
-			background-position: 0 50%!important;
-			padding-left: 15px;
-			padding-top: 1px;
-
-		}
-
 	}
 	.paragraph--view-mode--liste {
 		display: flex;
@@ -1012,11 +1016,12 @@ footer .menu li.last {
 			padding-top: 2px;
 		}
 		.horaire {
-			height: 15px;
+			height: 17px;
 			overflow: hidden;
 		}
 	}
 }
+/* fin bloc fiche */
 #edit-center-coordinates {
 	display: none;
 }
@@ -1194,18 +1199,7 @@ footer .menu li.last {
 
 }
 
-.action-flag, .actions {
-	a.use-ajax, a.login-popup-form {
-		padding: 7px 15px;
-		display: block;;
-		&:before {
-			font-family: "Font Awesome 5 Free";
-			font-weight: 400;
-			content: "\f004";
-			margin-right: 10px;
-		}
-	}
-}
+
 
 p.js-flag-message {
 	position: fixed;
@@ -1220,38 +1214,80 @@ p.js-flag-message {
 
 }
 
-a.reservation {
-
-		white-space: nowrap;
-
-		padding: 7px 15px;
-		color: #fff;
-		display: inline-block;
-		text-align: center;
-
-		&:before {
-			content: "";
-		}
-		background: url(../images/ticket.png) no-repeat #db2a24!important;
-		background-position: 5px 50%!important;
-		padding-left: 35px;
-
+.bloc-fiche, article {
+	.groupe-actions {
+		float: right;
+	}
 }
 #groupe-actions {
-	display: inline-block;
+	float: left;
+}
+.groupe-actions {
 	overflow: hidden;
 	background: #db2a24;
-	.zone-flag, .reservation, .field{
-		float: right!important;
-	}
-	.ajout, .reservation {
-		a {
-			padding: 7px 15px!important;
+	float: left;
 
+	.zone-flag a,.zone-flag, .reservation, .field{
+		float: right;
+
+	}
+
+	a {
+		padding: 7px 10px;
+			color: #ffffff;
+			text-align: left;
+
+	}
+	a.login-popup-form, a.use-ajax {
+		&:before {
+			font-family: "Font Awesome 5 Free";
+			font-weight: 400;
+			content: "\f004";
+			margin-right: 5px;
 		}
+	}
+	.reservation {
+		&:before {
+			content: " ";
+			background: url(../images/ticket-16.svg) no-repeat #db2a24!important;
+			padding-left: 20px;
+		}
+
+		
 	}
 	.voir-actualites {
 		float: right;
+		i {
+			margin-right: 5px!important;
+			font-size: 18px;
+		}
+
+		white-space: nowrap;
+		color: #fff;
+	
+		background: #db2a24;
+		&:hover {
+			text-decoration: underline;
+			color:#fff;
+		}
+	}
+
+	@media(max-width: 500px) {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		.zone-flag a,.zone-flag, .reservation, .field{
+			float: left;
+	
+		}
+		a {
+			text-align: left;
+		}
+		a.reservation {
+			margin-top: 0px;
+			
+		}
+
 	}
 
 }
@@ -1259,7 +1295,7 @@ a.reservation {
 
     i {
       color: #fff;
-      padding-right: 5px;
+      padding-right: 5px!important;
     }
     a {
       background: #db2a24;
@@ -1267,11 +1303,16 @@ a.reservation {
       color: #fff;
 	  width: 100%;
 		display: block;
-		text-align: center;
     }
   }
 
 .activite, .agenda {
+	.field {
+		i {
+			width: 25px;
+			text-align: center;
+		}
+	}
 	.field--name-field-telephone,
 	.field--name-field-lien,
 	.field--name-field-email {
@@ -1285,16 +1326,40 @@ a.reservation {
 	}
 	.field--name-field-adresse {
 		margin-bottom: 5px!important;
+		span {
+			padding-left: 8px;
+		}
 	}
 	.field--name-field-lieu {
 		margin-top: 10px;
 	}
-	.flag-resa {
 
-	}
 
 	.field--name-field-resume  {
 		margin-bottom: 10px;
+	}
+	.field--name-field-duree {
+		span {
+			padding-left: 10px;
+		}
+	}
+	.field--name-field-telephone {
+		a {
+			padding-left: 10px;
+		}
+	}
+	.field--name-field-email {
+		a {
+			padding-left: 10px;
+		}
+	}
+	.field--name-field-lien {
+		a {
+			padding-left: 5px;
+		}	
+	}
+	#cp {
+		padding-left: 32px;
 	}
 
 
@@ -1304,7 +1369,7 @@ a.reservation {
 		.field--label {
 			font-weight: 500;
 			display: inline-block;
-      margin-right: 5px;
+      		margin-right: 5px;
 			&:after {
 				content: " :";
 			}
@@ -1317,11 +1382,6 @@ a.reservation {
 		.field--name-field-a-partir-de {
 			display: block;
 			margin-top: 0px;
-			.field--item {
-				&:before {
-					content: "Public : ";
-				}
-			}
 		}
 		.field--name-field-horaires {
 			margin-top: 10px;
@@ -1363,7 +1423,17 @@ aside .region {
 }
 article.full {
 	margin-bottom: 20px;
+	.groupe-actions {
 
+		@media(max-width: 500px) {
+			.reservation {
+				margin-top: 0px;
+			}
+			.zone-flag a {
+				padding: 7px 13px;;
+			}
+		}
+	}
 	.bloc-age {
 		display: flex;
 		flex-direction: row;
@@ -1413,7 +1483,6 @@ article.full {
 			}
 			.field--item {
 				font-weight: 500;
-				padding-left: 20px;
 			}
 		}
 		.field--name-field-lien {
@@ -1449,13 +1518,24 @@ section{
 	position: relative;
 	width: 100%;
 
+  .views-field-nothing {
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 25vw;
+    @media(min-width: 1200px) {
+      height: 300px;
+    }
+    background-size: cover;
+    cursor: pointer;
+  }
+
 	@media(max-width: 992px) {
-		max-height: 375px;
+		/*max-height: 375px;*/
 	}
 	@media(min-width: 992px) {
 		max-height: 305px;
 	}
-	
+
 	overflow: hidden;
 	margin-bottom: 20px;
 
@@ -1466,9 +1546,23 @@ section{
 		.views-row {
 			position: relative;
 			display: flex;
-			@media(max-width: 992px) {
+			.views-field-nothing {
+				flex: 3;
+			}
+			/*@media(max-width: 500px) {
 				flex-direction: column;
+			  .views-field-nothing {
+          flex: none;
+          height: 180px;
+			  }
 
+      }*/
+      @media(max-width: 992px) {
+				flex-direction: column;
+			  .views-field-nothing {
+          flex: none;
+          height: 38vw;
+			  }
 			}
 			.views-field-title {
 				flex: 1;
@@ -1497,9 +1591,6 @@ section{
 					color: #fff;
 					text-transform: uppercase;
 				}
-			}
-			.views-field-nothing {
-				flex: 3;
 			}
 		}
 	}
@@ -1552,13 +1643,17 @@ section{
 	.change_dep {
 		border-radius: 0px;
 		border: none;
-		background: url(/assets/img/picto_france.jpg) no-repeat center left;
+		background: url(/assets/img/23463.png) no-repeat center left;
+		padding-bottom: 0!important;
+		padding-left: 20px;
+		margin-bottom: 10px;
+		background-size: 20px;
 		.select2-selection {
 			border-radius: 0px;
 			border: none;
 			.select2-selection__rendered {
 				color: #000;
-				padding-left: 10px;
+				padding-left: 0px;
 			}
 		}
 	}
@@ -1592,10 +1687,7 @@ section{
 		display: block;
 		text-align: left!important;
 		margin-left: 2px;
-		padding-bottom: 5px;
-		a {
-			padding-left: 23px;
-		}
+
 		i {
 
 			color: #333!important;
@@ -1608,28 +1700,28 @@ section{
 		border-radius: 0px;
 		border: none;
 		background: url(/assets/img/picto_france.jpg) no-repeat top center;
-		padding-top: 20px;
+		padding-top: 18px;
 		.select2-selection__arrow {
 			top: 20px;
 		}
 	}
 }
 #menu, .menu {
-
-		a {
-			color: #808080;
+	ul.menu-desktop {
+		li {
 			i {
 				text-align: center;
 				display: block;
-				margin-bottom: 10px;
 				color: #808080;
 			}
+			a {
+				color: #808080;
+				
+			}
 		}
-		li.newsletter {
-			background: url(../images/newsletter.png) no-repeat top center;
-			background-size: 15px;
-			padding-top: 23px!important;
-		}
+	}
+		
+
 
 	.reseaux-sociaux {
 		border-top: 1px solid rgba(0,0,0,.5);
@@ -1763,25 +1855,20 @@ section{
 			width: 100%;
 			li {
 				flex: auto;
-				padding: 0 5px;
-				text-align: center;
+				padding-bottom: 10px;
+				i {
+					&:before {
+						font-size: 14px;
+						color: #000;
+						font-weight: 500;
+					}
+				}
 				a {
 					color: #333;
-				}
-				&.coeur {
-					background: url(/assets/img/picto_coeur.jpg) no-repeat top center;
 
-					a {
-						margin-top: 6px;
-					}
 				}
-				&.user {
-					background: url(/assets/img/picto_user.jpg) no-repeat top center;
-					text-align: center;
-					a {
-						margin-top: 6px;
-					}
-				}
+
+
 
 				input {
 					margin-top: 20px;
@@ -1790,36 +1877,15 @@ section{
 					width: 100%;
 				}
 
-        @media (max-width: 992px) {
-          &.change_dep {
-            //display: none;
-          }
-          &.user {
-            text-align: left;
-            background: url(/assets/img/picto_user.jpg) no-repeat center left;
-            a {
-              padding-left: 40px;
-              margin-top: 0px;
-            }
-          }
-          &.coeur {
-            text-align: left;
-            background: url(/assets/img/picto_coeur.jpg) no-repeat center left;
-            a {
-              padding-left: 40px;
-              margin-top: 0px;
-            }
-          }
+				@media (max-width: 992px) {
 
-          &.newsletter {
-            text-align: left;
-            background: url(/assets/img/newsletter.jpg) no-repeat center left;
-            a {
-              padding-left: 40px;
-              margin-top: 0px;
-            }
-          }
-        }
+					&.user {
+						text-align: left;
+
+					}
+
+
+				}
 			}
 		}
 
@@ -2305,17 +2371,7 @@ div.user-login, div.user-register {
 	}
 }
 
-.voir-actualites {
-	white-space: nowrap;
-	padding: 7px 20px;
-	color: #fff;
 
-	background: #db2a24;
-	&:hover {
-		text-decoration: underline;
-		color:#fff;
-	}
-}
 
 .ui-widget-content {
 	@media (max-width: 700px) {
@@ -2393,3 +2449,15 @@ article.page {
 	}
 }
 
+.fs-1 {
+	font-size: 10px;
+}
+.fs-2 {
+	font-size: 12px;
+}
+.fs-3 {
+	font-size: 14px;
+}
+.fs-4 {
+	font-size: 16px;
+}
