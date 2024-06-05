@@ -357,10 +357,11 @@ function kidiklik_front_recherche_views_query_alter(Drupal\views\ViewExecutable 
           * recherche du bon nom d'une ville
           */
           $info_ville = $kidiklik_service->searchVilleById($id_ville ?? null);
+          
           if ($info_ville === false) {
             $info_ville = $kidiklik_service->searchFromCp($dep);
           }
-
+          
           if ($info_ville !== false) {
             $ou = $info_ville->commune;
 
@@ -413,6 +414,22 @@ function kidiklik_front_recherche_views_query_alter(Drupal\views\ViewExecutable 
         fin recherche si pas trouvé dans où
         */
 
+        if($count_event > 0) {
+          $configuration = array(
+            'type' => 'INNER',
+            'table' => 'node__field_departement',
+            'field' => 'entity_id',
+            'left_table' => 'node_field_data',
+            'left_field' => 'nid',
+            'operator' => '=',
+          );
+  
+          $join = \Drupal\views\Views::pluginManager('join')->createInstance('standard', $configuration);
+          $rel = $query->addRelationship('field_dep', $join, 'node_field_data');
+          $query->addTable('node__field_departement', $rel, $join, 'field_dep');
+          $query->addWhere('3', 'field_dep.field_departement_target_id', $kidiklik_service->getTermDepartement(), '=');
+        }
+
         // SI on ne trouve pas de villes
         if (count($villes) === 0) {
           /* $query->addWhere('10', 'field_ville.field_ville_save_value', $villes, 'in');
@@ -461,7 +478,6 @@ function kidiklik_front_recherche_views_query_alter(Drupal\views\ViewExecutable 
           $query->addTable('node__field_code_postal', $rel, $join, 'field_cp');
 
           $query->addWhere('10', 'field_cp.field_code_postal_value', $villes, 'in');
-
         }
 
 
