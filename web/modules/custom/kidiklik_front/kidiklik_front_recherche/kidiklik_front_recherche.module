@@ -331,8 +331,37 @@ function kidiklik_front_recherche_views_query_alter(Drupal\views\ViewExecutable 
       } else {
         unset($query->where[5]);
       }
-
+      /*$configuration = array(
+        'type' => 'inner',
+        'table' => 'node__field_ville_save',
+        'field' => 'entity_id',
+        'left_table' => 'node_field_data',
+        'left_field' => 'nid',
+        'operator' => '=',
+      );
       
+      $join = \Drupal\views\Views::pluginManager('join')->createInstance('standard', $configuration);
+      $rel = $query->addRelationship('ville_save', $join, 'node_field_data');
+      $query->addTable('node__field_ville_save', $rel, $join, 'ville_save');
+      $configuration = array(
+        'type' => 'inner',
+        'table' => 'villes',
+        'field' => 'commune',
+        'left_table' => 'ville_save',
+        'left_field' => 'field_ville_save_value',
+        'operator' => '=',
+      );
+      $join = \Drupal\views\Views::pluginManager('join')->createInstance('standard', $configuration);
+      $rel = $query->addRelationship('villes', $join, 'villes');
+      $query->addTable('villes',  $rel, $join);
+
+
+
+      $formula_math = '(acos( SIN(47.811 * PI() / 180) * SIN(lat * PI() / 180) + COS(47.811 * PI() / 180) * COS(lat * PI() / 180) * COS( (1.81743 - lng) * PI() / 180 ) ) * 6371)';
+      $query->addField(null, $formula_math,'gps');
+      $query->addOrderBy(null, null, 'asc', 'gps');*/
+      //$query->addHavingExpression('gps', (int)$limit_distance, '<');
+      //$query->addWhere('11', 'gps',20, '<');
       /*
       RECHERCHE GEO
       */
@@ -363,117 +392,89 @@ function kidiklik_front_recherche_views_query_alter(Drupal\views\ViewExecutable 
         on va tester la présence de contenus dans le cas d'une ville
         */
 
-        //$session = \Drupal::request()->getSession();
+        
         $database = \Drupal::database();
 
-        //if ($session->get('search_ville') !== $ou) {
 
+        /*
+        * recherche du bon nom d'une ville
+        */
+        $info_ville = $kidiklik_service->searchVilleById($id_ville ?? null);
+        
+        /* pas de resultats, on recherche dans le cas où l'utilisateur aurait saisie un code postal */
+        if ($info_ville === false) {
+          $info_ville = $kidiklik_service->searchFromCp($dep);
+        } 
 
-
-          //$session->remove('villes');
-
-          /*
-          * recherche du bon nom d'une ville
-          */
-          $info_ville = $kidiklik_service->searchVilleById($id_ville ?? null);
+        /* LA VILLE EXISTE */
+        if ($info_ville !== false) {
           
-          if ($info_ville === false) {
-            $info_ville = $kidiklik_service->searchFromCp($dep);
-          } 
+          $ou = $info_ville->commune;
 
-          /* LA VILLE EXISTE */
-          if ($info_ville !== false) {
-            
-            $ou = $info_ville->commune;
+          /* ON RECHERCHE SI IL Y A BIEN DES EVENEMENTS */
+          $seach_event = Views::getView("activites");
+          $seach_event->setDisplay("search_by_city");
+          $seach_event->setArguments([$kidiklik_service->getTermDepartement(), $ou]);
+          $seach_event->execute();
+          $count_event = $seach_event->total_rows;
+          
+          $ou_search = [
+            'ville' => $ou
+          ];
 
-            /* ON RECHERCHE SI IL Y A BIEN DES EVENEMENTS*/
+          /* SI PAS EVENT, ON RECHERCHE DANS LE DEP */
+          if ($count_event <= $limit_nb_content) {
+            $ou = $info_ville->code_postal;
+            /* ON RECHERCHE AVEC LE CODE POSTAL */
             $seach_event = Views::getView("activites");
-            $seach_event->setDisplay("search_by_city");
+            $seach_event->setDisplay("search_by_cp");
             $seach_event->setArguments([$kidiklik_service->getTermDepartement(), $ou]);
             $seach_event->execute();
             $count_event = $seach_event->total_rows;
+
             
-            $ou_search = [
-              'ville' => $ou
-            ];
-            /* SI PAS EVENT, ON RECHERCHE DANS LE DEP */
+            
+
+            /* SI PAS AVEC LE CP, ON RECHERCHE AUTOUR D'UNE DISTANCE */
             if ($count_event <= $limit_nb_content) {
-              $ou = $info_ville->code_postal;
-              /* ON RECHERCHE AVEC LE CODE POSTAL */
-              $seach_event = Views::getView("activites");
-              $seach_event->setDisplay("search_by_cp");
-              $seach_event->setArguments([$kidiklik_service->getTermDepartement(), $ou]);
-              $seach_event->execute();
-              $count_event = $seach_event->total_rows;
+              
+              
+              $sql = 'select distinct code_postal,(acos( SIN(:lat * PI() / 180) * SIN(lat * PI() / 180) + COS(:lat * PI() / 180) * COS(lat * PI() / 180) * COS( (:lng - lng) * PI() / 180 ) ) * 6371) as distance
+                  from villes v
+                  having distance < :limit_distance
+                  order by distance';
 
-              /* ON AJOUTE LA JOINTURE POUR LE GPS */
-              $configuration = array(
-                'type' => 'inner',
-                'table' => 'villes',
-                'field' => 'commune',
-                'left_table' => 'ville_save',
-                'left_field' => 'field_ville_save_value',
-                'operator' => '=',
-              );
-              $join = \Drupal\views\Views::pluginManager('join')->createInstance('standard', $configuration);
-              $rel = $query->addRelationship('villes', $join, 'villes');
-              $query->addTable('villes',  $rel, $join);
-        
-  
-              /* ON MET LA FORMULE DES DISTANCES */
-              $formula_math = '(acos( SIN('.$info_ville->lat.' * PI() / 180) * SIN(lat * PI() / 180) + COS('.$info_ville->lat.' * PI() / 180) * COS(lat * PI() / 180) * COS( ('.$info_ville->lng.' - lng) * PI() / 180 ) ) * 6371)';
-              $query->addField(null, $formula_math,'gps');
-              $query->addOrderBy(null, null, 'asc', 'gps');
-              /* FIN */
-             
+              $query_calc = $database->query($sql, [
+                ':lat' => $info_ville->lat,
+                ':lng' => $info_ville->lng,
+                ':limit_distance' => $limit_distance
+              ]);
+              $results = $query_calc->fetchAll();
 
-              /* SI PAS AVEC LE CP, ON RECHERCHE AUTOUR D'UNE DISTANCE */
-              if ($count_event <= $limit_nb_content) {
-                
-                $sql = 'select distinct code_postal,(acos( SIN(:lat * PI() / 180) * SIN(lat * PI() / 180) + COS(:lat * PI() / 180) * COS(lat * PI() / 180) * COS( (:lng - lng) * PI() / 180 ) ) * 6371) as distance
-                    from villes v
-                    having distance < :limit_distance
-                    order by distance';
-
-                $query_calc = $database->query($sql, [
-                  ':lat' => $info_ville->lat,
-                  ':lng' => $info_ville->lng,
-                  ':limit_distance' => $limit_distance
-                ]);
-                $results = $query_calc->fetchAll();
-
-                foreach ($results as $ville) {
-                  $villes[] = $ville->code_postal;
-                }
-
-                $ou_search = [
-                  'distance' => $villes
-                ];
-
-                /*$session->set('villes', $villes);
-                $session->set('search_ville', $ou);*/
-
-
-              } else {
-                $ou_search = [
-                  'cp' => $info_ville->code_postal
-                ];
+              foreach ($results as $ville) {
+                $villes[] = $ville->code_postal;
               }
-            } 
+
+              $ou_search = [
+                'distance' => $villes
+              ];
 
 
-            /**/
-          } // FIN IF INFO_VILLE !== FALSE
-         
+            } else {
+              $ou_search = [
+                'cp' => $info_ville->code_postal
+              ];
+            }
+          } 
 
 
-        /*} else {
-          $villes = $session->get('villes');
+          /**/
+        } // FIN IF INFO_VILLE !== FALSE
 
-        }*/
         
 
-        /*if($count_event > 0) {
+        /* ON APPLIQUE LES SOLUTIONS DE RECHERCHE */
+        if(isset($ou_search['villes'])) {
           $configuration = array(
             'type' => 'INNER',
             'table' => 'node__field_departement',
@@ -487,18 +488,24 @@ function kidiklik_front_recherche_views_query_alter(Drupal\views\ViewExecutable 
           $rel = $query->addRelationship('field_dep', $join, 'node_field_data');
           $query->addTable('node__field_departement', $rel, $join, 'field_dep');
           $query->addWhere('3', 'field_dep.field_departement_target_id', $kidiklik_service->getTermDepartement(), '=');
-        }*/
-
-        /* ON APPLIQUE LES SOLUTIONS DE RECHERCHE */
-        if(isset($ou_search['villes'])) {
           $query->addWhere('10', 'ville_save.field_ville_save_value', $ou_search['villes'] . '%', 'like');
         } else if(isset($ou_search['cp'])) {
-        }
+          $configuration = array(
+            'type' => 'INNER',
+            'table' => 'node__field_departement',
+            'field' => 'entity_id',
+            'left_table' => 'node_field_data',
+            'left_field' => 'nid',
+            'operator' => '=',
+          );
+  
+          $join = \Drupal\views\Views::pluginManager('join')->createInstance('standard', $configuration);
+          $rel = $query->addRelationship('field_dep', $join, 'node_field_data');
+          $query->addTable('node__field_departement', $rel, $join, 'field_dep');
 
-        // SI on ne trouve pas de villes
-        if (count($villes) === 0) {
+          $query->addWhere('3', 'field_dep.field_departement_target_id', $kidiklik_service->getTermDepartement(), '=');
 
-          $query->addWhere('10', 'ville_save.field_ville_save_value', $ou . '%', 'like');
+          $query->addWhere('10', 'ville_save.field_ville_save_value', $ou_search['cp'] . '%', 'like');
 
           $configuration = array(
             'type' => 'INNER',
@@ -513,10 +520,30 @@ function kidiklik_front_recherche_views_query_alter(Drupal\views\ViewExecutable 
           $rel = $query->addRelationship('field_cp', $join, 'node_field_data');
           $query->addTable('node__field_code_postal', $rel, $join, 'field_cp');
 
-          $query->addWhere('10', 'field_cp.field_code_postal_value', $ou . '%', 'like');
+          $query->addWhere('10', 'field_cp.field_code_postal_value', $ou_search['cp'] . '%', 'like');
           $query->where[10]['type'] = 'OR';
-          kint($query);
-        } else {
+        } else if(isset($ou_search['distance'])) {
+          /* ON AJOUTE LA JOINTURE POUR LE GPS */
+          /*$configuration = array(
+            'type' => 'inner',
+            'table' => 'villes',
+            'field' => 'commune',
+            'left_table' => 'ville_save',
+            'left_field' => 'field_ville_save_value',
+            'operator' => '=',
+          );
+          $join = \Drupal\views\Views::pluginManager('join')->createInstance('standard', $configuration);
+          $rel = $query->addRelationship('villes', $join, 'villes');
+          $query->addTable('villes',  $rel, $join);
+    
+
+          $formula_math = '(acos( SIN('.$info_ville->lat.' * PI() / 180) * SIN(lat * PI() / 180) + COS('.$info_ville->lat.' * PI() / 180) * COS(lat * PI() / 180) * COS( ('.$info_ville->lng.' - lng) * PI() / 180 ) ) * 6371)';
+          $query->addField(null, $formula_math,'gps');
+          $query->addOrderBy(null, null, 'asc', 'gps');*/
+          //$query->addHavingExpression('gps', $limit_distance, '<');
+          //kint($query);exit;
+          /* FIN */
+          
           $configuration = array(
             'type' => 'INNER',
             'table' => 'node__field_code_postal',
@@ -530,8 +557,9 @@ function kidiklik_front_recherche_views_query_alter(Drupal\views\ViewExecutable 
           $rel = $query->addRelationship('field_cp', $join, 'node_field_data');
           $query->addTable('node__field_code_postal', $rel, $join, 'field_cp');
 
-          $query->addWhere('10', 'field_cp.field_code_postal_value', $villes, 'in');
+          $query->addWhere('10', 'field_cp.field_code_postal_value', $ou_search['distance'], 'in');
         }
+
 
 
       } else { //  PAS CRITERE OU
