@@ -346,11 +346,14 @@ class KidiklikService
   }
 
   public function paramsVillesIsValid($params) {
+    if(empty($params)) {
+      return true;
+    }
     preg_match('/(.*)_(.*)/', $params, $rs);
 
     if(!empty($rs) && is_numeric($rs[2]) && $rs[2]>0 && $rs[2]<100000) {
-      return $rs;
+      return true;
     }
-    return null;
+    return false;
   }
 }

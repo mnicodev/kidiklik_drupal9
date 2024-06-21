@@ -230,7 +230,7 @@ function _validate_form(array $form, FormStateInterface $form_state) {
     $results = \Drupal::service('kidiklik.service')->paramsVillesIsValid($geoloc);
     if(empty($results)) {
       $response = new RedirectResponse(base_path());
-      //$response->send();      exit;
+      $response->send();      exit;
     }
   }
   
@@ -267,17 +267,22 @@ function kidiklik_front_recherche_views_query_alter(Drupal\views\ViewExecutable 
       on teste si la geoloc est une ville ou un departement
       */
       $ou = \Drupal::request()->query->get("geoloc");
-      $results = $kidiklik_service->paramsVillesIsValid($ou);
-      if(!empty($results)) {
-        if($results[1] === 'id') {
-          $id_ville = $results[2] ?? null;
-        } else if($results[1] === 'd') {
-          $dep = $results[2] ?? null;
-        }
-      } else {
+     
+      if($kidiklik_service->paramsVillesIsValid($ou)) {
+        preg_match('/(.*)_(.*)/', $ou, $results);
+        if(!empty($results)) {
+          if($results[1] === 'id') {
+            $id_ville = $results[2] ?? null;
+          } else if($results[1] === 'd') {
+            $dep = $results[2] ?? null;
+          }
+        } 
+      }else {
         $response = new RedirectResponse(base_path());
-        //$response->send();        exit;
+        $response->send();        exit;
       }
+      
+      
 
       if(!empty($rubrique = \Drupal::request()->get('field_rubriques_activite_target_id')) &&
       \Drupal::currentUser()->getAccount()->isAnonymous() === true) {
