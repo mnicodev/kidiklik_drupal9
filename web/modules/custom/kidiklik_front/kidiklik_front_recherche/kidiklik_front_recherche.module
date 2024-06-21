@@ -230,8 +230,7 @@ function _validate_form(array $form, FormStateInterface $form_state) {
     $results = \Drupal::service('kidiklik.service')->paramsVillesIsValid($geoloc);
     if(empty($results)) {
       $response = new RedirectResponse(base_path());
-      $response->send();
-      exit;
+      //$response->send();      exit;
     }
   }
   
@@ -277,8 +276,7 @@ function kidiklik_front_recherche_views_query_alter(Drupal\views\ViewExecutable 
         }
       } else {
         $response = new RedirectResponse(base_path());
-        $response->send();
-        exit;
+        //$response->send();        exit;
       }
 
       if(!empty($rubrique = \Drupal::request()->get('field_rubriques_activite_target_id')) &&
