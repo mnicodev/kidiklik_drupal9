@@ -8,6 +8,7 @@
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\views\Views;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * Implements hook_help().
@@ -216,8 +217,25 @@ function kidiklik_front_recherche_form_views_exposed_form_alter(&$form, FormStat
       //$form["#attached"]["library"][] = "kidiklik_front_recherche/kidiklik_front_recherche.styles";
     }
 
+    $form["#validate"][] = '_validate_form';
+
   }
 
+}
+
+function _validate_form(array $form, FormStateInterface $form_state) {
+  if($form['#id'] === 'views-exposed-form-activites-recherche-activites') {
+    
+    $geoloc = $form['geoloc']['#value'] ?? \Drupal::request()->query->get("geoloc");
+    $results = \Drupal::service('kidiklik.service')->paramsVillesIsValid($geoloc);
+    if(empty($results)) {
+      $response = new RedirectResponse(base_path());
+      $response->send();
+      exit;
+    }
+  }
+  
+  //
 }
 
 function getCommunes(array &$form, FormStateInterface $form_state)
@@ -245,19 +263,22 @@ function kidiklik_front_recherche_views_query_alter(Drupal\views\ViewExecutable 
 
       $query->distinct = true;
       $query->groupby[] = 'nid';
-
+      $kidiklik_service = \Drupal::service('kidiklik.service');
       /*
       on teste si la geoloc est une ville ou un departement
       */
       $ou = \Drupal::request()->query->get("geoloc");
-      preg_match('/(.*)_(.*)/', $ou, $results);
-
+      $results = $kidiklik_service->paramsVillesIsValid($ou);
       if(!empty($results)) {
         if($results[1] === 'id') {
           $id_ville = $results[2] ?? null;
         } else if($results[1] === 'd') {
           $dep = $results[2] ?? null;
         }
+      } else {
+        $response = new RedirectResponse(base_path());
+        $response->send();
+        exit;
       }
 
       if(!empty($rubrique = \Drupal::request()->get('field_rubriques_activite_target_id')) &&
@@ -339,7 +360,7 @@ function kidiklik_front_recherche_views_query_alter(Drupal\views\ViewExecutable 
         'left_field' => 'nid',
         'operator' => '=',
       );
-      
+
       $join = \Drupal\views\Views::pluginManager('join')->createInstance('standard', $configuration);
       $rel = $query->addRelationship('ville_save', $join, 'node_field_data');
       $query->addTable('node__field_ville_save', $rel, $join, 'ville_save');
@@ -375,13 +396,13 @@ function kidiklik_front_recherche_views_query_alter(Drupal\views\ViewExecutable 
           'left_field' => 'nid',
           'operator' => '=',
         );
-        
+
         $join = \Drupal\views\Views::pluginManager('join')->createInstance('standard', $configuration);
         $rel = $query->addRelationship('ville_save', $join, 'node_field_data');
         $query->addTable('node__field_ville_save', $rel, $join, 'ville_save');
         /* FIN JOINTURE */
+
         
-        $kidiklik_service = \Drupal::service('kidiklik.service');
         $limit_distance = \Drupal::request()->get('ld') ?? 20;
         if(!is_numeric($limit_distance)) {
           $limit_distance = 20;
@@ -392,7 +413,7 @@ function kidiklik_front_recherche_views_query_alter(Drupal\views\ViewExecutable 
         on va tester la présence de contenus dans le cas d'une ville
         */
 
-        
+
         $database = \Drupal::database();
 
 
@@ -400,15 +421,15 @@ function kidiklik_front_recherche_views_query_alter(Drupal\views\ViewExecutable 
         * recherche du bon nom d'une ville
         */
         $info_ville = $kidiklik_service->searchVilleById($id_ville ?? null);
-        
+
         /* pas de resultats, on recherche dans le cas où l'utilisateur aurait saisie un code postal */
         if ($info_ville === false) {
           $info_ville = $kidiklik_service->searchFromCp($dep);
-        } 
+        }
 
         /* LA VILLE EXISTE */
         if ($info_ville !== false) {
-          
+
           $ou = $info_ville->commune;
 
           /* ON RECHERCHE SI IL Y A BIEN DES EVENEMENTS */
@@ -417,7 +438,7 @@ function kidiklik_front_recherche_views_query_alter(Drupal\views\ViewExecutable 
           $seach_event->setArguments([$kidiklik_service->getTermDepartement(), $ou]);
           $seach_event->execute();
           $count_event = $seach_event->total_rows;
-          
+
           $ou_search = [
             'ville' => $ou
           ];
@@ -432,13 +453,13 @@ function kidiklik_front_recherche_views_query_alter(Drupal\views\ViewExecutable 
             $seach_event->execute();
             $count_event = $seach_event->total_rows;
 
-            
-            
+
+
 
             /* SI PAS AVEC LE CP, ON RECHERCHE AUTOUR D'UNE DISTANCE */
             if ($count_event <= $limit_nb_content) {
-              
-              
+
+
               $sql = 'select distinct code_postal,(acos( SIN(:lat * PI() / 180) * SIN(lat * PI() / 180) + COS(:lat * PI() / 180) * COS(lat * PI() / 180) * COS( (:lng - lng) * PI() / 180 ) ) * 6371) as distance
                   from villes v
                   having distance < :limit_distance
@@ -465,16 +486,16 @@ function kidiklik_front_recherche_views_query_alter(Drupal\views\ViewExecutable 
                 'cp' => $info_ville->code_postal
               ];
             }
-          } 
+          }
 
 
           /**/
         } // FIN IF INFO_VILLE !== FALSE
 
-   
+
 
         /* ON APPLIQUE LES SOLUTIONS DE RECHERCHE */
-        if(isset($ou_search['ville'])) {   
+        if(isset($ou_search['ville'])) {
           $configuration = array(
             'type' => 'INNER',
             'table' => 'node__field_departement',
@@ -483,7 +504,7 @@ function kidiklik_front_recherche_views_query_alter(Drupal\views\ViewExecutable 
             'left_field' => 'nid',
             'operator' => '=',
           );
-  
+
           $join = \Drupal\views\Views::pluginManager('join')->createInstance('standard', $configuration);
           $rel = $query->addRelationship('field_dep', $join, 'node_field_data');
           $query->addTable('node__field_departement', $rel, $join, 'field_dep');
@@ -498,7 +519,7 @@ function kidiklik_front_recherche_views_query_alter(Drupal\views\ViewExecutable 
             'left_field' => 'nid',
             'operator' => '=',
           );
-  
+
           $join = \Drupal\views\Views::pluginManager('join')->createInstance('standard', $configuration);
           $rel = $query->addRelationship('field_dep', $join, 'node_field_data');
           $query->addTable('node__field_departement', $rel, $join, 'field_dep');
@@ -535,7 +556,7 @@ function kidiklik_front_recherche_views_query_alter(Drupal\views\ViewExecutable 
           $join = \Drupal\views\Views::pluginManager('join')->createInstance('standard', $configuration);
           $rel = $query->addRelationship('villes', $join, 'villes');
           $query->addTable('villes',  $rel, $join);
-    
+
 
           $formula_math = '(acos( SIN('.$info_ville->lat.' * PI() / 180) * SIN(lat * PI() / 180) + COS('.$info_ville->lat.' * PI() / 180) * COS(lat * PI() / 180) * COS( ('.$info_ville->lng.' - lng) * PI() / 180 ) ) * 6371)';
           $query->addField(null, $formula_math,'gps');
@@ -543,7 +564,7 @@ function kidiklik_front_recherche_views_query_alter(Drupal\views\ViewExecutable 
           //$query->addHavingExpression('gps', $limit_distance, '<');
           //kint($query);exit;
           /* FIN */
-          
+
           $configuration = array(
             'type' => 'INNER',
             'table' => 'node__field_code_postal',

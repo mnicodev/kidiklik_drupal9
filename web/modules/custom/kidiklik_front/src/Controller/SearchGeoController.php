@@ -51,6 +51,8 @@ class SearchGeoController extends ControllerBase
         'key' => $dep,
         'id' => sprintf('id_%s',$ville->id_ville),
         'text' => sprintf('%s (%s)',$ville->commune,$dep),
+        'lat' => $ville->lat,
+        'lng' => $ville->lng
       ];
     }
 
