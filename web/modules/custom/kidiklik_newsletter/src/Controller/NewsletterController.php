@@ -190,7 +190,7 @@ class NewsletterController extends ControllerBase
             "titre" => $bloc->get('field_titre')->value,
             "image" => $url_image,
             "texte" => $bloc->get("field_resume")->value,
-            "lien" => $bloc->get("field_lien")->value,
+            "lien" => sprintf('%s?utm_source=newsletter&utm_medium=mise_en_avant', $bloc->get("field_lien")->value),
             'ext' => $ext
           ];
         }
@@ -224,7 +224,7 @@ class NewsletterController extends ControllerBase
           "titre" => $bloc->get('field_titre')->value,
           "image" => $url_image,
           "texte" => $bloc->get("field_resume")->value,
-          "lien" => $bloc->get("field_lien")->value,
+          "lien" => sprintf('%s?utm_source=newsletter&utm_medium=mise_en_avant', $bloc->get("field_lien")->value),
           'ext' => $ext,
         ];
       }
