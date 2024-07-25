@@ -104,7 +104,22 @@ Drupal.behaviors.kidiklik = {
 
 jQuery(document).ready(function() {
 
-	
+	jQuery('.bloc-fiche a').each(function() {
+		let url = jQuery(this).attr('href');
+		let param = url.split('?');
+		if(param.length > 2) {
+			let new_url = param[0] + '?' + param[1] + '&' + param[2];
+			jQuery(this).attr('href', new_url)
+		}
+	});
+	jQuery('.diaporama a').each(function() {
+		let url = jQuery(this).attr('href');
+		let param = url.split('?');
+		if(param.length > 2) {
+			let new_url = param[0] + '?' + param[1] + '&' + param[2];
+			jQuery(this).attr('href', new_url)
+		}
+	});
 	if(jQuery('.console-recherche').length) {
 		form = jQuery('.console-recherche');
 		jQuery(form).find('.onoff').on('click', function() {
@@ -231,7 +246,7 @@ jQuery(document).ready(function() {
 
 	var url=new URL(window.location.href);
 	var email = url.searchParams.get('record_email');
-	console.log(email);
+	
   if(email !== undefined && email !== null && email !== '') {
       jQuery('.main-container .highlighted').html('<div class="alert alert-secondary">Envoi de la demande d\'inscription. Veuillez patienter ...</div>');
       jQuery.ajax({
