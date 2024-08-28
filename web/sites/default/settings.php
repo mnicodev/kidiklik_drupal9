@@ -812,12 +812,17 @@ case 95:
 	case 'champagne':
 		$settings["dep"]=51;
 	break;
+	case 06:
+	case 83:
+	case 'cotedazur':
+		$settings["dep"]='06';
+	break;
 	case 16:
 		$settings["dep"]=17;
 		break;
 	case 23:
 	case 19:
-	case 24:	
+	case 24:
 	case 'perigord-limousin':
 	case 'limousin':
 		$settings["dep"]=87;
