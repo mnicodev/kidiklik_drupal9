@@ -73,6 +73,11 @@ RewriteRule ^/?(.*)	https://85.kidiklik.fr/$1 [L,R=301]
 RewriteCond %{HTTP_HOST}	56.kidiklik\.fr [NC]
 RewriteRule ^/?(.*)	https://29.kidiklik.fr/$1 [L,R=301]
 
+RewriteCond %{HTTP_HOST}	06.kidiklik\.fr [NC]
+RewriteRule ^/?(.*)	https://cotedazur.kidiklik.fr/$1 [L,R=301]
+RewriteCond %{HTTP_HOST}	83.kidiklik\.fr [NC]
+RewriteRule ^/?(.*)	https://cotedazur.kidiklik.fr/$1 [L,R=301]
+
 RewriteCond %{HTTP_HOST}	23.kidiklik\.fr [NC]
 RewriteRule ^/?(.*)	https://perigord-limousin.kidiklik.fr/$1 [L,R=301]
 RewriteCond %{HTTP_HOST}	19.kidiklik\.fr [NC]
@@ -269,7 +274,7 @@ RewriteRule ^/?(.*)	https://31.kidiklik.fr/$1 [L,R=301]
     <FilesMatch "\.(html|htm)$">
 	Header set Cache-Control "max-age=7200, public"
     </FilesMatch>
-	
+
   </IfModule>
 </IfModule>
 
