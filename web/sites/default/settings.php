@@ -813,10 +813,11 @@ case 95:
 		$settings["dep"]=51;
 	break;
 	case 06:
-	case 83:
+	//case 83:
 	case 'cotedazur':
 		$settings["dep"]='06';
 	break;
+	case 'charentes':
 	case 16:
 		$settings["dep"]=17;
 		break;
