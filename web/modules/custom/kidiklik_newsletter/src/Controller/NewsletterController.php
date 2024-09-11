@@ -164,6 +164,8 @@ class NewsletterController extends ControllerBase
       "url" => \Drupal::request()->getRequestUri()
     ];
 
+    $url = null;
+    $parse = null;
     /** département */
     $liste = [];
     foreach ($blocs as $item) {
@@ -186,11 +188,18 @@ class NewsletterController extends ControllerBase
           if (count($rs) && $rs[1] === 'https://') {
             $ext = 1;
           }
+
+          $parse = parse_url($bloc->get("field_lien")->value);
+          $url = $parse['path'];
+          if(!empty($parse['query'])) {
+            $url = sprintf('%s?%s&utm_source=newsletter&utm_medium=mise_en_avant', $parse['path'], $parse['query']);
+          }
+
           $liste[] = [
             "titre" => $bloc->get('field_titre')->value,
             "image" => $url_image,
             "texte" => $bloc->get("field_resume")->value,
-            "lien" => sprintf('%s?utm_source=newsletter&utm_medium=mise_en_avant', $bloc->get("field_lien")->value),
+            "lien" => sprintf('%s?utm_source=newsletter&utm_medium=mise_en_avant', $url),
             'ext' => $ext
           ];
         }
@@ -200,6 +209,7 @@ class NewsletterController extends ControllerBase
 
     /**national */
     $liste_nat = [];
+    
     foreach ($blocs_nat as $item) {
       $bloc = Paragraph::load($item['target_id']);
 
@@ -220,11 +230,18 @@ class NewsletterController extends ControllerBase
         if (count($rs) && $rs[1] === 'https://') {
           $ext = 1;
         }
+
+        $parse = parse_url($bloc->get("field_lien")->value);
+          $url = $parse['path'];
+          if(!empty($parse['query'])) {
+            $url = sprintf('%s?%s&utm_source=newsletter&utm_medium=mise_en_avant', $parse['path'], $parse['query']);
+          }
+
         $liste_nat[] = [
           "titre" => $bloc->get('field_titre')->value,
           "image" => $url_image,
           "texte" => $bloc->get("field_resume")->value,
-          "lien" => sprintf('%s?utm_source=newsletter&utm_medium=mise_en_avant', $bloc->get("field_lien")->value),
+          "lien" => sprintf('%s?utm_source=newsletter&utm_medium=mise_en_avant', $url),
           'ext' => $ext,
         ];
       }
