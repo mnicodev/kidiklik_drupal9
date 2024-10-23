@@ -19,7 +19,7 @@ class SiteMapXmlController extends ControllerBase {
         $list = [];
         $dept = get_term_departement();
         $url = \Drupal::Request()->server->get('HTTP_HOST');
-        $protocol = (\Drupal::Request()->server->get('HTTPS') || \Drupal::Request()->server->get('HTTP_X_FORWARDED_PROTO') == 'https') ? 'https://' : 'http://';
+        $protocol = (\Drupal::Request()->server->get('HTTPS') || \Drupal::Request()->server->get('HTTP_X_FORWARDED_PROTO') == 'https') ? 'https://' : 'https://';
         $url = $protocol.$url;
 
         /**
@@ -48,8 +48,8 @@ class SiteMapXmlController extends ControllerBase {
           ];
           //kint($rubrique->Id());
           $rubriques_enfants = \Drupal::entityTypeManager()->getStorage("taxonomy_term")->loadByProperties([
-            "status" => 1, 
-            "vid" => "rubriques_activite", 
+            "status" => 1,
+            "vid" => "rubriques_activite",
             "field_departement" => $dept,
             "parent" => $rubrique->Id()
           ]);
@@ -68,16 +68,16 @@ class SiteMapXmlController extends ControllerBase {
         /**
          * on liste les reportages en premier
          */
-        
+
         $articles = [];
         $view = Views::getView('sitemap_xml');
         $view->setDisplay('sitemapxml_article');
         $reportages = json_decode($view->executeDisplay()['#markup']->__toString());
-        
+
         if(!empty($reportages)) {
           foreach($reportages as $reportage) {
             $articles[] = [
-              'loc' => $reportage->view_node,
+              'loc' => str_replace('http:','https:',$reportage->view_node),
               'lastmod' =>$reportage->changed,// date('Y-m-d'),
               'changefreq' => 'weekly',
               'priority' => 1,
@@ -92,18 +92,17 @@ class SiteMapXmlController extends ControllerBase {
         if(!empty($activites)) {
           foreach($activites as $activite) {
             $liste_activites[] = [
-              'loc' => $activite->view_node,
+              'loc' => str_replace('http:','https:',$activite->view_node),
               'lastmod' => $activite->changed, //date('Y-m-d'),
               'changefreq' => 'weekly',
               'priority' => 1,
             ];
           }
         }
-
 	$racine = [
 		'loc' => $url,
 		'priority' => 1
-	]; 
+	];
 
         /*$view = Views::getView('sitemap_xml');
         $view->setDisplay('sitemapxml_agenda');
@@ -118,7 +117,7 @@ class SiteMapXmlController extends ControllerBase {
             ];
           }
         }*/
-        
+
 
         /*$view = Views::getView('sitemap_xml');
         $view->setDisplay('sitemapxml_article');
@@ -133,12 +132,12 @@ class SiteMapXmlController extends ControllerBase {
             ];
           }
         }*/
-        
-        
+
+
 //        $list = array_merge($rubriques_mere,$liste_rubriques_enfant, $articles, $liste_activites);
         $list = array_merge([['loc'=>$url,'lastmod'=>null,'changefreq'=>'weekly','priority'=>1]],$articles, $liste_activites, $rubriques_mere, $liste_rubriques_enfant);
-        
-        
+
+
         $build = [
           '#theme' => 'sitemap_xml',
           '#content' => $list
