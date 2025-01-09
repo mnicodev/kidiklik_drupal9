@@ -3,6 +3,7 @@
 namespace Drupal\kidiklik_front\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
+use Drupal\Core\Database\Database;
 
 /**
  * Provides a 'TypeSortiesBlock' block.
@@ -14,6 +15,23 @@ use Drupal\Core\Block\BlockBase;
  */
 class TypeSortiesBlock extends BlockBase {
 
+  public function getDraggableViewsWeight($term, $view_name, $display_name) {
+      if ($term instanceof \Drupal\taxonomy\Entity\Term) {
+        $term_id = $term->id();
+
+        $connection = Database::getConnection();
+        $query = $connection->select('draggableviews_structure', 'dvs')
+          ->fields('dvs', ['weight'])
+          ->condition('entity_id', $term_id)
+          ->condition('view_name', $view_name)
+          ->condition('view_display', $display_name);
+
+        $weight = $query->execute()->fetchField();
+
+        return $weight !== FALSE ? (int) $weight : NULL;
+      }
+  }
+
   /**
    * {@inheritdoc}
    */
@@ -23,6 +41,7 @@ class TypeSortiesBlock extends BlockBase {
     $rubriques = \Drupal::entityTypeManager()->getStorage("taxonomy_term")->loadByProperties([
       "vid" => "rubriques_activite",
       "field_ref_parent" => "0",
+      'status' => 1,
     ]);
     $kidiklik_service = \Drupal::service('kidiklik.service');
     $rub = $request->get('taxonomy_term');
@@ -49,6 +68,7 @@ class TypeSortiesBlock extends BlockBase {
     $list = [];
 
     foreach($rubriques as $rubrique) {
+      $weight = $this->getDraggableViewsWeight($rubrique, 'ordonnancement_rubrique', 'page_1');
       if($request->getPathInfo()==='/') {
 
       $sous_rub = \Drupal::entityTypeManager()->getStorage("taxonomy_term")->loadByProperties([
@@ -63,14 +83,15 @@ class TypeSortiesBlock extends BlockBase {
       if(!empty($sous_rub)) {
         $list[] = [
           'url' => \Drupal::service('path_alias.manager')->getAliasByPath('/taxonomy/term/'.$rubrique->id()),
-          'name' => $rubrique->getName()
+          'name' => $rubrique->getName(),
+          'weight' => $weight,
         ];
       }
 
     }
     usort($list, function ($a, $b)
     {
-        return strcmp($a["name"], $b["name"]);
+        return strcmp($a["weight"], $b["weight"]);
     });
 
     if(!empty($list)) {
