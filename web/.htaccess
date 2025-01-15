@@ -166,6 +166,9 @@ RewriteCond %{HTTP_HOST}	11.kidiklik\.fr [NC]
 RewriteRule ^/?(.*)	https://31.kidiklik.fr/$1 [L,R=301]
 RewriteCond %{HTTP_HOST}	32.kidiklik\.fr [NC]
 RewriteRule ^/?(.*)	https://31.kidiklik.fr/$1 [L,R=301]
+
+RedirectMatch 301 /loisirs/398434-get-out-kids-lescape-game-pour-les-enfants-lille-des-8-ans.html /loisirs/363958-get-out-lille-lescape-game-en-famille.html
+
   # Set "protossl" to "s" if we were accessed via https://.  This is used later
   # if you enable "www." stripping or enforcement, in order to ensure that
   # you don't bounce between http and https.
