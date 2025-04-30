@@ -790,11 +790,16 @@ $settings['config_sync_directory'] = '../config/sync';
 
 $host=explode(".",$_SERVER["SERVER_NAME"]);
 switch($host[0]) {
-case 91:
-case 92:
-case 93:
-case 94:
-case 95:
+	case 34:
+	case 30:
+	case 'montpellier-nimes':
+		$settings['dep']=34;
+		break;
+	case 91:
+	case 92:
+	case 93:
+	case 94:
+	case 95:
 	case 'iledefrance':
 		$settings["dep"]=78;
 		break;
