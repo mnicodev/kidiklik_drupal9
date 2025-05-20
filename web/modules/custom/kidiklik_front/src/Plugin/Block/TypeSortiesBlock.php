@@ -54,6 +54,7 @@ class TypeSortiesBlock extends BlockBase {
         "vid" => "rubriques_activite",
         "parent" => $rub->id(),
         'field_departement' => $kidiklik_service->getTermDepartement(),
+        "status" => 1
       ]);
 
       if(empty($rubriques)) {
@@ -61,21 +62,21 @@ class TypeSortiesBlock extends BlockBase {
           "vid" => "rubriques_activite",
           "parent" => current($rub->get('parent')->getValue())['target_id'],
           'field_departement' => $kidiklik_service->getTermDepartement(),
+          "status" => 1
         ]);
       }
 
     }
     $list = [];
-
     foreach($rubriques as $rubrique) {
       $weight = $this->getDraggableViewsWeight($rubrique, 'ordonnancement_rubrique', 'page_1');
       if($request->getPathInfo()==='/') {
 
-      $sous_rub = \Drupal::entityTypeManager()->getStorage("taxonomy_term")->loadByProperties([
-        "vid" => "rubriques_activite",
-        "parent" => $rubrique->Id(),
-        "field_departement" => $kidiklik_service->getTermDepartement(),
-      ]);
+          $sous_rub = \Drupal::entityTypeManager()->getStorage("taxonomy_term")->loadByProperties([
+            "vid" => "rubriques_activite",
+            "parent" => $rubrique->Id(),
+            "field_departement" => $kidiklik_service->getTermDepartement(),
+          ]);
       } else {
         $sous_rub = true;
       }
