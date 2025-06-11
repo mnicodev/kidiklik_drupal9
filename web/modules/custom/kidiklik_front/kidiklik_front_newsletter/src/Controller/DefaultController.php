@@ -38,7 +38,7 @@ class DefaultController extends ControllerBase {
 			$ID="";
 			$le_dept=$code_dept;
 			if($le_dept === '01') {
-				$le_dept = '01-bis';
+			//	$le_dept = '01-bis';
 			}
 			foreach($liste as $item) {
 				if($item["Name"]=="LC_".$le_dept) {
