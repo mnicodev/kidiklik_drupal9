@@ -108,7 +108,7 @@ class SiteMapXmlController extends ControllerBase {
         $view = Views::getView('sitemap_xml');
         $view->setDisplay('sitemapxml_agenda');
         $agendas = json_decode($view->executeDisplay()['#markup']->__toString());
-        if(!empty($agenda)) {
+        if(!empty($agendas)) {
           foreach($agendas as $agenda) {
             $liste_agenda[] = [
               'loc' => $agenda->view_node,
