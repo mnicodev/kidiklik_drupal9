@@ -99,24 +99,25 @@ class SiteMapXmlController extends ControllerBase {
             ];
           }
         }
-	$racine = [
-		'loc' => $url,
-		'priority' => 1
-	];
+	    $racine = [
+		    'loc' => $url,
+    		'priority' => 1
+        ];
 
-        /*$view = Views::getView('sitemap_xml');
+        $liste_agenda = [];
+        $view = Views::getView('sitemap_xml');
         $view->setDisplay('sitemapxml_agenda');
         $agendas = json_decode($view->executeDisplay()['#markup']->__toString());
         if(!empty($agenda)) {
           foreach($agendas as $agenda) {
-            $list[] = [
+            $liste_agenda[] = [
               'loc' => $agenda->view_node,
               'lastmod' => $agenda->changed, //date('Y-m-d'),
               'changefreq' => 'weekly',
               'priority' => 1,
             ];
           }
-        }*/
+        }
 
 
         /*$view = Views::getView('sitemap_xml');
@@ -135,7 +136,7 @@ class SiteMapXmlController extends ControllerBase {
 
 
 //        $list = array_merge($rubriques_mere,$liste_rubriques_enfant, $articles, $liste_activites);
-        $list = array_merge([['loc'=>$url,'lastmod'=>null,'changefreq'=>'weekly','priority'=>1]],$articles, $liste_activites, $rubriques_mere, $liste_rubriques_enfant);
+        $list = array_merge([['loc'=>$url,'lastmod'=>null,'changefreq'=>'weekly','priority'=>1]],$articles, $liste_activites, $liste_agenda, $rubriques_mere, $liste_rubriques_enfant);
 
 
         $build = [
