@@ -136,7 +136,7 @@ class SiteMapXmlController extends ControllerBase {
 
 
 //        $list = array_merge($rubriques_mere,$liste_rubriques_enfant, $articles, $liste_activites);
-        $list = array_merge([['loc'=>$url,'lastmod'=>null,'changefreq'=>'weekly','priority'=>1]],$articles, $liste_activites, $liste_agenda, $rubriques_mere, $liste_rubriques_enfant);
+        $list = array_merge([['loc'=>$url,'lastmod'=>null,'changefreq'=>'weekly','priority'=>1]],$articles, $liste_activites, $rubriques_mere, $liste_rubriques_enfant, $liste_agenda);
 
 
         $build = [
