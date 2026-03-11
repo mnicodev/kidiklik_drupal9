@@ -73,4 +73,46 @@ class ContentController extends ControllerBase
     return new JsonResponse(($tab));
   }
 
+  public function manageContent() {
+    /*$query = \Drupal::entityQuery('node')
+      ->condition('type', 'agenda')
+      //->condition('status', 1)
+      ->condition('field_date.entity.field_date_de_fin', '2022-01-01', '<');
+
+    $nids = $query->execute();
+
+    $nodes = \Drupal\node\Entity\Node::loadMultiple($nids);  */
+    $offset = filter_input(INPUT_GET, 'offset') ?? 0;
+      $database = \Drupal::database();
+
+      $query = $database->select('node_field_data', 'n');
+        $query->fields('n', ['nid', 'title']);
+        $query->condition('n.type', 'agenda');
+
+        $query->join('node__field_date', 'nb', 'nb.entity_id = n.nid');
+        $query->join('paragraph__field_date_de_fin', 'p', 'p.entity_id = nb.field_date_target_id');
+        $query->addField('p', 'field_date_de_fin_value', 'date_fin');
+        $query->condition('p.field_date_de_fin_value', '2022-01-01', '<');
+        $query->groupBy('n.nid');
+        $query->groupBy('n.title');
+        $query->orderBy('p.field_date_de_fin_value');
+        $query->range(0,30);
+
+        $result = $query->execute()->fetchAll();
+        foreach($result as $row) {
+            $node = node::Load($row->nid);
+            $node->delete();
+            printf("%s - %s - %s<br>", $row->date_fin, $row->nid, $row->title);
+        }
+
+        echo "<script>
+            setTimeout(() => {
+                document.location.href='?offset=".($offset+10)."'
+            }, 300)
+            </script>
+            ";
+
+        exit;
+  }
+
 }
