@@ -131,3 +131,11 @@ kidiklik_admin.content_controller_management:
     _title: 'Activite controleur'
   requirements:
     _custom_access: '\Drupal\kidiklik_access\Controller\Access::adminAccess'
+
+kidiklik_admin.url_controller_management:
+  path: '/admin/url/manage'
+  defaults:
+    _controller: '\Drupal\kidiklik_admin\Controller\ContentController::manageUrl'
+    _title: 'Activite controleur'
+  requirements:
+    _custom_access: '\Drupal\kidiklik_access\Controller\Access::adminAccess'
