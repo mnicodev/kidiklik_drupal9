@@ -206,3 +206,53 @@ function kidiklik_base_views_query_alter(Drupal\views\ViewExecutable $view, Drup
   }
 
 }
+
+function insert_registration_newsletter($email, $nom, $prenom, $newsletter, $which_dept = null) {
+    $database = \Drupal::database();
+    
+    $dept = $which_dept ?? get_departement();
+
+    $sql = 'select * from inscrits_newsletters where email like :email and dept=:dept';
+    $query = $database->query($sql, [
+        ':email' =>  $email,
+        ':dept' => $dept 
+    ]);
+
+    $user_test = $query->fetch();
+
+    $service = \Drupal::service('kidiklik.service'); 
+    $token = $service->generateToken($email, $dept);
+    $newsletters = [];
+    if($user_test === false) {
+        foreach($newsletter as $nl) {
+            if(is_string($nl) && in_array($nl, $service->getNewslettersList())) {
+                $newsletters[] = $nl;
+            }
+        }
+        $sql = "insert into inscrits_newsletters (email, nom, prenom,active, dept, token, newsletter) values (:email,:nom,:prenom,:active,:dept, :token, :newsletter)";
+        $query = $database->query($sql, [
+            ':email' =>  $email,
+            ':nom' => $nom,
+            ':prenom' => $prenom,
+            ':active' => 0,
+            ':dept' => $dept,
+            ':token' => $token,
+            ':newsletter' => implode('|', $newsletters),
+        ]);
+    } else {
+        $newsletters = explode('|', $user_test->newsletter);
+        foreach($newsletter as $nl) {
+            if(is_string($nl) && in_array($nl, $service->getNewslettersList()) && !in_array($nl, $newsletters)) {
+                $newsletters[] = $nl;
+            }
+            
+        }
+        $sql = "update inscrits_newsletters set token=:token, newsletter=:newsletter where id_inscrit=:id";
+        $query = $database->query($sql, [
+            ':id' => $user_test->id_inscrit,
+            ':token' => $token,
+            ':newsletter' => implode('|', $newsletters),
+        ]);
+    }
+    return $token;
+}

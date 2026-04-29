@@ -22,22 +22,36 @@ class NodeViewSubscriber implements EventSubscriberInterface
 
     } elseif ($route_name === 'entity.node.webform.confirmation') {
       $token = \Drupal::request()->get('token');
-      $email = \Drupal::request()->get('email');
       $submission = current(\Drupal::entityTypeManager()->getStorage("webform_submission")->loadByProperties([
         "token" => $token,
       ]));
       $data_submission = $submission->getData();
+      $email = $data_submission['email'];
 
-      if ($data_submission['newsletter'] === "1") {
-        if (empty($email)) {
-          $database = \Drupal::database();
-          $sql = "insert into inscrits_newsletters (email, nom, prenom, dept) values ('" . $data_submission['email'] . "','" . $data_submission['nom'] . "','" . $data_submission['prenom'] . "','" . get_departement() . "')";
-          $query = $database->query($sql);
+      if ($data_submission['newsletter'] === "1" && !empty($email)) {
+          $dept = null;
+          $search_dept = substr($data_submission['code_postal'], 0, 2);
+          $which_dept = get_departement();
+          if(!empty($search_dept) && $which_dept === 0) {
+              $terms = \Drupal::entityTypeManager()
+                  ->getStorage('taxonomy_term')
+                  ->loadByProperties([
+                      'vid' => 'departement',
+                      'name' => $search_dept,
+                      'status' => 1,
+                  ]);
 
-          $response = new RedirectResponse(\Drupal::request()->getRequestUri() . '&email=' . $data_submission['email']);
-          $response->send();
-        }
+              if(!empty($terms)) {
+                  $dept = $search_dept;
+              }
+          }
+          $token = insert_registration_newsletter($data_submission['email'], $data_submission['nom'], $data_submission['prenom'],$data_submission['choisissez_newsletters'], $dept);
+          $url = \Drupal::request()->getSchemeAndHttpHost();
+          $response = new RedirectResponse($url . '/registration.html?token=' . $token);
 
+          //    $response = new RedirectResponse(\Drupal::request()->getRequestUri() . '&email=' . $data_submission['email']);
+
+           $response->send();
       }
 
     } elseif (!empty($node) && $route_name == "entity.node.canonical") {

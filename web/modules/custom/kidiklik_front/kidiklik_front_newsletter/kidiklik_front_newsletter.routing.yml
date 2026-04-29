@@ -6,10 +6,32 @@ kidiklik_front_newsletter.newsletter_form:
   requirements:
     _access: 'TRUE'
 
-kidiklik_front_newsletter.default_controller_send:
-  path: '/kidiklik_front_newsletter/send'
+kidiklik_front_newsletter.registration:
+  path: '/registration.html'
   defaults:
-    _controller: '\Drupal\kidiklik_front_newsletter\Controller\DefaultController::send'
-    _title: 'Send inscription'
+    _controller: '\Drupal\kidiklik_front_newsletter\Controller\DefaultController::sendConfirmationEmail'
+    _title: 'Inscription à la newsletter'
   requirements:
     _permission: 'access content'
+  options:
+    no_cache: 'TRUE'
+
+kidiklik_front_newsletter.confirmation:
+  path: '/confirmation.html'
+  defaults:
+    _controller: '\Drupal\kidiklik_front_newsletter\Controller\DefaultController::send'
+    _title: "Confirmation d'inscription"
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: 'TRUE'
+
+kidiklik_front_newsletter.view_registration:
+  path: '/waiting_confirmation.html'
+  defaults:
+    _controller: '\Drupal\kidiklik_front_newsletter\Controller\DefaultController::viewConfirmationMail'
+    _title: "Confirmation d'inscription"
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: 'TRUE'

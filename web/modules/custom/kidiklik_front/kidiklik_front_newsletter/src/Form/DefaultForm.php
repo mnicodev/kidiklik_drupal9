@@ -31,15 +31,17 @@ class DefaultForm extends FormBase
     $form['group'] = [
       '#type' => 'fieldset',
     ];
+
     $form['group']['intro'] = [
       '#type' => 'html_tag',
       '#tag' => 'div',
-      '#value' => $this->t('<p><b>Découvrez chaque semaine les meilleurs bons plans de sorties et activités à faire en famille avec Kidiklik !</b><br>
-      Inscrivez-vous à notre newsletter pour recevoir directement dans votre boîte mail toutes les informations sur les événements et<br>
-      activités pour enfants près de chez vous. <span >Ne manquez plus aucune occasion de partager des moments magiques en famille !</span></p>'),
+      '#value' => $this->t('<p><b>Devenez un parent ultra-inspiré, une grand-mère dans le vent ou un enseignant époustouflant !</b><br>
+      Inscrivez-vous à notre newsletter pour recevoir nos coups de cœur et tous les bons plans de la région directement dans votre boîte mail.</span></p>'),
       '#prefix' => '<div class="col-sm-12 col-md-12 intro">',
       '#suffix' => '</div>'
-    ];
+  ];
+
+    
     $form['group']['nom'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Nom'),
@@ -53,7 +55,8 @@ class DefaultForm extends FormBase
       ],
       '#prefix' => '<div class="col-sm-12 col-md-6">',
       '#suffix' => '</div>'
-    ];
+  ];
+
     $form['group']['prenom'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Prénom'),
@@ -66,7 +69,8 @@ class DefaultForm extends FormBase
       ],
       '#prefix' => '<div class="col-sm-12 col-md-6">',
       '#suffix' => '</div>'
-    ];
+  ];
+
     $form['group']['email'] = [
       '#type' => 'textfield',
       '#title' => 'E-mail',
@@ -79,18 +83,44 @@ class DefaultForm extends FormBase
         ]
       ],
       '#default_value' => \Drupal::request()->get('email'),
-      '#weight' => '1',
+      '#weight' => '2',
       '#size' => '40',
       '#prefix' => '<div class="col-sm-12 col-md-6">',
       '#suffix' => '</div>'
-    ];
+  ];
+
+    $form['group']['newsletter'] = [
+      '#weight' => '3',
+        '#type' => 'checkboxes',
+        '#title' => 'Choix de la newsletter',
+        '#required' => true,
+        '#attributes' => [
+            'class' => [
+            //    'form-control'
+            ]
+        ],
+      '#prefix' => '<div class="col-sm-12 col-md-6">',
+      '#suffix' => '</div>',
+      '#options' => [
+            'FAMILLE' => t('Famille (hebdo)'),
+            'GP' => t('Grand-parent (avant chaque période de vacances)'),
+            'PRO' => t("Professionnel de l'enfance (4 fois par an)"),
+        ],
+        '#option_attributes' => [
+            'a' => ['class' => ['form-checkbox-inline']],
+            'b' => ['class' => ['form-checkbox-inline']],
+            'c' => ['class' => ['form-checkbox-inline']],
+          ],
+      ];
+
     $form['group']['submit'] = [
       '#type' => 'submit',
       '#value' => $this->t("S'inscrire à la newsletter"),
-      '#weight' => '3',
+      '#weight' => '4',
       '#prefix' => '<div class="col-sm-12 col-md-6">',
       '#suffix' => '</div>'
     ];
+    $form["#attached"]["library"][] = "kidiklik_front_newsletter/kidiklik_front_newsletter.styles";
 
     return $form;
   }
@@ -112,28 +142,11 @@ class DefaultForm extends FormBase
    */
   public function submitForm(array &$form, FormStateInterface $form_state)
   {
-    // Display result.
-    $database = \Drupal::database();
+      $token = insert_registration_newsletter($form_state->getValue('email'), $form_state->getValue('nom'), $form_state->getValue('prenom'), $form_state->getValue('newsletter'));
 
-    $sql = 'select * from inscrits_newsletters where email like :email';
-    $query = $database->query($sql, [
-      ':email' =>  $form_state->getValue('email'),
-    ]);
-    
-    if($query->fetch() === false) {
-      $sql = "insert into inscrits_newsletters (email, nom, prenom, dept) values (:email,:nom,:prenom,:dept)";
-      $query = $database->query($sql, [
-        ':email' =>  $form_state->getValue('email'),
-        ':nom' => $form_state->getValue('nom'),
-        ':prenom' => $form_state->getValue('prenom'),
-        ':dept' => get_departement()
-      ]);
-    }   
-
-    $response = new RedirectResponse('newsletter.html?record_email=' . $form_state->getValue('email'));
-
-    $form_state->setResponse($response);
-
+    $response = new RedirectResponse('registration.html?token=' . $token);
+    $response->send();
+    exit;
   }
 
 }

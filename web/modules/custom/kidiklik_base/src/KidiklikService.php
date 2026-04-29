@@ -83,6 +83,40 @@ class KidiklikService
     ];
   }
 
+  public function generateToken($email, $which_dept = null) {
+      $dept = $which_dept ?? $this->getDepartement(); 
+      $payload = $this->getPayload([$email, time(), $dept]);
+      $signature = hash_hmac('sha256', $payload, $this->getSecretKey());
+      return base64_encode($this->getPayload([$payload,$signature]));
+  }
+
+  public function validateToken($token) {
+      $token_info = $this->decodeToken($token);
+      return hash_equals($token_info['expected'], $token_info['signature']);
+  }
+
+  public function decodeToken($token) {
+      $decoded = base64_decode($token);
+      [$email, $timestamp, $dept, $signature] = explode('|', $decoded);
+      $expected = hash_hmac('sha256', $this->getPayload([$email, $timestamp, $dept]), $this->getSecretKey());
+
+      return [
+          'email' => $email,
+          'timestamp' => $timestamp,
+          'signature' => $signature,
+          'expected' => $expected,
+          'dept' => $dept,
+        ];
+  }
+
+  public function getPayload($array) {
+      return implode('|', $array);
+  }
+
+  public function getSecretKey() {
+    return 'c182a0dcb6a5bff347aa630f6b23e2dbac24e8ffcb49a41b41c196b026d72485';
+  }
+
   public function getFieldsExclus() {
     return $this->fields_exclus;
   }
@@ -355,5 +389,9 @@ class KidiklikService
       return true;
     }
     return false;
+  }
+
+  public function getNewslettersList() {
+    return ['FAMILLE', 'GP', 'PRO'];
   }
 }

@@ -18,6 +18,8 @@ Nombre d'inscrits : {{ count_list }}
     <th id="view-title-table-column" class="views-field views-field-title" scope="col">Email</th>
     <th id="view-title-table-column" class="views-field views-field-title" scope="col">Nom</th>
     <th id="view-title-table-column" class="views-field views-field-title" scope="col">Prénom</th>
+    <th id="view-title-table-column" class="views-field views-field-title" scope="col">Newsletters</th>
+    <th id="view-title-table-column" class="views-field views-field-title" scope="col">Statut</th>
     <th id="view-field-date-de-fin-table-column" class="views-field views-field-field-date-de-fin" scope="col">Date inscription</th>
 
   </tr>
@@ -31,6 +33,8 @@ Nombre d'inscrits : {{ count_list }}
 
         <td>{{ item.nom }}</td>
         <td>{{ item.prenom }}</td>
+        <td>{{ item.newsletter|replace({"|":","}) }}</td>
+        <td>{{ item.active }}</td>
         <td>{{ item.inscription }}</td>
       </tr>
 

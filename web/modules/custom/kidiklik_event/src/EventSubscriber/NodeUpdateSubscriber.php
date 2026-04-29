@@ -60,7 +60,7 @@ class NodeUpdateSubscriber implements EventSubscriberInterface
       }
     }
 
-    if ($type == "agenda" || $type == "article" || $type == "reportage" || $type == "activite") {
+    if ($type == "agenda2" || $type == "article" || $type == "reportage" || $type == "activite") {
       $image_target_id = current($entity->get('field_image')->getValue())['target_id'];
       $dates = $entity->get('field_date')->getValue();
 

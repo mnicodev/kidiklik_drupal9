@@ -78,12 +78,12 @@ class ContentController extends ControllerBase
       
       $offset = filter_input(INPUT_GET, 'offset') ?? 0;
       $racine = "/KIDIKLIK/WEBSITE/preprod.kidiklik.fr/tmp/";
-      $file=fopen("/KIDIKLIK/WEBSITE/preprod.kidiklik.fr/tmp/agenda-manquant-final.csv","r");
+      
+      /*$file=fopen("/KIDIKLIK/WEBSITE/preprod.kidiklik.fr/tmp/agenda-manquant-final.csv","r");
       $ids=json_decode(file_get_contents($racine."agenda-manquant-id.json"),true);
-    if($offset === 551) exit;
+      
+      if($offset === 551) exit;
       $id=$ids[$offset];
-
-      //foreach($ids as $id) {
 
     
       try {
@@ -159,27 +159,133 @@ class ContentController extends ControllerBase
             }, 1000)
             </script>
             ";
-      exit;
-     Database::setActiveConnection('prod_du_11');
-      
-     $database = Database::getConnection('default','prod_du_11');
+            exit;*/
 
-    /*  $query = $database->select('node_field_data', 'n');
-        $query->fields('n', ['nid', 'title']);
-        $query->condition('n.nid', 351098);
-        $query->join('node__field_date', 'nb', 'nb.entity_id = n.nid');
-        $query->join('paragraph__field_date_de_fin', 'p', 'p.entity_id = nb.field_date_target_id');
-        $query->addField('p', 'field_date_de_fin_value', 'date_fin');
-        $query->groupBy('n.nid');
-        $query->groupBy('n.title');
-        $query->orderBy('p.field_date_de_fin_value');
-              $result = $query->execute()->fetchAssoc();
-              kint($result);
-              exit;*/
-     $file=fopen("/KIDIKLIK/WEBSITE/preprod.kidiklik.fr/tmp/agenda-manquant-final.csv","r");
-     //$file_missing=fopen($racine."agenda-2025.csv","w");
-     $ids=[];
-     $urls=[];
+     //Database::setActiveConnection('prod_du_11');
+     //$database = Database::getConnection('default','prod_du_11');
+
+     //$file=fopen("/KIDIKLIK/WEBSITE/preprod.kidiklik.fr/tmp/liste-agenda-id.json","r");
+//      $ids=json_decode(file_get_contents($racine."liste-agenda-id.json"),true);
+      
+      $ids=json_decode(file_get_contents($racine."liste-id-retest.json"),true);
+      
+      /*$database = \Drupal::database();
+      $query = $database->select('node_field_data', 'n');
+      $query->fields('n', ['nid']);
+      $query->condition('n.type', 'agenda');
+      $query->condition('n.nid', $ids, 'NOT IN');
+      $query->join('node__field_date', 'nb', 'nb.entity_id = n.nid');
+      $query->join('paragraph__field_date_de_fin', 'p', 'p.entity_id = nb.field_date_target_id');
+      $query->addField('p', 'field_date_de_fin_value', 'date_fin');
+      $query->condition('p.field_date_de_fin_value', '2022-01-01', '<');
+      $query->groupBy('n.nid');
+      $query->orderBy('p.field_date_de_fin_value');
+      $query->range($offset,100);
+      $result = $query->execute()->fetchAll();
+      $new_ids=[];
+      $urls = [];
+      $not_found=[];
+      foreach($result as $r) {
+          $node=Node::load($r->nid);
+                  //echo sprintf("%s - %s <br>", $node->id(),$node->getType());
+                  foreach ($node->get('field_date')->referencedEntities() as $paragraph) {
+                      $fin = $paragraph->get('field_date_de_fin')->value;
+                      $deb = $paragraph->get('field_date_de_debut')->value;
+                      $dates=[];
+                      if((!str_contains($fin,"2017") && !str_contains($fin,"2018") && !str_contains($fin, "2019") && !str_contains($fin,"2020") && !str_contains($fin,"2021"))){
+$dates[]=$fin;
+                          echo sprintf("->%s - %s - %s<br>",$node->id(),$deb,$fin);
+                      }
+                      if(!empty($dates)) {
+
+                          $new_ids[]=$node->id();
+                      }
+                  }
+      }
+      $les_ids=json_decode(file_get_contents($racine."agenda-recup.json"), true);
+      if($les_ids !== null) {
+        $new_ids=array_merge($new_ids,$les_ids);
+      }
+      file_put_contents($racine."agenda-recup.json", json_encode($new_ids));
+    echo "<script>
+            setTimeout(() => {
+                document.location.href='?offset=".($offset+100)."'
+            }, 1000)
+            </script>";
+            exit;*/
+      $ids=json_decode(file_get_contents($racine."liste-agendas-20260326.json"),true);
+
+      foreach($ids as $id) {
+          $node = Node::load($id);
+          if(!empty($node)) {
+              $data=$node->toArray();
+              if(!empty($data)) {
+                  echo sprintf("%s - %s <br>", $node->id(),$node->getType());
+                  
+                  foreach ($node->get('field_departement')->referencedEntities() as $term) {
+                      $name = $term->getName();
+                      $tid = $term->id();
+                      $dep=$term->getName();
+                  }
+                    $urls[] = sprintf('https://%s.kidiklik.fr/%s',$dep,\Drupal::service('path_alias.manager')->getAliasByPath('/node/'.$id));
+
+                  if($node->getType() !== 'agenda') {
+                    continue;
+                  }
+
+                  $dates=[];
+
+
+                  foreach ($node->get('field_date')->referencedEntities() as $paragraph) {
+                      $fin = $paragraph->get('field_date_de_fin')->value;
+                      $deb = $paragraph->get('field_date_de_debut')->value;
+
+                      //if((!str_contains($fin,"2017") && !str_contains($fin,"2018") && !str_contains($fin, "2019") && !str_contains($fin,"2020"))){
+                        echo sprintf("-->%s - %s<br>",$deb,$fin);
+                        $dates[] = [
+                          "deb" => $deb,
+                          "fin" => $fin
+                        ];
+                      //}
+                  }
+                  if(!empty($dates)) {
+                      $new_ids[] = $id;
+                      file_put_contents($racine."JSON2/node-".$id.".json", json_encode($data));
+                      
+                      $filtres=[];
+                      file_put_contents($racine."JSON2/node-".$id."-date.json", json_encode($dates));
+                      foreach ($node->get('field_filtres')->referencedEntities() as $filtre) {
+                          $theme=$filtre->get('field_thematiques')->value??null;
+                          $age=$filtre->get('field_tranches_d_ages')->value??null;
+                          $vac=$filtre->get('field_vacances')->value??null;
+                          $filtres[] = [
+                              "theme" => $theme,
+                              "age" => $age,
+                              "vac" => $vac
+                          ];
+
+                      }
+                      
+                      file_put_contents($racine."JSON2/node-".$id."-filtres.json", json_encode($filtres));
+                  
+                  }
+              }
+          } else {
+              $not_found[]=$id;
+                  echo sprintf("%s contenu non trouvé <br>", $id);
+          }
+
+      
+      }
+      
+      //file_put_contents($racine."liste-id.json", json_encode($new_ids));
+      kint($urls);
+      //file_put_contents($racine."liste-agenda-not-found-prod.csv", implode(chr(10),$urls));
+      
+      exit;
+
+
+
       while(($data=fgetcsv($file, 1000)) !== false) {
           $url=$data[0];
           /*$id=$data[0];
@@ -281,13 +387,9 @@ class ContentController extends ControllerBase
             
             }
             foreach ($node->get('field_departement')->referencedEntities() as $term) {
-
                 $name = $term->getName();
-
                 $tid = $term->id();
-
                 $dep=$term->getName();
-
             }
 
 
