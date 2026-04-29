@@ -1,0 +1,5 @@
+kidiklik_front_newsletter.styles:
+  version: 1.x
+  css:
+    theme:
+      css/styles.css: {}
