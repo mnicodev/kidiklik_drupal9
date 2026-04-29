@@ -1,0 +1,13 @@
+#edit-newsletter--wrapper legend {
+    font-size: 14px;
+}
+#edit-newsletter--wrapper .form-type-checkbox {
+    display: block;
+    margin-right: 5px;
+}
+#edit-newsletter--wrapper .form-type-checkbox input {
+    width: auto!important;
+}
+#edit-newsletter {
+    padding-left: 10px;
+}
