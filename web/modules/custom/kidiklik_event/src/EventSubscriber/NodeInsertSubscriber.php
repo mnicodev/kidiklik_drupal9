@@ -75,8 +75,8 @@ class NodeInsertSubscriber implements EventSubscriberInterface
       if (!empty($blocs)) {
         foreach ($blocs as $bloc) {
 		$node_bloc = Node::load($bloc['target_id']);
-		$parent = null;
-          if (empty($bloc->get('field_lien')->value)) {
+        $parent = null;
+          if (empty($node_bloc->get('field_lien')->value)) {
             $node_bloc->set('field_lien', \Drupal::service('path.alias_manager')->getAliasByPath('/node/' . $entity->id()));
           }
           $rubriques = $entity->get('field_rubriques_activite')->getValue();
