@@ -132,10 +132,19 @@ kidiklik_admin.content_controller_management:
   requirements:
     _custom_access: '\Drupal\kidiklik_access\Controller\Access::adminAccess'
 
-kidiklik_admin.url_controller_management:
-  path: '/admin/url/manage'
+kidiklik_admin.content_to_json:
+  path: '/admin/content/nodetojson/{$type}'
   defaults:
-    _controller: '\Drupal\kidiklik_admin\Controller\ContentController::manageUrl'
+    _controller: '\Drupal\kidiklik_admin\Controller\ContentController::nodeTojson'
+    _title: 'Activite controleur'
+  requirements:
+    _custom_access: '\Drupal\kidiklik_access\Controller\Access::adminAccess'
+
+    
+kidiklik_admin.json_to_node:
+  path: '/admin/content/jsontonode'
+  defaults:
+    _controller: '\Drupal\kidiklik_admin\Controller\ContentController::jsonTonode'
     _title: 'Activite controleur'
   requirements:
     _custom_access: '\Drupal\kidiklik_access\Controller\Access::adminAccess'

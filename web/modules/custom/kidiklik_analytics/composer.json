@@ -8,6 +8,6 @@
     "minimum-stability": "dev",
     "support": {
         "issues": "https://www.drupal.org/project/issues/kidiklik_analytics",
-        "source": "http://cgit.drupalcode.org/kidiklik_analytics",
-    },
+        "source": "http://cgit.drupalcode.org/kidiklik_analytics"
+    }
 }

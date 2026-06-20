@@ -1907,14 +1907,15 @@ var_dump('node id : '.$node->id());
 	
 					break;
 				case 'publicite':
-					if(empty($item->get('field_ref_publicite')->value)) continue;
+					if(!empty($item->get('field_ref_publicite')->value)) {;
 					var_dump('recherche nouvelle img '.$item->get('field_ref_publicite')->value);
 					$req = $connection->query('select * from publicites where id_publicite = '.$item->get('field_ref_publicite')->value);
 					$res= $req->fetch();
-					$img = $res->image;
+                    $img = $res->image;
+                    }
 					break;
 				case 'article':
-					if(empty($item->get('field_ref_entite')->value)) continue;
+					if(!empty($item->get('field_ref_entite')->value)) {
 					var_dump('recherche nouvelle img '.$item->get('field_ref_entite')->value);
 					if($item->get('field_type_reportage')->value === 1) {
 						$req = $connection->query('select * from tests where id_test='.$item->get('field_ref_entite')->value);
@@ -1922,7 +1923,8 @@ var_dump('node id : '.$node->id());
 						$req = $connection->query('select * from editos where id_edito='.$item->get('field_ref_entite')->value);
 					}
 					$res= $req->fetch();
-					$img = $res->image;
+                    $img = $res->image;
+                    }
 					break;
 				}
 
@@ -2559,9 +2561,9 @@ var_dump('node id : '.$node->id());
 
 
 		} else {
-			if(count($item->__get('field_adherent')->getValue())) {
-				continue;
-			}
+			if(!count($item->__get('field_adherent')->getValue())) {
+				
+			
                   if (!empty($item->get("field_ref_adherent")->value)) {
 			  $item->__unset('field_adherent');
 			  $item->save();
@@ -2582,7 +2584,7 @@ var_dump('node id : '.$node->id());
 
                   }
                 }
-
+        }
 
                 break;
               case 'ville':

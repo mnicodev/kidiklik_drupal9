@@ -1,5 +1,5 @@
 {
-    "name": "kidiklik_front_newsletter",
+    "name": "drupal/kidiklik_front_newsletter",
     "type": "drupal-module",
     "description": "Kidiklik newsletter",
     "keywords": [
@@ -8,6 +8,10 @@
     "minimum-stability": "dev",
     "support": {
         "issues": "https://www.drupal.org/project/issues/kidiklik_front_newsletter",
-        "source": "http://cgit.drupalcode.org/kidiklik_front_newsletter",
+        "source": "http://cgit.drupalcode.org/kidiklik_front_newsletter"
     },
+    "require": {
+        "phpmailer/phpmailer": "^6.9",
+        "mailjet/mailjet-apiv3-php": "^1.6"
+    }
 }
