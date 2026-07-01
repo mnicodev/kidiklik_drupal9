@@ -1,0 +1,4 @@
+services:
+  kidiklik_event_schema.builder:
+    class: Drupal\kidiklik_event_schema\EventSchemaBuilder
+    arguments: ['@entity_type.manager', '@request_stack']

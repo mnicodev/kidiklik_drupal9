@@ -1,0 +1,15 @@
+{#
+/**
+ * @file
+ * node--sorties-moment--full.html.twig
+ *
+ * Variante Twig : à placer dans votre thème (ex: themes/custom/monthème/templates/node/).
+ * Nécessite le preprocess PHP ci-dessous dans le fichier .theme du thème.
+ */
+#}
+{% if event_schema_json %}
+  <script type="application/ld+json">{{ event_schema_json|raw }}</script>
+{% endif %}
+
+{# ... reste du template existant (title, content, etc.) ... #}
+{{ content }}

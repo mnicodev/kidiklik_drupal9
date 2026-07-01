@@ -1,0 +1,52 @@
+<?php
+
+/**
+ * @file
+ * Attache automatiquement le balisage JSON-LD Event aux pages de sorties.
+ */
+
+use Drupal\node\NodeInterface;
+
+/**
+ * Implements hook_node_view().
+ *
+ * Le JSON-LD est injecté ici plutôt qu'en preprocess_html, pour avoir
+ * un accès simple et propre à l'entité $node complète.
+ *
+ * ADAPTEZ 'sorties_moment' au machine name réel de votre content type.
+ */
+function kidiklik_event_schema_node_view(array &$build, NodeInterface $node, $display, $view_mode) {
+  if ($view_mode !== 'full' || $node->bundle() !== 'agenda') {
+    return;
+  }
+
+  /** @var \Drupal\kidiklik_event_schema\EventSchemaBuilder $builder */
+  $builder = \Drupal::service('kidiklik_event_schema.builder');
+  $events = $builder->buildEventsForNode($node, TRUE, 20);
+  if (empty($events)) {
+    return;
+  }
+
+  // Un seul objet Event -> on sort l'objet nu. Plusieurs occurrences ->
+  // on sort un tableau JSON-LD (accepté par Google : plusieurs objets
+  // <script type="application/ld+json"> ou un seul tableau, les deux
+  // formats sont valides et équivalents pour le Rich Results Test).
+  $payload = count($events) === 1 ? $events[0] : $events;
+
+  $json = json_encode($payload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+
+  $build['#attached']['html_head'][] = [
+    [
+      '#type' => 'html_tag',
+      '#tag' => 'script',
+      '#attributes' => ['type' => 'application/ld+json'],
+      '#value' => $json,
+    ],
+    'kidiklik_event_schema_jsonld_' . $node->id(),
+  ];
+
+  // Important : le cache du rendu doit varier si les dates changent
+  // (ex: passage d'une occurrence de "future" à "passée" à minuit).
+  $build['#cache']['max-age'] = 3600;
+  $build['#cache']['tags'][] = 'node:' . $node->id();
+}

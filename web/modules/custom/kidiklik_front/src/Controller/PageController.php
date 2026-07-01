@@ -36,7 +36,6 @@ class PageController extends ControllerBase
         $node = \Drupal::entityTypeManager()
         ->getStorage("node")
         ->load(current($term_dep->get("field_" . $page)->getValue())["target_id"]);
-
         if (is_object($node)) {
           $view = node_view($node, 'default');
           $output = drupal_render($view);
@@ -44,7 +43,7 @@ class PageController extends ControllerBase
           $output = "La page est pour le moment incompléte";
         }
       }
-      
+
     }
     //exit;
     return $output;
@@ -83,7 +82,7 @@ class PageController extends ControllerBase
       '#markup' => $this->getContent("kidiklik_recrute", $service->getTermDepartement(0))
     ];
   }
-  
+
   /**
    * Contact.
    *
@@ -92,18 +91,11 @@ class PageController extends ControllerBase
    */
   public function contact()
   {
-    $page_dep = \Drupal::service('kidiklik.service')->getPageDepartement();
-    $renderer = \Drupal::service("renderer");
-      $build = [
-        '#markup' => sprintf('<div class="jumbotron mt-4 pt-3 pb-3"><p><b class="bleu titre_h1">Coordonnées</b></p><b>Nom :</b> %s<br><b>Téléphone :</b> <a href="tel:%s">%s</a><br><b>E-mail :</b> <a href="mailto:%s">%s</a></div>',
-          $page_dep->get('field_societe')->value,
-          $page_dep->get('field_telephone')->value,
-          $page_dep->get('field_telephone')->value,
-          $page_dep->get('field_e_mail')->value,
-          $page_dep->get('field_e_mail')->value
-        ),
-      ];
-    return $build;
+    $service = \Drupal::service('kidiklik.service');
+    return [
+      '#type' => 'markup',
+      '#markup' => $this->getContent("contact", $service->getTermDepartement())
+    ];
   }
 
   /**

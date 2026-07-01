@@ -1,0 +1,5 @@
+name: 'Kidiklik Event Schema'
+type: module
+description: 'Génère automatiquement le balisage JSON-LD Event (schema.org) pour les pages de sorties, avec un objet Event par occurrence future.'
+core_version_requirement: ^8.9 || ^9
+package: Custom

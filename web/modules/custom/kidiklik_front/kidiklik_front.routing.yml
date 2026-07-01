@@ -97,6 +97,13 @@ kidiklik_front.categorie_controller_get:
     _permission: 'access content'
 
 
+kidiklik_front.robots_controller_generate:
+  path: '/robots.txt'
+  defaults:
+    _controller: '\Drupal\kidiklik_front\Controller\RobotsController::generate'
+    _title: 'generate'
+  requirements:
+    _permission: 'access content'
 
 
 
