@@ -94,7 +94,7 @@ class PageController extends ControllerBase
     $service = \Drupal::service('kidiklik.service');
     return [
       '#type' => 'markup',
-      '#markup' => $this->getContent("contact", $service->getTermDepartement())
+      '#markup' => $this->getContent("page_contact", $service->getTermDepartement())
     ];
   }
 
