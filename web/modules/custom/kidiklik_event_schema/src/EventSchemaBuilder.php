@@ -320,6 +320,8 @@ class EventSchemaBuilder {
         } catch(Exception $exception) {
             $event['image'] = file_create_url($file->getFileUri());
         }*/
+      } else {
+          $event['image'] = 'https://www.kidiklik.fr/assets/img/piaf.jpg';
       }
     }
 
