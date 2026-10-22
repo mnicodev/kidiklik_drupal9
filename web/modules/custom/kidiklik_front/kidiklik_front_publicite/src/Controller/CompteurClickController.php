@@ -5,6 +5,10 @@ namespace Drupal\kidiklik_front_publicite\Controller;
 use Drupal\Core\Controller\ControllerBase;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Drupal\node\Entity\Node;
+use Drupal\Core\Cache\Cache;
+use Drupal\Core\Database\Connection;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
 
 /**
  * Class CompteurClickController.
