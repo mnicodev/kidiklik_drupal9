@@ -418,77 +418,169 @@ $dates[]=$fin;
         exit;
   }
   
-  public function manageUrl() {
-      $ids=[300478,
-301489,
-301687,
-301787,
-302279,
-302951,
-302571,
-299669,
-299812,
-307642,
-299397,
-309180,
-301873,
-309448,
-299273,
-298522,
-299525,
-299567,
-309522,
-310264,
-298492,
-299505,
-302311,
-310127,
-302114,
-303546,
-309361,
-301885,
-299716,
-303462,
-311049,
-311407,
-299612,
-316058,
-316081,
-316102,
-302584,
-316186,
-309532,
-316836,
-310868,
-318201,
-317676,
-317890,
-317892,
-319649,
-304513,
-316935,
-313629,
-321729,
-322473,
-301442];
 
-    $file=fopen("/KIDIKLIK/WEBSITE/preprod.kidiklik.fr/tmp/agenda-alias-2026.csv","w");
 
-      foreach($ids as $id) {
-          $node = Node::load($id);
-          foreach ($node->get('field_departement')->referencedEntities() as $term) {
-             $name = $term->getName();
-             $tid = $term->id();
-             $dep=$term->getName();
+  function nodeTojson($type) {
+      $racine = "/KIDIKLIK/WEBSITE/preprod.kidiklik.fr/tmp/";
+      $offset = \Drupal::request()->query->get('offset');
+      $database = \Drupal::database();
+      $query = $database->select('node_field_data', 'n');
+      $query->fields('n', ['nid']);
+      $query->condition('n.type', $type);
+      $query->range($offset,100);
+      $result = $query->execute()->fetchAll();
+
+      foreach($result as $r) {
+          $node=Node::load($r->nid);
+          if(!empty($node)) {
+              $data=$node->toArray();
+              if(!empty($data)) {
+                  echo sprintf("%s - %s <br>", $node->id(),$node->getType());
+                  
+                  foreach ($node->get('field_departement')->referencedEntities() as $term) {
+                      $name = $term->getName();
+                      $tid = $term->id();
+                      $dep=$term->getName();
+                  }
+                  
+                  $urls[] = sprintf('https://%s.kidiklik.fr/%s',$dep,\Drupal::service('path_alias.manager')->getAliasByPath('/node/'.$id));
+
+
+                  $dates=[];
+
+
+                  foreach ($node->get('field_date')->referencedEntities() as $paragraph) {
+                      $fin = $paragraph->get('field_date_de_fin')->value;
+                      $deb = $paragraph->get('field_date_de_debut')->value;
+
+                      
+                      echo sprintf("-->%s - %s<br>",$deb,$fin);
+                      
+                      $dates[] = [
+                          "deb" => $deb,
+                          "fin" => $fin
+                        ];
+                  }
+                  if(!empty($dates)) {
+                    //  file_put_contents($racine."JSON2/node-".$id."-date.json", json_encode($dates));
+                  }
+
+              
+                  $new_ids[] = $id;
+                     // file_put_contents($racine."JSON2/node-".$id.".json", json_encode($data));
+                      
+
+                 // FILTRES 
+                  $filtres=[];
+           
+                  foreach ($node->get('field_filtres')->referencedEntities() as $filtre) {
+                          $theme=$filtre->get('field_thematiques')->value??null;
+                          $age=$filtre->get('field_tranches_d_ages')->value??null;
+                          $vac=$filtre->get('field_vacances')->value??null;
+                          $filtres[] = [
+                              "theme" => $theme,
+                              "age" => $age,
+                              "vac" => $vac
+                          ];
+       
+                  }
+                      
+     
+                  //  file_put_contents($racine."JSON2/node-".$id."-filtres.json", json_encode($filtres));
+                  
+              }
+          } else {
+              $not_found[]=$id;
+              echo sprintf("%s contenu non trouvé <br>", $id);
           }
+      }
 
-          $alias = \Drupal::service('path.alias_manager')->getAliasByPath('/node/'.$id);
-          $url = sprintf("https://%s.kidiklik.fr%s",$dep,$alias.chr(10));
-        fputs($file,$url);
-    }
-    fclose($file);
+      if(!empty($result)) {
+          
+        echo "<script>
+            setTimeout(() => {
+                document.location.href='?type=".$type."&offset=".($offset+50)."'
+            }, 200)
+            </script>";
+      }
+  }
 
-echo "ok";
-exit;
+
+
+  function jsonTonode() {
+      $racine = "/KIDIKLIK/WEBSITE/preprod.kidiklik.fr/tmp/";
+      try {
+          echo $id; /// lecture d'un fichier listant les nid !! A FAIRE
+          
+          $data = json_decode(file_get_contents($racine."JSON/node-".$id.".json"), true);
+    
+          $data_dates = json_decode(file_get_contents($racine."JSON/node-".$id."-date.json"), true);
+    
+          $data_filtres = json_decode(file_get_contents($racine."JSON/node-".$id."-filtres.json"), true);
+    
+          unset($data['field_date']);
+              
+              $node = Node::create($data);
+              $dates = [];
+              $paragraphs = [];
+
+              foreach($data_dates as $d) {
+                  $p = Paragraph::create([
+                      'type' => 'date',
+                      'field_date_de_debut' => $d['deb'],
+                      'field_date_de_fin' => $d['fin'],
+                  ]);
+
+                  $p->save();
+
+                  $paragraphs[] = [
+                      'target_id' => $p->id(),
+                      'target_revision_id' => $p->getRevisionId(),
+                  ];
+              }
+              $node->set('field_date', $paragraphs);
+              
+              $paragraphs_filtres = [];
+              foreach($data_filtres as $d) {
+                  $val = [
+                      'type' => 'filtres',
+                  ];
+                  if($d['theme'] !== null) {
+                      $val['field_thematiques'] = $d['theme'];
+                  }
+                  if($d['age'] !== null) {
+                      $val['field_tranches_d_ages'] = $d['age'];
+                  }
+                  if($d['vac'] !== null) {
+                      $val['field_vacances'] = $d['vac'];
+                  }
+                  $p = Paragraph::create($val);
+
+                  $p->save();
+
+                    $node->field_filtres= [
+                      'target_id' => $p->id(),
+                      'target_revision_id' => $p->getRevisionId(),
+                  ];
+              }
+
+              $node->save();
+              
+              $node->field_departement = $data['field_departement'];
+              $node->save();
+      } catch(Exception $e) {
+
+                  kint($e);
+      }
+
+      
+        echo "<script>
+            setTimeout(() => {
+                document.location.href='?offset=".($offset+1)."'
+            }, 1000)
+            </script>
+            ";
+            exit;
+
   }
 }

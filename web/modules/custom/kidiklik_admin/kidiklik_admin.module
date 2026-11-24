@@ -233,6 +233,7 @@ function kidiklik_admin_inline_entity_form_entity_form_alter(&$entity_form, &$fo
 
   }
 
+    /* Gestion des mises en avant dans un contenu article, activité ou agenda */
   if ($entity_form["#bundle"] == "bloc_de_mise_en_avant") {
     $node = \Drupal::request()->attributes->get('node');
     if (!empty($node)) {
@@ -250,6 +251,10 @@ function kidiklik_admin_inline_entity_form_entity_form_alter(&$entity_form, &$fo
           $entity_form['field_resume']['widget'][0]['value']['#default_value'] = preg_replace_callback("/(&#[0-9]+;)/", function ($m) {
             return mb_convert_encoding($m[1], "UTF-8", "HTML-ENTITIES");
           }, html_entity_decode(strip_tags(current($node->get('body')->getValue())['value']), ENT_COMPAT, 'UTF-8'));
+        }
+        if($node->__isset('field_video')) {
+          $entity_form['field_video']['widget'][0]['value']['#default_value'] =  html_entity_decode(strip_tags(current($node->get('field_video')->getValue())['value']), ENT_COMPAT, 'UTF-8');
+            
         }
       }
     }

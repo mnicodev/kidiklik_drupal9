@@ -168,19 +168,31 @@ class NewsletterController extends ControllerBase
     $parse = null;
     /** département */
     $liste = [];
+
     foreach ($blocs as $item) {
       $bloc = Paragraph::load($item['target_id']);
+        $video = null;
 
       if ($bloc !== null) {
-        if (is_object($bloc->get("field_image")->first())) {
-          //kint($bloc->get("field_image")->first()->get("target_id")->getValue());
-          $file = \Drupal::entityTypeManager()->getStorage("file")->load($bloc->get("field_image")->first()->get("target_id")->getValue());
+          if($bloc->hasField('field_nid_bloc')) {
+              $nid_bloc = $bloc->get('field_nid_bloc')->getValue()[0] ?? null;
+              if($nid_bloc !== null) {
+                  $mise_en_avant = Node::Load($nid_bloc['value']);
+                  $video = $mise_en_avant->get('field_video')->getValue()[0] ?? null;
+                  if($video !== null) {
+                      $url_image = 'https://img.youtube.com/vi/' . $video['value'] . '/hqdefault.jpg';
+                      
+                  }
+              }
+        
+          }elseif (is_object($bloc->get("field_image")->first())) {
+              $file = \Drupal::entityTypeManager()->getStorage("file")->load($bloc->get("field_image")->first()->get("target_id")->getValue());
 
-          $url_image = file_create_url($file->getFileUri());
+              $url_image = file_create_url($file->getFileUri());
+          } else {
+              $url_image = "";
+          }
 
-        } else {
-          $url_image = "";
-        }
         if (!empty($bloc->get('field_titre')->value)) {
           preg_match('/(https:\/\/)(.*)/', $bloc->get("field_lien")->value, $rs);
 
@@ -200,7 +212,8 @@ class NewsletterController extends ControllerBase
             "image" => $url_image,
             "texte" => $bloc->get("field_resume")->value,
             "lien" => sprintf('%s?utm_source=newsletter&utm_medium=mise_en_avant', $url),
-            'ext' => $ext
+            'ext' => $ext,
+            'has_video' => ($video !== null ? true : false)
           ];
         }
       }
@@ -211,43 +224,66 @@ class NewsletterController extends ControllerBase
     $liste_nat = [];
     
     foreach ($blocs_nat as $item) {
-      $bloc = Paragraph::load($item['target_id']);
+        $bloc = Paragraph::load($item['target_id']);
+        $video= null;
 
-      if (is_object($bloc->get("field_image")->first())) {
-        //kint($bloc->get("field_image")->first()->get("target_id")->getValue());
-        $file = \Drupal::entityTypeManager()->getStorage("file")->load($bloc->get("field_image")->first()->get("target_id")->getValue());
+      if ($bloc !== null) {
+          if($bloc->hasField('field_nid_bloc')) {
+              $nid_bloc = $bloc->get('field_nid_bloc')->getValue()[0] ?? null;
+              if($nid_bloc !== null) {
+                  $mise_en_avant = Node::Load($nid_bloc['value']);
+                  $video = $mise_en_avant->get('field_video')->getValue()[0] ?? null;
+                  if($video !== null) {
+                      $url_image = 'https://img.youtube.com/vi/' . $video['value'] . '/hqdefault.jpg';
+                      
+                  }
+              }
+        
 
-        $url_image = file_create_url($file->getFileUri());
+          
+          } elseif (is_object($bloc->get("field_image")->first())) {
+              
+              $file = \Drupal::entityTypeManager()->getStorage("file")->load($bloc->get("field_image")->first()->get("target_id")->getValue());
 
-      } else {
-        $url_image = "";
-      }
-      if (!empty($bloc->get('field_titre')->value)) {
+              
+              $url_image = file_create_url($file->getFileUri());
 
-        preg_match('/(https:\/\/)(.*)/', $bloc->get("field_lien")->value, $rs);
-
-        $ext = 0;
-        if (count($rs) && $rs[1] === 'https://') {
-          $ext = 1;
-        }
-
-        $parse = parse_url($bloc->get("field_lien")->value);
-          $url = $parse['path'];
-          if(!empty($parse['query'])) {
-            $url = sprintf('%s?%s&utm_source=newsletter&utm_medium=mise_en_avant', $parse['path'], $parse['query']);
+          
+          } else {
+              
+              $url_image = "";
+          
           }
+          
+          if (!empty($bloc->get('field_titre')->value)) {
 
-        $liste_nat[] = [
-          "titre" => $bloc->get('field_titre')->value,
-          "image" => $url_image,
-          "texte" => $bloc->get("field_resume")->value,
-          "lien" => sprintf('%s?utm_source=newsletter&utm_medium=mise_en_avant', $url),
-          'ext' => $ext,
-        ];
+              
+              preg_match('/(https:\/\/)(.*)/', $bloc->get("field_lien")->value, $rs);
+
+                $ext = 0;
+                if (count($rs) && $rs[1] === 'https://') {
+                  $ext = 1;
+                }
+
+                $parse = parse_url($bloc->get("field_lien")->value);
+                  $url = $parse['path'];
+                  if(!empty($parse['query'])) {
+                    $url = sprintf('%s?%s&utm_source=newsletter&utm_medium=mise_en_avant', $parse['path'], $parse['query']);
+                  }
+
+                $liste_nat[] = [
+                  "titre" => $bloc->get('field_titre')->value,
+                  "image" => $url_image,
+                  "texte" => $bloc->get("field_resume")->value,
+                  "lien" => sprintf('%s?utm_source=newsletter&utm_medium=mise_en_avant', $url),
+                  'ext' => $ext,
+                  'has_video' => ($video !== null ? true : false)
+                ];
+     
+          }
       }
 
     }
-
     $globalSettings = \Drupal::service("settings");
     $entete['www'] = 'www.';
     if ($globalSettings->get("environment") === 'dev') {
