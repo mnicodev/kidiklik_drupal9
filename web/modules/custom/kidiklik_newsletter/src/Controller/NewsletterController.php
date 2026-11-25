@@ -178,10 +178,15 @@ class NewsletterController extends ControllerBase
               $nid_bloc = $bloc->get('field_nid_bloc')->getValue()[0] ?? null;
               if($nid_bloc !== null) {
                   $mise_en_avant = Node::Load($nid_bloc['value']);
+                  $img = $mise_en_avant->get('field_image')->getValue()[0] ?? null;
                   $video = $mise_en_avant->get('field_video')->getValue()[0] ?? null;
                   if($video !== null) {
                       $url_image = 'https://img.youtube.com/vi/' . $video['value'] . '/hqdefault.jpg';
-                      
+                  } else if(isset($img['target_id'])){
+                    $file = \Drupal::entityTypeManager()->getStorage("file")->load($img['target_id']);
+                    $url_image = file_create_url($file->getFileUri());
+                  } else {
+                      $url_image=null;
                   }
               }
         
