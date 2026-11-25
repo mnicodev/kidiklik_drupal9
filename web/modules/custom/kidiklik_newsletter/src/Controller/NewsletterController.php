@@ -171,12 +171,14 @@ class NewsletterController extends ControllerBase
 
     foreach ($blocs as $item) {
       $bloc = Paragraph::load($item['target_id']);
-        $video = null;
+      $video = null;
+      $img = null;
 
       if ($bloc !== null) {
-          if($bloc->hasField('field_nid_bloc')) {
-              $nid_bloc = $bloc->get('field_nid_bloc')->getValue()[0] ?? null;
-              if($nid_bloc !== null) {
+          $nid_bloc = $bloc->get('field_nid_bloc')->getValue()[0] ?? null;
+
+          if($nid_bloc !== null) {
+
                   $mise_en_avant = Node::Load($nid_bloc['value']);
                   $img = $mise_en_avant->get('field_image')->getValue()[0] ?? null;
                   $video = $mise_en_avant->get('field_video')->getValue()[0] ?? null;
@@ -188,7 +190,6 @@ class NewsletterController extends ControllerBase
                   } else {
                       $url_image=null;
                   }
-              }
         
           }elseif (is_object($bloc->get("field_image")->first())) {
               $file = \Drupal::entityTypeManager()->getStorage("file")->load($bloc->get("field_image")->first()->get("target_id")->getValue());
@@ -198,29 +199,28 @@ class NewsletterController extends ControllerBase
               $url_image = "";
           }
 
-        if (!empty($bloc->get('field_titre')->value)) {
-          preg_match('/(https:\/\/)(.*)/', $bloc->get("field_lien")->value, $rs);
+          if (!empty($bloc->get('field_titre')->value)) {
 
-          $ext = 0;
-          if (count($rs) && $rs[1] === 'https://') {
-            $ext = 1;
-          }
+                  preg_match('/(https:\/\/)(.*)/', $bloc->get("field_lien")->value, $rs);
+                  $ext = 0;
+                  if (count($rs) && $rs[1] === 'https://') {
+                      $ext = 1;
+                  }
+              $parse = parse_url($bloc->get("field_lien")->value);
+              $url = $parse['path'];
+              if(!empty($parse['query'])) {
+                $url = sprintf('%s?%s&utm_source=newsletter&utm_medium=mise_en_avant', $parse['path'], $parse['query']);
+              }
 
-          $parse = parse_url($bloc->get("field_lien")->value);
-          $url = $parse['path'];
-          if(!empty($parse['query'])) {
-            $url = sprintf('%s?%s&utm_source=newsletter&utm_medium=mise_en_avant', $parse['path'], $parse['query']);
-          }
-
-          $liste[] = [
-            "titre" => $bloc->get('field_titre')->value,
-            "image" => $url_image,
-            "texte" => $bloc->get("field_resume")->value,
-            "lien" => sprintf('%s?utm_source=newsletter&utm_medium=mise_en_avant', $url),
-            'ext' => $ext,
-            'has_video' => ($video !== null ? true : false)
-          ];
-        }
+              $liste[] = [
+                "titre" => $bloc->get('field_titre')->value,
+                "image" => $url_image,
+                "texte" => $bloc->get("field_resume")->value,
+                "lien" => sprintf('%s?utm_source=newsletter&utm_medium=mise_en_avant', $url),
+                'ext' => $ext,
+                'has_video' => ($video !== null ? true : false)
+              ];
+            }
       }
 
     }
@@ -231,6 +231,7 @@ class NewsletterController extends ControllerBase
     foreach ($blocs_nat as $item) {
         $bloc = Paragraph::load($item['target_id']);
         $video= null;
+        $img = null;
 
       if ($bloc !== null) {
           if($bloc->hasField('field_nid_bloc')) {

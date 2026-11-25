@@ -41,7 +41,6 @@ class BlocsDatasController extends ControllerBase
               $url_image = null;
             }
 
-
             $json[] = [
               "titre" => $paragraph->get("field_titre")->value,
               "resume" => strip_tags($paragraph->get("field_resume")->value),

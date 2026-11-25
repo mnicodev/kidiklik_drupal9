@@ -12,7 +12,7 @@ function blocAction(o) {
 }
 
 function getBloc(obj) {
-console.log(obj.nid);
+console.log(obj);
 	bloc=document.createElement("div");
 	bloc_image=document.createElement("div");
 	bloc_data=document.createElement("div");
@@ -36,7 +36,7 @@ console.log(obj.nid);
 	$(fid).val(obj.fid);
 	$(nid).attr("type","hidden");
 	$(nid).attr("name","nid_bloc[]");
-	$(nid).val(obj.nid);
+	$(nid).val(obj.bloc_nid);
 
   $(lien).val(obj.lien);
   $(lien).attr('type','hidden');
@@ -104,7 +104,7 @@ $(function(){
 					console.log(result)
 					rs=JSON.parse(result);
 					for(item in rs) {
-						console.log(rs[item])
+						//console.log(rs[item])
 						$("#blocs_datas").append(getBloc(rs[item]));
 						if($("#edit-bandeau-rose").is(":checked")) {
 							$("#blocs_datas").find(".row").each(function () {
